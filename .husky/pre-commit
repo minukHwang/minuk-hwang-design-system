@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "✅ Commit hook passed - React project has its own quality checks"
+echo "🧹 Code formatting and linting..."
+pnpm lint-staged

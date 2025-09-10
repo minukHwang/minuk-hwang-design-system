@@ -31,6 +31,15 @@
     "publish:react": "pnpm --filter @minuk-hwang-design-system/react build && pnpm --filter @minuk-hwang-design-system/react publish",
     "publish:all": "pnpm publish:tokens && pnpm publish:react"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
+  },
   "keywords": [
     "design-system",
     "react",
@@ -55,6 +64,7 @@
     "@storybook/test": "^8.6.14",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
+    "commitlint-config-gitmoji": "^2.3.1",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -65,8 +75,10 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-storybook": "^0.8.0",
+    "gitmoji-cli": "^9.7.0",
     "globals": "^15.8.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "nx": "^21.5.1",
     "prettier": "^3.3.3",
     "storybook": "^8.6.14",

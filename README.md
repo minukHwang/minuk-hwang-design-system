@@ -8,10 +8,9 @@ This monorepo contains the following packages:
 
 ### Core Packages
 
-- **[@minuk-hwang-design-system/tokens](./packages/tokens)** - Design tokens (colors, typography, spacing, etc.)
-- **[@minuk-hwang-design-system/react](./packages/react)** - React component library
-- **[@minuk-hwang-design-system/react-native](./packages/react-native)** - React Native components
-- **[@minuk-hwang-design-system/build-config](./packages/build-config)** - Shared build configuration
+- **[@minuk-hwang-design-system/style-tokens](./packages/style-tokens)** - Design tokens (colors, typography, spacing, etc.)
+- **[@minuk-hwang-design-system/components-react](./packages/components/react)** - React component library
+- **[@minuk-hwang-design-system/esbuild-config](./packages/esbuild-config)** - Shared build configuration
 
 ## 🚀 Getting Started
 
@@ -19,20 +18,20 @@ This monorepo contains the following packages:
 
 ```bash
 # Install all dependencies
-yarn install
+pnpm install
 
 # Build all packages
-yarn build:all
+pnpm build:all
 ```
 
 ### Development
 
 ```bash
 # Start development mode
-yarn dev
+pnpm dev
 
 # Start Storybook (documentation)
-yarn dev:storybook
+pnpm dev:storybook
 ```
 
 ## 📚 Documentation
@@ -46,7 +45,7 @@ Visit our Storybook for component documentation and examples.
 - **Vanilla Extract** - CSS-in-JS solution
 - **NX** - Monorepo tooling
 - **ESBuild** - Fast bundling
-- **Yarn Workspaces** - Package management
+- **PNPM Workspaces** - Package management
 
 ## 📄 License
 
