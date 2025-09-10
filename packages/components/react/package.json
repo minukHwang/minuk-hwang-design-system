@@ -1,0 +1,48 @@
+{
+  "name": "@minuk-hwang-design-system/components-react",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "index.js",
+  "packageManager": "pnpm@8.15.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style/css": "./dist/index.css"
+  },
+  "scripts": {
+    "build": "pnpm build:js && pnpm build:type",
+    "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
+    "build:js": "node build.js",
+    "build:type": "tsc --emitDeclarationOnly",
+    "clean": "rimraf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@minuk-hwang-design-system/esbuild-config": "workspace:^",
+    "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vanilla-extract/esbuild-plugin": "^2.3.8",
+    "esbuild": "^0.23.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "react": "*"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "^1.15.3",
+    "@vanilla-extract/recipes": "^0.5.3",
+    "@vanilla-extract/sprinkles": "^1.6.2",
+    "clsx": "^2.1.1"
+  }
+}

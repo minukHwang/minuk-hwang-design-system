@@ -1,0 +1,29 @@
+{
+  "name": "@minuk-hwang-design-system/storybook",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "preview": "storybook dev --ci"
+  },
+  "dependencies": {
+    "@minuk-hwang-design-system/components-react": "workspace:^",
+    "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test": "^8.6.14",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vanilla-extract/vite-plugin": "^4.0.0",
+    "storybook": "^8.6.14",
+    "typescript": "^5.5.4",
+    "vite": "^5.0.0"
+  }
+}

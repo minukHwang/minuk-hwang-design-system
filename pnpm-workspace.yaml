@@ -1,0 +1,8 @@
+packages:
+  - 'packages/*'
+  - 'packages/components/*'
+  - 'apps/*'
+
+public-hoist-pattern:
+  - '*vanilla-extract*'
+  - '*esbuild*'

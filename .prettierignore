@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+dist/
+build/
+.next/
+out/
+
+# Logs
+*.log
+
+# Coverage directory
+coverage/
+
+# NX
+.nx/
+
+# OS generated files
+.DS_Store
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json

@@ -1,0 +1,11 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    // 디렉토리 경로 설정: 컴파일된 파일들이 저장될 디렉토리
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
