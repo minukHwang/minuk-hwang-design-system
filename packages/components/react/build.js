@@ -18,4 +18,5 @@ const config = {
 runBuild({
   pkg,
   config,
+  buildMode: 'separate', // 컴포넌트별 개별 빌드
 });

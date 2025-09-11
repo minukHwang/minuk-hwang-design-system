@@ -1,4 +1,5 @@
 import { forwardRef, ChangeEvent } from 'react';
+
 import { Container } from '../../common/container/Container';
 import { CommonProps } from '../../common/types';
 import { inputStyle } from '../style.css';
@@ -24,7 +25,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         />
       </Container>
     );
-  },
+  }
 );
 
 TextArea.displayName = 'TextArea';

@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
+
 import { Container } from '../../common/container/Container';
 import { Text } from '../../common/text/Text';
+
 import { commonStyle, stateStyle } from './style.css';
 
 type TabProps = {
@@ -21,5 +23,5 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>(
         </Text>
       </Container>
     );
-  },
+  }
 );

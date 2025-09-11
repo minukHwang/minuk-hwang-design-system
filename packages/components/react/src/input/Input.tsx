@@ -1,5 +1,10 @@
 import React, { forwardRef, useState, useEffect } from 'react';
+
+import { Container } from '../common/container/Container';
+import { Icon } from '../common/icon/Icon';
 import { CommonProps } from '../common/types';
+import { Palette } from '../style/color/sprinkles.css';
+
 import {
   divStateStyle,
   inputStyle,
@@ -8,9 +13,6 @@ import {
   disabledIconStyle,
   buttonStyle,
 } from './style.css';
-import { Icon } from '../common/icon/Icon';
-import { Palette } from '../style/color/sprinkles.css';
-import { Container } from '../common/container/Container';
 
 interface InputProps extends CommonProps {
   state: 'default' | 'highlight' | 'warning' | 'disabled' | 'readonly';
@@ -42,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       readOnly = false,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [internalValue, setInternalValue] = useState(value || defaultValue);
     const [inputType, setInputType] = useState(type);
@@ -126,5 +128,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </Container>
     );
-  },
+  }
 );

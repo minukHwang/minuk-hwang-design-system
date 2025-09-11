@@ -1,6 +1,8 @@
 import { forwardRef } from 'react';
+
 import { Container } from '../../common/container/Container';
 import { Tab } from '../tab/Tab';
+
 import { activeTab } from './style.css';
 
 type TabBarProps = {
@@ -9,7 +11,7 @@ type TabBarProps = {
 };
 
 export const TabBar = forwardRef<HTMLElement, TabBarProps>(({ tabs, className, ...props }, ref) => {
-  const activeTabIndex = tabs.findIndex((tab) => tab.state === 'active');
+  const activeTabIndex = tabs.findIndex(tab => tab.state === 'active');
 
   const updatedTabs = tabs.map((tab, index) => {
     const newState: 'default' | 'active' =

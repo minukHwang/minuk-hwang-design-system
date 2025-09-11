@@ -1,5 +1,6 @@
 import { Badge } from '../badge/Badge';
 import { CommonProps } from '../common/types';
+
 import { sizeStyle, infoStyle } from './style.css';
 
 interface CollectionProps extends CommonProps {

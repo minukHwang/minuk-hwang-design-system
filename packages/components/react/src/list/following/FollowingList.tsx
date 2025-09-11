@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
+
 import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
 import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
 
 interface FollowingListProps extends CommonProps {
@@ -12,7 +13,7 @@ interface FollowingListProps extends CommonProps {
 }
 
 export const FollowingList = forwardRef<HTMLElement, FollowingListProps>(
-  ({ name, nickName, loginId, children, className, onDelete }, ref) => {
+  ({ name, nickName, loginId, children: _children, className, onDelete }, ref) => {
     const handleDelete = () => {
       if (window.confirm(`${name ? name : nickName}님을 삭제하시겠습니까?`)) {
         onDelete();
@@ -45,5 +46,5 @@ export const FollowingList = forwardRef<HTMLElement, FollowingListProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );

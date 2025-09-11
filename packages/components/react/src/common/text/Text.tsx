@@ -1,8 +1,10 @@
+import clsx from 'clsx';
 import { forwardRef } from 'react';
+
 import { colorSprinkles } from '../../style/color/sprinkles.css';
 import { typographyRecipe } from '../../style/typography/recipes.css';
 import { CommonProps } from '../types';
-import clsx from 'clsx';
+
 import { ellipsisTextStyle } from './style.css';
 
 interface TextProps extends CommonProps {
@@ -36,7 +38,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const textClass = typographyRecipe({ textType, textMode, textAlign });
     const colorClass = colorSprinkles({ color });
@@ -49,5 +51,5 @@ export const Text = forwardRef<HTMLElement, TextProps>(
         {children}
       </Component>
     );
-  },
+  }
 );

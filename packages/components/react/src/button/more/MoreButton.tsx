@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
-import { Text } from '../../common/text/Text';
-import { Icon } from '../../common/icon/Icon';
+
 import { Container } from '../../common/container/Container';
+import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
 
 export const MoreButton = forwardRef<HTMLDivElement, CommonProps>(
@@ -24,5 +25,5 @@ export const MoreButton = forwardRef<HTMLDivElement, CommonProps>(
         <Icon color="textAssistive">chevron_right</Icon>
       </Container>
     );
-  },
+  }
 );

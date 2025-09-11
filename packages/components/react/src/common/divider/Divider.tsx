@@ -1,7 +1,8 @@
-import { forwardRef } from 'react';
-import { CommonProps } from '../types';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { forwardRef } from 'react';
+
 import { Container } from '../container/Container';
+import { CommonProps } from '../types';
 
 interface DividerProps
   extends Pick<CommonProps, 'color'>,

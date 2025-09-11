@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -21,18 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@minuk-hwang-design-system/style-tokens": [
-        "packages/style-tokens/src"
-      ],
-      "@minuk-hwang-design-system/components-react": [
-        "packages/components/react/src"
-      ],
-      "@minuk-hwang-design-system/components-react-native": [
-        "packages/components/react-native/src"
-      ],
-      "@minuk-hwang-design-system/esbuild-config": [
-        "packages/esbuild-config"
-      ]
+      "@minuk-hwang-design-system/style-tokens": ["packages/style-tokens/src"],
+      "@minuk-hwang-design-system/components-react": ["packages/components/react/src"],
+      "@minuk-hwang-design-system/esbuild-config": ["packages/esbuild-config"]
     }
   },
   "include": [],
@@ -42,9 +29,6 @@
     },
     {
       "path": "./packages/components/react"
-    },
-    {
-      "path": "./packages/components/react-native"
     }
   ]
 }

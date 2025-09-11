@@ -1,11 +1,13 @@
-import { forwardRef } from 'react';
-import { CommonProps } from '../../common/types';
-import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
-import { Badge } from '../../badge/Badge';
-import { Icon } from '../../common/icon/Icon';
-import { messageListRecipe } from './style.css';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
+
+import { Badge } from '../../badge/Badge';
+import { Container } from '../../common/container/Container';
+import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
+import { CommonProps } from '../../common/types';
+
+import { messageListRecipe } from './style.css';
 
 interface MessageListProps extends Omit<CommonProps, 'color'> {
   title?: string;
@@ -53,7 +55,7 @@ export const MessageList = forwardRef<HTMLElement, MessageListProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const color = colorMap[variant] || 'blue';
     const messageListClass = messageListRecipe({ variant, mode });
@@ -102,5 +104,5 @@ export const MessageList = forwardRef<HTMLElement, MessageListProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );

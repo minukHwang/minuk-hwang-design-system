@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
-import { Text } from '../../common/text/Text';
+
 import { Container } from '../../common/container/Container';
+import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
 
 /**
@@ -28,7 +29,7 @@ export const Headline = forwardRef<HTMLDivElement, CommonProps>(
         </Text>
       </Container>
     );
-  },
+  }
 );
 
 Headline.displayName = 'Headline';

@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
+
 import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
 import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
 
 interface TabListProps extends React.HTMLAttributes<HTMLElement> {
   icon: string;

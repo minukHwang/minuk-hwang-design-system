@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+
 import { colorSprinkles } from '../../style/color/sprinkles.css';
 
 export const commonStyle = style({

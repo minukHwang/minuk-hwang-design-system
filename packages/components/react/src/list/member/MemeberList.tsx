@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
+
+import { Button } from '../../button/Button';
 import { Container } from '../../common/container/Container';
 import { Text } from '../../common/text/Text';
-import { Button } from '../../button/Button';
 import { CommonProps } from '../../common/types';
 
 interface FollowingListProps extends CommonProps {
@@ -47,5 +48,5 @@ export const MemberList = forwardRef<HTMLElement, FollowingListProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );

@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+
 import { Container } from '../../common/container/Container';
 import { Text } from '../../common/text/Text';
 
@@ -31,5 +32,5 @@ export const DropDownItem = forwardRef<HTMLElement, DropDownItemProps>(
         <Text textType="label">{children}</Text>
       </Container>
     );
-  },
+  }
 );

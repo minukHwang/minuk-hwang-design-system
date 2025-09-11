@@ -1,12 +1,13 @@
-import { forwardRef } from 'react';
-import { CommonProps } from '../types';
-import { layoutSprinkles } from '../../style/layout/sprinkles.css';
-import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
-import { colorSprinkles } from '../../style/color/sprinkles.css';
-import { borderSprinkles } from '../../style/border/sprinkles.css';
-import { borderRecipe } from '../../style/border/recipes.css';
-import { shadowSprinkles } from '../../style/shadow/sprinkles.css';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
+
+import { borderRecipe } from '../../style/border/recipes.css';
+import { borderSprinkles } from '../../style/border/sprinkles.css';
+import { colorSprinkles } from '../../style/color/sprinkles.css';
+import { layoutSprinkles } from '../../style/layout/sprinkles.css';
+import { shadowSprinkles } from '../../style/shadow/sprinkles.css';
+import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
+import { CommonProps } from '../types';
 
 /**
  * Container 컴포넌트
@@ -122,7 +123,7 @@ export const Container = forwardRef<HTMLElement, CommonProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const containerStyle = {
       ...(typeof width === 'number' && { width: `${width}px` }),
@@ -198,5 +199,5 @@ export const Container = forwardRef<HTMLElement, CommonProps>(
         {children}
       </Component>
     );
-  },
+  }
 );

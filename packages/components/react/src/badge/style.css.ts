@@ -1,8 +1,8 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+
 import { borderSprinkles } from '../style/border/sprinkles.css';
-import { spacingSprinkles } from '../style/spacing/sprinkles.css';
 import { colorSprinkles } from '../style/color/sprinkles.css';
-import { RecipeVariants } from '@vanilla-extract/recipes';
+import { spacingSprinkles } from '../style/spacing/sprinkles.css';
 
 export const badgeRecipe = recipe({
   base: [borderSprinkles({ borderRadius: 's' })],

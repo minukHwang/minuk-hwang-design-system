@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
-import { CommonProps } from '../../../common/types';
-import { InfoItem, InfoItemProps } from '../info-item/InfoItem';
+
 import { Container } from '../../../common/container/Container';
 import { Divider } from '../../../common/divider/Divider';
+import { CommonProps } from '../../../common/types';
+import { InfoItem, InfoItemProps } from '../info-item/InfoItem';
 
 export type Infos = Omit<InfoItemProps, 'size'>[];
 
@@ -26,7 +27,7 @@ export const InfoBox = forwardRef<HTMLElement, InfoBoxProps>(
     const infoItems = infos?.reduce((acc, item, index) => {
       if (index > 0) {
         acc.push(
-          <Divider key={item.id || `divider-${index}`} orientation="vertical" margin={16} />,
+          <Divider key={item.id || `divider-${index}`} orientation="vertical" margin={16} />
         );
       }
       acc.push(
@@ -37,7 +38,7 @@ export const InfoBox = forwardRef<HTMLElement, InfoBoxProps>(
           icon={item.icon}
           size={size}
           link={item.link}
-        />,
+        />
       );
       return acc;
     }, [] as React.ReactNode[]);
@@ -56,5 +57,5 @@ export const InfoBox = forwardRef<HTMLElement, InfoBoxProps>(
         {infoItems}
       </Container>
     );
-  },
+  }
 );

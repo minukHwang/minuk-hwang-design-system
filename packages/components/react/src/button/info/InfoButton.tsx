@@ -1,11 +1,13 @@
-import { forwardRef } from 'react';
-import { CommonProps } from '../../common/types';
-import { Badge } from '../../badge/Badge';
-import { Text } from '../../common/text/Text';
-import { infoButtonRecipe, InfoButtonVariants } from './style.css';
-import { BadgeVariants } from '../../badge/style.css';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
+
+import { Badge } from '../../badge/Badge';
+import { BadgeVariants } from '../../badge/style.css';
+import { Text } from '../../common/text/Text';
+import { CommonProps } from '../../common/types';
 import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
+
+import { infoButtonRecipe, InfoButtonVariants } from './style.css';
 
 interface InfoButtonProps extends CommonProps, NonNullable<InfoButtonVariants> {
   badgeColor?: NonNullable<BadgeVariants>['color'];
@@ -38,7 +40,7 @@ export const InfoButton = forwardRef<HTMLButtonElement, InfoButtonProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const infoButtonClass = infoButtonRecipe({ size, variant });
     const textType = size === 's' ? 'heading2' : 'title1';
@@ -82,5 +84,5 @@ export const InfoButton = forwardRef<HTMLButtonElement, InfoButtonProps>(
         )}
       </button>
     );
-  },
+  }
 );

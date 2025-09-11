@@ -1,12 +1,13 @@
-import { forwardRef } from 'react';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { forwardRef } from 'react';
+
 import { Badge } from '../../badge/Badge';
+import { BadgeVariants } from '../../badge/style.css';
 import { InfoBox, Infos } from '../../box/info/info-box/InfoBox';
 import { Button } from '../../button/Button';
 import { Container } from '../../common/container/Container';
 import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
-import { BadgeVariants } from '../../badge/style.css';
 
 interface MapBottomSheetProps extends CommonProps {
   title?: string;
