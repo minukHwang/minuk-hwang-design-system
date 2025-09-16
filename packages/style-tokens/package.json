@@ -26,6 +26,7 @@
   "description": "",
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
+    "@minuk-hwang-design-system/tsconfig": "workspace:^",
     "esbuild": "^0.23.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.3"

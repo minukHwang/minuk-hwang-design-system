@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const esbuild = require('esbuild');
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
+
+const esbuild = require('esbuild');
 
 // 컴포넌트별 entry points를 자동으로 스캔하는 함수
 const scanComponentEntryPoints = (srcDir = 'src') => {
@@ -37,25 +38,29 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
         // .tsx 파일을 직접 entry point로 추가 (CSS 파일은 제외)
         const relativePath = path.join(basePath, item).replace(/\\/g, '/');
         entryPoints.push(`${srcDir}/${relativePath}`);
-      } else if (item.endsWith('.css.ts')) {
-        // vanilla-extract CSS 파일도 entry point로 추가
-        const relativePath = path.join(basePath, item).replace(/\\/g, '/');
-        entryPoints.push(`${srcDir}/${relativePath}`);
       }
     });
   };
 
   scanDirectory(srcDir);
 
-  // entry points가 없으면 기본값 사용
-  return entryPoints.length > 0 ? entryPoints : ['src/index.ts'];
+  // index.ts를 제외하고 개별 컴포넌트만 빌드
+  // if (!entryPoints.includes('src/index.ts')) {
+  //   entryPoints.unshift('src/index.ts');
+  // }
+
+  // index.ts 제외하고 반환
+  const filteredEntryPoints = entryPoints.filter(entry => !entry.includes('src/index.ts'));
+
+  // entry points가 없으면 빈 배열 반환 (index.ts는 제외)
+  return filteredEntryPoints.length > 0 ? filteredEntryPoints : [];
 };
 
 const runBuild = ({
-  entryPoints = ['src/index.ts'], // 모두 동일하게 entryPoint 설정,
+  entryPoints = [], // 개별 컴포넌트만 빌드하므로 기본값은 빈 배열
   pkg,
   config = {}, // 추가 설정
-  onBuildEnd = () => {}, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수
+  onBuildEnd = () => void 0, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수
   buildMode = 'bundle', // 'bundle' (기본값) 또는 'separate'
 }) => {
   const dev = process.argv.includes('--dev'); // 명령줄 인자(arguments)를 확인
@@ -66,13 +71,10 @@ const runBuild = ({
   // buildMode에 따라 entryPoints 결정
   const finalEntryPoints = buildMode === 'separate' ? scanComponentEntryPoints() : entryPoints;
 
-  const external =
-    buildMode === 'separate'
-      ? []
-      : Object.keys({
-          ...pkg.devDependencies,
-          ...pkg.peerDependencies,
-        });
+  const external = Object.keys({
+    ...pkg.devDependencies,
+    ...pkg.peerDependencies,
+  });
 
   /**
    * 빌드 설정
@@ -81,7 +83,7 @@ const runBuild = ({
     // 빌드할 파일 위치: 번들링할 엔트리 포인트 파일 경로를 지정
     entryPoints: finalEntryPoints,
     // 번들링 설정: 모든 의존성 파일들을 하나의 파일로 번들링
-    bundle: buildMode === 'separate' ? false : true,
+    bundle: true,
     // 파일 압축: 코드를 간결하게 (minify) 작성하여 파일 크기를 줄임
     minify,
     // 소스맵 생성: 디버깅을 위해 소스맵 파일 생성

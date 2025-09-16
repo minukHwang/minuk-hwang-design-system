@@ -107,7 +107,13 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
     devDependencies:
+      '@minuk-hwang-design-system/tsconfig':
+        specifier: workspace:^
+        version: link:../../packages/tsconfig
       '@storybook/addon-essentials':
         specifier: ^8.6.14
         version: 8.6.14(@types/react@18.3.24)(storybook@8.6.14)
@@ -163,6 +169,9 @@ importers:
       '@minuk-hwang-design-system/style-tokens':
         specifier: workspace:^
         version: link:../../style-tokens
+      '@minuk-hwang-design-system/tsconfig':
+        specifier: workspace:^
+        version: link:../../tsconfig
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.24
@@ -206,12 +215,21 @@ importers:
       '@minuk-hwang-design-system/esbuild-config':
         specifier: workspace:^
         version: link:../esbuild-config
+      '@minuk-hwang-design-system/tsconfig':
+        specifier: workspace:^
+        version: link:../tsconfig
       esbuild:
         specifier: ^0.23.0
         version: 0.23.1
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      typescript:
+        specifier: ^5.5.3
+        version: 5.9.2
+
+  packages/tsconfig:
+    devDependencies:
       typescript:
         specifier: ^5.5.3
         version: 5.9.2
@@ -8445,7 +8463,6 @@ packages:
 
   /tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-    dev: true
 
   /tsutils@3.21.0(typescript@5.9.2):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}

@@ -1,5 +1,5 @@
+import { Text } from '@minuk-hwang-design-system/components-react/text';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Text } from '@minuk-hwang-design-system/components-react';
 
 const meta = {
   title: 'Components/Text',
@@ -38,7 +38,7 @@ const meta = {
     },
     color: {
       control: { type: 'select' },
-      options: ['textNormal', 'textAssistive', 'textDisabled', 'uiPrimaryNormal', 'red500'],
+      options: ['textNormal', 'textAlternative', 'textStrong', 'uiPrimaryNormal', 'blue500'],
     },
   },
 } satisfies Meta<typeof Text>;
@@ -94,31 +94,4 @@ export const BoldText: Story = {
     textMode: 'bold',
     children: 'Bold text example',
   },
-};
-
-export const ColorVariants: Story = {
-  args: {
-    textType: 'body1',
-    color: 'textNormal',
-    children: 'Color variant text',
-  },
-  render: args => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text {...args} color="textNormal">
-        Normal text color
-      </Text>
-      <Text {...args} color="textAssistive">
-        Assistive text color
-      </Text>
-      <Text {...args} color="textDisabled">
-        Disabled text color
-      </Text>
-      <Text {...args} color="uiPrimaryNormal">
-        Primary color text
-      </Text>
-      <Text {...args} color="red500">
-        Error color text
-      </Text>
-    </div>
-  ),
 };

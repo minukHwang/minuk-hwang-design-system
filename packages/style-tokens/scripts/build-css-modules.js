@@ -1,8 +1,9 @@
-import * as theme from '../dist/index.js';
 import fs from 'fs';
 
+import * as theme from '../dist/index.js';
+
 // 카멜케이스를 케밥케이스로 변경하는 정규식
-const toKebabCase = (str) => {
+const toKebabCase = str => {
   return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
 };
 
@@ -10,11 +11,12 @@ const toKebabCase = (str) => {
 const generateCssVariables = () => {
   // 변수 문자열을 담을 배열
   const lightCssString = [];
+  const lightClassCssString = [];
   const darkCssString = [];
   const darkClassCssString = [];
 
   Object.entries(theme.vars).forEach(([key, value]) => {
-    const selector = ':root';
+    const selector = 'html';
     // 색
     if (key === 'color') {
       Object.entries(value.$static).forEach(([colorKey, colorValue]) => {
@@ -29,18 +31,27 @@ const generateCssVariables = () => {
                     return `\t\t--${toKebabCase(mainKey)}-${toKebabCase(subKey)}: ${subValue};`;
                   }
                 })
-                .join('\n'), // 줄바꿈
+                .join('\n') // 줄바꿈
           )
           .join('\n\n'); // 줄바꿈
 
         // 문자열을 배열에 추가
         if (colorKey === 'light') {
+          // 기본 라이트는 루트(html)에 선언
           lightCssString.push(`${selector} {\n${cssVariables}\n}`);
+
+          // 수동 라이트 강제: data-theme 및 .light 클래스 모두 지원
+          lightClassCssString.push(`${selector}[data-theme="light"] {\n${cssVariables}\n}`);
+          lightClassCssString.push(`${selector}.light {\n${cssVariables}\n}`);
         } else if (colorKey === 'dark') {
+          // 시스템 다크 추적: 수동 테마(data-theme)가 없을 때만 적용
           darkCssString.push(
-            `@media (prefers-color-scheme: dark) {\n\t${selector} {\n${cssVariables}\n\t}\n}`,
+            `@media (prefers-color-scheme: dark) {\n\t${selector}:not([data-theme]) {\n${cssVariables}\n\t}\n}`
           );
-          darkClassCssString.push(`${selector} .dark {\n${cssVariables}\n}`)
+
+          // 수동 다크 강제: data-theme 및 .dark 클래스 모두 지원
+          darkClassCssString.push(`${selector}[data-theme="dark"] {\n${cssVariables}\n}`);
+          darkClassCssString.push(`${selector}.dark {\n${cssVariables}\n}`);
         }
       });
     } else {
@@ -52,7 +63,7 @@ const generateCssVariables = () => {
               .map(([subKey, subValue]) => {
                 return `\t--${toKebabCase(mainKey)}-${toKebabCase(subKey)}: ${subValue};`;
               })
-              .join('\n'), // 줄바꿈
+              .join('\n') // 줄바꿈
         )
         .join('\n\n'); // 줄바꿈
 
@@ -63,6 +74,7 @@ const generateCssVariables = () => {
 
   return {
     light: lightCssString.join('\n\n'),
+    lightClass: lightClassCssString.join('\n\n'),
     dark: darkCssString.join('\n\n'),
     darkClass: darkClassCssString.join('\n\n'),
   };
@@ -112,7 +124,7 @@ const generateCssImports = () => {
 // 일반 css variable 파일 만들기
 const generateCssFile = () => {
   const imports = generateCssImports();
-  const { light, dark, darkClass } = generateCssVariables();
+  const { light, lightClass, dark, darkClass } = generateCssVariables();
   const classes = generateCssClasses();
 
   // 추가된 문자열 배열을 풀어서 넣어주기
@@ -123,6 +135,8 @@ ${light}
 ${dark}
 
 ${darkClass}
+
+${lightClass}
 
 ${classes}
 `;

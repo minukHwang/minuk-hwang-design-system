@@ -5,12 +5,219 @@
   "main": "index.js",
   "packageManager": "pnpm@8.15.0",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "./badge": {
+      "types": "./dist/badge/Badge.d.ts",
+      "import": "./dist/badge/Badge.js",
+      "require": "./dist/badge/Badge.cjs"
     },
-    "./style/css": "./dist/index.css"
+    "./badge/style": "./dist/badge/Badge.css",
+    "./button": {
+      "types": "./dist/button/Button.d.ts",
+      "import": "./dist/button/Button.js",
+      "require": "./dist/button/Button.cjs"
+    },
+    "./button/style": "./dist/button/Button.css",
+    "./button/info": {
+      "types": "./dist/button/info/InfoButton.d.ts",
+      "import": "./dist/button/info/InfoButton.js",
+      "require": "./dist/button/info/InfoButton.cjs"
+    },
+    "./button/info/style": "./dist/button/info/InfoButton.css",
+    "./button/more": {
+      "types": "./dist/button/more/MoreButton.d.ts",
+      "import": "./dist/button/more/MoreButton.js",
+      "require": "./dist/button/more/MoreButton.cjs"
+    },
+    "./button/more/style": "./dist/button/more/MoreButton.css",
+    "./chip": {
+      "types": "./dist/chip/Chips.d.ts",
+      "import": "./dist/chip/Chips.js",
+      "require": "./dist/chip/Chips.cjs"
+    },
+    "./chip/style": "./dist/chip/Chips.css",
+    "./collection": {
+      "types": "./dist/collection/Collection.d.ts",
+      "import": "./dist/collection/Collection.js",
+      "require": "./dist/collection/Collection.cjs"
+    },
+    "./collection/style": "./dist/collection/Collection.css",
+    "./container": {
+      "types": "./dist/common/container/Container.d.ts",
+      "import": "./dist/common/container/Container.js",
+      "require": "./dist/common/container/Container.cjs"
+    },
+    "./container/style": "./dist/common/container/Container.css",
+    "./text": {
+      "types": "./dist/common/text/Text.d.ts",
+      "import": "./dist/common/text/Text.js",
+      "require": "./dist/common/text/Text.cjs"
+    },
+    "./text/style": "./dist/common/text/Text.css",
+    "./icon": {
+      "types": "./dist/common/icon/Icon.d.ts",
+      "import": "./dist/common/icon/Icon.js",
+      "require": "./dist/common/icon/Icon.cjs"
+    },
+    "./icon/style": "./dist/common/icon/Icon.css",
+    "./divider": {
+      "types": "./dist/common/divider/Divider.d.ts",
+      "import": "./dist/common/divider/Divider.js",
+      "require": "./dist/common/divider/Divider.cjs"
+    },
+    "./divider/style": "./dist/common/divider/Divider.css",
+    "./input": {
+      "types": "./dist/input/Input.d.ts",
+      "import": "./dist/input/Input.js",
+      "require": "./dist/input/Input.cjs"
+    },
+    "./input/style": "./dist/input/Input.css",
+    "./input/group": {
+      "types": "./dist/input/group/InputGroup.d.ts",
+      "import": "./dist/input/group/InputGroup.js",
+      "require": "./dist/input/group/InputGroup.cjs"
+    },
+    "./input/group/style": "./dist/input/group/InputGroup.css",
+    "./input/text-area": {
+      "types": "./dist/input/text-area/TextArea.d.ts",
+      "import": "./dist/input/text-area/TextArea.js",
+      "require": "./dist/input/text-area/TextArea.cjs"
+    },
+    "./input/text-area/style": "./dist/input/text-area/TextArea.css",
+    "./notification": {
+      "types": "./dist/notification/Notification.d.ts",
+      "import": "./dist/notification/Notification.js",
+      "require": "./dist/notification/Notification.cjs"
+    },
+    "./notification/style": "./dist/notification/Notification.css",
+    "./loading-spinner": {
+      "types": "./dist/loading-spinner/LoadingSpinner.d.ts",
+      "import": "./dist/loading-spinner/LoadingSpinner.js",
+      "require": "./dist/loading-spinner/LoadingSpinner.cjs"
+    },
+    "./loading-spinner/style": "./dist/loading-spinner/LoadingSpinner.css",
+    "./app-bar/top": {
+      "types": "./dist/app-bar/top-app-bar/TopAppBar.d.ts",
+      "import": "./dist/app-bar/top-app-bar/TopAppBar.js",
+      "require": "./dist/app-bar/top-app-bar/TopAppBar.cjs"
+    },
+    "./app-bar/top/style": "./dist/app-bar/top-app-bar/TopAppBar.css",
+    "./header/title": {
+      "types": "./dist/header/title/Title.d.ts",
+      "import": "./dist/header/title/Title.js",
+      "require": "./dist/header/title/Title.cjs"
+    },
+    "./header/title/style": "./dist/header/title/Title.css",
+    "./header/headline": {
+      "types": "./dist/header/headline/Headline.d.ts",
+      "import": "./dist/header/headline/Headline.js",
+      "require": "./dist/header/headline/Headline.cjs"
+    },
+    "./header/headline/style": "./dist/header/headline/Headline.css",
+    "./box/info": {
+      "types": "./dist/box/info/info-box/InfoBox.d.ts",
+      "import": "./dist/box/info/info-box/InfoBox.js",
+      "require": "./dist/box/info/info-box/InfoBox.cjs"
+    },
+    "./box/info/style": "./dist/box/info/info-box/InfoBox.css",
+    "./box/info/info-item": {
+      "types": "./dist/box/info/info-item/InfoItem.d.ts",
+      "import": "./dist/box/info/info-item/InfoItem.js",
+      "require": "./dist/box/info/info-item/InfoItem.cjs"
+    },
+    "./box/info/info-item/style": "./dist/box/info/info-item/InfoItem.css",
+    "./box/weather": {
+      "types": "./dist/box/weather/WeatherBox.d.ts",
+      "import": "./dist/box/weather/WeatherBox.js",
+      "require": "./dist/box/weather/WeatherBox.cjs"
+    },
+    "./box/weather/style": "./dist/box/weather/WeatherBox.css",
+    "./bottom-sheet/map": {
+      "types": "./dist/bottom-sheet/map/MapBottomSheet.d.ts",
+      "import": "./dist/bottom-sheet/map/MapBottomSheet.js",
+      "require": "./dist/bottom-sheet/map/MapBottomSheet.cjs"
+    },
+    "./bottom-sheet/map/style": "./dist/bottom-sheet/map/MapBottomSheet.css",
+    "./drop-down/box": {
+      "types": "./dist/drop-down/drop-down-box/DropDownBox.d.ts",
+      "import": "./dist/drop-down/drop-down-box/DropDownBox.js",
+      "require": "./dist/drop-down/drop-down-box/DropDownBox.cjs"
+    },
+    "./drop-down/box/style": "./dist/drop-down/drop-down-box/DropDownBox.css",
+    "./drop-down/item": {
+      "types": "./dist/drop-down/drop-down-item/DropDownItem.d.ts",
+      "import": "./dist/drop-down/drop-down-item/DropDownItem.js",
+      "require": "./dist/drop-down/drop-down-item/DropDownItem.cjs"
+    },
+    "./drop-down/item/style": "./dist/drop-down/drop-down-item/DropDownItem.css",
+    "./list/comment": {
+      "types": "./dist/list/comment/CommentList.d.ts",
+      "import": "./dist/list/comment/CommentList.js",
+      "require": "./dist/list/comment/CommentList.cjs"
+    },
+    "./list/comment/style": "./dist/list/comment/CommentList.css",
+    "./list/following": {
+      "types": "./dist/list/following/FollowingList.d.ts",
+      "import": "./dist/list/following/FollowingList.js",
+      "require": "./dist/list/following/FollowingList.cjs"
+    },
+    "./list/following/style": "./dist/list/following/FollowingList.css",
+    "./list/member": {
+      "types": "./dist/list/member/MemberList.d.ts",
+      "import": "./dist/list/member/MemberList.js",
+      "require": "./dist/list/member/MemberList.cjs"
+    },
+    "./list/member/style": "./dist/list/member/MemberList.css",
+    "./list/message": {
+      "types": "./dist/list/message/MessageList.d.ts",
+      "import": "./dist/list/message/MessageList.js",
+      "require": "./dist/list/message/MessageList.cjs"
+    },
+    "./list/message/style": "./dist/list/message/MessageList.css",
+    "./list/social-content": {
+      "types": "./dist/list/social-content/SocialContentList.d.ts",
+      "import": "./dist/list/social-content/SocialContentList.js",
+      "require": "./dist/list/social-content/SocialContentList.cjs"
+    },
+    "./list/social-content/style": "./dist/list/social-content/SocialContentList.css",
+    "./list/tab": {
+      "types": "./dist/list/tab/TabList.d.ts",
+      "import": "./dist/list/tab/TabList.js",
+      "require": "./dist/list/tab/TabList.cjs"
+    },
+    "./list/tab/style": "./dist/list/tab/TabList.css",
+    "./tabs/tab": {
+      "types": "./dist/tabs/tab/Tab.d.ts",
+      "import": "./dist/tabs/tab/Tab.js",
+      "require": "./dist/tabs/tab/Tab.cjs"
+    },
+    "./tabs/tab/style": "./dist/tabs/tab/Tab.css",
+    "./tabs/tab-bar": {
+      "types": "./dist/tabs/tab-bar/TabBar.d.ts",
+      "import": "./dist/tabs/tab-bar/TabBar.js",
+      "require": "./dist/tabs/tab-bar/TabBar.cjs"
+    },
+    "./tabs/tab-bar/style": "./dist/tabs/tab-bar/TabBar.css",
+    "./utils/date": {
+      "types": "./dist/utils/dateUtils.d.ts"
+    },
+    "./style/border": {
+      "types": "./dist/style/border/recipes.d.ts"
+    },
+    "./style/color": {
+      "types": "./dist/style/color/sprinkles.d.ts"
+    },
+    "./style/layout": {
+      "types": "./dist/style/layout/sprinkles.d.ts"
+    },
+    "./style/shadow": {
+      "types": "./dist/style/shadow/sprinkles.d.ts"
+    },
+    "./style/spacing": {
+      "types": "./dist/style/spacing/sprinkles.d.ts"
+    },
+    "./style/typography": {
+      "types": "./dist/style/typography/recipes.d.ts"
+    }
   },
   "scripts": {
     "build": "pnpm build:js && pnpm build:type",
@@ -26,6 +233,7 @@
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
     "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "@minuk-hwang-design-system/tsconfig": "workspace:^",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vanilla-extract/esbuild-plugin": "^2.3.8",

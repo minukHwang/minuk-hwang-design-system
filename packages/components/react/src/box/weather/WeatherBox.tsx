@@ -4,7 +4,6 @@ import { Container } from '../../common/container/Container';
 import { Icon } from '../../common/icon/Icon';
 import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
-import { LoadingSpinner } from '../../loading-spinner/LoadingSpinner';
 
 interface WeatherBoxProps extends CommonProps {
   date: string;

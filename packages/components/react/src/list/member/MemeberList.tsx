@@ -13,7 +13,7 @@ interface FollowingListProps extends CommonProps {
 }
 
 export const MemberList = forwardRef<HTMLElement, FollowingListProps>(
-  ({ loginId, nickName, name, children, className, onClick }, ref) => {
+  ({ loginId, nickName, name, className, onClick }, ref) => {
     const handleDelete = () => {
       if (window.confirm(`${name}님을 추가 하시겠습니까?`)) {
         onClick();

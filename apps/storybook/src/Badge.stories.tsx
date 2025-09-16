@@ -1,5 +1,5 @@
+import { Badge } from '@minuk-hwang-design-system/components-react/badge';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from '@minuk-hwang-design-system/components-react';
 
 const meta = {
   title: 'Components/Badge',
