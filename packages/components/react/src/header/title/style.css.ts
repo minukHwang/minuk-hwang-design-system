@@ -1,5 +1,6 @@
-import { style } from '@vanilla-extract/css';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { style } from '@vanilla-extract/css';
+
 import { colorSprinkles } from '../../style/color/sprinkles.css';
 
 export const titleStyle = style([

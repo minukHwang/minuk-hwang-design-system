@@ -1,10 +1,12 @@
 import React, { forwardRef, useState, useEffect } from 'react';
-import { labelStyle, starStyle, inputStyle, warningStyle } from './style.css';
-import { Input } from '../Input';
+
 import { Button } from '../../button/Button';
-import { Text } from '../../common/text/Text';
 import { Container } from '../../common/container/Container';
+import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
+import { Input } from '../Input';
+
+import { labelStyle, starStyle, inputStyle, warningStyle } from './style.css';
 
 interface InputGroupProps extends CommonProps {
   state: 'default' | 'highlight' | 'warning' | 'disabled' | 'readonly';
@@ -47,7 +49,7 @@ export const InputGroup = forwardRef<HTMLInputElement, InputGroupProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [inputValue, setInputValue] = useState(value || defaultValue);
 
@@ -114,5 +116,5 @@ export const InputGroup = forwardRef<HTMLInputElement, InputGroupProps>(
         {state === 'warning' && <div className={warningStyle}>{warningContent}</div>}
       </Container>
     );
-  },
+  }
 );

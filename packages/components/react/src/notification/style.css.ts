@@ -1,6 +1,7 @@
+import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+
 import { colorSprinkles } from '../style/color/sprinkles.css';
 import { spacingSprinkles } from '../style/spacing/sprinkles.css';
 

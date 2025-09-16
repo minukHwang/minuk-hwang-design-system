@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@minuk-hwang-design-system/components-react';
+import { Button } from '@minuk-hwang-design-system/components-react/button';
 
 const meta = {
   title: 'Components/Button',

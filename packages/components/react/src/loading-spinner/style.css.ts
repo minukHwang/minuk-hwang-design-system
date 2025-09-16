@@ -1,5 +1,5 @@
-import { style, keyframes } from '@vanilla-extract/css';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { style, keyframes } from '@vanilla-extract/css';
 
 const rotateAnimation = keyframes({
   '100%': { transform: 'rotate(1turn)' },

@@ -1,5 +1,5 @@
-import { style, styleVariants } from '@vanilla-extract/css';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 export const commonStyle = style({
   alignItems: 'center',

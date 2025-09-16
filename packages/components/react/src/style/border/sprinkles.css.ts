@@ -1,5 +1,6 @@
-import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
+
 import { palette } from '../color/sprinkles.css';
 
 const borderProperties = defineProperties({

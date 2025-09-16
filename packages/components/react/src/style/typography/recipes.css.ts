@@ -1,5 +1,5 @@
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 export const typographyRecipe = recipe({
   base: { fontFamily: vars.typography.fontFamily.main },

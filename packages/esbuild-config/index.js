@@ -1,100 +1,156 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const fs = require('fs');
+const path = require('path');
+
 const esbuild = require('esbuild');
 
+// 컴포넌트별 entry points를 자동으로 스캔하는 함수
+const scanComponentEntryPoints = (srcDir = 'src') => {
+  const entryPoints = [];
+
+  if (!fs.existsSync(srcDir)) {
+    return ['src/index.ts']; // 기본값으로 fallback
+  }
+
+  const scanDirectory = (dir, basePath = '') => {
+    const items = fs.readdirSync(dir);
+
+    items.forEach(item => {
+      const itemPath = path.join(dir, item);
+      const stat = fs.statSync(itemPath);
+
+      if (stat.isDirectory()) {
+        // index.ts 또는 index.tsx가 있는 폴더를 컴포넌트로 인식
+        const indexTs = path.join(itemPath, 'index.ts');
+        const indexTsx = path.join(itemPath, 'index.tsx');
+
+        if (fs.existsSync(indexTs)) {
+          const relativePath = path.join(basePath, item, 'index.ts').replace(/\\/g, '/');
+          entryPoints.push(`${srcDir}/${relativePath}`);
+        } else if (fs.existsSync(indexTsx)) {
+          const relativePath = path.join(basePath, item, 'index.tsx').replace(/\\/g, '/');
+          entryPoints.push(`${srcDir}/${relativePath}`);
+        } else {
+          // 하위 디렉토리 재귀 탐색
+          scanDirectory(itemPath, path.join(basePath, item));
+        }
+      } else if (item.endsWith('.tsx') && !item.includes('.css.')) {
+        // .tsx 파일을 직접 entry point로 추가 (CSS 파일은 제외)
+        const relativePath = path.join(basePath, item).replace(/\\/g, '/');
+        entryPoints.push(`${srcDir}/${relativePath}`);
+      }
+    });
+  };
+
+  scanDirectory(srcDir);
+
+  // index.ts를 제외하고 개별 컴포넌트만 빌드
+  // if (!entryPoints.includes('src/index.ts')) {
+  //   entryPoints.unshift('src/index.ts');
+  // }
+
+  // index.ts 제외하고 반환
+  const filteredEntryPoints = entryPoints.filter(entry => !entry.includes('src/index.ts'));
+
+  // entry points가 없으면 빈 배열 반환 (index.ts는 제외)
+  return filteredEntryPoints.length > 0 ? filteredEntryPoints : [];
+};
+
 const runBuild = ({
-    entryPoints = ['src/index.ts'], // 모두 동일하게 entryPoint 설정,
-    pkg,
-    config = {}, // 추가 설정
-    onBuildEnd = () => { }, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수
+  entryPoints = [], // 개별 컴포넌트만 빌드하므로 기본값은 빈 배열
+  pkg,
+  config = {}, // 추가 설정
+  onBuildEnd = () => void 0, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수
+  buildMode = 'bundle', // 'bundle' (기본값) 또는 'separate'
 }) => {
-    const dev = process.argv.includes('--dev'); // 명령줄 인자(arguments)를 확인
-    const minify = !dev; // 만약 dev라면 minify 설정 해제
+  const dev = process.argv.includes('--dev'); // 명령줄 인자(arguments)를 확인
+  const minify = !dev; // 만약 dev라면 minify 설정 해제
 
-    const watch = process.argv.includes('--watch'); // watch 모드는 만약 변화가 있다면 알아서 다시 빌드하도록 하는 것
+  const watch = process.argv.includes('--watch'); // watch 모드는 만약 변화가 있다면 알아서 다시 빌드하도록 하는 것
 
-    const external = Object.keys({
-        ...pkg.devDependencies,
-        ...pkg.peerDependencies,
-    })
+  // buildMode에 따라 entryPoints 결정
+  const finalEntryPoints = buildMode === 'separate' ? scanComponentEntryPoints() : entryPoints;
 
-    /**
-     * 빌드 설정
-     */
-    const baseConfig = {
-        // 빌드할 파일 위치: 번들링할 엔트리 포인트 파일 경로를 지정
-        entryPoints,
-        // 번들링 설정: 모든 의존성 파일들을 하나의 파일로 번들링
-        bundle: true,
-        // 파일 압축: 코드를 간결하게 (minify) 작성하여 파일 크기를 줄임
-        minify,
-        // 소스맵 생성: 디버깅을 위해 소스맵 파일 생성
-        sourcemap: true,
-        // 파일 생성 위치: 컴파일된 파일이 저장될 디렉토리 경로
-        outdir: 'dist',
-        // 타겟 설정: ES2019 버전을 타겟으로 컴파일
-        target: 'es2019',
-        // 번들링 제외: 명시된 모듈들은 번들링에서 제외
-        external,
-        // 추가 설정
-        ...config
+  const external = Object.keys({
+    ...pkg.devDependencies,
+    ...pkg.peerDependencies,
+  });
+
+  /**
+   * 빌드 설정
+   */
+  const baseConfig = {
+    // 빌드할 파일 위치: 번들링할 엔트리 포인트 파일 경로를 지정
+    entryPoints: finalEntryPoints,
+    // 번들링 설정: 모든 의존성 파일들을 하나의 파일로 번들링
+    bundle: true,
+    // 파일 압축: 코드를 간결하게 (minify) 작성하여 파일 크기를 줄임
+    minify,
+    // 소스맵 생성: 디버깅을 위해 소스맵 파일 생성
+    sourcemap: true,
+    // 파일 생성 위치: 컴파일된 파일이 저장될 디렉토리 경로
+    outdir: 'dist',
+    // 타겟 설정: ES2019 버전을 타겟으로 컴파일
+    target: 'es2019',
+    // 번들링 제외: 명시된 모듈들은 번들링에서 제외
+    external,
+    // 추가 설정
+    ...config,
+  };
+
+  /**
+   * js(ESModule), cjs(commonJS) 파일 생성
+   * -> 병렬 처리를 위해서 Promise.all
+   */
+  async function executeBuild() {
+    // ESModule 설정
+    const esmConfig = {
+      ...baseConfig,
+      format: 'esm',
     };
 
-    /**
-     * js(ESModule), cjs(commonJS) 파일 생성
-     * -> 병렬 처리를 위해서 Promise.all
-     */
-    async function executeBuild() {
-        // ESModule 설정
-        const esmConfig = {
-            ...baseConfig,
-            format: 'esm',
-        };
+    // CommonJS 설정
+    const cjsConfig = {
+      ...baseConfig,
+      format: 'cjs',
+      outExtension: {
+        '.js': '.cjs', // 확장자 변경 (겹치지 않게)
+      },
+    };
 
-        // CommonJS 설정
-        const cjsConfig = {
-            ...baseConfig,
-            format: 'cjs',
-            outExtension: {
-                ".js": ".cjs", // 확장자 변경 (겹치지 않게)
-            },
-        };
+    if (watch) {
+      // 만약 watch 한다면,
+      // 플러그인 설정
 
-        if (watch) {
-            // 만약 watch 한다면,
-            // 플러그인 설정
+      const plugins = [
+        ...(config.plugins || []),
+        {
+          name: 'watch-plugin',
+          setup(build) {
+            build.onEnd(() => {
+              onBuildEnd();
+            });
+          },
+        },
+      ];
 
-            const plugins = [...(config.plugins || []), {
-                name: 'watch-plugin',
-                setup(build) {
-                    build.onEnd(() => {
-                        onBuildEnd();
-                    });
-                },
-            }];
+      // ESM 빌드에만 plugin 적용
+      const ctxESM = await esbuild.context({ ...esmConfig, plugins });
+      const ctxCJS = await esbuild.context(cjsConfig);
 
-            // ESM 빌드에만 plugin 적용
-            const ctxESM = await esbuild.context({ ...esmConfig, plugins });
-            const ctxCJS = await esbuild.context(cjsConfig);
-
-            await Promise.all([
-                ctxESM.watch(),
-                ctxCJS.watch(),
-            ]);
-            console.log('Watching for update');
-        } else {
-            // 아니라면 그냥 build
-            await Promise.all([
-                esbuild.build(esmConfig),
-                esbuild.build(cjsConfig),
-            ]);
-        }
+      await Promise.all([ctxESM.watch(), ctxCJS.watch()]);
+      console.log('Watching for update');
+    } else {
+      // 아니라면 그냥 build
+      await Promise.all([esbuild.build(esmConfig), esbuild.build(cjsConfig)]);
     }
+  }
 
-    // build 및 에러 핸들링
-    executeBuild().catch((error) => {
-        console.error("Build failed with error:", error);
-        process.exit(1);
-    });
-}
+  // build 및 에러 핸들링
+  executeBuild().catch(error => {
+    console.error('Build failed with error:', error);
+    process.exit(1);
+  });
+};
 
 module.exports = runBuild;

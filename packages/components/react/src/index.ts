@@ -3,13 +3,20 @@
  */
 
 // Style
-export { layoutSprinkles, LayoutSprinkles } from './style/layout/sprinkles.css';
-export { spacingSprinkles, SpacingSprinkles } from './style/spacing/sprinkles.css';
-export { colorSprinkles, ColorSprinkles } from './style/color/sprinkles.css';
-export { typographyRecipe, TypographyVariants } from './style/typography/recipes.css';
-export { borderSprinkles, BorderSprinkles } from './style/border/sprinkles.css';
-export { borderRecipe, BorderVariants } from './style/border/recipes.css';
-export { shadowSprinkles, ShadowSprinkles } from './style/shadow/sprinkles.css';
+export { layoutSprinkles } from './style/layout/sprinkles.css';
+export type { LayoutSprinkles } from './style/layout/sprinkles.css';
+export { spacingSprinkles } from './style/spacing/sprinkles.css';
+export type { SpacingSprinkles } from './style/spacing/sprinkles.css';
+export { colorSprinkles } from './style/color/sprinkles.css';
+export type { ColorSprinkles } from './style/color/sprinkles.css';
+export { typographyRecipe } from './style/typography/recipes.css';
+export type { TypographyVariants } from './style/typography/recipes.css';
+export { borderSprinkles } from './style/border/sprinkles.css';
+export type { BorderSprinkles } from './style/border/sprinkles.css';
+export { borderRecipe } from './style/border/recipes.css';
+export type { BorderVariants } from './style/border/recipes.css';
+export { shadowSprinkles } from './style/shadow/sprinkles.css';
+export type { ShadowSprinkles } from './style/shadow/sprinkles.css';
 
 // Common
 export { Text } from './common/text/Text';

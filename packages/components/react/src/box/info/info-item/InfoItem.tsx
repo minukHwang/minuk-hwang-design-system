@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
-import { CommonProps } from '../../../common/types';
+
 import { Container } from '../../../common/container/Container';
-import { Text } from '../../../common/text/Text';
 import { Icon } from '../../../common/icon/Icon';
+import { Text } from '../../../common/text/Text';
+import { CommonProps } from '../../../common/types';
 
 export interface InfoItemProps extends CommonProps {
   title: string;
@@ -75,5 +76,5 @@ export const InfoItem = forwardRef<HTMLElement, InfoItemProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );

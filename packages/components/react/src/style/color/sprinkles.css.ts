@@ -1,5 +1,5 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 export const palette = {
   ...Object.fromEntries(

@@ -46,7 +46,8 @@ module.exports = {
             emoji: '📄',
           },
           style: {
-            description: 'Formatting code, fixing whitespace, or adjusting styling without changing functionality',
+            description:
+              'Formatting code, fixing whitespace, or adjusting styling without changing functionality',
             title: 'Styles',
             emoji: '🎨',
           },
@@ -71,7 +72,8 @@ module.exports = {
             emoji: '🔨',
           },
           ci: {
-            description: 'Updating continuous integration workflows, GitHub Actions, or deployment scripts',
+            description:
+              'Updating continuous integration workflows, GitHub Actions, or deployment scripts',
             title: 'Continuous Integrations',
             emoji: '🔧',
           },
@@ -86,7 +88,8 @@ module.exports = {
             emoji: '🗑',
           },
           init: {
-            description: 'Setting up the project structure, initial configuration, or boilerplate code',
+            description:
+              'Setting up the project structure, initial configuration, or boilerplate code',
             title: 'Initialization',
             emoji: '🎉',
           },
@@ -100,7 +103,8 @@ module.exports = {
         description: 'Provide a concise summary of what this change accomplishes',
       },
       body: {
-        description: 'Explain the reasoning behind this change and any important details (optional)',
+        description:
+          'Explain the reasoning behind this change and any important details (optional)',
       },
     },
   },

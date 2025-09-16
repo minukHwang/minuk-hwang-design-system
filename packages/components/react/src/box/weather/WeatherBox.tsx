@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
-import { CommonProps } from '../../common/types';
+
 import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
 import { Icon } from '../../common/icon/Icon';
-import { LoadingSpinner } from '../../loading-spinner/LoadingSpinner';
+import { Text } from '../../common/text/Text';
+import { CommonProps } from '../../common/types';
 
 interface WeatherBoxProps extends CommonProps {
   date: string;
@@ -44,7 +44,7 @@ export const WeatherBox = forwardRef<HTMLElement, WeatherBoxProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     return (
       <Container
@@ -123,5 +123,5 @@ export const WeatherBox = forwardRef<HTMLElement, WeatherBoxProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );

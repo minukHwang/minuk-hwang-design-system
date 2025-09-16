@@ -1,11 +1,13 @@
+import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { CommonProps } from '../common/types';
+
 import { Container } from '../common/container/Container';
 import { Text } from '../common/text/Text';
-import { badgeRecipe, BadgeVariants } from './style.css';
-import { TypographyVariants } from '../style/typography/recipes.css';
+import { CommonProps } from '../common/types';
 import { Palette } from '../style/color/sprinkles.css';
-import clsx from 'clsx';
+import { TypographyVariants } from '../style/typography/recipes.css';
+
+import { badgeRecipe, BadgeVariants } from './style.css';
 
 // 지정된 색이 있는 경우 color props type 제외
 type BadgeProps = Omit<CommonProps, 'color'> & BadgeVariants;
@@ -64,5 +66,5 @@ export const Badge = forwardRef<HTMLElement, BadgeProps>(
         </Text>
       </Container>
     );
-  },
+  }
 );

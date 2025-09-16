@@ -2,10 +2,11 @@
 
 import { forwardRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CommonProps } from '../../common/types';
+
 import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
 import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
+import { CommonProps } from '../../common/types';
 import { DropDownBox } from '../../drop-down/drop-down-box/DropDownBox';
 
 interface CommentListProps extends CommonProps {
@@ -25,7 +26,7 @@ export const CommentList = forwardRef<HTMLDivElement, CommentListProps>(
       isWriter = false,
       className,
     },
-    ref,
+    ref
   ) => {
     const options = ['수정하기', '삭제하기'];
     const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -91,9 +92,9 @@ export const CommentList = forwardRef<HTMLDivElement, CommentListProps>(
                 zIndex: 1000,
               }}
             />,
-            document.body,
+            document.body
           )}
       </>
     );
-  },
+  }
 );

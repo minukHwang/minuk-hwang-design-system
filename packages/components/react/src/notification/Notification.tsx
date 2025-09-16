@@ -1,10 +1,12 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { stateStyle } from './style.css';
-import { Text } from '../common/text/Text';
-import { Icon } from '../common/icon/Icon';
+
 import { Container } from '../common/container/Container';
+import { Icon } from '../common/icon/Icon';
+import { Text } from '../common/text/Text';
 import { CommonProps } from '../common/types';
+
+import { stateStyle } from './style.css';
 
 interface NotificationProps extends CommonProps {
   state: 'default' | 'warning' | 'danger';
@@ -39,5 +41,5 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
         <Text color={textColor}>{content}</Text>
       </Container>
     );
-  },
+  }
 );

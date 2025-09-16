@@ -1,6 +1,7 @@
-import { forwardRef, ReactNode } from 'react';
-import { colorSprinkles, Palette } from '../../style/color/sprinkles.css';
 import clsx from 'clsx';
+import { forwardRef, ReactNode } from 'react';
+
+import { colorSprinkles, Palette } from '../../style/color/sprinkles.css';
 
 interface IconProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   children: ReactNode;
@@ -38,5 +39,5 @@ export const Icon = forwardRef<HTMLElement, IconProps>(
         {children}
       </span>
     );
-  },
+  }
 );

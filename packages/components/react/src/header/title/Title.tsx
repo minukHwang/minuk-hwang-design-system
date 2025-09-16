@@ -1,8 +1,10 @@
+import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { titleStyle } from './style.css';
+
 import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
-import clsx from 'clsx';
+
+import { titleStyle } from './style.css';
 
 /**
  * Title 컴포넌트
@@ -28,5 +30,5 @@ export const Title = forwardRef<HTMLElement, CommonProps>(
         {children}
       </Text>
     );
-  },
+  }
 );

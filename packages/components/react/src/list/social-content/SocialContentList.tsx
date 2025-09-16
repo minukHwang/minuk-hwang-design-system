@@ -1,9 +1,10 @@
 import { forwardRef } from 'react';
-import { CommonProps } from '../../common/types';
-import { Container } from '../../common/container/Container';
-import { Text } from '../../common/text/Text';
-import { Icon } from '../../common/icon/Icon';
+
 import { Button } from '../../button/Button';
+import { Container } from '../../common/container/Container';
+import { Icon } from '../../common/icon/Icon';
+import { Text } from '../../common/text/Text';
+import { CommonProps } from '../../common/types';
 
 interface SocialContentListProps extends CommonProps {
   title: string;
@@ -41,7 +42,7 @@ export const SocialContentList = forwardRef<HTMLElement, SocialContentListProps>
       secondBtnFucnt = () => {},
       isFact,
     },
-    ref,
+    ref
   ) => {
     return (
       <Container ref={ref} as="li">
@@ -168,5 +169,5 @@ export const SocialContentList = forwardRef<HTMLElement, SocialContentListProps>
         </Container>
       </Container>
     );
-  },
+  }
 );

@@ -1,24 +1,19 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@minuk-hwang-design-system/tsconfig/tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom",
-      "dom.iterable",
-      "es6"
-    ],
+    "lib": ["es2017", "dom", "dom.iterable", "es6"],
     "declaration": false,
     "outDir": "./dist",
     "jsx": "react-jsx",
@@ -26,12 +21,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": [
-    "src/**/*",
-    ".storybook/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*", ".storybook/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

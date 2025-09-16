@@ -2,11 +2,13 @@
 
 import clsx from 'clsx';
 import { forwardRef, useState } from 'react';
-import { CommonProps } from '../common/types';
-import { Palette } from '../style/color/sprinkles.css';
-import { buttonRecipe, ButtonVariants } from './style.css';
+
 import { Icon } from '../common/icon/Icon';
 import { Text } from '../common/text/Text';
+import { CommonProps } from '../common/types';
+import { Palette } from '../style/color/sprinkles.css';
+
+import { buttonRecipe, ButtonVariants } from './style.css';
 
 interface ButtonProps extends CommonProps, NonNullable<ButtonVariants> {
   icon?: string;
@@ -59,7 +61,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -127,5 +129,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </button>
     );
-  },
+  }
 );

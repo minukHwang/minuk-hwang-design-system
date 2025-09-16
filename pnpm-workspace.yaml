@@ -6,3 +6,4 @@ packages:
 public-hoist-pattern:
   - '*vanilla-extract*'
   - '*esbuild*'
+  - '@minuk-hwang-design-system/*'

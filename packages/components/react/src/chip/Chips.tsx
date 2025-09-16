@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
-import { CommonProps } from '../common/types';
-import { baseStyle, sizeStyle, stateStyle } from './style.css';
+
 import { Container } from '../common/container/Container';
+import { CommonProps } from '../common/types';
+
+import { baseStyle, sizeStyle, stateStyle } from './style.css';
 
 interface ChipsProps extends CommonProps {
   size: 's' | 'm' | 'l';
@@ -44,7 +46,7 @@ export const Chips = forwardRef<HTMLDivElement, ChipsProps>(
         {children}
       </Container>
     );
-  },
+  }
 );
 
 Chips.displayName = 'Chips';

@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
+
+import { Button } from '../../button/Button';
 import { Container } from '../../common/container/Container';
 import { Text } from '../../common/text/Text';
-import { Button } from '../../button/Button';
 import { CommonProps } from '../../common/types';
 
 interface FollowingListProps extends CommonProps {
@@ -12,7 +13,7 @@ interface FollowingListProps extends CommonProps {
 }
 
 export const MemberList = forwardRef<HTMLElement, FollowingListProps>(
-  ({ loginId, nickName, name, children, className, onClick }, ref) => {
+  ({ loginId, nickName, name, className, onClick }, ref) => {
     const handleDelete = () => {
       if (window.confirm(`${name}님을 추가 하시겠습니까?`)) {
         onClick();
@@ -47,5 +48,5 @@ export const MemberList = forwardRef<HTMLElement, FollowingListProps>(
         </Container>
       </Container>
     );
-  },
+  }
 );
