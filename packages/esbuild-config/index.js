@@ -44,11 +44,6 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
 
   scanDirectory(srcDir);
 
-  // index.ts를 제외하고 개별 컴포넌트만 빌드
-  // if (!entryPoints.includes('src/index.ts')) {
-  //   entryPoints.unshift('src/index.ts');
-  // }
-
   // index.ts 제외하고 반환
   const filteredEntryPoints = entryPoints.filter(entry => !entry.includes('src/index.ts'));
 
@@ -57,7 +52,7 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
 };
 
 const runBuild = ({
-  entryPoints = [], // 개별 컴포넌트만 빌드하므로 기본값은 빈 배열
+  entryPoints = ['src/index.ts'], // 개별 컴포넌트만 빌드하므로 기본값은 빈 배열
   pkg,
   config = {}, // 추가 설정
   onBuildEnd = () => void 0, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수

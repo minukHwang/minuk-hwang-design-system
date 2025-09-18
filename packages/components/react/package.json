@@ -4,6 +4,18 @@
   "type": "module",
   "main": "index.js",
   "packageManager": "pnpm@8.15.0",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     "./badge": {
       "types": "./dist/badge/Badge.d.ts",
@@ -228,12 +240,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
     "@minuk-hwang-design-system/style-tokens": "workspace:^",
-    "@minuk-hwang-design-system/tsconfig": "workspace:^",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vanilla-extract/esbuild-plugin": "^2.3.8",

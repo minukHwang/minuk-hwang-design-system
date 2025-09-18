@@ -27,8 +27,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "pnpm --filter @minuk-hwang-design-system/storybook dev",
     "build:storybook": "pnpm --filter @minuk-hwang-design-system/storybook build",
-    "publish:tokens": "pnpm --filter @minuk-hwang-design-system/tokens build && pnpm --filter @minuk-hwang-design-system/tokens publish",
-    "publish:react": "pnpm --filter @minuk-hwang-design-system/react build && pnpm --filter @minuk-hwang-design-system/react publish",
+    "publish:tokens": "pnpm --filter @minuk-hwang-design-system/tokens build && cd packages/style-tokens && npm publish --access public",
+    "publish:react": "pnpm --filter @minuk-hwang-design-system/react build && cd packages/components/react && npm publish --access public",
     "publish:all": "pnpm publish:tokens && pnpm publish:react"
   },
   "lint-staged": {

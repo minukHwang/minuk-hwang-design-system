@@ -1,6 +1,6 @@
 {
   "name": "@minuk-hwang-design-system/style-tokens",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "main": "index.js",
   "packageManager": "pnpm@8.15.0",
@@ -26,7 +26,6 @@
   "description": "",
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
-    "@minuk-hwang-design-system/tsconfig": "workspace:^",
     "esbuild": "^0.23.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.3"

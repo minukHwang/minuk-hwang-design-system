@@ -1,5 +1,5 @@
 {
-  "extends": "@minuk-hwang-design-system/tsconfig/tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
