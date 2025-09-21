@@ -5,6 +5,9 @@
   "files": [
     "index.js"
   ],
+  "private": true,
+  "author": "Minuk Hwang",
+  "description": "Shared esbuild configuration for the design system packages",
   "dependencies": {
     "esbuild": "^0.23.0"
   }

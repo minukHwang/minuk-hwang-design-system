@@ -1,18 +1,8 @@
 {
   "name": "@minuk-hwang-design-system/components-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
-  "main": "index.js",
   "packageManager": "pnpm@8.15.0",
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE",
-    "package.json"
-  ],
   "publishConfig": {
     "access": "public"
   },
@@ -229,7 +219,8 @@
     },
     "./style/typography": {
       "types": "./dist/style/typography/recipes.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm build:js && pnpm build:type",
@@ -239,12 +230,42 @@
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Minuk Hwang",
   "license": "MIT",
-  "description": "",
+  "description": "React components for the Minuk Hwang Design System",
+  "homepage": "https://github.com/minukHwang/minuk-hwang-design-system/tree/main/packages/components-react#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minukHwang/minuk-hwang-design-system.git",
+    "directory": "packages/components/react"
+  },
+  "bugs": {
+    "url": "https://github.com/minukHwang/minuk-hwang-design-system/issues"
+  },
+  "keywords": [
+    "react-components",
+    "design-system",
+    "component-library",
+    "vanilla-extract",
+    "sprinkles",
+    "recipes",
+    "css-variables",
+    "ui",
+    "frontend",
+    "minuk-hwang-design-system"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
-    "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "@minuk-hwang-design-system/style-tokens": "^0.0.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vanilla-extract/esbuild-plugin": "^2.3.8",
@@ -255,10 +276,10 @@
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "@minuk-hwang-design-system/style-tokens": "workspace:^",
     "react": "*"
   },
   "dependencies": {
+    "@minuk-hwang-design-system/style-tokens": "^0.0.1",
     "@vanilla-extract/css": "^1.15.3",
     "@vanilla-extract/recipes": "^0.5.3",
     "@vanilla-extract/sprinkles": "^1.6.2",

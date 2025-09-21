@@ -1,6 +1,6 @@
 {
   "name": "@minuk-hwang-design-system/style-tokens",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "type": "module",
   "main": "index.js",
   "packageManager": "pnpm@8.15.0",
@@ -21,9 +21,42 @@
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Minuk Hwang",
+  "license": "MIT",
+  "description": "Design system style tokens including colors, typography, spacing, and more",
+  "homepage": "https://github.com/minukHwang/minuk-hwang-design-system/tree/main/packages/style-tokens#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minukHwang/minuk-hwang-design-system.git",
+    "directory": "packages/style-tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/minukHwang/minuk-hwang-design-system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "style-tokens",
+    "design-tokens",
+    "css-variables",
+    "theme",
+    "theming",
+    "colors",
+    "typography",
+    "spacing",
+    "tokens",
+    "frontend",
+    "ui",
+    "minuk-hwang-design-system"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@minuk-hwang-design-system/esbuild-config": "workspace:^",
     "esbuild": "^0.23.0",
