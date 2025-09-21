@@ -96,10 +96,10 @@ importers:
   apps/storybook:
     dependencies:
       '@minuk-hwang-design-system/components-react':
-        specifier: workspace:^
+        specifier: ^0.0.1
         version: link:../../packages/components/react
       '@minuk-hwang-design-system/style-tokens':
-        specifier: workspace:^
+        specifier: ^0.0.1
         version: link:../../packages/style-tokens
       react:
         specifier: ^18.3.1
@@ -111,9 +111,6 @@ importers:
         specifier: ^2.8.1
         version: 2.8.1
     devDependencies:
-      '@minuk-hwang-design-system/tsconfig':
-        specifier: workspace:^
-        version: link:../../packages/tsconfig
       '@storybook/addon-essentials':
         specifier: ^8.6.14
         version: 8.6.14(@types/react@18.3.24)(storybook@8.6.14)
@@ -167,11 +164,8 @@ importers:
         specifier: workspace:^
         version: link:../../esbuild-config
       '@minuk-hwang-design-system/style-tokens':
-        specifier: workspace:^
+        specifier: ^0.0.1
         version: link:../../style-tokens
-      '@minuk-hwang-design-system/tsconfig':
-        specifier: workspace:^
-        version: link:../../tsconfig
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.24
@@ -215,21 +209,12 @@ importers:
       '@minuk-hwang-design-system/esbuild-config':
         specifier: workspace:^
         version: link:../esbuild-config
-      '@minuk-hwang-design-system/tsconfig':
-        specifier: workspace:^
-        version: link:../tsconfig
       esbuild:
         specifier: ^0.23.0
         version: 0.23.1
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
-      typescript:
-        specifier: ^5.5.3
-        version: 5.9.2
-
-  packages/tsconfig:
-    devDependencies:
       typescript:
         specifier: ^5.5.3
         version: 5.9.2

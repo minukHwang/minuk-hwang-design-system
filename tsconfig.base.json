@@ -1,34 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    // ESNext 타겟: 최신 ECMAScript 표준을 타겟으로 컴파일
+    "target": "ESNext",
+    // 모듈 시스템 설정: 최신 ECMAScript 모듈 시스템 사용
     "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    // 라이브러리 설정: 컴파일할 때 사용할 라이브러리 정의 (ESNext, DOM)
+    "lib": ["ESNext", "DOM"],
+    // 선언 파일 생성: 타입 선언 파일 (.d.ts) 생성 여부
+    "declaration": true,
+    // 엄격한 타입 검사: 타입스크립트의 엄격한 타입 검사 기능 활성화
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@minuk-hwang-design-system/style-tokens": ["packages/style-tokens/src"],
-      "@minuk-hwang-design-system/components-react": ["packages/components/react/src"],
-      "@minuk-hwang-design-system/esbuild-config": ["packages/esbuild-config"]
-    }
-  },
-  "include": [],
-  "references": [
-    {
-      "path": "./packages/style-tokens"
-    },
-    {
-      "path": "./packages/components/react"
-    }
-  ]
+    // 모듈 해석 방식: bundler 스타일로 모듈 해석
+    "moduleResolution": "bundler",
+    // JSX 변환 방식: React 17 이상의 JSX 변환 방식 사용
+    "jsx": "react-jsx"
+  }
 }

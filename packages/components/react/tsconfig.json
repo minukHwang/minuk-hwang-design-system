@@ -1,15 +1,42 @@
 {
-  "extends": "../../tsconfig/tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    // 디렉토리 경로 설정: 컴파일된 파일들이 저장될 디렉토리
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    // 컴파일 결과물이 저장될 디렉터리
     "outDir": "./dist",
-    "declaration": true,
+    // 트랜스파일 결과물을 생성할지 여부(false면 실제 코드도 출력)
     "noEmit": false,
+    // 타입 선언 파일만 생성하고 JS 출력은 생략
     "emitDeclarationOnly": true,
-    "baseUrl": ".",
+    // 모듈 해석의 기준이 되는 루트 경로
+    "baseUrl": "../../..",
+    // 컴파일러가 소스의 루트로 인식할 디렉터리
     "rootDir": "./src",
-    "paths": {}
+    // 클래스 필드 정의 시 define 프로퍼티 사용 여부(useDefineForClassFields)
+    "useDefineForClassFields": true,
+    // 외부 타입 선언의 검사(skipLibCheck)를 생략해 빌드 속도 향상
+    "skipLibCheck": true,
+    // .ts 확장자를 포함한 import 허용
+    "allowImportingTsExtensions": true,
+    // JSON 파일을 모듈처럼 import 가능
+    "resolveJsonModule": true,
+    // 각 파일을 독립된 모듈로 취급(빠른 TS/JS 호환)
+    "isolatedModules": true,
+    // 사용되지 않는 지역 변수를 경고
+    "noUnusedLocals": true,
+    // 사용되지 않는 매개변수를 경고
+    "noUnusedParameters": true,
+    // switch 문의 fallthrough(의도치 않은 다음 case로 흐름) 방지
+    "noFallthroughCasesInSwitch": true,
+    // 경로 별칭 구성(각 패키지의 소스 위치로 매핑)
+    "paths": {
+      "@minuk-hwang-design-system/style-tokens": ["packages/style-tokens/src"],
+      "@minuk-hwang-design-system/components-react": ["packages/components/react/src"],
+      "@minuk-hwang-design-system/esbuild-config": ["packages/esbuild-config"]
+    }
   },
+  // 컴파일 대상이 될 파일 패턴
   "include": ["src/**/*"],
+  // 컴파일에서 제외할 파일 목록
   "exclude": ["src/index.ts"]
 }
