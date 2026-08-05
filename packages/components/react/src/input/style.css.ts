@@ -24,14 +24,14 @@ export const inputStyle = style({
   backgroundColor: vars.color.$palette.background.normalPrimary,
   selectors: {
     '&::placeholder': {
-      color: vars.color.$palette.gray[200],
+      color: vars.color.$palette.neutral[200],
     },
     '&:focus': {
       outline: 'none',
     },
     '&:disabled': {
-      backgroundColor: vars.color.$palette.gray[50],
-      color: vars.color.$palette.gray[200],
+      backgroundColor: vars.color.$palette.neutral[50],
+      color: vars.color.$palette.neutral[200],
     },
   },
 });
@@ -39,7 +39,7 @@ export const inputStyle = style({
 export const inputStateStyle = styleVariants({
   default: {},
   highlight: {
-    backgroundColor: vars.color.$palette.gray[100],
+    backgroundColor: vars.color.$palette.neutral[100],
   },
   warning: {},
   disabled: {},
@@ -51,7 +51,7 @@ export const buttonStyle = style({
   alignItems: 'center',
   padding: '0px',
   border: 'none',
-  color: vars.color.$palette.gray[200],
+  color: vars.color.$palette.neutral[200],
   backgroundColor: 'transparent',
   cursor: 'pointer',
 });
@@ -60,43 +60,43 @@ export const buttonStyle = style({
  * 공통 div 스타일
  */
 const baseDivStyle = style({
-  border: `0.0625rem solid ${vars.color.$palette.gray[200]}`,
+  border: `0.0625rem solid ${vars.color.$palette.neutral[200]}`,
 });
 
 export const divStateStyle = styleVariants({
   default: [
     baseDivStyle,
     {
-      color: vars.color.$palette.gray[500],
+      color: vars.color.$palette.neutral[500],
       backgroundColor: vars.color.$palette.background.normalPrimary,
     },
   ],
   highlight: [
     baseDivStyle,
     {
-      color: vars.color.$palette.gray[700],
-      backgroundColor: vars.color.$palette.gray[100],
+      color: vars.color.$palette.neutral[700],
+      backgroundColor: vars.color.$palette.neutral[100],
     },
   ],
   warning: [
     baseDivStyle,
     {
-      color: vars.color.$palette.pink[700],
-      border: `0.0625rem solid ${vars.color.$palette.pink[500]}`,
+      color: vars.color.$palette.crimson[700],
+      border: `0.0625rem solid ${vars.color.$palette.crimson[500]}`,
       backgroundColor: vars.color.$palette.background.normalPrimary,
     },
   ],
   disabled: [
     baseDivStyle,
     {
-      color: vars.color.$palette.gray[200],
-      backgroundColor: vars.color.$palette.gray[50],
+      color: vars.color.$palette.neutral[200],
+      backgroundColor: vars.color.$palette.neutral[50],
     },
   ],
   readonly: [
     baseDivStyle,
     {
-      color: vars.color.$palette.gray[500],
+      color: vars.color.$palette.neutral[500],
       backgroundColor: vars.color.$palette.background.normalPrimary,
     },
   ],
@@ -110,5 +110,5 @@ export const iconStyle = style({
 });
 
 export const disabledIconStyle = style({
-  color: vars.color.$palette.gray[50],
+  color: vars.color.$palette.neutral[50],
 });

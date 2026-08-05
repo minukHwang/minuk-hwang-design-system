@@ -5,7 +5,7 @@ export const inputStyle = style({
   width: '100%',
   selectors: {
     '&::placeholder': {
-      color: vars.color.$palette.gray[200],
+      color: vars.color.$palette.neutral[200],
     },
   },
 });

@@ -20,9 +20,9 @@ interface MessageListProps extends Omit<CommonProps, 'color'> {
   mode: 'default' | 'round';
 }
 
-const colorMap: { [key in MessageListProps['variant']]: 'blue' | 'pink' | 'orange' } = {
+const colorMap: { [key in MessageListProps['variant']]: 'blue' | 'crimson' | 'orange' } = {
   default: 'blue',
-  danger: 'pink',
+  danger: 'crimson',
   warning: 'orange',
 };
 

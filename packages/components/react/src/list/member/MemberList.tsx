@@ -27,7 +27,6 @@ export const MemberList = forwardRef<HTMLElement, FollowingListProps>(
         padding={16}
         backgroundColor="backgroundNormalPrimary"
         borderType="borderBottom"
-        borderBottomColor="gray200"
         className={className}
         ref={ref}
       >

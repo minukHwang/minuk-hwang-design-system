@@ -25,7 +25,8 @@ interface NotificationProps extends CommonProps {
  */
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
   ({ state = 'default', content = 'warning', icon = 'warning', ...props }, ref) => {
-    const textColor = state === 'danger' ? 'white' : state === 'warning' ? 'pink500' : 'textNormal';
+    const textColor =
+      state === 'danger' ? 'white' : state === 'warning' ? 'crimson500' : 'textNormal';
 
     return (
       <Container

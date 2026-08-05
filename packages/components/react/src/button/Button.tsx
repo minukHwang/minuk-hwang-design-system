@@ -36,8 +36,8 @@ const textColorMap: Record<
     outline: { textColor: 'textNormal', hovertextColor: 'textNormal' },
   },
   tertiary: {
-    fill: { textColor: 'blueGray500', hovertextColor: 'blueGray500' },
-    outline: { textColor: 'blueGray500', hovertextColor: 'blueGray500' },
+    fill: { textColor: 'slate500', hovertextColor: 'slate500' },
+    outline: { textColor: 'slate500', hovertextColor: 'slate500' },
   },
 };
 

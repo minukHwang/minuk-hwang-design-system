@@ -50,7 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [internalValue, setInternalValue] = useState(value || defaultValue);
     const [inputType, setInputType] = useState(type);
-    const [iconColor, setIconColor] = useState<Palette>('gray200');
+    const [iconColor, setIconColor] = useState<Palette>('neutral200');
 
     useEffect(() => {
       setInternalValue(value !== undefined ? value : internalValue);
@@ -58,7 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     useEffect(() => {
       setInputType(type);
-      setIconColor(type === 'password' ? 'gray200' : 'gray600');
+      setIconColor(type === 'password' ? 'neutral200' : 'neutral600');
     }, [type]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,10 +78,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const handlePasswordToggle = () => {
       if (inputType === 'password') {
         setInputType('text');
-        setIconColor('gray600');
+        setIconColor('neutral600');
       } else {
         setInputType('password');
-        setIconColor('gray200');
+        setIconColor('neutral200');
       }
     };
 
@@ -120,7 +120,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           type !== 'password' &&
           !readOnly && (
             <button type="button" className={buttonStyle} onClick={handleButtonClick}>
-              <Icon color="gray200">{'cancel'}</Icon>
+              <Icon color="neutral200">{'cancel'}</Icon>
             </button>
           )}
         {showPasswordToggle && (

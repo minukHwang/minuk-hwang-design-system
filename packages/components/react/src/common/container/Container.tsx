@@ -53,10 +53,6 @@ import { CommonProps } from '../types';
  * @param {string} [props.borderColor] - 테두리 색상 (선택)
  * @param {string} [props.borderStyle] - 테두리 스타일 (선택)
  * @param {number} [props.borderWidth] - 테두리 두께 (선택)
- * @param {string} [props.borderBottomColor] - 하단 테두리 색상 (선택)
- * @param {string} [props.borderLeftColor] - 좌측 테두리 색상 (선택)
- * @param {string} [props.borderRightColor] - 우측 테두리 색상 (선택)
- * @param {string} [props.borderTopColor] - 상단 테두리 색상 (선택)
  * @param {string} [props.borderBottomStyle] - 하단 테두리 스타일 (선택)
  * @param {string} [props.borderLeftStyle] - 좌측 테두리 스타일 (선택)
  * @param {string} [props.borderRightStyle] - 우측 테두리 스타일 (선택)
@@ -107,10 +103,6 @@ export const Container = forwardRef<HTMLElement, CommonProps>(
       borderColor,
       borderStyle,
       borderWidth,
-      borderBottomColor,
-      borderLeftColor,
-      borderRightColor,
-      borderTopColor,
       borderBottomStyle,
       borderLeftStyle,
       borderRightStyle,
@@ -164,10 +156,6 @@ export const Container = forwardRef<HTMLElement, CommonProps>(
       borderRadius,
       borderStyle,
       borderWidth,
-      borderBottomColor,
-      borderLeftColor,
-      borderRightColor,
-      borderTopColor,
       borderBottomStyle,
       borderLeftStyle,
       borderRightStyle,

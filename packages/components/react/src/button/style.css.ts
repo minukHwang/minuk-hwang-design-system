@@ -28,7 +28,7 @@ export const buttonRecipe = recipe({
     variant: {
       primary: colorSprinkles({ color: 'white' }),
       secondary: colorSprinkles({ color: 'white' }),
-      tertiary: colorSprinkles({ color: 'blueGray500' }),
+      tertiary: colorSprinkles({ color: 'slate500' }),
     },
     design: {
       fill: [
@@ -38,9 +38,9 @@ export const buttonRecipe = recipe({
               backgroundColor: vars.color.$palette.blue[700],
             },
             '&:disabled': {
-              backgroundColor: vars.color.$palette.blueGray[500],
+              backgroundColor: vars.color.$palette.slate[500],
               cursor: 'not-allowed',
-              opacity: 0.5,
+              opacity: vars.color.$absolute.opacity.disabledContent,
             },
           },
         },
@@ -57,10 +57,10 @@ export const buttonRecipe = recipe({
               border: `0.0625rem solid ${vars.color.$palette.blue[700]}`,
             },
             '&:disabled': {
-              borderColor: vars.color.$palette.blueGray[500],
-              color: vars.color.$palette.blueGray[500],
+              borderColor: vars.color.$palette.slate[500],
+              color: vars.color.$palette.slate[500],
               cursor: 'not-allowed',
-              opacity: 0.5,
+              opacity: vars.color.$absolute.opacity.disabledContent,
             },
           },
         },
@@ -76,13 +76,13 @@ export const buttonRecipe = recipe({
         {
           selectors: {
             '&:hover': {
-              color: vars.color.$static.light.color.white,
+              color: vars.color.$absolute.color.white,
               backgroundColor: vars.color.$palette.blue[700],
             },
             '&:disabled': {
-              color: vars.color.$palette.blueGray[200],
-              backgroundColor: vars.color.$palette.blueGray[50],
-              opacity: 0.1,
+              color: vars.color.$palette.slate[200],
+              backgroundColor: vars.color.$palette.slate[50],
+              opacity: vars.color.$absolute.opacity.disabledContainer,
               cursor: 'not-allowed',
             },
           },
@@ -101,7 +101,7 @@ export const buttonRecipe = recipe({
             },
             '&:disabled': {
               border: `0.0625rem solid ${vars.color.$palette.ui.primaryNormal}`,
-              opacity: 0.1,
+              opacity: vars.color.$absolute.opacity.disabledContainer,
               cursor: 'not-allowed',
             },
           },
@@ -111,20 +111,23 @@ export const buttonRecipe = recipe({
     {
       variants: { variant: 'secondary', design: 'fill' },
       style: [
+        // slate-500 with white text measured 4.41:1, just under the 4.5:1 floor,
+        // and only cleared it on hover. The resting state has to pass on its own,
+        // so the whole ramp moved one step darker: 600 rests at 6.54:1.
         colorSprinkles({
           color: 'white',
-          backgroundColor: 'blueGray500',
+          backgroundColor: 'slate600',
         }),
         {
           selectors: {
             '&:hover': {
-              color: vars.color.$static.light.color.white,
-              backgroundColor: vars.color.$palette.blueGray[600],
+              color: vars.color.$absolute.color.white,
+              backgroundColor: vars.color.$palette.slate[700],
             },
             '&:disabled': {
-              color: vars.color.$static.light.color.white,
-              backgroundColor: vars.color.$palette.blueGray[500],
-              opacity: 0.1,
+              color: vars.color.$absolute.color.white,
+              backgroundColor: vars.color.$palette.slate[600],
+              opacity: vars.color.$absolute.opacity.disabledContainer,
               cursor: 'not-allowed',
             },
           },
@@ -135,18 +138,18 @@ export const buttonRecipe = recipe({
       variants: { variant: 'secondary', design: 'outline' },
       style: [
         colorSprinkles({ color: 'textNormal' }),
-        borderSprinkles({ borderColor: 'gray200' }),
+        borderSprinkles({ borderColor: 'neutral200' }),
         {
           selectors: {
             '&:hover': {
               color: vars.color.$palette.text.normal,
-              backgroundColor: vars.color.$palette.gray[100],
-              border: `0.0625rem solid ${vars.color.$palette.gray[200]}`,
+              backgroundColor: vars.color.$palette.neutral[100],
+              border: `0.0625rem solid ${vars.color.$palette.neutral[200]}`,
             },
             '&:disabled': {
               color: vars.color.$palette.text.normal,
-              border: `0.0625rem solid ${vars.color.$palette.gray[200]}`,
-              opacity: 0.1,
+              border: `0.0625rem solid ${vars.color.$palette.neutral[200]}`,
+              opacity: vars.color.$absolute.opacity.disabledContainer,
               cursor: 'not-allowed',
             },
           },
@@ -156,16 +159,16 @@ export const buttonRecipe = recipe({
     {
       variants: { variant: 'tertiary' },
       style: [
-        colorSprinkles({ color: 'blueGray500' }),
+        colorSprinkles({ color: 'slate500' }),
         {
           selectors: {
             '&:hover': {
-              color: vars.color.$palette.blueGray[500],
-              backgroundColor: vars.color.$palette.blueGray[50],
+              color: vars.color.$palette.slate[500],
+              backgroundColor: vars.color.$palette.slate[50],
             },
             '&:disabled': {
-              color: vars.color.$palette.blueGray[500],
-              backgroundColor: vars.color.$palette.blueGray[500],
+              color: vars.color.$palette.slate[500],
+              backgroundColor: vars.color.$palette.slate[500],
               cursor: 'not-allowed',
             },
           },

@@ -11,7 +11,7 @@ export const labelStyle = style({
 });
 
 export const starStyle = style({
-  color: vars.color.$palette.pink[500],
+  color: vars.color.$palette.crimson[500],
 });
 
 export const inputStyle = style({
@@ -19,7 +19,7 @@ export const inputStyle = style({
   gap: vars.spacing.spacing[10],
   selectors: {
     '&.disabledStyle': {
-      // backgroundColor: vars.color.$palette.gray[50],
+      // backgroundColor: vars.color.$palette.neutral[50],
     },
     '&.highlightStyle': {},
     '&.warningStyle': {},
@@ -29,7 +29,7 @@ export const inputStyle = style({
 export const warningStyle = style({
   display: 'flex',
   paddingTop: vars.spacing.spacing[6],
-  color: vars.color.$palette.pink[500],
+  color: vars.color.$palette.crimson[500],
   fontSize: vars.typography.fontSize[13],
   lineHeight: vars.typography.lineHeight[18],
 });

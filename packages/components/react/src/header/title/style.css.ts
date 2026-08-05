@@ -13,6 +13,6 @@ export const titleStyle = style([
     width: '100%',
     padding: vars.spacing.spacing[16],
     paddingTop: vars.spacing.spacing[64],
-    borderBottom: `0.0625rem soild ${vars.color.$palette.gray[100]}`,
+    borderBottom: `0.0625rem soild ${vars.color.$palette.neutral[100]}`,
   },
 ]);

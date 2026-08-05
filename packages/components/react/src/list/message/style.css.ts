@@ -7,8 +7,11 @@ export const messageListRecipe = recipe({
   variants: {
     variant: {
       default: colorSprinkles({ backgroundColor: 'backgroundNormalPrimary' }),
-      danger: colorSprinkles({ backgroundColor: 'pink10' }),
-      warning: colorSprinkles({ backgroundColor: 'orange10' }),
+      // These used to point at step 10, which sits within 5/255 of white and so
+      // rendered as no tint at all against the page. Step 10 is the canvas, not
+      // a wash; the surface role is what these wanted.
+      danger: colorSprinkles({ backgroundColor: 'statusErrorSurface' }),
+      warning: colorSprinkles({ backgroundColor: 'statusWarningSurface' }),
     },
     mode: {
       default: {},
@@ -27,12 +30,12 @@ export const messageListRecipe = recipe({
         borderTopStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomStyle: 'solid',
-        borderColor: 'pink500',
+        borderColor: 'crimson500',
       }),
     },
     {
       variants: { variant: 'danger', mode: 'round' },
-      style: borderSprinkles({ borderWidth: 1, borderStyle: 'solid', borderColor: 'pink500' }),
+      style: borderSprinkles({ borderWidth: 1, borderStyle: 'solid', borderColor: 'crimson500' }),
     },
   ],
 });

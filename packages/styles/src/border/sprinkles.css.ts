@@ -3,27 +3,32 @@ import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
 
 import { palette } from '../color/sprinkles.css';
 
+/**
+ * Border properties exposed as sprinkles props.
+ *
+ * `borderColor` is here; `borderTopColor` and its three siblings are not.
+ *
+ * Sprinkles generates a class per value × property pair, so opening the full
+ * palette to four directional colour properties produced more classes than the
+ * rest of the system combined — and the one place that used them picked a single
+ * grey. Width and style stay per-direction because their value sets are small
+ * enough that the multiplication does not matter.
+ *
+ * A component needing a one-sided coloured border should use a recipe, which is
+ * what the border recipe alongside this file already does.
+ */
 const borderProperties = defineProperties({
   properties: {
-    // 일반 border 속성
     borderColor: palette,
     borderRadius: vars.radius.borderRadius,
     borderStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderWidth: vars.spacing.spacing,
 
-    // 방향별 border 색상
-    borderBottomColor: palette,
-    borderLeftColor: palette,
-    borderRightColor: palette,
-    borderTopColor: palette,
-
-    // 방향별 border 스타일
     borderBottomStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderLeftStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderRightStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderTopStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
 
-    // 방향별 border 너비
     borderBottomWidth: vars.spacing.spacing,
     borderLeftWidth: vars.spacing.spacing,
     borderRightWidth: vars.spacing.spacing,

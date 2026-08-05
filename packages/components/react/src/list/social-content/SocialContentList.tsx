@@ -145,7 +145,7 @@ export const SocialContentList = forwardRef<HTMLElement, SocialContentListProps>
                 variant="secondary"
                 design="outline"
                 rightSubText={isFalseCounts}
-                rightSubTextColor="pink500"
+                rightSubTextColor="crimson500"
                 size="s"
                 onClick={secondBtnFucnt}
                 style={{ borderRadius: '999px' }}
@@ -158,7 +158,7 @@ export const SocialContentList = forwardRef<HTMLElement, SocialContentListProps>
                 <Button
                   variant="tertiary"
                   icon="chat"
-                  iconColor="blueGray500"
+                  iconColor="slate500"
                   leftSubText={commentCounts}
                   size="s"
                   onClick={routeToPath}

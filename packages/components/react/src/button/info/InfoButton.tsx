@@ -76,7 +76,7 @@ export const InfoButton = forwardRef<HTMLButtonElement, InfoButtonProps>(
           <Text
             as="span"
             textType="caption"
-            color="opacityWhite700"
+            color="lighten700"
             className={spacingSprinkles({ paddingBottom: 2 })}
           >
             {subText}

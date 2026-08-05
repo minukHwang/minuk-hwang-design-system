@@ -39,12 +39,12 @@ export const infoButtonRecipe = recipe({
       ],
       danger: [
         colorSprinkles({
-          backgroundColor: 'pink500',
+          backgroundColor: 'crimson500',
         }),
         {
           selectors: {
             '&:hover': {
-              backgroundColor: vars.color.$palette.pink[400],
+              backgroundColor: vars.color.$palette.crimson[400],
             },
           },
         },

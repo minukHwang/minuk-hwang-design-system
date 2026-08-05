@@ -28,13 +28,17 @@ export const stateStyle = recipe({
         color: 'textNormal',
         backgroundColor: 'backgroundElevatedPrimary',
       }),
+      // warning and danger both read crimson500 before, which left them
+      // indistinguishable. They now resolve to different status scales.
       warning: colorSprinkles({
-        color: 'pink500',
-        backgroundColor: 'backgroundElevatedPrimary',
+        color: 'statusWarningStrong',
+        backgroundColor: 'statusWarningSurface',
       }),
       danger: colorSprinkles({
-        color: 'white',
-        backgroundColor: 'pink500',
+        // onNormal records which text colour clears AA on top of `normal`,
+        // so this stays legible if the error hue is ever retuned.
+        color: 'statusErrorOnNormal',
+        backgroundColor: 'statusErrorNormal',
       }),
     },
   },

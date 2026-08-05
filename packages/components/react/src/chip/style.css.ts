@@ -53,12 +53,12 @@ const outlinePrimary = style({
 });
 
 const outlineSecondary = style({
-  border: `0.0625rem solid ${vars.color.$palette.gray[200]}`,
+  border: `0.0625rem solid ${vars.color.$palette.neutral[200]}`,
   color: vars.color.$palette.text.normal,
 });
 
 const activePrimary = style({
-  color: vars.color.$static.light.opacityWhite[950],
+  color: vars.color.$absolute.lighten[950],
   backgroundColor: vars.color.$palette.ui.primaryNormal,
 });
 
@@ -69,8 +69,8 @@ const activeSecondary = style({
 });
 
 const disabled = style({
-  color: vars.color.$palette.blueGray[200],
-  backgroundColor: vars.color.$palette.blueGray[50],
+  color: vars.color.$palette.slate[200],
+  backgroundColor: vars.color.$palette.slate[50],
 });
 
 export const stateStyle = {

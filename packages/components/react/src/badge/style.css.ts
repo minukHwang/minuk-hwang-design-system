@@ -14,10 +14,10 @@ export const badgeRecipe = recipe({
     },
     color: {
       blue: colorSprinkles({ backgroundColor: 'blue50' }),
-      pink: colorSprinkles({ backgroundColor: 'pink50' }),
+      crimson: colorSprinkles({ backgroundColor: 'crimson50' }),
       orange: colorSprinkles({ backgroundColor: 'orange50' }),
       green: colorSprinkles({ backgroundColor: 'green50' }),
-      white: colorSprinkles({ backgroundColor: 'opacityWhite200' }),
+      white: colorSprinkles({ backgroundColor: 'lighten200' }),
       ghost: {},
       ghostWhite: {},
     },

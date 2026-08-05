@@ -71,11 +71,11 @@ export const CommentList = forwardRef<HTMLDivElement, CommentListProps>(
             </Container>
           </Container>
           <Container display="flex" justifyContent="space-between" alignItems="flex-end">
-            <Text textType="footnote" color="gray300">
+            <Text textType="footnote" color="neutral300">
               {date}
             </Text>
             {!isReply && (
-              <Text textType="label" color="gray300">
+              <Text textType="label" color="neutral300">
                 답글달기
               </Text>
             )}
