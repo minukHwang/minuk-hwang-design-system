@@ -100,6 +100,11 @@ Two mechanisms, because CSS has two.
 than hues — "make this darker" works over a photo, a coloured card or a grey
 panel, which is why no other family gets an alpha scale.
 
+Both run eleven steps, where the number is the alpha in thousandths: `dim[500]`
+is 50% black. That is the palette's thirteen steps minus its two anchors, and
+the anchors are absent because they already exist — 0% alpha is `transparent`
+and 100% is `black` / `white`.
+
 ```ts
 vars.color.$semantic.surface.scrim; // dim[500], behind a modal
 vars.color.$absolute.lighten[200]; // a badge on an image
