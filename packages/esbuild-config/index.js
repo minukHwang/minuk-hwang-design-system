@@ -1,15 +1,41 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+/**
+ * Shared esbuild runner
+ * Builds every publishable package in the design system.
+ */
 const fs = require('fs');
 const path = require('path');
 
 const esbuild = require('esbuild');
 
-// 컴포넌트별 entry points를 자동으로 스캔하는 함수
+/**
+ * Decides whether a file should become its own entry point.
+ *
+ * - Only `.ts` / `.tsx` qualify, so plain modules (utils, helpers) are built too.
+ * - `.css.ts` belongs to vanilla-extract and is pulled into the bundle that uses it.
+ * - `.d.ts` is a declaration file and never an entry.
+ *
+ * @param fileName - File name to test
+ * @returns True when the file should be an entry point
+ */
+const isEntryFile = fileName =>
+  /\.tsx?$/.test(fileName) && !fileName.includes('.css.') && !fileName.endsWith('.d.ts');
+
+/**
+ * Walks `srcDir` and collects one entry point per component.
+ *
+ * A directory containing `index.ts(x)` is treated as a single component and is
+ * not traversed any further. Otherwise the walk recurses and every qualifying
+ * file becomes its own entry.
+ *
+ * @param srcDir - Source directory to scan
+ * @returns Entry point paths relative to the package root
+ */
 const scanComponentEntryPoints = (srcDir = 'src') => {
   const entryPoints = [];
 
   if (!fs.existsSync(srcDir)) {
-    return ['src/index.ts']; // 기본값으로 fallback
+    return ['src/index.ts']; // Fall back to the barrel file
   }
 
   const scanDirectory = (dir, basePath = '') => {
@@ -20,7 +46,7 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
       const stat = fs.statSync(itemPath);
 
       if (stat.isDirectory()) {
-        // index.ts 또는 index.tsx가 있는 폴더를 컴포넌트로 인식
+        // A folder holding index.ts(x) is the component itself
         const indexTs = path.join(itemPath, 'index.ts');
         const indexTsx = path.join(itemPath, 'index.tsx');
 
@@ -31,11 +57,9 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
           const relativePath = path.join(basePath, item, 'index.tsx').replace(/\\/g, '/');
           entryPoints.push(`${srcDir}/${relativePath}`);
         } else {
-          // 하위 디렉토리 재귀 탐색
           scanDirectory(itemPath, path.join(basePath, item));
         }
-      } else if (item.endsWith('.tsx') && !item.includes('.css.')) {
-        // .tsx 파일을 직접 entry point로 추가 (CSS 파일은 제외)
+      } else if (isEntryFile(item)) {
         const relativePath = path.join(basePath, item).replace(/\\/g, '/');
         entryPoints.push(`${srcDir}/${relativePath}`);
       }
@@ -44,79 +68,79 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
 
   scanDirectory(srcDir);
 
-  // index.ts 제외하고 반환
-  const filteredEntryPoints = entryPoints.filter(entry => !entry.includes('src/index.ts'));
-
-  // entry points가 없으면 빈 배열 반환 (index.ts는 제외)
-  return filteredEntryPoints.length > 0 ? filteredEntryPoints : [];
+  // The barrel file is never built separately; consumers import subpaths
+  return entryPoints.filter(entry => !entry.includes('src/index.ts'));
 };
 
+/**
+ * Builds a package into ESM and CJS outputs.
+ *
+ * @param options - Build options
+ * @param options.entryPoints - Entry points used when buildMode is 'bundle'
+ * @param options.pkg - The package's parsed package.json
+ * @param options.config - Extra esbuild options merged into the base config
+ * @param options.onBuildEnd - Called after each rebuild in watch mode
+ * @param options.buildMode - 'bundle' for a single entry, 'separate' to scan per component
+ */
 const runBuild = ({
-  entryPoints = ['src/index.ts'], // 개별 컴포넌트만 빌드하므로 기본값은 빈 배열
+  entryPoints = ['src/index.ts'],
   pkg,
-  config = {}, // 추가 설정
-  onBuildEnd = () => void 0, // 만약에 watch 실행 시 자동으로 실행되어야 하는 동작이 있다면 실행하는 함수
-  buildMode = 'bundle', // 'bundle' (기본값) 또는 'separate'
+  config = {},
+  onBuildEnd = () => void 0,
+  buildMode = 'bundle',
 }) => {
-  const dev = process.argv.includes('--dev'); // 명령줄 인자(arguments)를 확인
-  const minify = !dev; // 만약 dev라면 minify 설정 해제
+  const dev = process.argv.includes('--dev');
+  const minify = !dev;
+  const watch = process.argv.includes('--watch');
 
-  const watch = process.argv.includes('--watch'); // watch 모드는 만약 변화가 있다면 알아서 다시 빌드하도록 하는 것
-
-  // buildMode에 따라 entryPoints 결정
   const finalEntryPoints = buildMode === 'separate' ? scanComponentEntryPoints() : entryPoints;
 
-  const external = Object.keys({
-    ...pkg.devDependencies,
-    ...pkg.peerDependencies,
-  });
-
   /**
-   * 빌드 설정
+   * Modules kept out of the bundle.
+   *
+   * The list is derived from dependencies + peerDependencies:
+   * - dependencies are installed alongside the package, so bundling them only duplicates code
+   * - peerDependencies are supplied by the consumer and must never be bundled
+   * - devDependencies are build tooling and are never imported by source
+   *
+   * Each name is paired with a `${dep}/*` pattern so subpath imports
+   * (react/jsx-runtime, @vanilla-extract/sprinkles/createRuntimeSprinkles) stay external too.
    */
+  const external = [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ].flatMap(dep => [dep, `${dep}/*`]);
+
   const baseConfig = {
-    // 빌드할 파일 위치: 번들링할 엔트리 포인트 파일 경로를 지정
     entryPoints: finalEntryPoints,
-    // 번들링 설정: 모든 의존성 파일들을 하나의 파일로 번들링
     bundle: true,
-    // 파일 압축: 코드를 간결하게 (minify) 작성하여 파일 크기를 줄임
     minify,
-    // 소스맵 생성: 디버깅을 위해 소스맵 파일 생성
     sourcemap: true,
-    // 파일 생성 위치: 컴파일된 파일이 저장될 디렉토리 경로
     outdir: 'dist',
-    // 타겟 설정: ES2019 버전을 타겟으로 컴파일
+    /**
+     * Without an explicit outbase, esbuild derives it from the lowest common
+     * ancestor of all entry points. A package with a single entry would collapse
+     * to `src/<component>`, flattening the output and desyncing it from the
+     * `.d.ts` paths tsc emits. Pin it so both always agree.
+     */
+    outbase: 'src',
     target: 'es2019',
-    // 번들링 제외: 명시된 모듈들은 번들링에서 제외
     external,
-    // 추가 설정
     ...config,
   };
 
-  /**
-   * js(ESModule), cjs(commonJS) 파일 생성
-   * -> 병렬 처리를 위해서 Promise.all
-   */
+  /** Emits ESM and CJS in parallel. */
   async function executeBuild() {
-    // ESModule 설정
-    const esmConfig = {
-      ...baseConfig,
-      format: 'esm',
-    };
+    const esmConfig = { ...baseConfig, format: 'esm' };
 
-    // CommonJS 설정
     const cjsConfig = {
       ...baseConfig,
       format: 'cjs',
-      outExtension: {
-        '.js': '.cjs', // 확장자 변경 (겹치지 않게)
-      },
+      // Rename to .cjs so CJS output never collides with ESM
+      outExtension: { '.js': '.cjs' },
     };
 
     if (watch) {
-      // 만약 watch 한다면,
-      // 플러그인 설정
-
       const plugins = [
         ...(config.plugins || []),
         {
@@ -129,19 +153,17 @@ const runBuild = ({
         },
       ];
 
-      // ESM 빌드에만 plugin 적용
+      // The watch callback only needs to fire once, so it rides on the ESM build
       const ctxESM = await esbuild.context({ ...esmConfig, plugins });
       const ctxCJS = await esbuild.context(cjsConfig);
 
       await Promise.all([ctxESM.watch(), ctxCJS.watch()]);
       console.log('Watching for update');
     } else {
-      // 아니라면 그냥 build
       await Promise.all([esbuild.build(esmConfig), esbuild.build(cjsConfig)]);
     }
   }
 
-  // build 및 에러 핸들링
   executeBuild().catch(error => {
     console.error('Build failed with error:', error);
     process.exit(1);

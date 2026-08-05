@@ -223,7 +223,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm build:js && pnpm build:type",
+    "build": "pnpm clean && pnpm build:type && pnpm build:js",
     "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
     "build:js": "node build.js",
     "build:type": "tsc --emitDeclarationOnly",
@@ -275,10 +275,11 @@
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-dom": "*"
   },
   "dependencies": {
-    "@minuk-hwang-design-system/style-tokens": "^0.0.1",
+    "@minuk-hwang-design-system/style-tokens": "workspace:^",
     "@vanilla-extract/css": "^1.15.3",
     "@vanilla-extract/recipes": "^0.5.3",
     "@vanilla-extract/sprinkles": "^1.6.2",

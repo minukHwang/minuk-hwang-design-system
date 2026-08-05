@@ -1,6 +1,8 @@
 packages:
+  # Layer packages follow packages/<layer>/<framework>.
+  # Framework-agnostic packages (tokens, esbuild-config) sit one level up.
   - 'packages/*'
-  - 'packages/components/*'
+  - 'packages/*/*'
   - 'apps/*'
 
 public-hoist-pattern:

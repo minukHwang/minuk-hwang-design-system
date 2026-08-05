@@ -96,3 +96,6 @@ Thumbs.db
 # NX
 .nx/cache
 .nx/
+
+# Claude Code local settings
+.claude/settings.local.json

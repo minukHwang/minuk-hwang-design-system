@@ -1,3 +1,5 @@
+'use client';
+
 import React, { forwardRef, useState, useEffect } from 'react';
 
 import { Container } from '../common/container/Container';
