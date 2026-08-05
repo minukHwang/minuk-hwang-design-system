@@ -1,18 +1,21 @@
 # @minuk-hwang-design-system/style-tokens
 
 Design tokens for the system. Deliberately framework-agnostic — the values ship
-in three forms so that how you consume them stays your choice:
+in four forms so that how you consume them stays your choice:
 
 | Form               | For                                                                         |
 | ------------------ | --------------------------------------------------------------------------- |
 | `style-tokens.css` | CSS custom properties and typography classes. No build step, no TypeScript. |
 | `vars`             | TypeScript objects, for vanilla-extract or any CSS-in-JS.                   |
 | `classes`          | Typography utility classes as data.                                         |
+| `tailwind.css`     | A Tailwind v4 theme. Utilities named after the tokens.                      |
 
 ```ts
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
 ```
+
+All four are generated from the same source, so none of them can drift.
 
 ## Four layers of colour
 
@@ -137,6 +140,54 @@ status.success.onNormal; // black — green-500 would be 2.29:1 with white
 white. Its `strong` step is 800 rather than 700, because 700 measured 4.35:1 on
 its own surface — just under the floor.
 
+## Tailwind
+
+Tailwind v4 dropped the JavaScript preset for CSS, so the integration is one
+import:
+
+```css
+@import 'tailwindcss';
+@import '@minuk-hwang-design-system/style-tokens/tailwind.css';
+```
+
+Every token becomes a utility, named after the token itself:
+
+```html
+<div class="bg-surface-default text-text-normal border-border-focus rounded-ml">
+  <span class="bg-status-error-normal text-status-error-on-normal">Failed</span>
+  <span class="text-14 font-600 shadow-m bg-crimson-500/40">…</span>
+</div>
+```
+
+No `dark:` needed for any of it. The utilities compile to `var(--surface-default)`
+rather than to a copied value, and the variable is what the theme swaps — so a
+single class is correct in both themes. `dark:` is still there for one-off
+overrides, and it matches the same cascade the tokens use: an explicit
+`data-theme` or `.dark` wins, and the OS preference applies only when neither is
+set.
+
+Alpha modifiers work on every colour (`bg-crimson-500/40`); v4 resolves them with
+`color-mix`, so the channel-splitting trick v3 required is not needed here.
+
+### What is not mapped
+
+**Spacing and line height.** Tailwind derives `p-4`, `gap-4` and `leading-6` from
+one multiplier, so its numbers count quarter-rems where ours count pixels —
+shipping our scale would make `p-4` silently mean 4px instead of 16px. Every
+value in our spacing scale is already reachable through Tailwind's own numbering
+(`p-4` is our `spacing.16`, `p-1.5` our `spacing.6`), so nothing is lost by
+letting Tailwind keep the ladder it named first.
+
+**`palette.text`, `palette.ui`, `palette.background`.** Role groups the semantic
+layer already wraps. Exposing both would put two names on one value, and
+`palette.text.normal` would collide with `textColor.normal` outright.
+
+**The reset and the typography classes.** Preflight covers the reset, and
+`text-16 font-600 leading-24` is how a Tailwind user expects to write what
+`.title-large` bundles. Import `style-tokens.css` instead if you want ours.
+
+Pretendard and Material Symbols are included, since `font-main` names them.
+
 ## Regenerating
 
 The scales are generated, never hand-edited.
@@ -147,6 +198,10 @@ node scripts/generate-palette.js red 0  # preview one hue
 node scripts/write-scales.js            # rewrite static/light.ts and dark.ts
 node scripts/write-palette.js           # rewrite palette.ts
 ```
+
+`style-tokens.css` and `tailwind.css` are generated too, by `pnpm build`. Both
+read their variable blocks from `scripts/css-variables.js`, which is what stops
+the two stylesheets from drifting apart.
 
 Change a hue, its tuning, or the lightness ladder in `generate-palette.js` and
 replay. That is what keeps fourteen scales consistent with each other.
