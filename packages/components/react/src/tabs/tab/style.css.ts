@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-import { colorSprinkles } from '../../style/color/sprinkles.css';
+import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
 
 export const commonStyle = style({
   cursor: 'pointer',

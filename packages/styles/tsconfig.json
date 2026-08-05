@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Where declaration output lands
+    "outDir": "./dist",
+    // Source root, mirrored by the dist layout
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"]
+}

@@ -1,0 +1,99 @@
+{
+  "name": "@minuk-hwang-design-system/styles",
+  "version": "0.0.1",
+  "type": "module",
+  "packageManager": "pnpm@8.15.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./color": {
+      "types": "./dist/color/index.d.ts",
+      "import": "./dist/color/index.js",
+      "require": "./dist/color/index.cjs"
+    },
+    "./color/style": "./dist/color/index.css",
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js",
+      "require": "./dist/layout/index.cjs"
+    },
+    "./layout/style": "./dist/layout/index.css",
+    "./spacing": {
+      "types": "./dist/spacing/index.d.ts",
+      "import": "./dist/spacing/index.js",
+      "require": "./dist/spacing/index.cjs"
+    },
+    "./spacing/style": "./dist/spacing/index.css",
+    "./border": {
+      "types": "./dist/border/index.d.ts",
+      "import": "./dist/border/index.js",
+      "require": "./dist/border/index.cjs"
+    },
+    "./border/style": "./dist/border/index.css",
+    "./shadow": {
+      "types": "./dist/shadow/index.d.ts",
+      "import": "./dist/shadow/index.js",
+      "require": "./dist/shadow/index.cjs"
+    },
+    "./shadow/style": "./dist/shadow/index.css",
+    "./typography": {
+      "types": "./dist/typography/index.d.ts",
+      "import": "./dist/typography/index.js",
+      "require": "./dist/typography/index.cjs"
+    },
+    "./typography/style": "./dist/typography/index.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "pnpm clean && pnpm build:type && pnpm build:js",
+    "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
+    "build:js": "node build.js",
+    "build:type": "tsc --emitDeclarationOnly",
+    "clean": "rimraf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Minuk Hwang",
+  "license": "MIT",
+  "description": "Shared vanilla-extract style layer (sprinkles and recipes) for the Minuk Hwang Design System",
+  "homepage": "https://github.com/minukHwang/minuk-hwang-design-system/tree/main/packages/styles#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minukHwang/minuk-hwang-design-system.git",
+    "directory": "packages/styles"
+  },
+  "bugs": {
+    "url": "https://github.com/minukHwang/minuk-hwang-design-system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "vanilla-extract",
+    "sprinkles",
+    "recipes",
+    "atomic-css",
+    "css-variables",
+    "minuk-hwang-design-system"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "devDependencies": {
+    "@minuk-hwang-design-system/esbuild-config": "workspace:^",
+    "@vanilla-extract/esbuild-plugin": "^2.3.8",
+    "esbuild": "^0.23.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "@vanilla-extract/css": "^1.15.3",
+    "@vanilla-extract/recipes": "^0.5.3",
+    "@vanilla-extract/sprinkles": "^1.6.2"
+  }
+}

@@ -1,11 +1,11 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
-import { borderSprinkles } from '../../style/border/sprinkles.css';
-import { colorSprinkles } from '../../style/color/sprinkles.css';
-import { layoutSprinkles } from '../../style/layout/sprinkles.css';
-import { shadowSprinkles } from '../../style/shadow/sprinkles.css';
-import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
+import { borderSprinkles } from '@minuk-hwang-design-system/styles/border';
+import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
+import { layoutSprinkles } from '@minuk-hwang-design-system/styles/layout';
+import { shadowSprinkles } from '@minuk-hwang-design-system/styles/shadow';
+import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 
 export const infoButtonRecipe = recipe({
   base: [

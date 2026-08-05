@@ -200,25 +200,9 @@
     },
     "./tabs/tab-bar/style": "./dist/tabs/tab-bar/TabBar.css",
     "./utils/date": {
-      "types": "./dist/utils/dateUtils.d.ts"
-    },
-    "./style/border": {
-      "types": "./dist/style/border/recipes.d.ts"
-    },
-    "./style/color": {
-      "types": "./dist/style/color/sprinkles.d.ts"
-    },
-    "./style/layout": {
-      "types": "./dist/style/layout/sprinkles.d.ts"
-    },
-    "./style/shadow": {
-      "types": "./dist/style/shadow/sprinkles.d.ts"
-    },
-    "./style/spacing": {
-      "types": "./dist/style/spacing/sprinkles.d.ts"
-    },
-    "./style/typography": {
-      "types": "./dist/style/typography/recipes.d.ts"
+      "types": "./dist/utils/dateUtils.d.ts",
+      "import": "./dist/utils/dateUtils.js",
+      "require": "./dist/utils/dateUtils.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -280,6 +264,7 @@
   },
   "dependencies": {
     "@minuk-hwang-design-system/style-tokens": "workspace:^",
+    "@minuk-hwang-design-system/styles": "workspace:^",
     "@vanilla-extract/css": "^1.15.3",
     "@vanilla-extract/recipes": "^0.5.3",
     "@vanilla-extract/sprinkles": "^1.6.2",

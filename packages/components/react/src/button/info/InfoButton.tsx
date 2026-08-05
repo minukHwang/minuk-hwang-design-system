@@ -5,7 +5,7 @@ import { Badge } from '../../badge/Badge';
 import { BadgeVariants } from '../../badge/style.css';
 import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
-import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
+import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 
 import { infoButtonRecipe, InfoButtonVariants } from './style.css';
 

@@ -10,7 +10,7 @@
     "graph": "nx run-many --target=build --graph",
     "build": "nx build",
     "build:all": "nx run-many --target=build --all",
-    "build:packages": "nx run-many --target=build --projects=@minuk-hwang-design-system/style-tokens,@minuk-hwang-design-system/base-react,@minuk-hwang-design-system/behavior-react,@minuk-hwang-design-system/components-react",
+    "build:packages": "nx run-many --target=build --projects=@minuk-hwang-design-system/style-tokens,@minuk-hwang-design-system/styles,@minuk-hwang-design-system/base-react,@minuk-hwang-design-system/behavior-react,@minuk-hwang-design-system/components-react",
     "build:dev": "nx build:dev",
     "clean": "nx clean",
     "clean:all": "nx run-many --target=clean --all",
@@ -22,10 +22,11 @@
     "storybook": "pnpm --filter @minuk-hwang-design-system/storybook dev",
     "build:storybook": "pnpm --filter @minuk-hwang-design-system/storybook build",
     "publish:tokens": "pnpm --filter @minuk-hwang-design-system/style-tokens build && pnpm --filter @minuk-hwang-design-system/style-tokens publish --access public --no-git-checks",
+    "publish:styles": "pnpm --filter @minuk-hwang-design-system/styles build && pnpm --filter @minuk-hwang-design-system/styles publish --access public --no-git-checks",
     "publish:behavior": "pnpm --filter @minuk-hwang-design-system/behavior-react build && pnpm --filter @minuk-hwang-design-system/behavior-react publish --access public --no-git-checks",
     "publish:base": "pnpm --filter @minuk-hwang-design-system/base-react build && pnpm --filter @minuk-hwang-design-system/base-react publish --access public --no-git-checks",
     "publish:react": "pnpm --filter @minuk-hwang-design-system/components-react build && pnpm --filter @minuk-hwang-design-system/components-react publish --access public --no-git-checks",
-    "publish:all": "pnpm publish:tokens && pnpm publish:behavior && pnpm publish:base && pnpm publish:react"
+    "publish:all": "pnpm publish:tokens && pnpm publish:styles && pnpm publish:behavior && pnpm publish:base && pnpm publish:react"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

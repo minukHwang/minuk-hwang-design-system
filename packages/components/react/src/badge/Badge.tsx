@@ -4,8 +4,8 @@ import { forwardRef } from 'react';
 import { Container } from '../common/container/Container';
 import { Text } from '../common/text/Text';
 import { CommonProps } from '../common/types';
-import { Palette } from '../style/color/sprinkles.css';
-import { TypographyVariants } from '../style/typography/recipes.css';
+import { Palette } from '@minuk-hwang-design-system/styles/color';
+import { TypographyVariants } from '@minuk-hwang-design-system/styles/typography';
 
 import { badgeRecipe, BadgeVariants } from './style.css';
 

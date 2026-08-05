@@ -1,12 +1,12 @@
 import { ElementType } from 'react';
 
-import { BorderVariants } from '../style/border/recipes.css';
-import { BorderSprinkles } from '../style/border/sprinkles.css';
-import { ColorSprinkles } from '../style/color/sprinkles.css';
-import { LayoutSprinkles } from '../style/layout/sprinkles.css';
-import { ShadowSprinkles } from '../style/shadow/sprinkles.css';
-import { SpacingSprinkles } from '../style/spacing/sprinkles.css';
-import { TypographyVariants } from '../style/typography/recipes.css';
+import { BorderVariants } from '@minuk-hwang-design-system/styles/border';
+import { BorderSprinkles } from '@minuk-hwang-design-system/styles/border';
+import { ColorSprinkles } from '@minuk-hwang-design-system/styles/color';
+import { LayoutSprinkles } from '@minuk-hwang-design-system/styles/layout';
+import { ShadowSprinkles } from '@minuk-hwang-design-system/styles/shadow';
+import { SpacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
+import { TypographyVariants } from '@minuk-hwang-design-system/styles/typography';
 
 export type AsProps = {
   as?: ElementType;

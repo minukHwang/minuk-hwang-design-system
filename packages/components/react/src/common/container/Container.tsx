@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-import { borderRecipe } from '../../style/border/recipes.css';
-import { borderSprinkles } from '../../style/border/sprinkles.css';
-import { colorSprinkles } from '../../style/color/sprinkles.css';
-import { layoutSprinkles } from '../../style/layout/sprinkles.css';
-import { shadowSprinkles } from '../../style/shadow/sprinkles.css';
-import { spacingSprinkles } from '../../style/spacing/sprinkles.css';
+import { borderRecipe } from '@minuk-hwang-design-system/styles/border';
+import { borderSprinkles } from '@minuk-hwang-design-system/styles/border';
+import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
+import { layoutSprinkles } from '@minuk-hwang-design-system/styles/layout';
+import { shadowSprinkles } from '@minuk-hwang-design-system/styles/shadow';
+import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 import { CommonProps } from '../types';
 
 /**

@@ -5,7 +5,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { Container } from '../common/container/Container';
 import { Icon } from '../common/icon/Icon';
 import { CommonProps } from '../common/types';
-import { Palette } from '../style/color/sprinkles.css';
+import { Palette } from '@minuk-hwang-design-system/styles/color';
 
 import {
   divStateStyle,

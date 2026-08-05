@@ -1,22 +1,10 @@
 /**
- * 제작한 Component를 export 합니다.
+ * Barrel file
+ * Kept for editor discovery. Consumers import subpaths so bundlers can tree-shake.
+ *
+ * The shared style layer is not re-exported here; it belongs to
+ * @minuk-hwang-design-system/styles and should be imported from there.
  */
-
-// Style
-export { layoutSprinkles } from './style/layout/sprinkles.css';
-export type { LayoutSprinkles } from './style/layout/sprinkles.css';
-export { spacingSprinkles } from './style/spacing/sprinkles.css';
-export type { SpacingSprinkles } from './style/spacing/sprinkles.css';
-export { colorSprinkles } from './style/color/sprinkles.css';
-export type { ColorSprinkles } from './style/color/sprinkles.css';
-export { typographyRecipe } from './style/typography/recipes.css';
-export type { TypographyVariants } from './style/typography/recipes.css';
-export { borderSprinkles } from './style/border/sprinkles.css';
-export type { BorderSprinkles } from './style/border/sprinkles.css';
-export { borderRecipe } from './style/border/recipes.css';
-export type { BorderVariants } from './style/border/recipes.css';
-export { shadowSprinkles } from './style/shadow/sprinkles.css';
-export type { ShadowSprinkles } from './style/shadow/sprinkles.css';
 
 // Common
 export { Text } from './common/text/Text';

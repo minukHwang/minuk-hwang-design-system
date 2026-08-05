@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { forwardRef, ReactNode } from 'react';
 
-import { colorSprinkles, Palette } from '../../style/color/sprinkles.css';
+import { colorSprinkles, Palette } from '@minuk-hwang-design-system/styles/color';
 
 interface IconProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   children: ReactNode;
