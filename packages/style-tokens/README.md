@@ -169,6 +169,44 @@ set.
 Alpha modifiers work on every colour (`bg-crimson-500/40`); v4 resolves them with
 `color-mix`, so the channel-splitting trick v3 required is not needed here.
 
+### Tailwind's own scales stay
+
+The theme is added to Tailwind's defaults, not swapped for them. Where a name
+collides ours wins — `bg-red-500` and `shadow-xs` resolve to our values — and
+where it does not, Tailwind's survives: `bg-emerald-500`, `rounded-md`,
+`font-bold`, `text-lg` all still work.
+
+That is a deliberate trade, and it has one sharp edge worth knowing. **Tailwind's
+colours do not follow the theme.** `bg-surface-default` turns dark on a dark
+ground; `bg-emerald-500` stays the same bright green it was, and nothing warns
+you. The same near-miss exists on shape: `rounded-md` is Tailwind's 6px while
+`rounded-m` is our 10px.
+
+A project that would rather have the token set be the only vocabulary can clear
+whichever namespaces it wants to own. The clearing has to sit **between** the two
+imports:
+
+```css
+@import 'tailwindcss';
+
+/* Our tokens or nothing. bg-emerald-500 and rounded-md stop compiling;
+   bg-transparent, bg-current and bg-inherit are static utilities and survive. */
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+}
+
+@import '@minuk-hwang-design-system/style-tokens/tailwind.css';
+```
+
+Order is the whole trick, and getting it wrong fails loudly in one direction
+only. Put the block after our import and it clears our tokens too — every colour
+utility in the project stops compiling, ours included.
+
+Left as opt-in because a preset that silently deletes half of Tailwind is a worse
+first impression than one that adds to it.
+
 ### What is not mapped
 
 **Spacing and line height.** Tailwind derives `p-4`, `gap-4` and `leading-6` from
