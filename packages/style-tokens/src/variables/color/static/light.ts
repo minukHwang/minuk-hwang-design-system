@@ -290,3 +290,7 @@ export const ui = {
   accentNormal: '#ffffff',
   stateNormal: '#ffffff',
 };
+export const shadowColor = {
+  ambient: 'rgb(0 0 0 / 0.08)',
+  direct: 'rgb(0 0 0 / 0.14)',
+};

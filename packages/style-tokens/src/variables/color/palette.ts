@@ -285,6 +285,11 @@ export const text = {
   strong: 'var(--text-strong)',
 };
 
+export const shadowColor = {
+  ambient: 'var(--shadow-color-ambient)',
+  direct: 'var(--shadow-color-direct)',
+};
+
 export const ui = {
   primaryNormal: 'var(--ui-primary-normal)',
   accentNormal: 'var(--ui-accent-normal)',

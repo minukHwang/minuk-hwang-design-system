@@ -72,6 +72,17 @@ const THEME_SEMANTICS = {
       accentNormal: '#ffffff',
       stateNormal: '#ffffff',
     },
+    /**
+     * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
+     * not, which is why the two live apart — see variables/shadow.ts.
+     *
+     * A shadow works by darkening what is behind it, so how opaque it has to be
+     * depends entirely on how dark that already is. On white, 8% reads clearly.
+     */
+    shadowColor: {
+      ambient: 'rgb(0 0 0 / 0.08)',
+      direct: 'rgb(0 0 0 / 0.14)',
+    },
   },
   dark: {
     background: {
@@ -90,6 +101,19 @@ const THEME_SEMANTICS = {
       primaryNormal: '#0f6fff',
       accentNormal: '#ffffff',
       stateNormal: '#ffffff',
+    },
+    /**
+     * The same 8% over a dark canvas moves it by 2/255 — invisible. These are
+     * the alphas that put a dark shadow back at roughly the same 10–15/255
+     * separation the light theme gets, measured against neutral-10 (#141414).
+     *
+     * Shadow is not carrying elevation alone here: the dark surfaces already
+     * step 11 points apart, so this reinforces a difference rather than
+     * inventing one. Pushing the alpha higher to compensate reads as a smudge.
+     */
+    shadowColor: {
+      ambient: 'rgb(0 0 0 / 0.48)',
+      direct: 'rgb(0 0 0 / 0.72)',
     },
   },
 };

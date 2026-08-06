@@ -140,6 +140,47 @@ status.success.onNormal; // black — green-500 would be 2.29:1 with white
 white. Its `strong` step is 800 rather than 700, because 700 measured 4.35:1 on
 its own surface — just under the floor.
 
+## Shadows
+
+Geometry and colour are separate tokens, and only the colour follows the theme.
+
+```ts
+shadow.m; // 0 8px 16px -4px var(--shadow-color-direct), 0 3px 6px -2px …
+```
+
+How far something floats above the page is a fact about the layout. How much it
+darkens what is behind it depends entirely on what is behind it — 8% black is
+clear on white and invisible on `#141414`. The values used to be literal
+`rgba(0, 0, 0, 0.1)`, so a card that floated in the light theme went flat in the
+dark one and nothing in the type system noticed.
+
+| Theme | Ground    | ambient | direct | Ground moves by |
+| ----- | --------- | ------- | ------ | --------------- |
+| light | `#fcfcfc` | 0.08    | 0.14   | 20–35 / 255     |
+| dark  | `#141414` | 0.48    | 0.72   | 10–14 / 255     |
+
+The six-fold jump in alpha looks drastic and is not: it is what puts the dark
+theme back at roughly the separation the light one gets for free. Shadow is not
+carrying elevation alone there either — the dark surfaces already step 11 points
+apart, so these reinforce a difference rather than invent one. Higher reads as a
+smudge.
+
+Every step above `xs` is two layers, which is what makes a shadow read as cast
+rather than painted on: `direct` is tight and offset further down, `ambient` is
+wide, soft and barely offset.
+
+```
+xs              resting card, separation only
+s               raised: hovered card, small menu
+m               floating: dropdown, popover, tooltip, toast
+l               overlay: dialog, drawer
+elevatedTop     sticky header, casting down
+elevatedBottom  sticky footer or bottom sheet, casting up
+```
+
+These keep t-shirt names while the rest of the system moved to pixels, because a
+shadow is four lengths and a colour. There is no single number to key it by.
+
 ## Everything measurable is keyed by pixels
 
 ```ts
