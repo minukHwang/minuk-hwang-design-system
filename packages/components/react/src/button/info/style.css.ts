@@ -27,7 +27,7 @@ export const infoButtonRecipe = recipe({
     variant: {
       default: [
         colorSprinkles({
-          backgroundColor: 'surfaceCanvas',
+          backgroundColor: 'surfaceDefault',
         }),
         {
           selectors: {
