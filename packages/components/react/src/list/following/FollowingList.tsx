@@ -26,7 +26,7 @@ export const FollowingList = forwardRef<HTMLElement, FollowingListProps>(
         justifyContent="space-between"
         padding={16}
         borderRadius={8}
-        backgroundColor="backgroundNormalPrimary"
+        backgroundColor="surfaceCanvas"
         className={className}
         ref={ref}
       >

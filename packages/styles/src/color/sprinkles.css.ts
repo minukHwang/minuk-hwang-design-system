@@ -81,10 +81,8 @@ export const palette = {
   ...flatten('gray', $palette.gray),
   ...flatten('slate', $palette.slate),
 
-  // Theme surfaces and text.
-  ...flattenNamed('background', $palette.background),
+  // The authored per-theme text ramp.
   ...flattenNamed('text', $palette.text),
-  ...flattenNamed('ui', $palette.ui),
 
   // Absolute values, which do not flip with the theme.
   ...$absolute.color,
@@ -101,6 +99,7 @@ export const palette = {
    */
   ...flattenGroup('surface', $semantic.surface),
   ...flattenGroup('border', $semantic.border),
+  ...flattenGroup('accent', $semantic.accent),
   ...flattenGroup('statusSuccess', $semantic.status.success),
   ...flattenGroup('statusWarning', $semantic.status.warning),
   ...flattenGroup('statusError', $semantic.status.error),

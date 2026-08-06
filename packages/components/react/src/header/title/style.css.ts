@@ -5,7 +5,7 @@ import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
 
 export const titleStyle = style([
   colorSprinkles({
-    backgroundColor: 'backgroundNormalPrimary',
+    backgroundColor: 'surfaceCanvas',
   }),
   {
     display: 'flex',

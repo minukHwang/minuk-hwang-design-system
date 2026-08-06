@@ -60,7 +60,7 @@ export const MapBottomSheet = forwardRef<HTMLElement, MapBottomSheetProps>(
         padding={20}
         paddingBottom={32}
         gap={20}
-        backgroundColor="backgroundNormalPrimary"
+        backgroundColor="surfaceCanvas"
         borderRadius={8}
         boxShadow="s"
         {...props}
@@ -94,16 +94,14 @@ export const MapBottomSheet = forwardRef<HTMLElement, MapBottomSheetProps>(
                   icon={subButtonIcon}
                   style={{
                     borderRadius: vars.borderRadius.full,
-                    backgroundColor: vars.color.$palette.background.elevatedSecondary,
+                    backgroundColor: vars.color.$semantic.surface.default,
                   }}
                 ></Button>
               )}
             </Container>
           </Container>
           {/* info-box */}
-          {infos && (
-            <InfoBox infos={infos} size="s" backgroundColor="backgroundElevatedSecondary" />
-          )}
+          {infos && <InfoBox infos={infos} size="s" backgroundColor="surfaceDefault" />}
         </Container>
         {/* button */}
         {buttonText && <Button size="m">{buttonText}</Button>}

@@ -43,13 +43,13 @@ export const sizeStyle = {
  * state 스타일
  */
 const basic = style({
-  color: vars.color.$palette.ui.primaryNormal,
+  color: vars.color.$semantic.accent.normal,
   backgroundColor: vars.color.$palette.blue[100],
 });
 
 const outlinePrimary = style({
   border: `0.0625rem solid ${vars.color.$palette.blue[100]}`,
-  color: vars.color.$palette.ui.primaryNormal,
+  color: vars.color.$semantic.accent.normal,
 });
 
 const outlineSecondary = style({
@@ -59,12 +59,12 @@ const outlineSecondary = style({
 
 const activePrimary = style({
   color: vars.color.$absolute.lighten[950],
-  backgroundColor: vars.color.$palette.ui.primaryNormal,
+  backgroundColor: vars.color.$semantic.accent.normal,
 });
 
 const activeSecondary = style({
-  border: `0.0625rem solid ${vars.color.$palette.ui.primaryNormal}`,
-  color: vars.color.$palette.ui.primaryNormal,
+  border: `0.0625rem solid ${vars.color.$semantic.accent.normal}`,
+  color: vars.color.$semantic.accent.normal,
   backgroundColor: vars.color.$palette.blue[100],
 });
 

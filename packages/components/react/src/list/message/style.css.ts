@@ -6,7 +6,7 @@ import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
 export const messageListRecipe = recipe({
   variants: {
     variant: {
-      default: colorSprinkles({ backgroundColor: 'backgroundNormalPrimary' }),
+      default: colorSprinkles({ backgroundColor: 'surfaceCanvas' }),
       // These used to point at step 10, which sits within 5/255 of white and so
       // rendered as no tint at all against the page. Step 10 is the canvas, not
       // a wash; the surface role is what these wanted.

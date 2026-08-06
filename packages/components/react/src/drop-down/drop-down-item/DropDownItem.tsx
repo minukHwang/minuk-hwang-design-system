@@ -23,7 +23,7 @@ export const DropDownItem = forwardRef<HTMLElement, DropDownItemProps>(
         paddingX={16}
         paddingY={10}
         borderRadius={4}
-        backgroundColor={state === 'active' ? 'neutral50' : 'backgroundNormalPrimary'}
+        backgroundColor={state === 'active' ? 'neutral50' : 'surfaceCanvas'}
         style={{ width: '153px', cursor: 'pointer' }}
         className={className}
         ref={ref}

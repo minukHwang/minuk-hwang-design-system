@@ -72,7 +72,7 @@ export const buttonRecipe = recipe({
     {
       variants: { variant: 'primary', design: 'fill' },
       style: [
-        colorSprinkles({ color: 'white', backgroundColor: 'uiPrimaryNormal' }),
+        colorSprinkles({ color: 'white', backgroundColor: 'accentNormal' }),
         {
           selectors: {
             '&:hover': {
@@ -92,15 +92,15 @@ export const buttonRecipe = recipe({
     {
       variants: { variant: 'primary', design: 'outline' },
       style: [
-        colorSprinkles({ color: 'uiPrimaryNormal' }),
-        borderSprinkles({ borderColor: 'uiPrimaryNormal' }),
+        colorSprinkles({ color: 'accentNormal' }),
+        borderSprinkles({ borderColor: 'accentNormal' }),
         {
           selectors: {
             '&:hover': {
               border: `0.0625rem solid ${vars.color.$palette.blue[700]}`,
             },
             '&:disabled': {
-              border: `0.0625rem solid ${vars.color.$palette.ui.primaryNormal}`,
+              border: `0.0625rem solid ${vars.color.$semantic.accent.normal}`,
               opacity: vars.color.$absolute.opacity.disabledContainer,
               cursor: 'not-allowed',
             },

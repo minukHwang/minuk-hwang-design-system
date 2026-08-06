@@ -29,6 +29,13 @@ import { color, dim } from './absolute';
  * moves ~20–50 either way.
  */
 export const surface = {
+  /**
+   * The page itself. Step 10 in both themes, which is the one step defined as
+   * sitting closest to the background rather than as a tint of the hue.
+   *
+   * Everything below is a surface a component paints *on top of* this one.
+   */
+  canvas: palette.neutral[10],
   /** Resting state of an interactive surface. */
   default: palette.neutral[50],
   hover: palette.neutral[100],
@@ -38,6 +45,47 @@ export const surface = {
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
 };
+
+/*
+ * ============================================
+ * Ramps
+ * ============================================
+ */
+
+/**
+ * Builds the five entries a coloured role needs, from one scale.
+ *
+ * `onNormal` records which text colour clears WCAG AA on top of `normal`.
+ * Leaving that judgement to each component is how a 2.29:1 green button gets
+ * shipped.
+ */
+const buildRamp = (scale: typeof palette.green, onNormal: string, strongStep: 700 | 800) => ({
+  /** Filled background for banners and badges. */
+  surface: scale[50],
+  /** Border of that banner, or a subtle fill. */
+  subtle: scale[200],
+  /** Icons and solid fills. */
+  normal: scale[500],
+  /** Text sitting on `surface`. */
+  strong: scale[strongStep],
+  /** Text sitting on `normal`. */
+  onNormal,
+});
+
+/*
+ * ============================================
+ * Accent
+ * ============================================
+ */
+
+/**
+ * The brand colour: primary buttons, focus rings, selected states.
+ *
+ * Identical to `status.info` today, since both are blue. They stay separate
+ * names because they answer different questions — a decision to make the brand
+ * purple should not turn every informational banner purple with it.
+ */
+export const accent = buildRamp(palette.blue, color.white, 700);
 
 /*
  * ============================================
@@ -57,7 +105,7 @@ export const border = {
    * requirement the others do not: 3:1 against whatever sits next to it.
    * Measured at 4.83:1 on light and 4.00:1 on dark.
    */
-  focus: palette.ui.primaryNormal,
+  focus: accent.normal,
 };
 
 /*
@@ -94,31 +142,16 @@ export const textColor = {
  * `warning` maps to amber rather than yellow: yellow-500 measures 1.35:1 against
  * white, which no amount of surrounding design rescues.
  *
- * `onNormal` records which text colour clears AA on top of `normal`. Only blue,
- * purple and indigo are dark enough at full chroma to carry white; the rest need
- * black. Leaving that judgement to each component is how a 2.29:1 green button
- * gets shipped.
+ * Only blue, purple and indigo are dark enough at full chroma to carry white
+ * text; everything from cyan through orange needs black.
  */
-const buildStatus = (scale: typeof palette.green, onNormal: string, strongStep: 700 | 800) => ({
-  /** Filled background for banners and badges. */
-  surface: scale[50],
-  /** Border of that banner, or a subtle fill. */
-  subtle: scale[200],
-  /** Icons and solid fills. */
-  normal: scale[500],
-  /** Text sitting on `surface`. */
-  strong: scale[strongStep],
-  /** Text sitting on `normal`. */
-  onNormal,
-});
-
 export const status = {
-  success: buildStatus(palette.green, color.black, 700),
+  success: buildRamp(palette.green, color.black, 700),
   /**
    * Amber's step 700 measured 4.35:1 on its own surface, just under the floor,
    * so warning reads its strong value one step darker than the others.
    */
-  warning: buildStatus(palette.amber, color.black, 800),
-  error: buildStatus(palette.red, color.black, 700),
-  info: buildStatus(palette.blue, color.white, 700),
+  warning: buildRamp(palette.amber, color.black, 800),
+  error: buildRamp(palette.red, color.black, 700),
+  info: buildRamp(palette.blue, color.white, 700),
 };

@@ -31,7 +31,7 @@ export const DropDownBox = forwardRef<HTMLElement, DropDownBoxProps>(({ options 
         gap={4}
         borderRadius={4}
         boxShadow="s"
-        backgroundColor="backgroundNormalPrimary"
+        backgroundColor="surfaceCanvas"
       >
         {options.map((item, index) => (
           <DropDownItem

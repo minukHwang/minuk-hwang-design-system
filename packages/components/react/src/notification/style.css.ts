@@ -26,7 +26,7 @@ export const stateStyle = recipe({
     state: {
       default: colorSprinkles({
         color: 'textNormal',
-        backgroundColor: 'backgroundElevatedPrimary',
+        backgroundColor: 'surfaceCanvas',
       }),
       // warning and danger both read crimson500 before, which left them
       // indistinguishable. They now resolve to different status scales.

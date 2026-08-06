@@ -8,7 +8,7 @@ export const topAppBarStyle = style({
   width: '100%',
   padding: `${vars.spacing[8]} ${vars.spacing[4]}`,
   color: vars.color.$palette.text.normal,
-  backgroundColor: vars.color.$palette.background.normalPrimary,
+  backgroundColor: vars.color.$semantic.surface.canvas,
 });
 
 export const leftContentStyle = style({

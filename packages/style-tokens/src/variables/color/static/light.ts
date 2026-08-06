@@ -273,22 +273,11 @@ export const slate = {
 
 /* Theme surfaces and text. Authored, not generated. */
 
-export const background = {
-  normalPrimary: '#ffffff',
-  normalSecondary: '#f4f4f5',
-  elevatedPrimary: '#ffffff',
-  elevatedSecondary: '#f4f4f5',
-};
 export const text = {
   normal: '#1a1a1a',
   assistive: '#636363',
   alternative: '#3b3b3b',
   strong: '#000000',
-};
-export const ui = {
-  primaryNormal: '#0066ff',
-  accentNormal: '#ffffff',
-  stateNormal: '#ffffff',
 };
 export const shadowColor = {
   ambient: 'rgb(0 0 0 / 0.08)',

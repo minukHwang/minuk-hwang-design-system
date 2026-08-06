@@ -29,7 +29,7 @@ const textColorMap: Record<
 > = {
   primary: {
     fill: { textColor: 'white', hovertextColor: 'white' },
-    outline: { textColor: 'uiPrimaryNormal', hovertextColor: 'blue700' },
+    outline: { textColor: 'accentNormal', hovertextColor: 'blue700' },
   },
   secondary: {
     fill: { textColor: 'white', hovertextColor: 'white' },
@@ -72,8 +72,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     });
 
     const { textColor, hovertextColor } = textColorMap[variant][design] || {
-      textColor: 'uiPrimaryNormal',
-      hovertextColor: 'uiPrimaryNormal',
+      textColor: 'accentNormal',
+      hovertextColor: 'accentNormal',
     };
 
     return (

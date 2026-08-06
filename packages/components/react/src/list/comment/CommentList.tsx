@@ -49,7 +49,7 @@ export const CommentList = forwardRef<HTMLDivElement, CommentListProps>(
         <Container
           display="flex"
           flexDirection="column"
-          backgroundColor={isReply ? 'backgroundNormalSecondary' : 'backgroundNormalPrimary'}
+          backgroundColor={isReply ? 'surfaceDefault' : 'surfaceCanvas'}
           paddingLeft={effectivePadding}
           paddingRight={16}
           paddingY={16}

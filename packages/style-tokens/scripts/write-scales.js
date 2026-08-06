@@ -47,30 +47,23 @@ const renderScale = (name, scale) => {
 };
 
 /**
- * Semantic groups that still carry literal values per theme.
+ * Groups that carry authored values per theme rather than generated ones.
  *
- * Unlike the scales above these are not generated — they are the theme's own
- * surfaces and text colours, and they are what every other semantic token is
- * ultimately measured against.
+ * Only two survive. `text` is the ramp every other text token is measured
+ * against, and `shadowColor` is the one part of a shadow that varies by theme.
+ *
+ * The old `background` and `ui` groups are gone. `background` was a second,
+ * hand-authored surface model whose values sat in no scale, and `ui` held a
+ * brand blue that measured identical to `blue[500]` — both now go through the
+ * semantic layer, which is where a role belongs.
  */
 const THEME_SEMANTICS = {
   light: {
-    background: {
-      normalPrimary: '#ffffff',
-      normalSecondary: '#f4f4f5',
-      elevatedPrimary: '#ffffff',
-      elevatedSecondary: '#f4f4f5',
-    },
     text: {
       normal: '#1a1a1a',
       assistive: '#636363',
       alternative: '#3b3b3b',
       strong: '#000000',
-    },
-    ui: {
-      primaryNormal: '#0066ff',
-      accentNormal: '#ffffff',
-      stateNormal: '#ffffff',
     },
     /**
      * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
@@ -85,22 +78,11 @@ const THEME_SEMANTICS = {
     },
   },
   dark: {
-    background: {
-      normalPrimary: '#18181b',
-      normalSecondary: '#101014',
-      elevatedPrimary: '#2d2d34',
-      elevatedSecondary: '#212126',
-    },
     text: {
       normal: '#e3e3e3',
       assistive: '#a1a1a1',
       alternative: '#d1d1d1',
       strong: '#ededed',
-    },
-    ui: {
-      primaryNormal: '#0f6fff',
-      accentNormal: '#ffffff',
-      stateNormal: '#ffffff',
     },
     /**
      * The same 8% over a dark canvas moves it by 2/255 — invisible. These are

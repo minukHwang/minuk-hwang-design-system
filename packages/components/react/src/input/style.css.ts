@@ -21,7 +21,7 @@ export const inputStyle = style({
   textAlign: 'left',
   fontSize: vars.typography.fontSize[16],
   lineHeight: vars.typography.lineHeight[21],
-  backgroundColor: vars.color.$palette.background.normalPrimary,
+  backgroundColor: vars.color.$semantic.surface.canvas,
   selectors: {
     '&::placeholder': {
       color: vars.color.$palette.neutral[200],
@@ -68,7 +68,7 @@ export const divStateStyle = styleVariants({
     baseDivStyle,
     {
       color: vars.color.$palette.neutral[500],
-      backgroundColor: vars.color.$palette.background.normalPrimary,
+      backgroundColor: vars.color.$semantic.surface.canvas,
     },
   ],
   highlight: [
@@ -83,7 +83,7 @@ export const divStateStyle = styleVariants({
     {
       color: vars.color.$palette.crimson[700],
       border: `0.0625rem solid ${vars.color.$palette.crimson[500]}`,
-      backgroundColor: vars.color.$palette.background.normalPrimary,
+      backgroundColor: vars.color.$semantic.surface.canvas,
     },
   ],
   disabled: [
@@ -97,7 +97,7 @@ export const divStateStyle = styleVariants({
     baseDivStyle,
     {
       color: vars.color.$palette.neutral[500],
-      backgroundColor: vars.color.$palette.background.normalPrimary,
+      backgroundColor: vars.color.$semantic.surface.canvas,
     },
   ],
 });

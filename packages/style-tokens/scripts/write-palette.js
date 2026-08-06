@@ -60,14 +60,7 @@ const blocks = [
   '\n/* Neutrals, ordered by how much blue they carry. */\n',
   ...Object.keys(NEUTRALS).map(renderScale),
   `
-/* Theme surfaces and text, mirroring the groups in static/. */
-
-export const background = {
-  normalPrimary: 'var(--background-normal-primary)',
-  normalSecondary: 'var(--background-normal-secondary)',
-  elevatedPrimary: 'var(--background-elevated-primary)',
-  elevatedSecondary: 'var(--background-elevated-secondary)',
-};
+/* Authored per-theme groups, mirroring static/. */
 
 export const text = {
   normal: 'var(--text-normal)',
@@ -79,12 +72,6 @@ export const text = {
 export const shadowColor = {
   ambient: 'var(--shadow-color-ambient)',
   direct: 'var(--shadow-color-direct)',
-};
-
-export const ui = {
-  primaryNormal: 'var(--ui-primary-normal)',
-  accentNormal: 'var(--ui-accent-normal)',
-  stateNormal: 'var(--ui-state-normal)',
 };`,
 ];
 

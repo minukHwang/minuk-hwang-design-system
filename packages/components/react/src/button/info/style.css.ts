@@ -27,12 +27,12 @@ export const infoButtonRecipe = recipe({
     variant: {
       default: [
         colorSprinkles({
-          backgroundColor: 'backgroundElevatedPrimary',
+          backgroundColor: 'surfaceCanvas',
         }),
         {
           selectors: {
             '&:hover': {
-              backgroundColor: vars.color.$palette.background.elevatedSecondary,
+              backgroundColor: vars.color.$semantic.surface.default,
             },
           },
         },
