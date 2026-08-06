@@ -21,27 +21,27 @@ export const borderRecipe = recipe({
       border: {
         borderColor: border.subtle,
         borderStyle: 'solid',
-        borderWidth: vars.spacing.spacing[1],
+        borderWidth: vars.spacing[1],
       },
       borderTop: {
         borderTopColor: border.subtle,
         borderTopStyle: 'solid',
-        borderTopWidth: vars.spacing.spacing[1],
+        borderTopWidth: vars.spacing[1],
       },
       borderBottom: {
         borderBottomColor: border.subtle,
         borderBottomStyle: 'solid',
-        borderBottomWidth: vars.spacing.spacing[1],
+        borderBottomWidth: vars.spacing[1],
       },
       borderLeft: {
         borderLeftColor: border.subtle,
         borderLeftStyle: 'solid',
-        borderLeftWidth: vars.spacing.spacing[1],
+        borderLeftWidth: vars.spacing[1],
       },
       borderRight: {
         borderRightColor: border.subtle,
         borderRightStyle: 'solid',
-        borderRightWidth: vars.spacing.spacing[1],
+        borderRightWidth: vars.spacing[1],
       },
     },
   },

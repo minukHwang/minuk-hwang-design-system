@@ -80,9 +80,17 @@ export const generateCssVariables = () => {
 
   // Non-colour token groups (spacing, radius, shadow, typography) never vary by
   // theme, so they join the root block alongside the absolutes.
+  //
+  // `typography` holds several groups and renders each; `spacing`, `borderRadius`
+  // and `shadow` are single groups and render themselves. Both shapes reach the
+  // same names either way — `--font-size-14`, `--spacing-16`.
+  const isGroupOfGroups = node => Object.values(node).every(value => typeof value === 'object');
+
   const nonColour = Object.entries(theme.vars)
     .filter(([key]) => key !== 'color')
-    .map(([, group]) => renderTheme(group))
+    .map(([name, group]) =>
+      isGroupOfGroups(group) ? renderTheme(group) : renderGroup(name, group)
+    )
     .join('\n\n');
 
   return {

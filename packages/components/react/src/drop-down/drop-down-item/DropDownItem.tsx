@@ -22,7 +22,7 @@ export const DropDownItem = forwardRef<HTMLElement, DropDownItemProps>(
         display="flex"
         paddingX={16}
         paddingY={10}
-        borderRadius="s"
+        borderRadius={4}
         backgroundColor={state === 'active' ? 'neutral50' : 'backgroundNormalPrimary'}
         style={{ width: '153px', cursor: 'pointer' }}
         className={className}

@@ -5,7 +5,7 @@ import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
 import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 
 export const badgeRecipe = recipe({
-  base: [borderSprinkles({ borderRadius: 's' })],
+  base: [borderSprinkles({ borderRadius: 4 })],
   variants: {
     size: {
       s: spacingSprinkles({ paddingX: 4, paddingY: 2 }),

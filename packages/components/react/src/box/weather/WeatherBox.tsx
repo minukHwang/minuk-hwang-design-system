@@ -53,7 +53,7 @@ export const WeatherBox = forwardRef<HTMLElement, WeatherBoxProps>(
         padding={16}
         gap={36}
         backgroundColor="backgroundNormalPrimary"
-        borderRadius="ml"
+        borderRadius={12}
         ref={ref}
         className={className}
         {...props}

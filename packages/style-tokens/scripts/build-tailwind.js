@@ -117,8 +117,8 @@ const absoluteColours = () => {
  * nothing is lost by letting Tailwind keep the ladder it named first.
  */
 const NON_COLOUR = [
-  { namespace: 'radius', group: theme.vars.radius.borderRadius },
-  { namespace: 'shadow', group: theme.vars.shadow.shadow },
+  { namespace: 'radius', group: theme.vars.borderRadius },
+  { namespace: 'shadow', group: theme.vars.shadow },
   { namespace: 'font', group: theme.vars.typography.fontFamily },
   { namespace: 'text', group: theme.vars.typography.fontSize },
   { namespace: 'font-weight', group: theme.vars.typography.fontWeight },

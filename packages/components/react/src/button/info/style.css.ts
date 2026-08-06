@@ -9,7 +9,7 @@ import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 
 export const infoButtonRecipe = recipe({
   base: [
-    borderSprinkles({ borderRadius: 'ml' }),
+    borderSprinkles({ borderRadius: 12 }),
     shadowSprinkles({ boxShadow: 's' }),
     layoutSprinkles({
       display: 'flex',

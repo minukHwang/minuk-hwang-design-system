@@ -3,17 +3,17 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 const spacingProperties = defineProperties({
   properties: {
-    marginTop: vars.spacing.spacing,
-    marginRight: vars.spacing.spacing,
-    marginBottom: vars.spacing.spacing,
-    marginLeft: vars.spacing.spacing,
-    paddingTop: vars.spacing.spacing,
-    paddingRight: vars.spacing.spacing,
-    paddingBottom: vars.spacing.spacing,
-    paddingLeft: vars.spacing.spacing,
-    gap: vars.spacing.spacing,
-    rowGap: vars.spacing.spacing,
-    columnGap: vars.spacing.spacing,
+    marginTop: vars.spacing,
+    marginRight: vars.spacing,
+    marginBottom: vars.spacing,
+    marginLeft: vars.spacing,
+    paddingTop: vars.spacing,
+    paddingRight: vars.spacing,
+    paddingBottom: vars.spacing,
+    paddingLeft: vars.spacing,
+    gap: vars.spacing,
+    rowGap: vars.spacing,
+    columnGap: vars.spacing,
   },
   shorthands: {
     margin: ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],

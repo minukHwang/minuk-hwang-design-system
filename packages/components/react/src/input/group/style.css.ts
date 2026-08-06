@@ -3,9 +3,9 @@ import { style } from '@vanilla-extract/css';
 
 export const labelStyle = style({
   display: 'flex',
-  paddingBottom: vars.spacing.spacing[8],
+  paddingBottom: vars.spacing[8],
   color: vars.color.$palette.text.normal,
-  gap: vars.spacing.spacing[4],
+  gap: vars.spacing[4],
   fontSize: vars.typography.fontSize[15],
   lineHeight: vars.typography.lineHeight[18],
 });
@@ -16,7 +16,7 @@ export const starStyle = style({
 
 export const inputStyle = style({
   display: 'flex',
-  gap: vars.spacing.spacing[10],
+  gap: vars.spacing[10],
   selectors: {
     '&.disabledStyle': {
       // backgroundColor: vars.color.$palette.neutral[50],
@@ -28,7 +28,7 @@ export const inputStyle = style({
 
 export const warningStyle = style({
   display: 'flex',
-  paddingTop: vars.spacing.spacing[6],
+  paddingTop: vars.spacing[6],
   color: vars.color.$palette.crimson[500],
   fontSize: vars.typography.fontSize[13],
   lineHeight: vars.typography.lineHeight[18],

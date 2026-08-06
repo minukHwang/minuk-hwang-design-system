@@ -20,19 +20,19 @@ import { palette } from '../color/sprinkles.css';
 const borderProperties = defineProperties({
   properties: {
     borderColor: palette,
-    borderRadius: vars.radius.borderRadius,
+    borderRadius: vars.borderRadius,
     borderStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
-    borderWidth: vars.spacing.spacing,
+    borderWidth: vars.spacing,
 
     borderBottomStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderLeftStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderRightStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
     borderTopStyle: ['none', 'solid', 'dashed', 'dotted', 'double'],
 
-    borderBottomWidth: vars.spacing.spacing,
-    borderLeftWidth: vars.spacing.spacing,
-    borderRightWidth: vars.spacing.spacing,
-    borderTopWidth: vars.spacing.spacing,
+    borderBottomWidth: vars.spacing,
+    borderLeftWidth: vars.spacing,
+    borderRightWidth: vars.spacing,
+    borderTopWidth: vars.spacing,
   },
 });
 

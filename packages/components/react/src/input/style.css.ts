@@ -6,17 +6,17 @@ export const commonStyle = style({
   justifyContent: 'space-between',
   width: '100%',
   height: '3rem',
-  paddingLeft: vars.spacing.spacing[12],
-  paddingRight: vars.spacing.spacing[18],
-  borderRadius: vars.radius.borderRadius.base,
-  gap: vars.spacing.spacing[8],
+  paddingLeft: vars.spacing[12],
+  paddingRight: vars.spacing[18],
+  borderRadius: vars.borderRadius[8],
+  gap: vars.spacing[8],
   fontSize: vars.typography.fontSize[16],
   lineHeight: vars.typography.lineHeight[21],
 });
 
 export const inputStyle = style({
   width: '100%',
-  padding: vars.spacing.spacing[6],
+  padding: vars.spacing[6],
   border: 'none',
   textAlign: 'left',
   fontSize: vars.typography.fontSize[16],

@@ -140,6 +140,31 @@ status.success.onNormal; // black — green-500 would be 2.29:1 with white
 white. Its `strong` step is 800 rather than 700, because 700 measured 4.35:1 on
 its own surface — just under the floor.
 
+## Everything measurable is keyed by pixels
+
+```ts
+vars.spacing[16]; // 1rem
+vars.borderRadius[12]; // 0.75rem
+vars.typography.fontSize[14]; // 0.875rem
+vars.typography.lineHeight[20]; // 1.25rem
+```
+
+There is nothing to translate: a design says 16 and the code says 16. T-shirt
+sizes buy nothing here and cost ordering — the radius scale these replaced had a
+step named `s` (4px) next to one named `sm` (6px), and `base` (8px) sitting in
+the middle of the ladder rather than at an end.
+
+Two names survive, both because they are not measurements. `borderRadius.full`
+asks for a pill whatever the element's height. `shadow` stays on `xs`/`s`/`m`/`l`
+because a shadow is four numbers and a colour, so no single value could name it.
+
+`0` is a token in both scales. Without it `padding: 0` has to be written raw,
+which is the exact escape hatch a scale exists to close.
+
+Only `color` and `typography` are namespaced, because only they hold several
+groups. The rest sit directly on `vars` — `vars.spacing`, not
+`vars.spacing.spacing`.
+
 ## Tailwind
 
 Tailwind v4 dropped the JavaScript preset for CSS, so the integration is one
@@ -153,7 +178,7 @@ import:
 Every token becomes a utility, named after the token itself:
 
 ```html
-<div class="bg-surface-default text-text-normal border-border-focus rounded-ml">
+<div class="bg-surface-default text-text-normal border-border-focus rounded-12">
   <span class="bg-status-error-normal text-status-error-on-normal">Failed</span>
   <span class="text-14 font-600 shadow-m bg-crimson-500/40">…</span>
 </div>
@@ -179,8 +204,9 @@ where it does not, Tailwind's survives: `bg-emerald-500`, `rounded-md`,
 That is a deliberate trade, and it has one sharp edge worth knowing. **Tailwind's
 colours do not follow the theme.** `bg-surface-default` turns dark on a dark
 ground; `bg-emerald-500` stays the same bright green it was, and nothing warns
-you. The same near-miss exists on shape: `rounded-md` is Tailwind's 6px while
-`rounded-m` is our 10px.
+you. Shape is safe by construction — our radius steps are numbers and Tailwind's
+are t-shirt sizes, so `rounded-12` and `rounded-md` cannot be confused for each
+other.
 
 A project that would rather have the token set be the only vocabulary can clear
 whichever namespaces it wants to own. The clearing has to sit **between** the two

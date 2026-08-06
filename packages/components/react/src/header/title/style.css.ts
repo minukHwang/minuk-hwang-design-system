@@ -11,8 +11,8 @@ export const titleStyle = style([
     display: 'flex',
     alignItems: 'flex-start',
     width: '100%',
-    padding: vars.spacing.spacing[16],
-    paddingTop: vars.spacing.spacing[64],
+    padding: vars.spacing[16],
+    paddingTop: vars.spacing[64],
     borderBottom: `0.0625rem soild ${vars.color.$palette.neutral[100]}`,
   },
 ]);

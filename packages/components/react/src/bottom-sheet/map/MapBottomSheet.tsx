@@ -61,7 +61,7 @@ export const MapBottomSheet = forwardRef<HTMLElement, MapBottomSheetProps>(
         paddingBottom={32}
         gap={20}
         backgroundColor="backgroundNormalPrimary"
-        borderRadius="base"
+        borderRadius={8}
         boxShadow="s"
         {...props}
       >
@@ -93,7 +93,7 @@ export const MapBottomSheet = forwardRef<HTMLElement, MapBottomSheetProps>(
                   size="m"
                   icon={subButtonIcon}
                   style={{
-                    borderRadius: vars.radius.borderRadius.round,
+                    borderRadius: vars.borderRadius.full,
                     backgroundColor: vars.color.$palette.background.elevatedSecondary,
                   }}
                 ></Button>

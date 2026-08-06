@@ -7,19 +7,19 @@ export const sizeStyle = {
     flexDirection: 'column',
     width: '96px',
     color: vars.color.$palette.text.normal,
-    gap: vars.spacing.spacing[12],
+    gap: vars.spacing[12],
   }),
   m: style({
     display: 'flex',
     flexDirection: 'column',
     width: '182px',
     color: vars.color.$palette.text.normal,
-    gap: vars.spacing.spacing[12],
+    gap: vars.spacing[12],
   }),
 };
 
 export const infoStyle = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.spacing.spacing[4],
+  gap: vars.spacing[4],
 });

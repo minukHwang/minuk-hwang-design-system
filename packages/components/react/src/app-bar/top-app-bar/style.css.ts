@@ -6,7 +6,7 @@ export const topAppBarStyle = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
-  padding: `${vars.spacing.spacing[8]} ${vars.spacing.spacing[4]}`,
+  padding: `${vars.spacing[8]} ${vars.spacing[4]}`,
   color: vars.color.$palette.text.normal,
   backgroundColor: vars.color.$palette.background.normalPrimary,
 });
@@ -14,7 +14,7 @@ export const topAppBarStyle = style({
 export const leftContentStyle = style({
   display: 'flex',
   alignItems: 'center',
-  gap: vars.spacing.spacing[4],
+  gap: vars.spacing[4],
 });
 
 export const textStyle = style({
@@ -28,16 +28,16 @@ const iconWrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: vars.spacing.spacing[24],
-    height: vars.spacing.spacing[24],
-    padding: vars.spacing.spacing[8],
+    width: vars.spacing[24],
+    height: vars.spacing[24],
+    padding: vars.spacing[8],
   }),
   outer: style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: vars.spacing.spacing[48],
-    height: vars.spacing.spacing[48],
+    width: vars.spacing[48],
+    height: vars.spacing[48],
   }),
 };
 

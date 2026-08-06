@@ -12,7 +12,7 @@ export const buttonRecipe = recipe({
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%',
-      borderRadius: vars.radius.borderRadius.base,
+      borderRadius: vars.borderRadius[8],
       textAlign: 'center',
       cursor: 'pointer',
     },

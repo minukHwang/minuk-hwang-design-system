@@ -8,7 +8,7 @@ export const baseStyle = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: vars.radius.borderRadius.round,
+  borderRadius: vars.borderRadius.full,
   textAlign: 'center',
 });
 
@@ -16,19 +16,19 @@ export const baseStyle = style({
  * size 스타일
  */
 const small = style({
-  padding: `${vars.spacing.spacing[4]} ${vars.spacing.spacing[8]}`,
+  padding: `${vars.spacing[4]} ${vars.spacing[8]}`,
   fontSize: vars.typography.fontSize[13],
   lineHeight: vars.typography.lineHeight[18],
 });
 
 const medium = style({
-  padding: `${vars.spacing.spacing[6]} ${vars.spacing.spacing[12]}`,
+  padding: `${vars.spacing[6]} ${vars.spacing[12]}`,
   fontSize: vars.typography.fontSize[14],
   lineHeight: vars.typography.lineHeight[19],
 });
 
 const large = style({
-  padding: `${vars.spacing.spacing[6]} ${vars.spacing.spacing[12]}`,
+  padding: `${vars.spacing[6]} ${vars.spacing[12]}`,
   fontSize: vars.typography.fontSize[15],
   lineHeight: vars.typography.lineHeight[20],
 });

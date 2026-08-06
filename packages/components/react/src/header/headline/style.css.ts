@@ -6,8 +6,8 @@ export const headlineStyle = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
-  paddingLeft: vars.spacing.spacing[16],
-  paddingRight: vars.spacing.spacing[4],
+  paddingLeft: vars.spacing[16],
+  paddingRight: vars.spacing[4],
   color: vars.color.$palette.text.normal,
   textAlign: 'center',
 });
@@ -19,6 +19,6 @@ export const iconStyle = style({
 export const headlineSubStyle = style({
   display: 'flex',
   alignItems: 'center',
-  padding: vars.spacing.spacing[12],
-  gap: vars.spacing.spacing[4],
+  padding: vars.spacing[12],
+  gap: vars.spacing[4],
 });

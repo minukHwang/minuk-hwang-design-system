@@ -3,7 +3,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 const shadowProperties = defineProperties({
   properties: {
-    boxShadow: vars.shadow.shadow,
+    boxShadow: vars.shadow,
   },
 });
 

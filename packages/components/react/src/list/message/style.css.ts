@@ -15,7 +15,7 @@ export const messageListRecipe = recipe({
     },
     mode: {
       default: {},
-      round: borderSprinkles({ borderRadius: 'ml' }),
+      round: borderSprinkles({ borderRadius: 12 }),
     },
   },
   defaultVariants: {

@@ -51,7 +51,7 @@ export const InfoBox = forwardRef<HTMLElement, InfoBoxProps>(
         width="100%"
         height="100%"
         backgroundColor={backgroundColor}
-        borderRadius="ml"
+        borderRadius={12}
         {...props}
       >
         {infoItems}

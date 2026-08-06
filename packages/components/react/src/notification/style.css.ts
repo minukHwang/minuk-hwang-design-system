@@ -14,8 +14,8 @@ export const commonStyle = style([
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    borderRadius: vars.radius.borderRadius.base,
-    // boxShadow: vars.shadow.shadow.s,
+    borderRadius: vars.borderRadius[8],
+    // boxShadow: vars.shadow.s,
   },
   spacingSprinkles({ paddingY: 16, paddingX: 20, gap: 20 }),
 ]);

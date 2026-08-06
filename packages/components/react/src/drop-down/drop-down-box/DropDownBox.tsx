@@ -29,7 +29,7 @@ export const DropDownBox = forwardRef<HTMLElement, DropDownBoxProps>(({ options 
         flexDirection="column"
         padding={6}
         gap={4}
-        borderRadius="s"
+        borderRadius={4}
         boxShadow="s"
         backgroundColor="backgroundNormalPrimary"
       >
