@@ -196,3 +196,22 @@ input:focus {
 a {
   text-decoration: none;
 }
+
+/*
+ * Reduced motion.
+ *
+ * A floor, not a preference: some people get motion sickness from interface
+ * animation, and the OS setting is how they say so. Durations collapse rather
+ * than transitions being removed, so `transitionend` still fires and any
+ * component waiting on it still finishes.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

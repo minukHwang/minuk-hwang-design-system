@@ -206,6 +206,60 @@ Only `color` and `typography` are namespaced, because only they hold several
 groups. The rest sit directly on `vars` — `vars.spacing`, not
 `vars.spacing.spacing`.
 
+## Motion
+
+The base layer is Radix, which animates by setting `data-state="open"` and
+leaving the transition to CSS. Without these tokens every component picks its
+own number, and a dropdown opens faster than the tooltip beside it for no reason
+anyone can name.
+
+```ts
+vars.motion.duration[200]; // '200ms'
+vars.motion.easing.entrance; // cubic-bezier(0.05, 0.7, 0.1, 1)
+```
+
+Two rules choose the value.
+
+**Distance sets duration.** A tooltip travels almost nowhere and is done in
+150ms; a sheet crossing the screen needs 400ms or it reads as a jump cut. One
+duration for both makes the small thing sluggish and the large thing violent.
+
+| Duration | For                                    |
+| -------- | -------------------------------------- |
+| `70`     | Hover and press colour changes         |
+| `100`    | Checkbox, switch, icon rotation        |
+| `150`    | Tooltip, badge, inline expand          |
+| `200`    | The default — popover, dropdown, toast |
+| `300`    | Dialog, drawer                         |
+| `400`    | Bottom sheet, page transition          |
+
+**Direction sets easing.** Something arriving decelerates so it lands rather
+than stops; something leaving accelerates, and can be quicker than its entrance
+because nobody waits for a dismissal they already asked for. The curves are
+Material 3's emphasized pair.
+
+```
+standard   moves and resizes — anything staying on screen
+entrance   appearing
+exit       leaving
+linear     spinners and progress
+```
+
+Durations are numbers because they are measurable; easings are names because a
+curve is four numbers, the same argument that keeps shadows on t-shirt sizes.
+
+### Reduced motion
+
+`prefers-reduced-motion: reduce` collapses every duration to `0.01ms`, in both
+stylesheets. Not zero — `transitionend` still has to fire, or a component
+waiting on it never finishes.
+
+This is a floor rather than a preference. Interface animation makes some people
+motion sick, and the OS setting is how they say so; a token set that ships
+easing curves owes them the rule that honours it. Tailwind's Preflight does not
+include it, which is why `tailwind.css` carries it despite otherwise shipping no
+reset.
+
 ## Tailwind
 
 Tailwind v4 dropped the JavaScript preset for CSS, so the integration is one
