@@ -10,46 +10,13 @@ import { Input } from '@minuk-hwang-design-system/components-react/input';
 import { Switch } from '@minuk-hwang-design-system/components-react/switch';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import { Theme } from '@minuk-hwang-design-system/components-react/theme';
-import {
-  accentColors,
-  radiusScales,
-  type AccentColor,
-  type RadiusScale,
-} from '@minuk-hwang-design-system/style-tokens';
+import { accentColors, radiusScales } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
+import { useDials } from '../../site/dials';
 import { Page } from '../../site/Page';
 import { Callout, PropsTable, Preview, Prose, Section } from '../../site/Preview';
 import css from '../../site/theme.module.css';
-
-/**
- * The picker writes to `<html>` rather than to a local `Theme`, so the rest of
- * the site changes with it. Choosing a brand colour by looking at one sample
- * block is how you pick a hue that works on exactly one sample block.
- */
-const useSiteTheme = () => {
-  const [accent, setAccent] = React.useState<AccentColor>('blue');
-  const [radius, setRadius] = React.useState<RadiusScale>('medium');
-
-  React.useEffect(() => {
-    const storedAccent = window.localStorage.getItem('accent') as AccentColor | null;
-    const storedRadius = window.localStorage.getItem('radius') as RadiusScale | null;
-    if (storedAccent) setAccent(storedAccent);
-    if (storedRadius) setRadius(storedRadius);
-  }, []);
-
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-accent', accent);
-    window.localStorage.setItem('accent', accent);
-  }, [accent]);
-
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-radius', radius);
-    window.localStorage.setItem('radius', radius);
-  }, [radius]);
-
-  return { accent, setAccent, radius, setRadius };
-};
 
 /** A sample wide enough to judge a hue on: fills, tints, borders, focus, text. */
 const Sample = () => (
@@ -98,7 +65,7 @@ const Sample = () => (
 );
 
 export default function ThemePage() {
-  const { accent, setAccent, radius, setRadius } = useSiteTheme();
+  const { accent, setAccent, radius, setRadius } = useDials();
 
   return (
     <Page
@@ -106,7 +73,7 @@ export default function ThemePage() {
       title="Theme"
       lede="Two dials — an accent and a radius — set on an ancestor. Twenty-two components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
-      <Preview title="try it — this one changes the whole site" stack>
+      <Preview title="try it — the same dials as the toolbar above" stack>
         <div className={css.picker}>
           <div className={css.control}>
             <Text as="div" size={1} color="assistive" className={css.controlLabel}>
@@ -215,7 +182,7 @@ export default function ThemePage() {
           stack
           code={`/* the ramp every accent token points at */
 html                   { --accent-500: var(--blue-500);   … }
-[data-accent='violet'] { --accent-500: var(--violet-500); … }
+[data-accent='purple'] { --accent-500: var(--purple-500); … }
 
 /* radius as a multiplier, so the steps keep their relationship */
 html                 { --border-radius-factor: 1; }

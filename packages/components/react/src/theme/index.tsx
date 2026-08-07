@@ -40,7 +40,7 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
  * Sets the accent and the radius for everything inside it.
  *
  * ```tsx
- * <Theme accentColor="violet" radius="large">
+ * <Theme accentColor="purple" radius="large">
  *   <App />
  * </Theme>
  * ```
@@ -50,7 +50,7 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
  * `--border-radius-8` rather than `0.5rem`; this writes the two attributes those
  * properties are keyed off, and inheritance carries them down.
  *
- * That is also why it nests. A pricing section in violet inside a blue
+ * That is also why it nests. A pricing section in teal inside a blue
  * application is a second `Theme` around that section — the attribute selectors
  * are unqualified, so the nearest ancestor wins.
  *

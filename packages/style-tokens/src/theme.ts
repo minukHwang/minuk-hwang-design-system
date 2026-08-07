@@ -17,7 +17,7 @@
  * of them is rebuilt.
  *
  * The attributes are unqualified selectors rather than `html[data-accent]`, so a
- * region of a page can carry its own accent — a pricing table in violet inside a
+ * region of a page can carry its own accent — a pricing table in teal inside a
  * blue application — by wrapping it in a second `Theme`.
  */
 

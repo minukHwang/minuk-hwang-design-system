@@ -107,9 +107,94 @@
 
 /* ── content ────────────────────────────────────────────────── */
 
+/*
+ * No padding on `main` itself — the toolbar spans the full width and the
+ * article is inset inside it. Padding here would leave the toolbar's rule
+ * stopping short of both edges, which reads as a misaligned box rather than as
+ * a bar.
+ */
 .main {
   min-width: 0;
-  padding: var(--spacing-56) var(--spacing-40) var(--spacing-64);
+}
+
+.content {
+  padding: var(--spacing-40) var(--spacing-40) var(--spacing-64);
+}
+
+/* ── toolbar ────────────────────────────────────────────────── */
+
+/*
+ * Sticky, because the point of the dials is to try a colour against whatever is
+ * on screen. Reaching them means scrolling to the top, changing one, and
+ * scrolling back to where you were — which is enough friction that nobody
+ * compares two hues on the same component.
+ *
+ * Translucent rather than opaque: content passing underneath should read as
+ * passing underneath. `backdrop-filter` is progressive — without it the
+ * fallback is a flat surface, which is merely less pretty.
+ */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-10);
+  padding: var(--spacing-8) var(--spacing-40);
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-canvas) 82%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.toolGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.toolDivider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle);
+}
+
+.toolLabel {
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-right: var(--spacing-2);
+}
+
+/*
+ * Each swatch sets its own `data-accent`, so `--accent-500` inside it resolves
+ * to the hue it selects. The alternative is fourteen hex values written out
+ * beside the generated palette, which go stale the first time a hue is retuned.
+ */
+.swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-full);
+  background: var(--accent-500);
+  cursor: pointer;
+  transition: transform var(--duration-70) var(--easing-standard);
+}
+
+.swatch:hover {
+  transform: scale(1.15);
+}
+
+/* Two rings rather than a border, so the mark reads on a swatch of any hue. */
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--surface-canvas),
+    0 0 0 4px var(--accent-500);
+}
+
+.radiusTrigger {
+  width: 116px;
 }
 
 .article {
@@ -143,20 +228,6 @@
   padding: 0 var(--spacing-8);
 }
 
-/* ── theme toggle ───────────────────────────────────────────── */
-
-/*
- * Three `Button`s in a row. The buttons are `secondary` when chosen and `ghost`
- * when not, so the whole control is variants the system already ships — the
- * hand-drawn 28px squares this replaces were a fourth button style that nothing
- * else on the site could reuse.
- */
-.themeBar {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-}
-
 /* ── mobile disclosure ──────────────────────────────────────── */
 
 /*
@@ -185,8 +256,8 @@
   }
 
   /*
-   * A bar rather than a column, stuck to the top so the disclosure and the
-   * theme toggle stay reachable from anywhere on a long page.
+   * A bar rather than a column, stuck to the top so the disclosure stays
+   * reachable from anywhere on a long page.
    */
   .sidebar {
     position: sticky;
@@ -242,8 +313,27 @@
     cursor: default;
   }
 
-  .main {
-    padding: var(--spacing-32) var(--spacing-20) var(--spacing-48);
+  .content {
+    padding: var(--spacing-28) var(--spacing-20) var(--spacing-48);
+  }
+
+  /*
+   * Not sticky on a narrow screen. The sidebar is already a sticky bar here, and
+   * a second one under it would need to know how tall the first is — a number
+   * that changes the moment the brand wraps.
+   *
+   * The swatches scroll sideways instead of wrapping, so the bar stays one row
+   * high. Fourteen 20px circles need 336px, which no phone has.
+   */
+  .toolbar {
+    position: static;
+    padding: var(--spacing-8) var(--spacing-20);
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .toolGroup {
+    flex: none;
   }
 
   /*

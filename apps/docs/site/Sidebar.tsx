@@ -12,69 +12,6 @@ import { nav } from './nav';
 
 /*
  * ============================================
- * Theme toggle
- * ============================================
- */
-
-type Theme = 'light' | 'dark' | 'system';
-
-const THEME_ICON: Record<Theme, string> = {
-  light: 'light_mode',
-  dark: 'dark_mode',
-  system: 'contrast',
-};
-
-/**
- * Writes `data-theme` on the root, which is exactly what the token stylesheet
- * watches. Removing the attribute hands control back to the OS rather than
- * pinning a guess at what the OS currently says.
- *
- * Selection is shown by giving the chosen option a box — `secondary` against
- * `ghost` — rather than by a tint the system does not have a name for. Both are
- * variants that already exist, so the toggle cannot drift from the buttons it
- * sits next to.
- */
-const ThemeToggle = () => {
-  const [theme, setTheme] = React.useState<Theme>('system');
-
-  React.useEffect(() => {
-    const stored = window.localStorage.getItem('theme') as Theme | null;
-    if (stored) setTheme(stored);
-  }, []);
-
-  React.useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'system') {
-      root.removeAttribute('data-theme');
-      window.localStorage.removeItem('theme');
-    } else {
-      root.setAttribute('data-theme', theme);
-      window.localStorage.setItem('theme', theme);
-    }
-  }, [theme]);
-
-  return (
-    <div className={css.themeBar} role="group" aria-label="Theme">
-      {(['light', 'dark', 'system'] as const).map(option => (
-        <Button
-          key={option}
-          size="s"
-          iconOnly
-          variant={theme === option ? 'secondary' : 'ghost'}
-          onClick={() => setTheme(option)}
-          aria-pressed={theme === option}
-          aria-label={option}
-          title={option}
-        >
-          <Icon name={THEME_ICON[option]} size={18} />
-        </Button>
-      ))}
-    </div>
-  );
-};
-
-/*
- * ============================================
  * Navigation
  * ============================================
  */
@@ -142,8 +79,9 @@ const Brand = () => (
 /**
  * Two presentations of one list.
  *
- * Wide: a column beside the content, where the brand and the theme toggle stay
- * put and only the links scroll.
+ * Wide: a column beside the content, where the brand stays put and only the
+ * links scroll. The dials are not here — they moved to the toolbar above the
+ * content, where fourteen swatches have room to be a row rather than a grid.
  *
  * Narrow: a bar with a disclosure, because twenty-eight links stacked above the
  * article means every visit starts by scrolling past the table of contents.
@@ -184,7 +122,6 @@ export const Sidebar = () => {
       <div className={css.head}>
         <Brand />
         <div className={css.headActions}>
-          <ThemeToggle />
           <Button
             size="s"
             iconOnly

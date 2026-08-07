@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import * as React from 'react';
 
 import css from '../site/chrome.module.css';
+import { DialsProvider } from '../site/dials';
 import { Sidebar } from '../site/Sidebar';
-import { ThemePreference } from '../site/ThemePreference';
+import { Toolbar } from '../site/Toolbar';
 
 import './globals.css';
 
@@ -78,11 +79,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <ThemePreference />
-        <div className={css.shell}>
-          <Sidebar />
-          <main className={css.main}>{children}</main>
-        </div>
+        <DialsProvider>
+          <div className={css.shell}>
+            <Sidebar />
+            <main className={css.main}>
+              <Toolbar />
+              <div className={css.content}>{children}</div>
+            </main>
+          </div>
+        </DialsProvider>
       </body>
     </html>
   );
