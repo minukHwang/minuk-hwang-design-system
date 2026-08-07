@@ -115,7 +115,7 @@
     "**/node_modules/**",
     "**/.nx/**",
     "**/coverage/**",
-    "**/storybook-static/**",
-    "**/.storybook/**"
+    "**/.next/**",
+    "**/next-env.d.ts"
   ]
 }

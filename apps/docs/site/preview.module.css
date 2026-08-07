@@ -1,0 +1,164 @@
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-12);
+  overflow: hidden;
+}
+
+.title {
+  padding: var(--spacing-10) var(--spacing-16);
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--mono);
+  font-size: var(--font-size-12);
+  letter-spacing: 0.04em;
+  color: var(--text-color-assistive);
+}
+
+/*
+ * The stage sits on the canvas rather than on a tinted panel, so a component's
+ * own surface reads against the same ground it will have in an application.
+ */
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  flex-wrap: wrap;
+  padding: var(--spacing-28) var(--spacing-24);
+  background: var(--surface-canvas);
+}
+
+.stageStack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-16);
+}
+
+.code {
+  margin: 0;
+  padding: var(--spacing-16);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-default);
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-21);
+  color: var(--text-color-normal);
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.code code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  max-width: 68ch;
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-26);
+  color: var(--text-color-assistive);
+}
+
+.prose :global(p) {
+  margin: 0;
+}
+
+.prose :global(strong) {
+  color: var(--text-color-normal);
+  font-weight: var(--font-weight-600);
+}
+
+/* ── props table ────────────────────────────────────────────── */
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-21);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) 0;
+  border-bottom: 1px solid var(--border-normal);
+  font-family: var(--mono);
+  font-size: var(--font-size-12);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-400);
+  color: var(--text-color-assistive);
+}
+
+.table td {
+  padding: var(--spacing-10) var(--spacing-16) var(--spacing-10) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  color: var(--text-color-assistive);
+}
+
+.type {
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  color: var(--text-color-assistive);
+}
+
+/* ── parts ──────────────────────────────────────────────────── */
+
+.parts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.parts li {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--spacing-16);
+  align-items: baseline;
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-21);
+  color: var(--text-color-assistive);
+}
+
+.parts code {
+  font-size: var(--font-size-13);
+}
+
+/* ── callout ────────────────────────────────────────────────── */
+
+.callout {
+  padding: var(--spacing-14) var(--spacing-16);
+  border-left: 2px solid var(--accent-normal);
+  border-radius: 0 var(--border-radius-6) var(--border-radius-6) 0;
+  background: var(--accent-surface);
+  color: var(--accent-strong);
+  font-size: var(--font-size-15);
+  line-height: var(--line-height-24);
+}
+
+.calloutWarning {
+  border-left-color: var(--status-warning-normal);
+  background: var(--status-warning-surface);
+  color: var(--status-warning-strong);
+}
+
+@media (max-width: 640px) {
+  .parts li {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+  }
+}

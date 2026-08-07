@@ -1,0 +1,102 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: var(--font-size-24);
+  line-height: var(--line-height-30);
+}
+
+/* ── layers ─────────────────────────────────────────────────── */
+
+.layers {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-12);
+  overflow: hidden;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: var(--spacing-12);
+  padding: var(--spacing-18) var(--spacing-20);
+  background: var(--surface-canvas);
+}
+
+.layer + .layer {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/*
+ * Numbered because the layers really are ordered — each one may only reach
+ * downwards, and that is the constraint the whole structure rests on.
+ */
+.layerIndex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--border-radius-full);
+  background: var(--surface-default);
+  color: var(--text-color-assistive);
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+}
+
+.layerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  min-width: 0;
+}
+
+.layerHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-10);
+  flex-wrap: wrap;
+}
+
+/* ── component grid ─────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-10);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-14) var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-10);
+  background: var(--surface-canvas);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-70) var(--easing-standard),
+    border-color var(--duration-70) var(--easing-standard);
+}
+
+.tile:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-normal);
+}
+
+.tileHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.installCard {
+  max-width: 420px;
+}

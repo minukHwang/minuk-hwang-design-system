@@ -1,0 +1,295 @@
+/* ── shell ──────────────────────────────────────────────────── */
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/*
+ * A flex column rather than one scrolling box, so the brand and the theme
+ * toggle stay put and only the link list moves. Putting the toggle at the end
+ * of a scrolling sidebar meant it was below the fold on every screen shorter
+ * than the nav — a control nobody can find is a control that does not exist.
+ */
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /*
+   * No horizontal padding on the sidebar itself. It would sit between the
+   * scrollbar and the border as a reserved empty lane, which reads as a gap
+   * rather than as breathing room. The children carry their own insets instead,
+   * so the scrollbar can sit against the edge where it belongs.
+   */
+  padding: var(--spacing-24) 0;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--surface-canvas);
+}
+
+.head {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: 0 var(--spacing-16) var(--spacing-16);
+}
+
+.nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--spacing-12) var(--spacing-2) 0 var(--spacing-8);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: 0 var(--spacing-8);
+  text-decoration: none;
+}
+
+.brandName {
+  font-family: var(--serif);
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-600);
+  color: var(--text-color-strong);
+}
+
+.brandNote {
+  font-family: var(--mono);
+  font-size: var(--font-size-12);
+  color: var(--text-color-assistive);
+}
+
+.section + .section {
+  margin-top: var(--spacing-20);
+}
+
+.sectionTitle {
+  padding: 0 var(--spacing-8) var(--spacing-6);
+  font-family: var(--mono);
+  font-size: var(--font-size-12);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color-assistive);
+}
+
+.link {
+  display: block;
+  padding: var(--spacing-6) var(--spacing-8);
+  border-radius: var(--border-radius-6);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-20);
+  color: var(--text-color-assistive);
+  text-decoration: none;
+  transition: background-color var(--duration-70) var(--easing-standard);
+}
+
+.link:hover {
+  background: var(--surface-hover);
+  color: var(--text-color-normal);
+}
+
+/* Bolder rather than only tinted — colour alone is a poor "you are here". */
+.linkActive {
+  color: var(--accent-strong);
+  background: var(--accent-surface);
+  font-weight: var(--font-weight-600);
+}
+
+/* ── content ────────────────────────────────────────────────── */
+
+.main {
+  min-width: 0;
+  padding: var(--spacing-56) var(--spacing-40) var(--spacing-64);
+}
+
+.article {
+  max-width: var(--content);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+.pageHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--font-size-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-color-assistive);
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: var(--font-size-40);
+  line-height: var(--line-height-48);
+}
+
+.lede {
+  margin: 0;
+  font-size: var(--font-size-17);
+  line-height: var(--line-height-28);
+  color: var(--text-color-assistive);
+}
+
+.headActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 0 var(--spacing-8);
+}
+
+/* ── theme toggle ───────────────────────────────────────────── */
+
+.themeBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-8);
+}
+
+.themeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius-6);
+  background: transparent;
+  color: var(--text-color-assistive);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-70) var(--easing-standard),
+    color var(--duration-70) var(--easing-standard);
+}
+
+.themeButton:hover {
+  background: var(--surface-hover);
+  color: var(--text-color-normal);
+}
+
+.themeButtonActive,
+.themeButtonActive:hover {
+  color: var(--accent-strong);
+  background: var(--accent-surface);
+}
+
+/* ── mobile disclosure ──────────────────────────────────────── */
+
+/*
+ * Hidden until the sidebar stops being a sidebar. Rendering the button always
+ * and hiding it here keeps one nav list in the document — two copies would be
+ * two sets of links for a screen reader to walk.
+ */
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border-normal);
+  border-radius: var(--border-radius-8);
+  background: var(--surface-canvas);
+  color: var(--text-color-normal);
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background: var(--surface-hover);
+}
+
+.scrim {
+  display: none;
+}
+
+/* ── responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  /*
+   * A bar rather than a column, stuck to the top so the disclosure and the
+   * theme toggle stay reachable from anywhere on a long page.
+   */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: auto;
+    padding: var(--spacing-12) 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-16);
+    padding: 0 var(--spacing-16);
+  }
+
+  .headActions {
+    padding: 0;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  /*
+   * Collapsed by default. Twenty-eight links stacked above the article means
+   * every visit starts by scrolling past the table of contents.
+   */
+  .nav {
+    display: none;
+    max-height: calc(100vh - 76px);
+    padding: var(--spacing-12) var(--spacing-2) var(--spacing-8) var(--spacing-8);
+    margin-top: var(--spacing-12);
+  }
+
+  .nav[data-open] {
+    display: block;
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    border: none;
+    background: var(--surface-scrim);
+    cursor: default;
+  }
+
+  .main {
+    padding: var(--spacing-32) var(--spacing-20) var(--spacing-48);
+  }
+
+  .pageTitle {
+    font-size: var(--font-size-28);
+    line-height: var(--line-height-34);
+  }
+}

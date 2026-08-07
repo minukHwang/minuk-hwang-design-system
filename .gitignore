@@ -66,10 +66,8 @@ jspm_packages/
 # Nuxt.js build / generate output
 .nuxt
 
-# Storybook build outputs
 .out
 .build
-storybook-static
 
 # Temporary folders
 tmp/

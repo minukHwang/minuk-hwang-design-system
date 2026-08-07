@@ -1,0 +1,110 @@
+/*
+ * Site chrome.
+ *
+ * Everything here is built from the design system's own tokens — the docs site
+ * is the system's first consumer, and a documentation site styled with values
+ * the system does not define would be documenting something else.
+ */
+
+@import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+
+:root {
+  --sidebar: 248px;
+  --content: 780px;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+body {
+  margin: 0;
+  background: var(--neutral-10);
+  color: var(--text-color-normal);
+}
+
+/* The reset sets every element to the body colour; headings want their own. */
+h1,
+h2,
+h3 {
+  color: var(--text-color-strong);
+  font-family: var(--serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--neutral-50);
+  padding: 1px 5px;
+  border-radius: var(--border-radius-4);
+}
+
+/*
+ * Focus is never removed, only redrawn. The one rule of a docs site nobody
+ * checks is whether it can be read with a keyboard.
+ */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-4);
+}
+
+::selection {
+  background: var(--accent-surface);
+}
+
+/*
+ * Scrollbars.
+ *
+ * Drawn from the same border tokens as everything else, so they flip with the
+ * theme instead of staying whatever the OS decided. The thumb is painted inside
+ * a transparent border with `background-clip: padding-box` — that keeps the
+ * visible bar at 6px while leaving the full 10px as the grab target, which a
+ * plain 6px scrollbar would not.
+ *
+ * macOS hides overlay scrollbars until a mouse is connected, so this is mostly
+ * for everyone else. That is the point: it should not look like an oversight on
+ * the platforms that do show them.
+ */
+
+/* Firefox has no pseudo-elements for this; two properties are the whole API. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-normal) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-full);
+  background-color: var(--border-normal);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-strong);
+}
+
+/* Where two scrollable areas meet, the default corner is a bare grey square. */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/*
+ * No `scrollbar-gutter: stable` anywhere. It buys away the one-off shift when a
+ * page first overflows, and charges an always-visible empty lane for it — which
+ * is the worse of the two.
+ */

@@ -30,13 +30,13 @@ pnpm build:all
 # Start development mode
 pnpm dev
 
-# Start Storybook (documentation)
-pnpm dev:storybook
+# Start the documentation site (documentation)
+pnpm dev:docs
 ```
 
 ## 📚 Documentation
 
-Visit our Storybook for component documentation and examples.
+Visit our the documentation site for component documentation and examples.
 
 ## 🛠 Tech Stack
 

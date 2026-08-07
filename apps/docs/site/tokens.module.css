@@ -1,0 +1,196 @@
+.ramps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+/*
+ * The label column fits the longest name rather than the shortest. At 86px
+ * `status.success` was clipped mid-word, which reads as a rendering fault
+ * rather than as a name that did not fit.
+ */
+.ramp {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: var(--spacing-12);
+  align-items: center;
+}
+
+.rampName {
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  color: var(--text-color-assistive);
+  white-space: nowrap;
+}
+
+.swatches {
+  display: flex;
+  border-radius: var(--border-radius-6);
+  overflow: hidden;
+}
+
+.swatch {
+  flex: 1;
+  height: 40px;
+  min-width: 0;
+}
+
+/* ── token tables ───────────────────────────────────────────── */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 150px 110px minmax(0, 1fr);
+  gap: var(--spacing-16);
+  align-items: center;
+  padding: var(--spacing-8) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--font-size-14);
+}
+
+.token {
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  color: var(--text-color-normal);
+}
+
+.value {
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  color: var(--text-color-assistive);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A bar whose width is the token, so the scale is visible rather than only listed. */
+.bar {
+  height: 12px;
+  border-radius: var(--border-radius-2);
+  background: var(--accent-normal);
+}
+
+.radiusChip {
+  width: 56px;
+  height: 40px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-default);
+}
+
+.shadowChip {
+  width: 120px;
+  height: 56px;
+  border-radius: var(--border-radius-8);
+  background: var(--surface-canvas);
+}
+
+.shadowStage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-24);
+  padding: var(--spacing-28);
+  border-radius: var(--border-radius-12);
+  background: var(--surface-default);
+}
+
+.shadowItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+/* ── motion ─────────────────────────────────────────────────── */
+
+.curve {
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-8);
+  background: var(--surface-canvas);
+}
+
+.curves {
+  display: flex;
+  gap: var(--spacing-20);
+  flex-wrap: wrap;
+}
+
+.curveItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ramp {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── motion demo ────────────────────────────────────────────── */
+
+/*
+ * The bar is positioned against the track, so `left: 100%` resolves against the
+ * track's width. Animating `transform: translateX(100%)` does not work here —
+ * a percentage transform is a percentage of the element's own size, so a 44px
+ * bar moved by `calc(100% - 44px)` travels exactly nowhere.
+ */
+.track {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: var(--border-radius-2);
+  background: var(--surface-default);
+  overflow: hidden;
+}
+
+.runner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 100%;
+  border-radius: var(--border-radius-2);
+  background: var(--accent-normal);
+}
+
+.running {
+  animation-name: docsRun;
+  animation-timing-function: var(--easing-standard);
+  animation-fill-mode: both;
+}
+
+@keyframes docsRun {
+  from {
+    left: 0;
+  }
+  to {
+    left: calc(100% - 44px);
+  }
+}
+
+.durationRow {
+  display: grid;
+  grid-template-columns: 150px 70px minmax(0, 1fr) 220px;
+  gap: var(--spacing-16);
+  align-items: center;
+  padding: var(--spacing-10) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--font-size-14);
+}
+
+@media (max-width: 720px) {
+  .durationRow {
+    grid-template-columns: 110px 60px minmax(0, 1fr);
+  }
+  .durationRow > :last-child {
+    display: none;
+  }
+}
