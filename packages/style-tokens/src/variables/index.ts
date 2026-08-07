@@ -12,5 +12,12 @@ export * as typography from './typography';
 export * as motion from './motion';
 
 export * from './spacing';
-export * from './radius';
 export * from './shadow';
+
+/*
+ * Only the pointers. `borderRadiusValues` holds the literals the stylesheet is
+ * built from, and this namespace is walked by that generator — exporting both
+ * here would emit `--border-radius-8: var(--border-radius-8)`, a self-reference
+ * the browser discards. It is re-exported from the package root instead.
+ */
+export { borderRadius } from './radius';

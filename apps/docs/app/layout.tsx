@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import css from '../site/chrome.module.css';
 import { Sidebar } from '../site/Sidebar';
+import { ThemePreference } from '../site/ThemePreference';
 
 import './globals.css';
 
@@ -35,6 +36,7 @@ import '@minuk-hwang-design-system/components-react/separator/style';
 import '@minuk-hwang-design-system/components-react/spinner/style';
 import '@minuk-hwang-design-system/components-react/switch/style';
 import '@minuk-hwang-design-system/components-react/tabs/style';
+import '@minuk-hwang-design-system/components-react/theme/style';
 import '@minuk-hwang-design-system/components-react/text/style';
 import '@minuk-hwang-design-system/components-react/tooltip/style';
 
@@ -76,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <ThemePreference />
         <div className={css.shell}>
           <Sidebar />
           <main className={css.main}>{children}</main>

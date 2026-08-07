@@ -40,3 +40,7 @@ export { DropdownMenu } from './dropdown-menu';
 /* Navigation */
 export { Accordion } from './accordion';
 export { Tabs } from './tabs';
+
+/* Theme */
+export { Theme } from './theme';
+export type { ThemeProps, AccentColor, RadiusScale } from './theme';

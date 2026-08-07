@@ -49,6 +49,73 @@ const renderSemantic = (prefix, node, indent = '\t') =>
     })
     .join('\n');
 
+/*
+ * ============================================
+ * Theme dials
+ * ============================================
+ */
+
+/**
+ * The accent ramp, and one block per hue that can replace it.
+ *
+ * The default sits in the root block so it is present without any attribute;
+ * the hue blocks are attribute selectors, which outrank `html` on specificity
+ * rather than on source order. That matters — the two files this module feeds
+ * assemble their sections differently, and a rule that depended on which came
+ * last would work in one and not the other.
+ *
+ * Unqualified on purpose. `html[data-accent]` would allow exactly one accent per
+ * document; this way a subtree can carry its own, and custom-property
+ * inheritance takes it the rest of the way down.
+ */
+const accentRamp = (hue, indent = '\t') =>
+  [
+    ...theme.accentSteps.map(step => `${indent}--accent-${step}: var(--${hue}-${step});`),
+    `${indent}--accent-on-solid: var(--on-solid-${hue});`,
+  ].join('\n');
+
+const accentBlocks = () =>
+  theme.accentColors.map(hue => `[data-accent='${hue}'] {\n${accentRamp(hue)}\n}`).join('\n\n');
+
+/**
+ * Radius, as a value multiplied by a factor.
+ *
+ * `0` and `full` are written out rather than run through the multiplication:
+ * zero times anything is zero, and a pill is not a measurement the factor can
+ * scale — 999px times 2 is still a pill. `full` reads a property of its own so
+ * that `radius="none"` can square it, which is what asking for no radius means
+ * even on an avatar.
+ *
+ * Named `--border-radius-factor` rather than `--radius-factor` to stay out of
+ * Tailwind's `--radius-*` namespace, where it would have generated a
+ * `rounded-factor` utility.
+ */
+const renderRadius = (indent = '\t') =>
+  Object.entries(theme.borderRadiusValues)
+    .map(([step, value]) => {
+      if (step === 'full') return `${indent}--border-radius-full: var(--border-radius-pill);`;
+      if (value === '0rem') return `${indent}--border-radius-${step}: 0rem;`;
+      return `${indent}--border-radius-${step}: calc(${value} * var(--border-radius-factor));`;
+    })
+    .join('\n');
+
+const radiusDefaults = indent =>
+  [
+    `${indent}--border-radius-factor: ${theme.radiusFactors[theme.defaultRadiusScale]};`,
+    `${indent}--border-radius-pill: ${theme.borderRadiusValues.full};`,
+  ].join('\n');
+
+const radiusBlocks = () =>
+  theme.radiusScales
+    .map(scale => {
+      const lines = [`\t--border-radius-factor: ${theme.radiusFactors[scale]};`];
+      // A pill is the one corner the factor cannot flatten, so `none` says so.
+      if (scale === 'none') lines.push('\t--border-radius-pill: 0rem;');
+      else lines.push(`\t--border-radius-pill: ${theme.borderRadiusValues.full};`);
+      return `[data-radius='${scale}'] {\n${lines.join('\n')}\n}`;
+    })
+    .join('\n\n');
+
 /**
  * Builds the four theme blocks.
  *
@@ -88,17 +155,32 @@ export const generateCssVariables = () => {
   // `shadow` is both: flat steps beside a nested `up`. The recursive renderer
   // handles that shape without needing to know which it is, and produces
   // `--shadow-m` and `--shadow-up-m` from the same pass.
+  //
+  // `borderRadius` is excluded because it is the one group whose properties are
+  // not their own values: every step is `calc(value * factor)`, and the object
+  // in `vars` holds `var(--border-radius-8)` so components can follow the dial.
+  // Running it through here would emit each property in terms of itself.
   const isNamespace = node => Object.values(node).every(value => typeof value === 'object');
 
   const nonColour = Object.entries(theme.vars)
-    .filter(([key]) => key !== 'color')
+    .filter(([key]) => key !== 'color' && key !== 'borderRadius')
     .map(([name, group]) =>
       isNamespace(group) ? renderTheme(group) : renderSemantic(toKebabCase(name), group)
     )
     .join('\n\n');
 
+  const root = [
+    renderTheme($static.light),
+    absolute,
+    accentRamp(theme.defaultAccentColor),
+    radiusDefaults('\t'),
+    renderRadius(),
+    semantic,
+    nonColour,
+  ].join('\n\n');
+
   return {
-    light: `${SELECTOR} {\n${renderTheme($static.light)}\n\n${absolute}\n\n${semantic}\n\n${nonColour}\n}`,
+    light: `${SELECTOR} {\n${root}\n}`,
     // Only follow the OS when the page has not asked for a specific theme.
     dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]) {\n${renderTheme($static.dark, '\t\t')}\n\t}\n}`,
     darkClass: [`${SELECTOR}[data-theme="dark"]`, `${SELECTOR}.dark`]
@@ -110,10 +192,15 @@ export const generateCssVariables = () => {
   };
 };
 
-/** The four blocks in cascade order, ready to concatenate. */
+/**
+ * Every block in cascade order, ready to concatenate.
+ *
+ * The dials come last so they read in the order they take effect, though they do
+ * not depend on it: attribute selectors outrank `html` either way.
+ */
 export const cssVariableBlocks = () => {
   const { light, dark, darkClass, lightClass } = generateCssVariables();
-  return [light, dark, darkClass, lightClass];
+  return [light, dark, darkClass, lightClass, accentBlocks(), radiusBlocks()];
 };
 
 /** Webfonts the token set names. Bare specifiers, resolved by the consumer's bundler. */

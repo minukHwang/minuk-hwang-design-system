@@ -1,0 +1,92 @@
+/* ── picker ─────────────────────────────────────────────────── */
+
+.picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-28);
+  padding-bottom: var(--spacing-20);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.controlLabel {
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-6);
+}
+
+/*
+ * Each swatch carries its own `data-accent`, so it paints itself from the same
+ * ramp it selects. A hand-written list of fourteen hex values beside the
+ * generated palette is a list that goes stale the first time a hue is retuned.
+ */
+.swatch {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border-normal);
+  border-radius: var(--border-radius-full);
+  background: var(--accent-500);
+  cursor: pointer;
+  transition: transform var(--duration-70) var(--easing-standard);
+}
+
+.swatch:hover {
+  transform: scale(1.12);
+}
+
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--surface-canvas),
+    0 0 0 4px var(--accent-500);
+}
+
+.segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+/* ── sample ─────────────────────────────────────────────────── */
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.sampleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+/* ── nesting ────────────────────────────────────────────────── */
+
+.nested {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-16);
+}
+
+.nestedPane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-12);
+  background: var(--surface-default);
+}

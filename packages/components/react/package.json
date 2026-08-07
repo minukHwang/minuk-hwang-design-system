@@ -138,6 +138,12 @@
       "require": "./dist/tabs/index.cjs"
     },
     "./tabs/style": "./dist/tabs/index.css",
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js",
+      "require": "./dist/theme/index.cjs"
+    },
+    "./theme/style": "./dist/theme/index.css",
     "./text": {
       "types": "./dist/text/index.d.ts",
       "import": "./dist/text/index.js",

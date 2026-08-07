@@ -11,8 +11,21 @@
  * `full` is the one name left, because it is not a measurement. It asks for a
  * pill regardless of the element's height, which is what the value is for — 999px
  * is simply past anything real.
+ *
+ * ---
+ *
+ * Two exports, for the same reason the colour tokens have `$static` beside
+ * `$palette`: one is the value, the other is the name to reach it by.
+ *
+ * `borderRadiusValues` is what the stylesheet generator emits. `borderRadius` is
+ * what a component uses, and it points at the custom properties rather than
+ * carrying the numbers — which is what lets `<Theme radius="large">` reach
+ * seventeen components' stylesheets without any of them being rebuilt. Inlining
+ * the literal, which is what this did before, put `border-radius: 0.5rem` in
+ * every compiled rule and left nothing for a theme to change.
  */
-export const borderRadius = {
+
+const VALUES = {
   0: '0rem', // 0px
   2: '0.125rem',
   4: '0.25rem',
@@ -24,4 +37,10 @@ export const borderRadius = {
   24: '1.5rem',
   36: '2.25rem',
   full: '62.4375rem', // 999px, past anything real
-};
+} as const;
+
+export const borderRadiusValues = VALUES;
+
+export const borderRadius = Object.fromEntries(
+  Object.keys(VALUES).map(step => [step, `var(--border-radius-${step})`])
+) as { [K in keyof typeof VALUES]: string };

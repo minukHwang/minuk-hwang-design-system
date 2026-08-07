@@ -10,3 +10,17 @@ export * as classes from './classes';
  */
 export { headingScale, textScale, headingSizeForLevel } from './scale';
 export type { HeadingSize, HeadingLevel, TextSize, TypographyWeight } from './scale';
+
+/* Radius literals, kept out of `vars` so the generator does not self-reference. */
+export { borderRadiusValues } from './variables/radius';
+
+/* The accent and radius dials, for the same reason the scales are out here. */
+export {
+  accentColors,
+  accentSteps,
+  defaultAccentColor,
+  radiusScales,
+  radiusFactors,
+  defaultRadiusScale,
+} from './theme';
+export type { AccentColor, RadiusScale } from './theme';

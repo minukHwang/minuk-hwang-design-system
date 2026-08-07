@@ -11,6 +11,8 @@
  * variant" of their surface.
  */
 
+import { accentSteps } from '../../theme';
+
 import { color, dim } from './absolute';
 import * as palette from './palette';
 
@@ -85,11 +87,22 @@ const buildRamp = (scale: typeof palette.green, onNormal: string, strongStep: 70
 /**
  * The brand colour: primary buttons, focus rings, selected states.
  *
- * Identical to `status.info` today, since both are blue. They stay separate
- * names because they answer different questions — a decision to make the brand
- * purple should not turn every informational banner purple with it.
+ * Points at `--accent-*` rather than at a hue directly. Those properties are
+ * defined once as whichever scale the accent currently is, and `data-accent`
+ * redefines them for a subtree — so a component compiled against
+ * `var(--accent-500)` follows a rebrand it was built years before.
+ *
+ * This is why it is a separate name from `status.info`, which is the same blue
+ * today. They answer different questions, and a decision to make the brand
+ * purple should not turn every informational banner purple with it. With the
+ * indirection in place that is no longer only an argument — the two genuinely
+ * move apart the moment anyone turns the dial.
  */
-export const accent = buildRamp(palette.blue, palette.onSolid.blue, 700);
+const accentScale = Object.fromEntries(
+  accentSteps.map(step => [step, `var(--accent-${step})`])
+) as typeof palette.blue;
+
+export const accent = buildRamp(accentScale, 'var(--accent-on-solid)', 700);
 
 /*
  * ============================================
