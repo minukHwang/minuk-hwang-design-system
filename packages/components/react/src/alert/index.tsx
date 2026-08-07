@@ -93,18 +93,23 @@ const Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
   }
 );
 
+/**
+ * A paragraph, not a heading. An alert interrupts the page rather than
+ * structuring it, and putting an `h*` in the outline for every toast is how a
+ * document ends up with a table of contents made of notifications.
+ */
 const Title = React.forwardRef<HTMLElement, TextProps>(function AlertTitle(
-  { as = 'p', textType = 'body2', textMode = 'bold', ...props },
+  { as = 'p', size = 'body2', weight = 'bold', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} as={as} textType={textType} textMode={textMode} />;
+  return <Text {...props} ref={ref} as={as} size={size} weight={weight} />;
 });
 
 const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescription(
-  { textType = 'body3', ...props },
+  { size = 'body3', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} textType={textType} />;
+  return <Text {...props} ref={ref} size={size} />;
 });
 
 /*

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
-import { textColor, TextColor } from '../text/styles.css';
+import { colorStyle, TextColor } from '../text/styles.css';
 
 import { icon } from './styles.css';
 
@@ -59,7 +59,7 @@ export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(function Icon(
     <span
       {...props}
       ref={ref}
-      className={clsx('material-symbols-outlined', icon, color && textColor[color], className)}
+      className={clsx('material-symbols-outlined', icon, color && colorStyle[color], className)}
       style={{ fontSize: `${size}px`, ...props.style }}
       role={label ? 'img' : undefined}
       aria-label={label}

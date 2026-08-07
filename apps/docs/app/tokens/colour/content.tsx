@@ -148,7 +148,7 @@ export default function ColourPage() {
               color: `var(--status-${status}-on-normal)`,
             }}
           >
-            <Text as="span" textType="body2" textMode="bold" style={{ color: 'inherit' }}>
+            <Text as="span" size="body2" weight="bold" style={{ color: 'inherit' }}>
               status.{status}.onNormal
             </Text>
           </div>

@@ -94,7 +94,7 @@ export default function ScalesPage() {
           Three weights — 400, 600, 700 — and sixteen line heights, all keyed the same way. The
           named steps that combine them (<code>body1</code>, <code>title3</code> and the rest) live
           on{' '}
-          <Text as="span" textType="body1" color="link">
+          <Text as="span" size="body1" color="link">
             Text
           </Text>
           .

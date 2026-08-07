@@ -78,6 +78,12 @@
       "require": "./dist/field/index.cjs"
     },
     "./field/style": "./dist/field/index.css",
+    "./heading": {
+      "types": "./dist/heading/index.d.ts",
+      "import": "./dist/heading/index.js",
+      "require": "./dist/heading/index.cjs"
+    },
+    "./heading/style": "./dist/heading/index.css",
     "./icon": {
       "types": "./dist/icon/index.d.ts",
       "import": "./dist/icon/index.js",

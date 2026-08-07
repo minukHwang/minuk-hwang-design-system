@@ -40,7 +40,12 @@ export const nav: NavSection[] = [
   {
     title: 'Primitives',
     items: [
-      { href: '/components/text', label: 'Text', summary: 'Type steps, semantic colour' },
+      { href: '/components/text', label: 'Text', summary: 'Body copy at one of ten steps' },
+      {
+        href: '/components/heading',
+        label: 'Heading',
+        summary: 'Level and size, decided separately',
+      },
       { href: '/components/icon', label: 'Icon', summary: 'Material Symbols glyph' },
       { href: '/components/spinner', label: 'Spinner', summary: 'Indeterminate progress' },
       { href: '/components/separator', label: 'Separator', summary: 'Divider between sections' },

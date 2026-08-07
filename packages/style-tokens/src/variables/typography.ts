@@ -15,9 +15,17 @@ export const fontSize = {
   12: '0.75rem',
 };
 
+/**
+ * Four weights, three of which `Text` exposes.
+ *
+ * 600 stays because the interface uses it directly — buttons, tab triggers,
+ * sidebar links — where 700 is heavier than a control wants to be. What it is
+ * no longer is the meaning of `bold`, which is 700 everywhere now.
+ */
 export const fontWeight = {
   700: '700',
   600: '600',
+  500: '500',
   400: '400',
 };
 

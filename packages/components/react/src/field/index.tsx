@@ -186,13 +186,13 @@ const Control = ({ children }: FieldControlProps) => {
 
 /** Helper text. Stays visible when the field is invalid — the error adds, it does not replace. */
 const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescription(
-  { textType = 'caption', color = 'assistive', ...props },
+  { size = 'footnote', color = 'assistive', ...props },
   ref
 ) {
   const { descriptionId, register } = useField('Description');
   React.useEffect(() => register('description'), [register]);
 
-  return <Text {...props} ref={ref} id={descriptionId} textType={textType} color={color} />;
+  return <Text {...props} ref={ref} id={descriptionId} size={size} color={color} />;
 });
 
 /**
@@ -203,7 +203,7 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescr
  * screen reader announce it the moment it appears.
  */
 const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
-  { textType = 'caption', color = 'error', ...props },
+  { size = 'footnote', color = 'error', ...props },
   ref
 ) {
   const { errorId, invalid, register } = useField('Error');
@@ -217,7 +217,7 @@ const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
       ref={ref}
       id={errorId}
       role="alert"
-      textType={textType}
+      size={size}
       color={color}
       className={clsx(css.error, props.className)}
     />

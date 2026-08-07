@@ -63,7 +63,7 @@ transitionTimingFunction: vars.motion.easing.standard;`}
                   style={{ animationDuration: `var(--duration-${ms})` }}
                 />
               </span>
-              <Text as="span" textType="footnote" color="assistive">
+              <Text as="span" size="footnote" color="assistive">
                 {use}
               </Text>
             </div>

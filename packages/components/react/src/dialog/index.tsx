@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 
 import { Button } from '../button';
+import { Heading, HeadingProps } from '../heading';
 import { Icon } from '../icon';
 import { scrim } from '../shared/overlay.css';
 import { Text, TextProps } from '../text';
@@ -69,25 +70,31 @@ const Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
   }
 );
 
-/** Wraps the base `Title`, so the accessible name and the visible heading stay the same node. */
-const Title = React.forwardRef<HTMLHeadingElement, TextProps>(function DialogTitle(
-  { textType = 'title3', textMode = 'bold', ...props },
+/**
+ * Wraps the base `Title`, so the accessible name and the visible heading stay
+ * the same node.
+ *
+ * Level 2 by default: a dialog opens over a page that already has its `h1`, and
+ * its title starts a new region rather than replacing the document's.
+ */
+const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(function DialogTitle(
+  { level = 2, size = 'heading2', ...props },
   ref
 ) {
   return (
     <BaseDialog.Title asChild>
-      <Text {...props} ref={ref} as="h2" textType={textType} textMode={textMode} />
+      <Heading {...props} ref={ref} level={level} size={size} />
     </BaseDialog.Title>
   );
 });
 
 const Description = React.forwardRef<HTMLParagraphElement, TextProps>(function DialogDescription(
-  { textType = 'body2', color = 'assistive', ...props },
+  { size = 'body2', color = 'assistive', ...props },
   ref
 ) {
   return (
     <BaseDialog.Description asChild>
-      <Text {...props} ref={ref} textType={textType} color={color} />
+      <Text {...props} ref={ref} size={size} color={color} />
     </BaseDialog.Description>
   );
 });

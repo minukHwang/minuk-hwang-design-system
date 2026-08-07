@@ -35,18 +35,18 @@ export default function TabsPage() {
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Panel value="tokens">
-            <Text textType="body2" color="assistive">
+            <Text size="body2" color="assistive">
               Colour, spacing, radius, type, shadow and motion — four consumption formats generated
               from one source.
             </Text>
           </Tabs.Panel>
           <Tabs.Panel value="base">
-            <Text textType="body2" color="assistive">
+            <Text size="body2" color="assistive">
               Eighteen headless primitives. Radix where WAI-ARIA already specifies the contract.
             </Text>
           </Tabs.Panel>
           <Tabs.Panel value="components">
-            <Text textType="body2" color="assistive">
+            <Text size="body2" color="assistive">
               Twenty-two styled components, replaceable by design.
             </Text>
           </Tabs.Panel>

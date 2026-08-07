@@ -8,6 +8,7 @@
 
 /* Primitives */
 export { Text } from './text';
+export { Heading } from './heading';
 export { Icon } from './icon';
 export { Spinner } from './spinner';
 export { Separator } from './separator';

@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
+import { Heading, HeadingProps } from '../heading';
 import { Text, TextProps } from '../text';
 
 import * as css from './styles.css';
@@ -60,19 +61,24 @@ const Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
   }
 );
 
-/** Defaults to `h3`: a card is almost never the top of a document's outline. */
-const Title = React.forwardRef<HTMLElement, TextProps>(function CardTitle(
-  { as = 'h3', textType = 'title3', textMode = 'bold', ...props },
+/**
+ * Defaults to level 3: a card is almost never the top of a document's outline,
+ * and its title is almost never the largest thing on the page. Both are
+ * overridable, and `level` is the one that matters — it decides the outline
+ * whatever the size says.
+ */
+const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(function CardTitle(
+  { level = 3, size = 'headline', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} as={as} textType={textType} textMode={textMode} />;
+  return <Heading {...props} ref={ref} level={level} size={size} />;
 });
 
 const Description = React.forwardRef<HTMLElement, TextProps>(function CardDescription(
-  { textType = 'body2', color = 'assistive', ...props },
+  { size = 'body3', color = 'assistive', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} textType={textType} color={color} />;
+  return <Text {...props} ref={ref} size={size} color={color} />;
 });
 
 const Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

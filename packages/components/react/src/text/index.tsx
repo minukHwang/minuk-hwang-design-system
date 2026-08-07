@@ -1,16 +1,8 @@
+import type { TextStep } from '@minuk-hwang-design-system/style-tokens';
 import clsx from 'clsx';
 import * as React from 'react';
 
-import {
-  textAlign as alignStyle,
-  textColor as colorStyle,
-  textStep,
-  TextAlign,
-  TextColor,
-  TextMode,
-  TextType,
-  truncate as truncateStyle,
-} from './styles.css';
+import * as css from './styles.css';
 
 /*
  * ============================================
@@ -18,15 +10,31 @@ import {
  * ============================================
  */
 
-export type TextProps = React.HTMLAttributes<HTMLElement> & {
-  /** Element to render. Pick the one that is true of the content, not the one that looks right. */
+/**
+ * The bottom ten steps of the scale, defined in the token package.
+ *
+ * Text stops at `title3` because nothing above 24px is ever run as body copy —
+ * a 28px paragraph is a heading that forgot to say so. `Heading` takes the top
+ * ten, and the six they share are the band where either is a real answer.
+ */
+export type TextSize = TextStep;
+
+export type TextProps = Omit<React.HTMLAttributes<HTMLElement>, 'color'> & {
+  /** Element to render. Pick the one that is true of the content. */
   as?: React.ElementType;
-  textType?: TextType;
-  textMode?: TextMode;
-  textAlign?: TextAlign;
-  color?: TextColor;
-  /** Truncates to a single line with an ellipsis. */
+  size?: TextSize;
+  weight?: css.TextWeight;
+  /**
+   * `reading` keeps the size and opens the line height, for text that will be
+   * read as a paragraph rather than scanned as a label.
+   */
+  leading?: 'normal' | 'reading';
+  color?: css.TextColor;
+  align?: css.TextAlign;
+  /** One line, with an ellipsis. */
   truncate?: boolean;
+  /** Clamp to this many lines. Ignored when `truncate` is set. */
+  lines?: number;
 };
 
 /*
@@ -36,40 +44,49 @@ export type TextProps = React.HTMLAttributes<HTMLElement> & {
  */
 
 /**
- * Text at one of the system's type steps.
+ * Body text at one of the system's steps.
  *
- * `textType` chooses the step; `as` chooses the element. They are separate on
- * purpose — a section heading that needs to read small is still an `h2`, and
- * collapsing the two is how a page ends up with six `h1`s or none.
+ * `size` chooses the step; `as` chooses the element. They are separate on
+ * purpose — a caption that has to be a `dd` is still a caption, and collapsing
+ * the two is how a document outline quietly stops matching what is on screen.
  *
- * Colour is restricted to the semantic roles. A one-off hue belongs in the
- * caller's own class rather than in a prop that makes it look sanctioned.
+ * For anything that is a heading, reach for `Heading`. It takes a `level`
+ * rather than an element, so the outline cannot be left to whoever remembered.
  */
 export const Text = React.forwardRef<HTMLElement, TextProps>(function Text(
   {
     as: Component = 'p',
-    textType = 'body1',
-    textMode = 'default',
-    textAlign,
+    size = 'body2',
+    weight = 'regular',
+    leading = 'normal',
     color = 'normal',
+    align,
     truncate,
+    lines,
     className,
+    style,
     children,
     ...props
   },
   ref
 ) {
+  const clamped = !truncate && lines !== undefined && lines > 1;
+
   return (
     <Component
       {...props}
       ref={ref}
       className={clsx(
-        textStep[textMode][textType],
-        colorStyle[color],
-        textAlign && alignStyle[textAlign],
-        truncate && truncateStyle,
+        css.sizeStyle[size],
+        css.weightStyle[weight],
+        leading === 'reading' && css.hasReading[size] && css.readingStyle[size],
+        css.colorStyle[color],
+        align && css.alignStyle[align],
+        truncate && css.truncateStyle,
+        clamped && css.clampStyle,
         className
       )}
+      style={clamped ? ({ '--text-lines': lines, ...style } as React.CSSProperties) : style}
     >
       {children}
     </Component>

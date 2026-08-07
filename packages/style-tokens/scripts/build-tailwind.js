@@ -142,6 +142,30 @@ const nonColourTokens = () =>
     flattenValues(namespace, group).map(([name, value]) => `\t--${name}: ${value};`)
   );
 
+/**
+ * The composed type steps, so Tailwind can say `text-body2` rather than
+ * `text-16` plus a line height the caller had to look up.
+ *
+ * Without this the step exists in three of the package's formats and not in
+ * this one: the utility classes have `.body2-bold`, the TypeScript objects have
+ * `classes.typography.body2`, and `Text` takes `size="body2"` — while a
+ * Tailwind user got the ingredients and no recipe. Pairing 16px with the wrong
+ * leading is exactly what a step exists to prevent.
+ *
+ * Tailwind reads `--text-{name}--line-height` as the leading that belongs to
+ * that size, so one utility sets both. Weight stays separate: `font-bold` is
+ * how a Tailwind user says bold, and baking a weight into the size would take
+ * that away.
+ */
+const typeSteps = () =>
+  theme.typographySteps.flatMap(step => {
+    const spec = theme.classes.typography[step].regular;
+    return [
+      `\t--text-${step}: ${spec.fontSize};`,
+      `\t--text-${step}--line-height: ${spec.lineHeight};`,
+    ];
+  });
+
 /*
  * ============================================
  * Assembly
@@ -156,6 +180,7 @@ ${[
   section('Palette ramps', paletteColours()),
   section('Absolute', absoluteColours()),
   section('Radius, shadow, type, easing', nonColourTokens()),
+  section('Type steps — size and leading together', typeSteps()),
 ].join('\n\n')}
 }`;
 

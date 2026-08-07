@@ -194,3 +194,35 @@
     display: none;
   }
 }
+
+/* ── type specimen ──────────────────────────────────────────── */
+
+.stepRow {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--spacing-16);
+  align-items: baseline;
+  width: 100%;
+}
+
+.stepMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  font-family: var(--mono);
+  font-size: var(--font-size-13);
+  color: var(--text-color-normal);
+}
+
+.stepSize {
+  font-size: var(--font-size-12);
+  color: var(--text-color-assistive);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .stepRow {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}

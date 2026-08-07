@@ -25,6 +25,7 @@ import '@minuk-hwang-design-system/components-react/chip/style';
 import '@minuk-hwang-design-system/components-react/dialog/style';
 import '@minuk-hwang-design-system/components-react/dropdown-menu/style';
 import '@minuk-hwang-design-system/components-react/field/style';
+import '@minuk-hwang-design-system/components-react/heading/style';
 import '@minuk-hwang-design-system/components-react/icon/style';
 import '@minuk-hwang-design-system/components-react/input/style';
 import '@minuk-hwang-design-system/components-react/popover/style';
