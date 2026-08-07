@@ -1,7 +1,6 @@
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-
 import { borderSprinkles } from '@minuk-hwang-design-system/styles/border';
 import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 export const messageListRecipe = recipe({
   variants: {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from '@minuk-hwang-design-system/components-react/input';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'Components/Input',

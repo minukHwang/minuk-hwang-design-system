@@ -11,8 +11,8 @@
  * variant" of their surface.
  */
 
-import * as palette from './palette';
 import { color, dim } from './absolute';
+import * as palette from './palette';
 
 /*
  * ============================================

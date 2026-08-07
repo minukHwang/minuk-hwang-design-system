@@ -1,3 +1,4 @@
+import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
@@ -5,7 +6,6 @@ import { Badge } from '../../badge/Badge';
 import { BadgeVariants } from '../../badge/style.css';
 import { Text } from '../../common/text/Text';
 import { CommonProps } from '../../common/types';
-import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
 
 import { infoButtonRecipe, InfoButtonVariants } from './style.css';
 

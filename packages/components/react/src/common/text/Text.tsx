@@ -1,8 +1,8 @@
+import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
+import { typographyRecipe } from '@minuk-hwang-design-system/styles/typography';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
-import { typographyRecipe } from '@minuk-hwang-design-system/styles/typography';
 import { CommonProps } from '../types';
 
 import { ellipsisTextStyle } from './style.css';

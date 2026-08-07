@@ -1,12 +1,12 @@
 'use client';
 
+import { Palette } from '@minuk-hwang-design-system/styles/color';
 import clsx from 'clsx';
 import { forwardRef, useState } from 'react';
 
 import { Icon } from '../common/icon/Icon';
 import { Text } from '../common/text/Text';
 import { CommonProps } from '../common/types';
-import { Palette } from '@minuk-hwang-design-system/styles/color';
 
 import { buttonRecipe, ButtonVariants } from './style.css';
 

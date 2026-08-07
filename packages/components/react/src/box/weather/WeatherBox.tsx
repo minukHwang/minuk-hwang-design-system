@@ -8,7 +8,7 @@ import { CommonProps } from '../../common/types';
 interface WeatherBoxProps extends CommonProps {
   date: string;
   location: string;
-  condition: React.ReactNode;
+  condition: string;
   iconSrc: string;
   temperature: number | string;
   highestTemperature: number | string;
@@ -21,7 +21,7 @@ interface WeatherBoxProps extends CommonProps {
  *
  * @param {Date} [props.date=new Date()] - 날짜 (필수, 기본값: 현재 날짜)
  * @param {string} [props.location='-'] - 위치 (필수, 기본값: '-')
- * @param {React.ReactNode} [props.condition='loading'] - 날씨 상태 (필수, 기본값: 'loading')
+ * @param {string} [props.condition='loading'] - 날씨 상태 (필수, 기본값: 'loading')
  * @param {number | string} [props.temperature='-'] - 현재 온도 (필수, 기본값: '-')
  * @param {number | string} [props.highestTemperature='-'] - 최고 온도 (필수, 기본값: '-')
  * @param {number | string} [props.lowestTemperature='-'] - 최저 온도 (필수, 기본값: '-')
@@ -83,8 +83,7 @@ export const WeatherBox = forwardRef<HTMLElement, WeatherBoxProps>(
               width={72}
               height={72}
             >
-              {/* {condition} */}
-              <img src={iconSrc} />
+              <img src={iconSrc} alt={condition} />
             </Container>
             <Text textType="display1" textAlign="center">
               {`${temperature}°`}

@@ -1,0 +1,62 @@
+# Build, lint and format checks on every pull request and every push to master.
+#
+# Tests are deliberately absent. Every package still has the `exit 1` stub for
+# its test script, so adding the step would paint the whole board red on day one
+# — which is the fastest way to teach everyone to ignore CI. It goes in when
+# there is something to run.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# A new push supersedes whatever is still running for the same branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # nx needs history to work out what changed against the base branch.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # nx caches per project, so an unchanged package is restored rather than
+      # rebuilt. Keyed on the lockfile and source so a dependency bump busts it.
+      - name: Restore nx cache
+        uses: actions/cache@v4
+        with:
+          path: .nx/cache
+          key: nx-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            nx-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            nx-${{ runner.os }}-
+
+      # Build first. A type error here is the failure most worth catching, and
+      # the packages have to be built before anything can resolve them anyway.
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check formatting
+        run: pnpm format:check

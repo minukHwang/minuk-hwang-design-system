@@ -1,9 +1,8 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
-import { style } from '@vanilla-extract/css';
-import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-
 import { colorSprinkles } from '@minuk-hwang-design-system/styles/color';
 import { spacingSprinkles } from '@minuk-hwang-design-system/styles/spacing';
+import { style } from '@vanilla-extract/css';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 /**
  * 공통 스타일
