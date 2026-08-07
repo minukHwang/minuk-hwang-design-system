@@ -151,6 +151,77 @@ const buildOnSolid = theme =>
     })
   );
 
+/**
+ * The measurements behind each `onSolid`, kept rather than discarded.
+ *
+ * The rule is one line — white if it clears 4.5, otherwise black — and on
+ * several hues the two answers are close enough that the line is a judgement
+ * rather than a calculation. Red carries white at 4.52 and black at 4.64: both
+ * legible, and the rule takes white because a red button set in black reads as a
+ * hazard sign rather than as a button.
+ *
+ * A judgement that cannot be inspected is indistinguishable from an accident, so
+ * the numbers ship, and the documentation renders them beside the fill.
+ */
+const contrastRows = theme =>
+  CHROMATIC_ORDER.map(name => {
+    const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[500];
+    const { white, black } = contrastReport(fill);
+    return (
+      `    ${name}: { fill: '${fill}', white: ${white.toFixed(2)}, ` +
+      `black: ${black.toFixed(2)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
+    );
+  }).join('\n');
+
+/**
+ * Its own file rather than a group inside the per-theme scales.
+ *
+ * Everything in `static/light.ts` is walked by the stylesheet generator and
+ * turned into custom properties, and a group whose values are objects comes out
+ * as `--contrast-red: [object Object]`. This is data about the colours, not a
+ * colour.
+ */
+const writeContrast = () => {
+  const body = ['light', 'dark']
+    .map(theme => `  ${theme}: {\n${contrastRows(theme)}\n  },`)
+    .join('\n');
+
+  const file = path.join(STATIC_DIR, 'contrast.ts');
+  writeFileSync(
+    file,
+    `/**
+ * What white and black measure against each solid fill, per theme.
+ *
+ * GENERATED FILE. Run \`node scripts/write-scales.js\` to rebuild.
+ *
+ * \`onSolid\` is one line — white if it clears 4.5, otherwise black — and on
+ * several hues the two answers are close enough that the line is a judgement
+ * rather than a calculation. Red carries white at 4.52 and black at 4.64: both
+ * legible, and the rule takes white because a red button set in black reads as a
+ * hazard sign rather than as a button.
+ *
+ * A judgement that cannot be inspected is indistinguishable from an accident, so
+ * the numbers ship. It is also the only way to notice that retuning a hue left
+ * its margin at 0.02.
+ */
+
+export type ContrastMeasurement = {
+  /** The 500 step, which is what a solid fill uses. */
+  fill: string;
+  /** Ratio against white text. AA wants 4.5 for body copy, 3 for large. */
+  white: number;
+  black: number;
+  chosen: 'white' | 'black';
+};
+
+export const contrast: Record<'light' | 'dark', Record<string, ContrastMeasurement>> = {
+${body}
+};
+`
+  );
+  console.log(`wrote ${path.relative(process.cwd(), file)}`);
+};
+
 ['light', 'dark'].forEach(theme => {
   const blocks = [header(theme)];
 
@@ -176,3 +247,5 @@ const buildOnSolid = theme =>
   writeFileSync(file, blocks.join('\n') + '\n');
   console.log(`wrote ${path.relative(process.cwd(), file)}`);
 });
+
+writeContrast();

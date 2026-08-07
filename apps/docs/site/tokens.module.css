@@ -226,3 +226,90 @@
     gap: var(--spacing-4);
   }
 }
+
+/* ── contrast comparison ────────────────────────────────────── */
+
+.contrastList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.contrastRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+/*
+ * One fill, two halves. Split rather than shown twice side by side, because two
+ * separate swatches let the eye compare each against the page instead of
+ * against each other — and the question here is only which of the two is
+ * easier to read on the same ground.
+ */
+.contrastFill {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--border-radius-8);
+  overflow: hidden;
+}
+
+.contrastHalf {
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-15);
+  font-weight: var(--font-weight-600);
+  line-height: var(--line-height-22);
+  text-align: center;
+}
+
+.contrastMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-10);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-20);
+  color: var(--text-color-assistive);
+}
+
+.contrastName {
+  font-weight: var(--font-weight-600);
+  color: var(--text-color-normal);
+  min-width: 72px;
+}
+
+.contrastHex {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-12);
+}
+
+/*
+ * Three states, not two. A figure that fails is struck through; one that clears
+ * is plain; the one actually in use is boxed. Marking only pass and fail would
+ * leave the interesting rows — where both clear — saying nothing about which
+ * was taken.
+ */
+.contrastFigure {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-12);
+  padding: 1px var(--spacing-6);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-4);
+  text-decoration: line-through;
+  text-decoration-color: var(--status-error-normal);
+}
+
+.contrastFigure[data-pass] {
+  text-decoration: none;
+}
+
+.contrastFigure[data-used] {
+  border-color: var(--border-normal);
+  color: var(--text-color-normal);
+  background: var(--surface-default);
+}
+
+.contrastNote {
+  font-size: var(--font-size-12);
+  color: var(--status-warning-strong);
+}

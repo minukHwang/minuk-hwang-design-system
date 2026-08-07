@@ -1,10 +1,12 @@
 'use client';
 
 import { Text } from '@minuk-hwang-design-system/components-react/text';
+import { contrast } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
+import { useResolvedAppearance } from '../../../site/dials';
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Prose } from '../../../site/Preview';
+import { Callout, Preview, Prose, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const STEPS = [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 990];
@@ -46,12 +48,69 @@ const Ramp = ({ name }: { name: string }) => (
   </div>
 );
 
+const AA = 4.5;
+
+/**
+ * One fill, set in both text colours at once.
+ *
+ * The rule that picks between them is a single comparison against 4.5, and on
+ * several hues the two answers are close enough that the comparison is a
+ * judgement rather than a calculation. Reading the two numbers tells you which;
+ * seeing the two halves tells you whether you agree.
+ */
+const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) => {
+  const measured = contrast[theme][hue];
+  const bothClear = measured.white >= AA && measured.black >= AA;
+  const rejected = measured.chosen === 'white' ? measured.black : measured.white;
+  const nearMiss = !bothClear && rejected >= AA - 0.6;
+
+  return (
+    <div className={css.contrastRow}>
+      <div className={css.contrastFill} style={{ background: `var(--${hue}-500)` }}>
+        <span className={css.contrastHalf} style={{ color: '#ffffff' }}>
+          {hue} in white
+        </span>
+        <span className={css.contrastHalf} style={{ color: '#000000' }}>
+          {hue} in black
+        </span>
+      </div>
+
+      <div className={css.contrastMeta}>
+        <span className={css.contrastName}>{hue}</span>
+        <span className={css.contrastHex}>{measured.fill}</span>
+        <span
+          className={css.contrastFigure}
+          data-pass={measured.white >= AA || undefined}
+          data-used={measured.chosen === 'white' || undefined}
+        >
+          white {measured.white.toFixed(2)}
+        </span>
+        <span
+          className={css.contrastFigure}
+          data-pass={measured.black >= AA || undefined}
+          data-used={measured.chosen === 'black' || undefined}
+        >
+          black {measured.black.toFixed(2)}
+        </span>
+        {bothClear && <span className={css.contrastNote}>either clears — convention picked</span>}
+        {nearMiss && (
+          <span className={css.contrastNote}>
+            {measured.chosen === 'white' ? 'black' : 'white'} misses by {(AA - rejected).toFixed(2)}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default function ColourPage() {
+  const theme = useResolvedAppearance();
+
   return (
     <Page
       eyebrow="Tokens"
       title="Colour"
-      lede="Fourteen chromatic scales and three neutrals, thirteen steps each, generated rather than picked. Switch the theme in the sidebar — every swatch below moves."
+      lede="Fourteen chromatic scales and three neutrals, thirteen steps each, generated rather than picked. Switch the theme in the toolbar — every swatch below moves."
     >
       <Prose>
         <p>
@@ -131,9 +190,9 @@ export default function ColourPage() {
       <Prose>
         <p>
           Each status ramp carries an <code>onNormal</code> alongside these — the text colour that
-          clears WCAG AA on top of <code>normal</code>. Only blue, purple and indigo are dark enough
-          at full chroma to carry white; everything from cyan through orange needs black. Leaving
-          that judgement to each component is how a 2.29:1 green button gets shipped.
+          clears WCAG AA on top of <code>normal</code>. Four of the fourteen hues are dark enough at
+          full chroma to carry white; the rest need black. Leaving that judgement to each component
+          is how a 2.29:1 green button gets shipped.
         </p>
       </Prose>
 
@@ -154,6 +213,48 @@ export default function ColourPage() {
           </div>
         ))}
       </Preview>
+
+      <Section title="White or black on each fill">
+        <Prose>
+          <p>
+            The rule is one comparison: <strong>white if it clears 4.5, otherwise black</strong>.
+            Not &quot;whichever number is larger&quot; — that put black on red, which passes at 4.64
+            and reads as a hazard sign rather than as a button. Contrast decides what is legible;
+            convention decides between two legible answers.
+          </p>
+          <p>
+            Below is every hue in both text colours at once, with what each measures. The close
+            calls are marked, because a margin of 0.09 is a decision someone should look at rather
+            than a fact.
+          </p>
+        </Prose>
+
+        <Preview title={`measured against the ${theme} theme`} stack>
+          <div className={css.contrastList}>
+            {HUES.map(hue => (
+              <ContrastRow key={hue} hue={hue} theme={theme} />
+            ))}
+          </div>
+        </Preview>
+
+        <Callout tone="warning">
+          <code>crimson</code>, <code>pink</code> and <code>magenta</code> are the awkward ones.
+          White misses by 0.09, 0.54 and 0.47, so all three take black — on saturated hues where
+          white is what the eye expects. They are legible and they look wrong, which is the
+          difference between passing an audit and being right. Dropping their saturation a few
+          points would let white clear, the same way red, orange, amber, yellow and blue were
+          already tuned.
+        </Callout>
+
+        <Prose>
+          <p>
+            Both themes measure the same today, because step 500 is deliberately the same lightness
+            in each — a solid fill should not change identity when the theme flips. The measurement
+            is still taken per theme, since that is a decision that could be revisited and the table
+            should notice when it is.
+          </p>
+        </Prose>
+      </Section>
     </Page>
   );
 }

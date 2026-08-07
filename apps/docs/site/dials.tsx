@@ -99,3 +99,27 @@ export const useDials = () => {
   if (!context) throw new Error('useDials must be used within DialsProvider');
   return context;
 };
+
+/**
+ * Which theme is actually showing, with `system` resolved.
+ *
+ * `appearance` is what was asked for; pages that display per-theme data need
+ * what was given. Subscribing to the media query rather than reading it once
+ * matters — someone switching their OS to dark at dusk should not be left
+ * looking at the light theme's numbers over the dark theme's colours.
+ */
+export const useResolvedAppearance = (): 'light' | 'dark' => {
+  const { appearance } = useDials();
+  const [systemIsDark, setSystemIsDark] = React.useState(false);
+
+  React.useEffect(() => {
+    const query = window.matchMedia('(prefers-color-scheme: dark)');
+    setSystemIsDark(query.matches);
+    const onChange = (event: MediaQueryListEvent) => setSystemIsDark(event.matches);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
+  if (appearance !== 'system') return appearance;
+  return systemIsDark ? 'dark' : 'light';
+};

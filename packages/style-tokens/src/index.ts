@@ -14,6 +14,14 @@ export type { HeadingSize, HeadingLevel, TextSize, TypographyWeight } from './sc
 /* Radius literals, kept out of `vars` so the generator does not self-reference. */
 export { borderRadiusValues } from './variables/radius';
 
+/*
+ * What white and black measure against each solid fill. Data about the colours
+ * rather than a colour, so it stays out of `vars` — the stylesheet generator
+ * walks that namespace and would emit `--contrast-red: [object Object]`.
+ */
+export { contrast } from './variables/color/static/contrast';
+export type { ContrastMeasurement } from './variables/color/static/contrast';
+
 /* The accent and radius dials, for the same reason the scales are out here. */
 export {
   accentColors,
