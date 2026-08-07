@@ -4,7 +4,7 @@ import { Avatar } from '@minuk-hwang-design-system/components-react/avatar';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -59,8 +59,7 @@ export default function AvatarPage() {
         </Avatar.Root>
       </Preview>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             {
@@ -75,10 +74,9 @@ export default function AvatarPage() {
             },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -95,7 +93,7 @@ export default function AvatarPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

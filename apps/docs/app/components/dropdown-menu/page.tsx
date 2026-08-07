@@ -6,7 +6,7 @@ import { Icon } from '@minuk-hwang-design-system/components-react/icon';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function DropdownMenuPage() {
   const [tag, setTag] = React.useState('latest');
@@ -110,8 +110,7 @@ export default function DropdownMenuPage() {
         label still has to say &ldquo;Unpublish&rdquo;.
       </Callout>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'DropdownMenu.Root', description: 'Owns the open state.' },
@@ -131,10 +130,9 @@ export default function DropdownMenuPage() {
             { name: 'DropdownMenu.Sub / SubTrigger / SubContent', description: 'Nested menu.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -155,7 +153,7 @@ export default function DropdownMenuPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

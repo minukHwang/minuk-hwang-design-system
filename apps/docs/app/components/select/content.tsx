@@ -5,7 +5,7 @@ import { Select } from '@minuk-hwang-design-system/components-react/select';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function SelectPage() {
   return (
@@ -100,8 +100,7 @@ export default function SelectPage() {
         </div>
       </Preview>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'Select.Root', description: 'Owns the value.' },
@@ -119,10 +118,9 @@ export default function SelectPage() {
             { name: 'Select.Separator', description: 'Divider between groups.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'value', type: 'string', description: 'Controlled selection, on Root.' },
@@ -141,7 +139,7 @@ export default function SelectPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

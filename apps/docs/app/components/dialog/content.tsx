@@ -6,7 +6,7 @@ import { Dialog } from '@minuk-hwang-design-system/components-react/dialog';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function DialogPage() {
   return (
@@ -111,8 +111,7 @@ export default function DialogPage() {
         <code>VisuallyHidden</code> rather than dropping it.
       </Callout>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'Dialog.Root', description: 'Owns the open state.' },
@@ -138,10 +137,9 @@ export default function DialogPage() {
             { name: 'Dialog.Close', description: 'Closes it from anywhere inside.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'open', type: 'boolean', description: 'Controlled state, on Root.' },
@@ -160,7 +158,7 @@ export default function DialogPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

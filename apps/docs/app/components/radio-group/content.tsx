@@ -4,7 +4,7 @@ import { RadioGroup } from '@minuk-hwang-design-system/components-react/radio-gr
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function RadioGroupPage() {
   return (
@@ -56,8 +56,7 @@ export default function RadioGroupPage() {
         </RadioGroup.Root>
       </Preview>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'RadioGroup.Root', description: 'Owns the value and the roving focus.' },
@@ -68,10 +67,9 @@ export default function RadioGroupPage() {
             },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'value', type: 'string', description: 'Controlled selection, on Root.' },
@@ -84,7 +82,7 @@ export default function RadioGroupPage() {
             { name: 'value', type: 'string', description: 'On Item — what this option is worth.' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

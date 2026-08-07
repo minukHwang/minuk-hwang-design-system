@@ -7,13 +7,20 @@
   overflow: hidden;
 }
 
+/* Size and colour arrive with `Text`; the frame and the mono face do not. */
 .title {
   padding: var(--spacing-10) var(--spacing-16);
   border-bottom: 1px solid var(--border-subtle);
-  font-family: var(--mono);
-  font-size: var(--font-size-12);
+  font-family: var(--font-family-mono);
   letter-spacing: 0.04em;
-  color: var(--text-color-assistive);
+}
+
+/* ── section ────────────────────────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
 }
 
 /*
@@ -40,7 +47,7 @@
   padding: var(--spacing-16);
   border-top: 1px solid var(--border-subtle);
   background: var(--surface-default);
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   line-height: var(--line-height-21);
   color: var(--text-color-normal);
@@ -60,9 +67,6 @@
   flex-direction: column;
   gap: var(--spacing-12);
   max-width: 68ch;
-  font-size: var(--font-size-16);
-  line-height: var(--line-height-26);
-  color: var(--text-color-assistive);
 }
 
 .prose :global(p) {
@@ -84,33 +88,28 @@
   width: 100%;
   min-width: 560px;
   border-collapse: collapse;
-  font-size: var(--font-size-14);
-  line-height: var(--line-height-21);
 }
 
 .table th {
   text-align: left;
   padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) 0;
   border-bottom: 1px solid var(--border-normal);
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-12);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: var(--font-weight-400);
-  color: var(--text-color-assistive);
 }
 
 .table td {
   padding: var(--spacing-10) var(--spacing-16) var(--spacing-10) 0;
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
-  color: var(--text-color-assistive);
 }
 
 .type {
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
-  color: var(--text-color-assistive);
 }
 
 /* ── parts ──────────────────────────────────────────────────── */
@@ -129,31 +128,10 @@
   grid-template-columns: 200px minmax(0, 1fr);
   gap: var(--spacing-16);
   align-items: baseline;
-  font-size: var(--font-size-14);
-  line-height: var(--line-height-21);
-  color: var(--text-color-assistive);
 }
 
 .parts code {
   font-size: var(--font-size-13);
-}
-
-/* ── callout ────────────────────────────────────────────────── */
-
-.callout {
-  padding: var(--spacing-14) var(--spacing-16);
-  border-left: 2px solid var(--accent-normal);
-  border-radius: 0 var(--border-radius-6) var(--border-radius-6) 0;
-  background: var(--accent-surface);
-  color: var(--accent-strong);
-  font-size: var(--font-size-15);
-  line-height: var(--line-height-24);
-}
-
-.calloutWarning {
-  border-left-color: var(--status-warning-normal);
-  background: var(--status-warning-surface);
-  color: var(--status-warning-strong);
 }
 
 @media (max-width: 640px) {

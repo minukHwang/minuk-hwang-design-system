@@ -5,7 +5,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const NAMES = [
   'search',
@@ -79,8 +79,7 @@ export default function IconPage() {
         thing saying what something is.
       </Callout>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -107,7 +106,7 @@ export default function IconPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

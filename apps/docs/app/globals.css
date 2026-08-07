@@ -11,8 +11,6 @@
 :root {
   --sidebar: 248px;
   --content: 780px;
-  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-  --serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 }
 
 body {
@@ -21,23 +19,24 @@ body {
   color: var(--text-color-normal);
 }
 
-/* The reset sets every element to the body colour; headings want their own. */
-h1,
-h2,
-h3 {
-  color: var(--text-color-strong);
-  font-family: var(--serif);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
-}
+/*
+ * No `h1, h2, h3` rule here.
+ *
+ * There was one, setting a serif face on every heading on the site — including
+ * the ones inside the live examples, because an example's `Heading` renders a
+ * real `h2` and a site-wide element selector cannot tell the difference. The
+ * examples were documenting the docs site's own stylesheet rather than the
+ * system's.
+ *
+ * Headings are `Heading` now, which carries its own size, weight and colour.
+ */
 
 a {
   color: inherit;
 }
 
 code {
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: 0.88em;
   background: var(--neutral-50);
   padding: 1px 5px;

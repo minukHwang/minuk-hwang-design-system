@@ -4,7 +4,7 @@ import { Badge } from '@minuk-hwang-design-system/components-react/badge';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const TONES = ['neutral', 'accent', 'info', 'success', 'warning', 'error'] as const;
 
@@ -58,8 +58,7 @@ export default function BadgePage() {
         </Badge>
       </Preview>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -82,7 +81,7 @@ export default function BadgePage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

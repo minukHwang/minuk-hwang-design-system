@@ -8,7 +8,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function PopoverPage() {
   return (
@@ -79,8 +79,7 @@ export default function PopoverPage() {
         </Popover.Root>
       </Preview>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'Popover.Root', description: 'Owns the open state.' },
@@ -94,10 +93,9 @@ export default function PopoverPage() {
             { name: 'Popover.Close', description: 'Closes it from inside.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -120,7 +118,7 @@ export default function PopoverPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

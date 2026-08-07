@@ -5,7 +5,7 @@ import { Input, Textarea } from '@minuk-hwang-design-system/components-react/inp
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function FieldPage() {
   return (
@@ -123,8 +123,7 @@ export default function FieldPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Why a render prop</h2>
+      <Section title="Why a render prop">
         <Prose>
           <p>
             <code>Field.Control</code> hands the props over instead of wrapping the control, because
@@ -149,10 +148,9 @@ export default function FieldPage() {
             </Field.Control>
           </Field.Root>
         </Preview>
-      </section>
+      </Section>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             {
@@ -182,10 +180,9 @@ export default function FieldPage() {
             },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -217,7 +214,7 @@ export default function FieldPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

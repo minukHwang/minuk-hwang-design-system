@@ -7,7 +7,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function CardPage() {
   return (
@@ -104,8 +104,7 @@ export default function CardPage() {
         button or link inside, or make the whole card one.
       </Callout>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             {
@@ -130,10 +129,9 @@ export default function CardPage() {
             },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -150,7 +148,7 @@ export default function CardPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

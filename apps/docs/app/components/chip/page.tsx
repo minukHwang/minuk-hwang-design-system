@@ -4,7 +4,7 @@ import { Chip } from '@minuk-hwang-design-system/components-react/chip';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const FILTERS = ['All', 'Design', 'Engineering', 'Research'];
 
@@ -74,8 +74,7 @@ export default function ChipPage() {
         <Chip disabled>Disabled</Chip>
       </Preview>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -93,7 +92,7 @@ export default function ChipPage() {
             { name: 'disabled', type: 'boolean', default: 'false', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

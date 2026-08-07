@@ -5,7 +5,7 @@ import { Input, Textarea } from '@minuk-hwang-design-system/components-react/inp
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function InputPage() {
   return (
@@ -77,8 +77,7 @@ export default function InputPage() {
         </Field.Root>
       </Preview>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -99,7 +98,7 @@ export default function InputPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

@@ -91,15 +91,53 @@ export default function ScalesPage() {
 
       <Prose>
         <p>
-          Three weights — 400, 600, 700 — and sixteen line heights, all keyed the same way. The
-          named steps that combine them (<code>body1</code>, <code>title3</code> and the rest) live
-          on{' '}
-          <Text as="span" size={6} color="link">
+          Four weights — 400, 500, 600, 700 — and line heights keyed the same way in pixels. The
+          steps that combine a size with a line height live on{' '}
+          <Text as="span" size={5} color="link">
             Text
+          </Text>{' '}
+          and{' '}
+          <Text as="span" size={5} color="link">
+            Heading
           </Text>
-          .
+          , which have a ladder each.
+        </p>
+        <p>
+          600 is a token but not a <code>weight</code> value on those components. The interface uses
+          it directly — buttons, tab triggers — where 700 is heavier than a control wants to be.
+          What it is no longer is the meaning of <code>bold</code>, which is 700 everywhere.
         </p>
       </Prose>
+
+      <Preview
+        title="font family"
+        stack
+        code={`fontFamily.main  // 'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif
+fontFamily.mono  // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace`}
+      >
+        <div className={css.rows}>
+          <div className={css.row}>
+            <span className={css.token}>fontFamily.main</span>
+            <span style={{ fontFamily: 'var(--font-family-main)', fontSize: 18 }}>
+              디자인 시스템 Design System 0123
+            </span>
+          </div>
+          <div className={css.row}>
+            <span className={css.token}>fontFamily.mono</span>
+            <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: 18 }}>
+              디자인 시스템 Design System 0123
+            </span>
+          </div>
+        </div>
+      </Preview>
+
+      <Callout>
+        The token names the face; fetching it is the application&apos;s job — the same way Tailwind
+        names <code>font-sans</code> and leaves the <code>@font-face</code> to you. Shipping the
+        binary would charge every consumer for a typeface they may already self-host. This site
+        loads Pretendard from a CDN in its own <code>layout.tsx</code>, which is exactly what a
+        consumer has to do.
+      </Callout>
     </Page>
   );
 }

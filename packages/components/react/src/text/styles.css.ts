@@ -1,7 +1,7 @@
 import { classes, textScale, vars } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { textColor: semantic, status } = vars.color.$semantic;
+const { textColor: semantic, status, accent } = vars.color.$semantic;
 
 /*
  * ============================================
@@ -88,9 +88,20 @@ export const colorStyle = styleVariants({
   /** On a filled or inverted surface. */
   inverse: { color: semantic.inverse },
   link: { color: semantic.link },
+  /** The brand colour, for text that is selected or active rather than linked. */
+  accent: { color: accent.strong },
   success: { color: status.success.strong },
   warning: { color: status.warning.strong },
   error: { color: status.error.strong },
+  /**
+   * Take the colour of whatever this sits in.
+   *
+   * For text inside something that has already picked a colour — an alert with
+   * a tone, a filled banner, a selected row. Without it, every `Text` re-asserts
+   * a colour at higher specificity than its container and the container's choice
+   * never lands.
+   */
+  inherit: { color: 'inherit' },
 });
 
 export type TextColor = keyof typeof colorStyle;

@@ -48,6 +48,20 @@ export const lineHeight = {
   16: '1rem',
 };
 
+/**
+ * Two families, and no third.
+ *
+ * The token names the face; loading it is the application's job. Shipping the
+ * binary would charge every consumer for a typeface they may already self-host,
+ * and would make the system's size depend on a decision that is not the
+ * system's to make.
+ *
+ * `mono` existed only in the documentation site's own stylesheet until now,
+ * which is the tell that it was missing here: a system with one family cannot
+ * set a code sample, and every consumer that needs one invents a different
+ * stack.
+ */
 export const fontFamily = {
-  main: "'Pretendard', 'Noto Sans KR', 'Arial', 'Helvetica', 'sans-serif'",
+  main: "'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif",
+  mono: "'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
 };

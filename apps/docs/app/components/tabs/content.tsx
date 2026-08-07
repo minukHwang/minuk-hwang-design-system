@@ -5,7 +5,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function TabsPage() {
   return (
@@ -72,8 +72,7 @@ export default function TabsPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'Tabs.Root', description: 'Owns the selected value.' },
@@ -86,10 +85,9 @@ export default function TabsPage() {
             },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'value', type: 'string', description: 'Controlled selection, on Root.' },
@@ -103,7 +101,7 @@ export default function TabsPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

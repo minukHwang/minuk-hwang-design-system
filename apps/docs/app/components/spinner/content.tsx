@@ -5,7 +5,7 @@ import { Spinner } from '@minuk-hwang-design-system/components-react/spinner';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function SpinnerPage() {
   return (
@@ -58,8 +58,7 @@ export default function SpinnerPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -76,7 +75,7 @@ export default function SpinnerPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

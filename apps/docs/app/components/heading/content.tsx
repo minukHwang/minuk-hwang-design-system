@@ -10,7 +10,7 @@ import {
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const step = (n: number) => classes.typography[`heading${n}` as 'heading6'];
@@ -122,8 +122,7 @@ export default function HeadingPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -148,13 +147,13 @@ export default function HeadingPage() {
               name: 'color',
               type: 'strong | normal | assistive | inverse | link | success | warning | error',
               default: `'strong'`,
-              description: 'Semantic roles only.',
+              description: 'The same roles Text takes.',
             },
             { name: 'align', type: `'left' | 'center' | 'right' | 'justify'`, description: '' },
             { name: 'truncate', type: 'boolean', default: 'false', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

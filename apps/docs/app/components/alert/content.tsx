@@ -5,7 +5,7 @@ import { Button } from '@minuk-hwang-design-system/components-react/button';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const TONES = [
   [
@@ -101,8 +101,7 @@ export default function AlertPage() {
         the page all along — otherwise it is read out on every navigation.
       </Callout>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             {
@@ -121,10 +120,9 @@ export default function AlertPage() {
             { name: 'Alert.Description', description: 'The message.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -142,7 +140,7 @@ export default function AlertPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

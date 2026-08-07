@@ -17,7 +17,7 @@
 }
 
 .rampName {
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-assistive);
   white-space: nowrap;
@@ -53,13 +53,13 @@
 }
 
 .token {
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-normal);
 }
 
 .value {
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-assistive);
   font-variant-numeric: tabular-nums;
@@ -209,7 +209,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  font-family: var(--mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-normal);
 }

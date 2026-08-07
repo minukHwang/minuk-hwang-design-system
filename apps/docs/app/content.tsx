@@ -8,7 +8,7 @@ import * as React from 'react';
 
 import { componentItems } from '../site/nav';
 import { Page } from '../site/Page';
-import { Callout, Preview, Prose } from '../site/Preview';
+import { Callout, Preview, Prose, Section } from '../site/Preview';
 
 import css from './home.module.css';
 
@@ -81,8 +81,7 @@ export default function Home() {
         that stayed correct.
       </Callout>
 
-      <section className={css.section}>
-        <h2 className={css.sectionTitle}>Components</h2>
+      <Section title="Components">
         <Prose>
           <p>
             Compound where the parts need shared state or layout, flat where they do not. The ones
@@ -109,10 +108,9 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section className={css.section}>
-        <h2 className={css.sectionTitle}>Install</h2>
+      <Section title="Install">
         <Preview
           code={`pnpm add @minuk-hwang-design-system/components-react
 
@@ -137,7 +135,7 @@ import '@minuk-hwang-design-system/components-react/button/style';`}
             </Card.Body>
           </Card.Root>
         </Preview>
-      </section>
+      </Section>
     </Page>
   );
 }

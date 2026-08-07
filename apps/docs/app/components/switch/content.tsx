@@ -4,7 +4,7 @@ import { Switch } from '@minuk-hwang-design-system/components-react/switch';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function SwitchPage() {
   return (
@@ -35,8 +35,7 @@ export default function SwitchPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'checked', type: 'boolean', description: 'Controlled state.' },
@@ -50,7 +49,7 @@ export default function SwitchPage() {
             { name: 'disabled', type: 'boolean', default: 'false', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

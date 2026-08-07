@@ -1,6 +1,8 @@
 'use client';
 
+import { Button } from '@minuk-hwang-design-system/components-react/button';
 import { Icon } from '@minuk-hwang-design-system/components-react/icon';
+import { Text } from '@minuk-hwang-design-system/components-react/text';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -26,6 +28,11 @@ const THEME_ICON: Record<Theme, string> = {
  * Writes `data-theme` on the root, which is exactly what the token stylesheet
  * watches. Removing the attribute hands control back to the OS rather than
  * pinning a guess at what the OS currently says.
+ *
+ * Selection is shown by giving the chosen option a box — `secondary` against
+ * `ghost` — rather than by a tint the system does not have a name for. Both are
+ * variants that already exist, so the toggle cannot drift from the buttons it
+ * sits next to.
  */
 const ThemeToggle = () => {
   const [theme, setTheme] = React.useState<Theme>('system');
@@ -49,17 +56,18 @@ const ThemeToggle = () => {
   return (
     <div className={css.themeBar} role="group" aria-label="Theme">
       {(['light', 'dark', 'system'] as const).map(option => (
-        <button
+        <Button
           key={option}
-          type="button"
+          size="s"
+          iconOnly
+          variant={theme === option ? 'secondary' : 'ghost'}
           onClick={() => setTheme(option)}
           aria-pressed={theme === option}
           aria-label={option}
           title={option}
-          className={`${css.themeButton} ${theme === option ? css.themeButtonActive : ''}`}
         >
-          <Icon name={THEME_ICON[option]} size={16} />
-        </button>
+          <Icon name={THEME_ICON[option]} size={18} />
+        </Button>
       ))}
     </div>
   );
@@ -78,7 +86,9 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
     <>
       {nav.map(section => (
         <div key={section.title} className={css.section}>
-          <div className={css.sectionTitle}>{section.title}</div>
+          <Text as="div" size={1} color="assistive" className={css.sectionTitle}>
+            {section.title}
+          </Text>
           {section.items.map(item => {
             const active = pathname === item.href;
             return (
@@ -89,7 +99,20 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
                 className={`${css.link} ${active ? css.linkActive : ''}`}
                 aria-current={active ? 'page' : undefined}
               >
-                {item.label}
+                {/*
+                 * `Text` inside the link rather than as the link. It carries
+                 * the step and the weight; the anchor keeps the padding, the
+                 * hit area and the "you are here" background, which are
+                 * navigation behaviour rather than type.
+                 */}
+                <Text
+                  as="span"
+                  size={3}
+                  weight={active ? 'bold' : 'regular'}
+                  color={active ? 'accent' : 'assistive'}
+                >
+                  {item.label}
+                </Text>
               </Link>
             );
           })}
@@ -101,8 +124,12 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
 
 const Brand = () => (
   <Link href="/" className={css.brand}>
-    <span className={css.brandName}>minuk-hwang</span>
-    <span className={css.brandNote}>design system</span>
+    <Text as="span" size={7} weight="bold" color="strong">
+      minuk-hwang
+    </Text>
+    <Text as="span" size={1} color="assistive" className={css.brandNote}>
+      design system
+    </Text>
   </Link>
 );
 
@@ -158,8 +185,10 @@ export const Sidebar = () => {
         <Brand />
         <div className={css.headActions}>
           <ThemeToggle />
-          <button
-            type="button"
+          <Button
+            size="s"
+            iconOnly
+            variant="secondary"
             className={css.menuButton}
             onClick={() => setOpen(value => !value)}
             aria-expanded={open}
@@ -167,7 +196,7 @@ export const Sidebar = () => {
             aria-label={open ? 'Close navigation' : 'Open navigation'}
           >
             <Icon name={open ? 'close' : 'menu'} size={20} />
-          </button>
+          </Button>
         </div>
       </div>
 

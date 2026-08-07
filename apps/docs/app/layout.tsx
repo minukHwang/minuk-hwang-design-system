@@ -55,6 +55,26 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/*
+         * Pretendard, which is what `--font-family-main` has named all along
+         * without anyone loading it — so every page has quietly been rendering
+         * in the next fallback, Helvetica.
+         *
+         * The token names the family; fetching it is the application's job, the
+         * same way Tailwind names `font-sans` and leaves the `@font-face` to
+         * you. A design system that shipped the binary would make every
+         * consumer pay for a typeface they may already self-host.
+         *
+         * The dynamic subset splits the face into unicode-range slices, so a
+         * page of Latin never downloads the 11,172 Hangul syllables.
+         */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+        />
+      </head>
       <body>
         <div className={css.shell}>
           <Sidebar />

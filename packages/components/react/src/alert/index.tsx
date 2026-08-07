@@ -99,17 +99,24 @@ const Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
  * document ends up with a table of contents made of notifications.
  */
 const Title = React.forwardRef<HTMLElement, TextProps>(function AlertTitle(
-  { as = 'p', size = 5, weight = 'bold', ...props },
+  { as = 'p', size = 5, weight = 'bold', color = 'inherit', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} as={as} size={size} weight={weight} />;
+  return <Text {...props} ref={ref} as={as} size={size} weight={weight} color={color} />;
 });
 
+/**
+ * `color` inherits rather than defaulting to `normal`.
+ *
+ * The tone paints the root, and `Text` writing its own colour on the child at
+ * equal specificity but later in the cascade meant the tone never reached a
+ * single word — every alert read in body grey while claiming to be an error.
+ */
 const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescription(
-  { size = 4, ...props },
+  { size = 4, color = 'inherit', ...props },
   ref
 ) {
-  return <Text {...props} ref={ref} size={size} />;
+  return <Text {...props} ref={ref} size={size} color={color} />;
 });
 
 /*

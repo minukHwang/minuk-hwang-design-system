@@ -4,7 +4,7 @@ import { Accordion } from '@minuk-hwang-design-system/components-react/accordion
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const ITEMS = [
   [
@@ -80,8 +80,7 @@ export default function AccordionPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             {
@@ -96,10 +95,9 @@ export default function AccordionPage() {
             { name: 'Accordion.Content', description: 'The panel. Animates its own height.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             { name: 'type', type: `'single' | 'multiple'`, description: 'Required, on Root.' },
@@ -113,7 +111,7 @@ export default function AccordionPage() {
             { name: 'onValueChange', type: '(value) => void', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

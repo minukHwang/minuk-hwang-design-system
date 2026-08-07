@@ -4,7 +4,7 @@ import { Checkbox } from '@minuk-hwang-design-system/components-react/checkbox';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const CHILDREN = ['Colour', 'Spacing', 'Shadow'];
 
@@ -76,8 +76,7 @@ export default function CheckboxPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -99,7 +98,7 @@ export default function CheckboxPage() {
             { name: 'disabled', type: 'boolean', default: 'false', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

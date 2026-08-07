@@ -6,7 +6,7 @@ import { Tooltip } from '@minuk-hwang-design-system/components-react/tooltip';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 const ACTIONS = [
   ['content_copy', 'Copy install command'],
@@ -69,8 +69,7 @@ export default function TooltipPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Parts</h2>
+      <Section title="Parts">
         <PartsList
           parts={[
             { name: 'Tooltip.Provider', description: 'Shares delays. Mount once near the root.' },
@@ -80,10 +79,9 @@ export default function TooltipPage() {
             { name: 'Tooltip.Arrow', description: 'Optional pointer.' },
           ]}
         />
-      </section>
+      </Section>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -101,7 +99,7 @@ export default function TooltipPage() {
             { name: 'sideOffset', type: 'number', default: '6', description: '' },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

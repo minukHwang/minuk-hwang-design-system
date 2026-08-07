@@ -5,7 +5,7 @@ import { Icon } from '@minuk-hwang-design-system/components-react/icon';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 
 export default function ButtonPage() {
   return (
@@ -142,8 +142,7 @@ export default function ButtonPage() {
         </p>
       </Prose>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -191,7 +190,7 @@ export default function ButtonPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }

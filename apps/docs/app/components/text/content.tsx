@@ -5,7 +5,7 @@ import { classes, textScale } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const step = (n: number) => classes.typography[`text${n}` as 'text5'];
@@ -126,13 +126,22 @@ export default function TextPage() {
         code={`<Text color="assistive">Captions and timestamps</Text>
 <Text color="error">Something went wrong</Text>`}
       >
-        {(['strong', 'normal', 'assistive', 'link', 'success', 'warning', 'error'] as const).map(
-          color => (
-            <Text key={color} color={color}>
-              {color}
-            </Text>
-          )
-        )}
+        {(
+          [
+            'strong',
+            'normal',
+            'assistive',
+            'link',
+            'accent',
+            'success',
+            'warning',
+            'error',
+          ] as const
+        ).map(color => (
+          <Text key={color} color={color}>
+            {color}
+          </Text>
+        ))}
       </Preview>
 
       <Prose>
@@ -157,8 +166,7 @@ export default function TextPage() {
         </div>
       </Preview>
 
-      <section>
-        <h2>Props</h2>
+      <Section title="Props">
         <PropsTable
           rows={[
             {
@@ -182,9 +190,10 @@ export default function TextPage() {
             },
             {
               name: 'color',
-              type: 'strong | normal | assistive | inverse | link | success | warning | error',
+              type: 'strong | normal | assistive | inverse | link | accent | success | warning | error | inherit',
               default: `'normal'`,
-              description: 'Semantic roles only.',
+              description:
+                'Semantic roles only. inherit takes the colour of whatever it sits in, for text inside something that has already picked one.',
             },
             { name: 'align', type: `'left' | 'center' | 'right' | 'justify'`, description: '' },
             {
@@ -206,7 +215,7 @@ export default function TextPage() {
             },
           ]}
         />
-      </section>
+      </Section>
     </Page>
   );
 }
