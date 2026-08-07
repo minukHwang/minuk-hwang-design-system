@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import * as React from 'react';
 
@@ -72,13 +74,22 @@ const Root = React.forwardRef<HTMLDivElement, AlertRootProps>(function AlertRoot
  */
 const AlertIcon = ({ name, className }: { name?: string; className?: string }) => {
   const tone = React.useContext(AlertContext);
-  return <Icon name={name ?? css.toneIcon[tone]} size={20} className={clsx(css.icon, className)} />;
+  return (
+    <Icon
+      name={name ?? css.toneIcon[tone]}
+      size={20}
+      data-alert-part="icon"
+      className={clsx(css.icon, className)}
+    />
+  );
 };
 
 /** Everything to the right of the icon. Keeps the text aligned when it wraps. */
 const Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   function AlertBody({ className, ...props }, ref) {
-    return <div {...props} ref={ref} className={clsx(css.body, className)} />;
+    return (
+      <div {...props} ref={ref} data-alert-part="body" className={clsx(css.body, className)} />
+    );
   }
 );
 
@@ -102,4 +113,15 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescr
  * ============================================
  */
 
-export const Alert = { Root, Icon: AlertIcon, Body, Title, Description };
+/**
+ * Anything placed after `Alert.Body` is treated as the action — pushed to the
+ * far edge, centred against the block, and never shrunk. `Alert.Action` exists
+ * for the cases where that guess is not wanted verbatim.
+ */
+const Action = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  function AlertAction({ className, ...props }, ref) {
+    return <div {...props} ref={ref} className={clsx(css.action, className)} />;
+  }
+);
+
+export const Alert = { Root, Icon: AlertIcon, Body, Title, Description, Action };

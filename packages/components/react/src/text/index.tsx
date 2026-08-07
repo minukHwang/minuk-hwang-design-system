@@ -1,8 +1,16 @@
-import { typographyRecipe, TypographyVariants } from '@minuk-hwang-design-system/styles/typography';
 import clsx from 'clsx';
 import * as React from 'react';
 
-import { textColor, TextColor, truncate as truncateStyle } from './styles.css';
+import {
+  textAlign as alignStyle,
+  textColor as colorStyle,
+  textStep,
+  TextAlign,
+  TextColor,
+  TextMode,
+  TextType,
+  truncate as truncateStyle,
+} from './styles.css';
 
 /*
  * ============================================
@@ -10,14 +18,16 @@ import { textColor, TextColor, truncate as truncateStyle } from './styles.css';
  * ============================================
  */
 
-export type TextProps = React.HTMLAttributes<HTMLElement> &
-  NonNullable<TypographyVariants> & {
-    /** Element to render. Pick the one that is true of the content, not the one that looks right. */
-    as?: React.ElementType;
-    color?: TextColor;
-    /** Truncates to a single line with an ellipsis. */
-    truncate?: boolean;
-  };
+export type TextProps = React.HTMLAttributes<HTMLElement> & {
+  /** Element to render. Pick the one that is true of the content, not the one that looks right. */
+  as?: React.ElementType;
+  textType?: TextType;
+  textMode?: TextMode;
+  textAlign?: TextAlign;
+  color?: TextColor;
+  /** Truncates to a single line with an ellipsis. */
+  truncate?: boolean;
+};
 
 /*
  * ============================================
@@ -54,8 +64,9 @@ export const Text = React.forwardRef<HTMLElement, TextProps>(function Text(
       {...props}
       ref={ref}
       className={clsx(
-        typographyRecipe({ textType, textMode, textAlign }),
-        textColor[color],
+        textStep[textMode][textType],
+        colorStyle[color],
+        textAlign && alignStyle[textAlign],
         truncate && truncateStyle,
         className
       )}

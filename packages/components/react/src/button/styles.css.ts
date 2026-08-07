@@ -9,7 +9,7 @@ const { opacity } = vars.color.$absolute;
  * short enough to read as feedback rather than animation.
  */
 const transition = {
-  transitionProperty: 'background-color, border-color, color, box-shadow',
+  transitionProperty: 'background-color, border-color, color, box-shadow, transform',
   transitionDuration: vars.motion.duration[70],
   transitionTimingFunction: vars.motion.easing.standard,
 };
@@ -35,8 +35,20 @@ export const buttonRecipe = recipe({
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'transparent',
+    /*
+     * A `button` inherits neither family nor size from the page — left alone it
+     * renders at the UA's 13.33px in the system UI face, which is why the label
+     * looked unstyled beside everything around it.
+     */
+    fontFamily: 'inherit',
+    fontWeight: vars.typography.fontWeight[600],
+    // Labels are short; the extra tracking of default type at this weight makes
+    // two-word buttons look loose.
+    letterSpacing: '-0.005em',
     textAlign: 'center',
     whiteSpace: 'nowrap',
+    // A double-click on a button should not select its label.
+    userSelect: 'none',
     cursor: 'pointer',
     ...transition,
     selectors: {
@@ -57,9 +69,24 @@ export const buttonRecipe = recipe({
      * one holds an icon, a label, or both.
      */
     size: {
-      s: { height: '40px', padding: `${vars.spacing[2]} ${vars.spacing[8]}` },
-      m: { height: '48px', padding: `${vars.spacing[6]} ${vars.spacing[12]}` },
-      l: { height: '56px', padding: `${vars.spacing[10]} ${vars.spacing[16]}` },
+      s: {
+        height: '40px',
+        padding: `0 ${vars.spacing[12]}`,
+        fontSize: vars.typography.fontSize[14],
+        lineHeight: vars.typography.lineHeight[20],
+      },
+      m: {
+        height: '48px',
+        padding: `0 ${vars.spacing[16]}`,
+        fontSize: vars.typography.fontSize[15],
+        lineHeight: vars.typography.lineHeight[22],
+      },
+      l: {
+        height: '56px',
+        padding: `0 ${vars.spacing[20]}`,
+        fontSize: vars.typography.fontSize[16],
+        lineHeight: vars.typography.lineHeight[24],
+      },
     },
 
     variant: {
@@ -69,17 +96,30 @@ export const buttonRecipe = recipe({
         backgroundColor: accent.normal,
         selectors: {
           '&:hover:not(:disabled)': { backgroundColor: accent.strong },
-          '&:active:not(:disabled)': { backgroundColor: accent.strong },
+          // Pressing moves it down a pixel rather than only changing colour.
+          // On a filled button the colour shift is small; the movement is not.
+          '&:active:not(:disabled)': {
+            backgroundColor: accent.strong,
+            transform: 'translateY(1px)',
+          },
         },
       },
       /** Everything else that is still a real action. */
       secondary: {
         color: textColor.normal,
-        backgroundColor: surface.default,
+        // The canvas rather than the component surface, so a secondary button
+        // stays legible on a card that is already painted `surface.default`.
+        backgroundColor: surface.canvas,
         borderColor: border.normal,
         selectors: {
-          '&:hover:not(:disabled)': { backgroundColor: surface.hover },
-          '&:active:not(:disabled)': { backgroundColor: surface.pressed },
+          '&:hover:not(:disabled)': {
+            backgroundColor: surface.hover,
+            borderColor: border.strong,
+          },
+          '&:active:not(:disabled)': {
+            backgroundColor: surface.pressed,
+            transform: 'translateY(1px)',
+          },
         },
       },
       /** No box until you touch it. Toolbars, icon-only controls, card actions. */
@@ -88,7 +128,10 @@ export const buttonRecipe = recipe({
         backgroundColor: 'transparent',
         selectors: {
           '&:hover:not(:disabled)': { backgroundColor: surface.hover },
-          '&:active:not(:disabled)': { backgroundColor: surface.pressed },
+          '&:active:not(:disabled)': {
+            backgroundColor: surface.pressed,
+            transform: 'translateY(1px)',
+          },
         },
       },
       /**
@@ -100,7 +143,10 @@ export const buttonRecipe = recipe({
         backgroundColor: status.error.normal,
         selectors: {
           '&:hover:not(:disabled)': { backgroundColor: status.error.strong },
-          '&:active:not(:disabled)': { backgroundColor: status.error.strong },
+          '&:active:not(:disabled)': {
+            backgroundColor: status.error.strong,
+            transform: 'translateY(1px)',
+          },
         },
       },
     },
