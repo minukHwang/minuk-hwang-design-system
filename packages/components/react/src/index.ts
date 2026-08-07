@@ -1,60 +1,41 @@
 /**
- * Barrel file
- * Kept for editor discovery. Consumers import subpaths so bundlers can tree-shake.
+ * Barrel file.
  *
- * The shared style layer is not re-exported here; it belongs to
- * @minuk-hwang-design-system/styles and should be imported from there.
+ * Kept for editor discovery. Consumers import subpaths so bundlers can drop what
+ * they do not use, and so a project that only wants a Button does not pull in
+ * every Radix primitive the overlays depend on.
  */
 
-// Common
-export { Text } from './common/text/Text';
-export { Container } from './common/container/Container';
-export { Icon } from './common/icon/Icon';
-export { Divider } from './common/divider/Divider';
+/* Primitives */
+export { Text } from './text';
+export { Icon } from './icon';
+export { Spinner } from './spinner';
+export { Separator } from './separator';
 
-// Button
-export { Button } from './button/Button';
-export { InfoButton } from './button/info/InfoButton';
-export { MoreButton } from './button/more/MoreButton';
+/* Actions */
+export { Button } from './button';
+export { Chip } from './chip';
 
-// Badge
-export { Badge } from './badge/Badge';
+/* Display */
+export { Badge } from './badge';
+export { Card } from './card';
+export { Alert } from './alert';
+export { Avatar } from './avatar';
 
-// Box
-export { InfoBox } from './box/info/info-box/InfoBox';
-export { WeatherBox } from './box/weather/WeatherBox';
+/* Forms */
+export { Field } from './field';
+export { Input, Textarea } from './input';
+export { Checkbox } from './checkbox';
+export { RadioGroup } from './radio-group';
+export { Switch } from './switch';
+export { Select } from './select';
 
-// Chips
-export { Chips } from './chip/Chips';
+/* Overlays */
+export { Dialog } from './dialog';
+export { Popover } from './popover';
+export { Tooltip } from './tooltip';
+export { DropdownMenu } from './dropdown-menu';
 
-// Header
-export { TopAppBar } from './app-bar/top-app-bar/TopAppBar';
-export { Title } from './header/title/Title';
-export { Headline } from './header/headline/Headline';
-
-// List
-export { MessageList } from './list/message/MessageList';
-export { SocialContentList } from './list/social-content/SocialContentList';
-export { TabList } from './list/tab/TabList';
-export { FollowingList } from './list/following/FollowingList';
-export { MemberList } from './list/member/MemberList';
-export { CommentList } from './list/comment/CommentList';
-
-// Inputs
-export { Input } from './input/Input';
-export { InputGroup } from './input/group/InputGroup';
-export { TextArea } from './input/text-area/TextArea';
-
-// Notification
-export { Notification } from './notification/Notification';
-
-// Tabs
-export { TabBar } from './tabs/tab-bar/TabBar';
-export { MapBottomSheet } from './bottom-sheet/map/MapBottomSheet';
-
-// Drop Down
-export { DropDownItem } from './drop-down/drop-down-item/DropDownItem';
-export { DropDownBox } from './drop-down/drop-down-box/DropDownBox';
-
-// Loading Spinner
-export { LoadingSpinner } from './loading-spinner/LoadingSpinner';
+/* Navigation */
+export { Accordion } from './accordion';
+export { Tabs } from './tabs';

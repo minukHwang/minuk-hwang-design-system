@@ -256,6 +256,12 @@ importers:
 
   packages/components/react:
     dependencies:
+      '@minuk-hwang-design-system/base-react':
+        specifier: workspace:^
+        version: link:../../base/react
+      '@minuk-hwang-design-system/behavior-react':
+        specifier: workspace:^
+        version: link:../../behavior/react
       '@minuk-hwang-design-system/style-tokens':
         specifier: workspace:^
         version: link:../../style-tokens
