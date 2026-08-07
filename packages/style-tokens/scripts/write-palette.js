@@ -72,6 +72,12 @@ export const text = {
 export const shadowColor = {
   ambient: 'var(--shadow-color-ambient)',
   direct: 'var(--shadow-color-direct)',
+};
+
+/* Which text colour clears AA on each scale's solid fill. Measured per theme. */
+
+export const onSolid = {
+${CHROMATIC_ORDER.map(name => `  ${name}: 'var(--on-solid-${toKebab(name)})',`).join('\n')}
 };`,
 ];
 

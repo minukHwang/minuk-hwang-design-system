@@ -25,17 +25,77 @@
 const AMBIENT = 'var(--shadow-color-ambient)';
 const DIRECT = 'var(--shadow-color-direct)';
 
-export const shadow = {
+/*
+ * ============================================
+ * Ladder
+ * ============================================
+ */
+
+type Layer = {
+  /** Vertical offset in pixels, before direction is applied. */
+  y: number;
+  blur: number;
+  /** Negative spread pulls the shadow in at the sides, so it reads as cast down. */
+  spread: number;
+  ink: string;
+};
+
+/**
+ * Elevation, as data rather than as strings.
+ *
+ * Keeping the numbers apart from their rendering is what lets the same ladder be
+ * cast in two directions without a second copy of it — a copy that would be
+ * edited once and then diverge.
+ */
+const LADDER: Record<'xs' | 's' | 'm' | 'l', Layer[]> = {
   /** Resting card. Separation only — barely more than a hairline. */
-  xs: `0 1px 2px 0 ${AMBIENT}`,
+  xs: [{ y: 1, blur: 2, spread: 0, ink: AMBIENT }],
   /** Raised: a hovered card, a small menu. */
-  s: `0 2px 4px -1px ${DIRECT}, 0 1px 3px 0 ${AMBIENT}`,
+  s: [
+    { y: 2, blur: 4, spread: -1, ink: DIRECT },
+    { y: 1, blur: 3, spread: 0, ink: AMBIENT },
+  ],
   /** Floating: dropdown, popover, tooltip, toast. */
-  m: `0 8px 16px -4px ${DIRECT}, 0 3px 6px -2px ${AMBIENT}`,
+  m: [
+    { y: 8, blur: 16, spread: -4, ink: DIRECT },
+    { y: 3, blur: 6, spread: -2, ink: AMBIENT },
+  ],
   /** Overlay: dialog, drawer, anything with a scrim under it. */
-  l: `0 16px 32px -8px ${DIRECT}, 0 6px 12px -4px ${AMBIENT}`,
-  /** Sticky header, casting down onto content that scrolls beneath it. */
-  elevatedTop: `0 4px 12px -2px ${AMBIENT}`,
-  /** Sticky footer or bottom sheet, casting up. The mirror of elevatedTop. */
-  elevatedBottom: `0 -4px 12px -2px ${AMBIENT}`,
+  l: [
+    { y: 16, blur: 32, spread: -8, ink: DIRECT },
+    { y: 6, blur: 12, spread: -4, ink: AMBIENT },
+  ],
+};
+
+const cast = (direction: 1 | -1) =>
+  Object.fromEntries(
+    Object.entries(LADDER).map(([step, layers]) => [
+      step,
+      layers.map(l => `0 ${l.y * direction}px ${l.blur}px ${l.spread}px ${l.ink}`).join(', '),
+    ])
+  ) as Record<keyof typeof LADDER, string>;
+
+/*
+ * ============================================
+ * Export
+ * ============================================
+ */
+
+/**
+ * Down by default, because light comes from above and almost everything casts
+ * that way.
+ *
+ * `up` is the same ladder mirrored, for anything pinned to the bottom edge of
+ * the screen — a bottom sheet, a tab bar, a sticky footer. Content passes above
+ * those rather than below, so a downward shadow lands on nothing.
+ *
+ * Direction is a modifier on elevation rather than a value beside it. The
+ * version this replaced had `elevatedTop` and `elevatedBottom` sitting in the
+ * same flat list as `xs` through `l`, which mixed two axes: you could not ask
+ * for a subtle bottom bar or an emphatic one, only for the single weight
+ * someone had baked in.
+ */
+export const shadow = {
+  ...cast(1),
+  up: cast(-1),
 };

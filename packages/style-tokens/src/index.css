@@ -177,17 +177,34 @@ input:focus {
   outline: none;
 }
 
-/* font */
-* {
-  color: var(--text-normal);
+/*
+ * Font and colour.
+ *
+ * Set on `body` and inherited, not applied to `*`.
+ *
+ * A universal `color` rule defeats inheritance everywhere: an icon inside a
+ * filled button, a caption inside a status banner and anything else that means
+ * to tint its children all get overridden by a selector they cannot outrank
+ * without adding one of their own. Buttons and inputs do not inherit font by
+ * default, so those two are named explicitly rather than reaching for `*`.
+ */
+body {
+  color: var(--text-color-normal);
   font-family: var(--font-family-main);
+}
+
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
 }
 
 /* icon & symbol */
 .material-symbols-outlined {
-  color: var(--text-normal);
   font-variation-settings:
-    'FILL' 1,
+    'FILL' 0,
     'wght' 400,
     'GRAD' 0,
     'opsz' 24;

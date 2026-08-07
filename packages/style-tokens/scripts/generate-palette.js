@@ -33,7 +33,17 @@ const LIGHT_LADDER = [99, 95, 90, 80, 70, 60, 50, 41, 32, 23, 15, 10, 7];
  * hue out of the step: every colour's dark-990 came out within 5/255 of #ffffff,
  * so `blue-990` was blue in name only.
  */
-const DARK_LADDER = [8, 12, 17, 26, 35, 44, 53, 63, 72, 82, 85, 89, 93];
+/*
+ * Step 500 holds lightness 50 in both ladders, so the solid fill is literally
+ * the same colour in either theme. It is the step that identifies the colour —
+ * a brand blue button should be recognisably one blue — and it is also what
+ * stops the AA answer from flipping: at 53 the dark fill sat just light enough
+ * that white failed on red and blue while passing on both in the light theme.
+ *
+ * Every other step still runs its own way, because every other step is measured
+ * against its own background rather than against a memory of the other theme.
+ */
+const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
 
 /**
  * Hues of the colours this system ships, in degrees.
@@ -72,29 +82,55 @@ const NEUTRALS = {
   slate: { hue: 218, saturation: 19 },
 };
 
-/**
- * Which text colour clears WCAG AA on top of each scale's step 500.
- *
- * Only blue, purple and indigo are dark enough at full chroma to carry white
- * text; everything from cyan through orange needs black. Leaving this to each
- * component is how a 2.29:1 green button happens, so it is recorded here.
+/*
+ * ============================================
+ * Contrast
+ * ============================================
  */
-const ON_SOLID = {
-  blue: 'white',
-  purple: 'white',
-  indigo: 'white',
-  red: 'black',
-  crimson: 'black',
-  pink: 'black',
-  magenta: 'black',
-  cyan: 'black',
-  teal: 'black',
-  green: 'black',
-  lime: 'black',
-  yellow: 'black',
-  amber: 'black',
-  orange: 'black',
+
+/** WCAG relative luminance. */
+const channel = value => {
+  const c = value / 255;
+  return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 };
+
+const luminance = hex =>
+  0.2126 * channel(parseInt(hex.slice(1, 3), 16)) +
+  0.7152 * channel(parseInt(hex.slice(3, 5), 16)) +
+  0.0722 * channel(parseInt(hex.slice(5, 7), 16));
+
+const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+
+const WHITE = '#ffffff';
+const BLACK = '#000000';
+
+/**
+ * Which text colour clears WCAG AA on top of a solid fill.
+ *
+ * Measured rather than listed. The hand-maintained table this replaced was
+ * wrong in the dark theme and had no way of knowing: blue-500 carries white at
+ * 4.83:1 on light and only 4.43:1 on dark, so a single answer for both themes
+ * is a coin flip on which one it fails.
+ *
+ * Desaturating or retuning a hue moves the number, and a value derived from the
+ * colour follows it. A value typed beside the colour does not.
+ *
+ * White wins ties, and anything that clears the floor counts as a tie. Picking
+ * whichever number is larger put black on red — which passes at 4.64:1 and
+ * still reads as a hazard sign rather than a button. Contrast decides what is
+ * legible; convention decides between two legible answers.
+ */
+const onSolid = fill => (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
+
+/** Reports any fill where neither text colour clears the 4.5:1 floor. */
+const contrastReport = fill => ({
+  white: contrast(fill, WHITE),
+  black: contrast(fill, BLACK),
+  passes: Math.max(contrast(fill, WHITE), contrast(fill, BLACK)) >= 4.5,
+});
 
 /**
  * Per-hue corrections.
@@ -108,6 +144,18 @@ const ON_SOLID = {
  * documents the amount so a regenerated scale matches what is on disk.
  */
 const TUNING = {
+  /*
+   * The hues below kept full saturation only because they were never measured
+   * against anything. At L50 that puts red at a literal #ff0000 and amber at
+   * #ffa200 — pure hues, which read as signage rather than as interface. These
+   * are the smallest corrections that settle them without muddying the hue.
+   */
+  red: { saturation: 84 },
+  orange: { saturation: 90 },
+  amber: { saturation: 92 },
+  yellow: { saturation: 90 },
+  blue: { saturation: 94 },
+
   // Yellow through green is the brightest arc of the wheel; every scale in it
   // needs pulling down or it reads as a highlighter.
   lime: { saturation: 88, lightnessShift: -13 },
@@ -223,7 +271,9 @@ export {
   STEPS,
   HUES,
   NEUTRALS,
-  ON_SOLID,
+  onSolid,
+  contrast,
+  contrastReport,
   TUNING,
   LIGHT_LADDER,
   DARK_LADDER,

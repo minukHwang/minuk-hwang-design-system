@@ -282,3 +282,22 @@ export const shadowColor = {
   ambient: 'var(--shadow-color-ambient)',
   direct: 'var(--shadow-color-direct)',
 };
+
+/* Which text colour clears AA on each scale's solid fill. Measured per theme. */
+
+export const onSolid = {
+  red: 'var(--on-solid-red)',
+  crimson: 'var(--on-solid-crimson)',
+  pink: 'var(--on-solid-pink)',
+  magenta: 'var(--on-solid-magenta)',
+  purple: 'var(--on-solid-purple)',
+  indigo: 'var(--on-solid-indigo)',
+  blue: 'var(--on-solid-blue)',
+  cyan: 'var(--on-solid-cyan)',
+  teal: 'var(--on-solid-teal)',
+  green: 'var(--on-solid-green)',
+  lime: 'var(--on-solid-lime)',
+  yellow: 'var(--on-solid-yellow)',
+  amber: 'var(--on-solid-amber)',
+  orange: 'var(--on-solid-orange)',
+};

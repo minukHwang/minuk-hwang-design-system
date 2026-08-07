@@ -130,9 +130,16 @@ const NON_COLOUR = [
   { namespace: 'ease', group: theme.vars.motion.easing },
 ];
 
+/** Flattens `shadow.up.m` to `shadow-up-m`, leaving flat groups untouched. */
+const flattenValues = (prefix, node) =>
+  Object.entries(node).flatMap(([key, value]) => {
+    const name = `${prefix}-${toKebabCase(key)}`;
+    return typeof value === 'object' ? flattenValues(name, value) : [[name, value]];
+  });
+
 const nonColourTokens = () =>
   NON_COLOUR.flatMap(({ namespace, group }) =>
-    Object.entries(group).map(([key, value]) => `\t--${namespace}-${toKebabCase(key)}: ${value};`)
+    flattenValues(namespace, group).map(([name, value]) => `\t--${name}: ${value};`)
   );
 
 /*

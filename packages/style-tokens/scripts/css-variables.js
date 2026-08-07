@@ -81,15 +81,19 @@ export const generateCssVariables = () => {
   // Non-colour token groups (spacing, radius, shadow, typography) never vary by
   // theme, so they join the root block alongside the absolutes.
   //
-  // `typography` holds several groups and renders each; `spacing`, `borderRadius`
-  // and `shadow` are single groups and render themselves. Both shapes reach the
-  // same names either way — `--font-size-14`, `--spacing-16`.
-  const isGroupOfGroups = node => Object.values(node).every(value => typeof value === 'object');
+  // `typography` and `motion` are namespaces holding several groups, so they
+  // render their children and drop their own name — `--font-size-14`, not
+  // `--typography-font-size-14`. The rest are one group and keep it.
+  //
+  // `shadow` is both: flat steps beside a nested `up`. The recursive renderer
+  // handles that shape without needing to know which it is, and produces
+  // `--shadow-m` and `--shadow-up-m` from the same pass.
+  const isNamespace = node => Object.values(node).every(value => typeof value === 'object');
 
   const nonColour = Object.entries(theme.vars)
     .filter(([key]) => key !== 'color')
     .map(([name, group]) =>
-      isGroupOfGroups(group) ? renderTheme(group) : renderGroup(name, group)
+      isNamespace(group) ? renderTheme(group) : renderSemantic(toKebabCase(name), group)
     )
     .join('\n\n');
 

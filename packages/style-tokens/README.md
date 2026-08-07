@@ -170,13 +170,23 @@ rather than painted on: `direct` is tight and offset further down, `ambient` is
 wide, soft and barely offset.
 
 ```
-xs              resting card, separation only
-s               raised: hovered card, small menu
-m               floating: dropdown, popover, tooltip, toast
-l               overlay: dialog, drawer
-elevatedTop     sticky header, casting down
-elevatedBottom  sticky footer or bottom sheet, casting up
+shadow.xs       resting card, separation only
+shadow.s        raised: hovered card, small menu
+shadow.m        floating: dropdown, popover, tooltip, toast
+shadow.l        overlay: dialog, drawer
+
+shadow.up.*     the same ladder, mirrored
 ```
+
+Light comes from above, so everything casts down and that is the default.
+`up` is for anything pinned to the bottom edge — a bottom sheet, a tab bar, a
+sticky footer — where content passes above rather than below and a downward
+shadow lands on nothing.
+
+Direction modifies elevation rather than sitting beside it. An earlier version
+put `elevatedTop` and `elevatedBottom` in the same flat list as `xs` through
+`l`, which mixed two axes: there was no way to ask for a subtle bottom bar or
+an emphatic one, only for the single weight someone had baked in.
 
 These keep t-shirt names while the rest of the system moved to pixels, because a
 shadow is four lengths and a colour. There is no single number to key it by.

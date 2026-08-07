@@ -14,7 +14,15 @@ import { writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { STEPS, HUES, NEUTRALS, TUNING, buildScale } from './generate-palette.js';
+import {
+  STEPS,
+  HUES,
+  NEUTRALS,
+  TUNING,
+  buildScale,
+  onSolid,
+  contrastReport,
+} from './generate-palette.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const STATIC_DIR = path.join(HERE, '..', 'src', 'variables', 'color', 'static');
@@ -120,6 +128,29 @@ const header = theme => `/**
  */
 `;
 
+/**
+ * The text colour that clears WCAG AA on each scale's solid fill.
+ *
+ * Measured per theme rather than listed once, because the answer genuinely
+ * differs: blue-500 carries white at 4.85:1 on light and fails at 4.43:1 on
+ * dark, where black clears instead. A single value for both themes is a coin
+ * flip on which one it fails, and the failure is invisible until someone
+ * measures it.
+ */
+const buildOnSolid = theme =>
+  Object.fromEntries(
+    CHROMATIC_ORDER.map(name => {
+      const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[500];
+      const report = contrastReport(fill);
+      if (!report.passes) {
+        console.warn(
+          `  ! ${theme} ${name}-500 (${fill}) clears neither: white ${report.white.toFixed(2)}, black ${report.black.toFixed(2)}`
+        );
+      }
+      return [name, onSolid(fill)];
+    })
+  );
+
 ['light', 'dark'].forEach(theme => {
   const blocks = [header(theme)];
 
@@ -132,6 +163,9 @@ const header = theme => `/**
   Object.entries(NEUTRALS).forEach(([name, { hue, saturation }]) => {
     blocks.push(renderScale(name, buildScale(hue, theme, { saturation })));
   });
+
+  blocks.push('\n/* Text colour that clears AA on each solid fill. Measured, not chosen. */\n');
+  blocks.push(renderRecord('onSolid', buildOnSolid(theme)));
 
   blocks.push('\n/* Theme surfaces and text. Authored, not generated. */\n');
   Object.entries(THEME_SEMANTICS[theme]).forEach(([name, record]) => {

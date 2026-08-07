@@ -55,9 +55,13 @@ export const surface = {
 /**
  * Builds the five entries a coloured role needs, from one scale.
  *
- * `onNormal` records which text colour clears WCAG AA on top of `normal`.
- * Leaving that judgement to each component is how a 2.29:1 green button gets
- * shipped.
+ * `onNormal` is not passed in. It comes from `palette.onSolid`, which the
+ * generator measures against each theme's actual fill — and the two themes
+ * genuinely disagree: blue-500 carries white at 4.85:1 on light and only
+ * 4.43:1 on dark, where black clears at 4.75:1 instead.
+ *
+ * A literal `color.white` here looked right and was wrong half the time, in the
+ * half nobody checks.
  */
 const buildRamp = (scale: typeof palette.green, onNormal: string, strongStep: 700 | 800) => ({
   /** Filled background for banners and badges. */
@@ -85,7 +89,7 @@ const buildRamp = (scale: typeof palette.green, onNormal: string, strongStep: 70
  * names because they answer different questions — a decision to make the brand
  * purple should not turn every informational banner purple with it.
  */
-export const accent = buildRamp(palette.blue, color.white, 700);
+export const accent = buildRamp(palette.blue, palette.onSolid.blue, 700);
 
 /*
  * ============================================
@@ -142,16 +146,16 @@ export const textColor = {
  * `warning` maps to amber rather than yellow: yellow-500 measures 1.35:1 against
  * white, which no amount of surrounding design rescues.
  *
- * Only blue, purple and indigo are dark enough at full chroma to carry white
- * text; everything from cyan through orange needs black.
+ * Which text colour clears AA on each fill is measured per theme rather than
+ * assumed — see `buildRamp`.
  */
 export const status = {
-  success: buildRamp(palette.green, color.black, 700),
+  success: buildRamp(palette.green, palette.onSolid.green, 700),
   /**
    * Amber's step 700 measured 4.35:1 on its own surface, just under the floor,
    * so warning reads its strong value one step darker than the others.
    */
-  warning: buildRamp(palette.amber, color.black, 800),
-  error: buildRamp(palette.red, color.black, 700),
-  info: buildRamp(palette.blue, color.white, 700),
+  warning: buildRamp(palette.amber, palette.onSolid.amber, 800),
+  error: buildRamp(palette.red, palette.onSolid.red, 700),
+  info: buildRamp(palette.blue, palette.onSolid.blue, 700),
 };
