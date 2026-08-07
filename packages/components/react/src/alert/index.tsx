@@ -99,14 +99,14 @@ const Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
  * document ends up with a table of contents made of notifications.
  */
 const Title = React.forwardRef<HTMLElement, TextProps>(function AlertTitle(
-  { as = 'p', size = 'body2', weight = 'bold', ...props },
+  { as = 'p', size = 5, weight = 'bold', ...props },
   ref
 ) {
   return <Text {...props} ref={ref} as={as} size={size} weight={weight} />;
 });
 
 const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescription(
-  { size = 'body3', ...props },
+  { size = 4, ...props },
   ref
 ) {
   return <Text {...props} ref={ref} size={size} />;

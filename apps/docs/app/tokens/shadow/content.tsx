@@ -38,7 +38,7 @@ export default function ShadowPage() {
           {STEPS.map(([name]) => (
             <div key={name} className={css.shadowItem}>
               <div className={css.shadowChip} style={{ boxShadow: `var(--shadow-${name})` }} />
-              <Text as="span" size="footnote" color="assistive">
+              <Text as="span" size={2} color="assistive">
                 {name}
               </Text>
             </div>
@@ -71,7 +71,7 @@ export default function ShadowPage() {
           {STEPS.map(([name]) => (
             <div key={name} className={css.shadowItem}>
               <div className={css.shadowChip} style={{ boxShadow: `var(--shadow-up-${name})` }} />
-              <Text as="span" size="footnote" color="assistive">
+              <Text as="span" size={2} color="assistive">
                 up.{name}
               </Text>
             </div>

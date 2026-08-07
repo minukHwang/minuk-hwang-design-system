@@ -1,24 +1,16 @@
 'use client';
 
 import { Text } from '@minuk-hwang-design-system/components-react/text';
-import { classes, textSteps } from '@minuk-hwang-design-system/style-tokens';
+import { classes, textScale } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
 import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
-const scale = classes.typography;
+const step = (n: number) => classes.typography[`text${n}` as 'text5'];
 
 const px = (rem: string) => Math.round(parseFloat(rem) * 16);
-
-/**
- * The bottom ten of the fourteen, sliced from the token package's own ordered
- * list rather than typed out. A hand-written list held ten of fourteen once and
- * the four it dropped were invisible — a reference page that quietly omits part
- * of the reference answers the question wrongly instead of not answering it.
- */
-const TEXT_STEPS = textSteps;
 
 const WEIGHTS = ['regular', 'medium', 'bold'] as const;
 
@@ -30,25 +22,27 @@ export default function TextPage() {
     <Page
       eyebrow="Primitives"
       title="Text"
-      lede="Body copy at one of ten steps. Anything that is a heading belongs in Heading, which takes a level rather than an element so the document outline is not left to whoever remembered."
+      lede="Body copy at one of ten steps, numbered from its own 1. Anything that is a heading belongs in Heading, which takes a level rather than an element so the document outline is not left to whoever remembered."
     >
       <Preview
-        title="size — title3 down to caption"
+        title="size — 1 is the smallest"
         stack
-        code={`<Text size="body2">Interface copy.</Text>
-<Text size="footnote" color="assistive">A timestamp.</Text>`}
+        code={`<Text size={5}>Interface copy.</Text>
+<Text size={2} color="assistive">A timestamp.</Text>`}
       >
-        {TEXT_STEPS.map(step => {
-          const spec = scale[step].regular;
+        {[...textScale].reverse().map(({ step: n }) => {
+          const spec = step(n).regular;
           return (
-            <div key={step} className={css.stepRow}>
+            <div key={n} className={css.stepRow}>
               <span className={css.stepMeta}>
-                {step}
+                size={'{'}
+                {n}
+                {'}'}
                 <span className={css.stepSize}>
                   {px(spec.fontSize)}/{px(spec.lineHeight)}
                 </span>
               </span>
-              <Text size={step} truncate>
+              <Text size={n} truncate>
                 {SAMPLE}
               </Text>
             </div>
@@ -57,9 +51,10 @@ export default function TextPage() {
       </Preview>
 
       <Callout>
-        Ten steps here and ten in <code>Heading</code>, out of fourteen — the six in the middle
-        belong to both. A card title set at 16px is a real thing, and so is a lead paragraph at
-        24px. The split decides what each component defaults to, not what it is allowed.
+        This is its own ladder, not a slice of a shared one. <code>Heading</code> has ten steps of
+        its own, and six pixel values appear in both — two design decisions that agree today at
+        18px, rather than one written down twice. Retuning the smallest heading should not move a
+        body step nobody was thinking about.
       </Callout>
 
       <Preview
@@ -73,7 +68,7 @@ export default function TextPage() {
           <div key={weight} className={css.stepRow}>
             <span className={css.stepMeta}>
               {weight}
-              <span className={css.stepSize}>{scale.body2[weight].fontWeight}</span>
+              <span className={css.stepSize}>{step(5)[weight].fontWeight}</span>
             </span>
             <Text weight={weight}>{SAMPLE}</Text>
           </div>
@@ -82,9 +77,9 @@ export default function TextPage() {
 
       <Prose>
         <p>
-          <code>bold</code> is 700 at every step. It used to be 700 above <code>title3</code> and
-          600 below, so the same prop produced two different weights depending on how large the text
-          was — a difference nobody chose and nothing recorded.
+          <code>bold</code> is 700 at every step. It used to be 700 on the large steps and 600 on
+          the small ones, so the same prop produced two different weights depending on how large the
+          text was — a difference nobody chose and nothing recorded.
         </p>
       </Prose>
 
@@ -99,7 +94,7 @@ export default function TextPage() {
             <span className={css.stepMeta}>
               {leading}
               <span className={css.stepSize}>
-                16/{leading === 'reading' ? px(scale.body2.reading!.lineHeight) : 21}
+                16/{leading === 'reading' ? px(step(5).reading!.lineHeight) : 21}
               </span>
             </span>
             <Text leading={leading}>
@@ -118,9 +113,10 @@ export default function TextPage() {
           is its own prop rather than a value hidden inside the weight.
         </p>
         <p>
-          It has an effect on <code>body1</code>, <code>body2</code>, <code>body3</code> and{' '}
-          <code>label</code>. Asking for it elsewhere is not an error — there is simply nothing to
-          override, and silently doing nothing beats throwing over a line height.
+          It has an effect on steps 3 to 6 — the sizes a paragraph is actually run at. 1 and 2 are
+          captions, and 8 upwards is a lede that wants its leading chosen deliberately. Asking for
+          it elsewhere is not an error: there is nothing to override, and silently doing nothing
+          beats throwing over a line height.
         </p>
       </Prose>
 
@@ -167,9 +163,9 @@ export default function TextPage() {
           rows={[
             {
               name: 'size',
-              type: 'title3 | heading1 | heading2 | headline | body1 | body2 | body3 | label | footnote | caption',
-              default: `'body2'`,
-              description: 'The bottom ten steps. Above title3, use Heading.',
+              type: '1 – 10',
+              default: '5',
+              description: '1 is 12px, 10 is 24px. Above that, it is a heading.',
             },
             {
               name: 'weight',
@@ -182,7 +178,7 @@ export default function TextPage() {
               type: `'normal' | 'reading'`,
               default: `'normal'`,
               description:
-                'reading keeps the size and opens the line height. Affects body1–3 and label.',
+                'reading keeps the size and opens the line height. Affects steps 3 to 6.',
             },
             {
               name: 'color',

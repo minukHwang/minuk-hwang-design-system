@@ -186,7 +186,7 @@ const Control = ({ children }: FieldControlProps) => {
 
 /** Helper text. Stays visible when the field is invalid — the error adds, it does not replace. */
 const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescription(
-  { size = 'footnote', color = 'assistive', ...props },
+  { size = 2, color = 'assistive', ...props },
   ref
 ) {
   const { descriptionId, register } = useField('Description');
@@ -203,7 +203,7 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescr
  * screen reader announce it the moment it appears.
  */
 const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
-  { size = 'footnote', color = 'error', ...props },
+  { size = 2, color = 'error', ...props },
   ref
 ) {
   const { errorId, invalid, register } = useField('Error');

@@ -46,7 +46,7 @@ export default function IconPage() {
             }}
           >
             <Icon name={name} size={24} />
-            <Text as="span" size="footnote" color="assistive">
+            <Text as="span" size={2} color="assistive">
               {name}
             </Text>
           </span>

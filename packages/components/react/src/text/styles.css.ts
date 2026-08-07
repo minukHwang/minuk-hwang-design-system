@@ -1,9 +1,7 @@
-import { classes, typographySteps, vars } from '@minuk-hwang-design-system/style-tokens';
+import { classes, textScale, vars } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 const { textColor: semantic, status } = vars.color.$semantic;
-const scale = classes.typography;
-const steps = typographySteps;
 
 /*
  * ============================================
@@ -15,26 +13,24 @@ const steps = typographySteps;
  * Three independent axes, three sets of classes.
  *
  * The version this replaces crossed size with weight and emitted 42 classes for
- * what is 14 sizes and 3 weights. Worse, it made them one prop — `textMode`
- * held `bold`, which is a weight, beside `reading`, which is a line height.
- * Two axes in one prop is how you end up unable to ask for bold body copy set
- * as a paragraph.
+ * what is a handful of sizes and three weights. Worse, it made them one prop —
+ * `textMode` held `bold`, which is a weight, beside `reading`, which is a line
+ * height. Two axes in one prop is how you end up unable to ask for bold body
+ * copy set as a paragraph.
  */
 export const sizeStyle = styleVariants(
   Object.fromEntries(
-    steps.map(step => [
-      step,
-      { fontSize: scale[step].regular.fontSize, lineHeight: scale[step].regular.lineHeight },
-    ])
-  ) as Record<(typeof steps)[number], { fontSize: string; lineHeight: string }>
+    textScale.map(({ step }) => {
+      const spec = classes.typography[`text${step}` as 'text5'].regular;
+      return [step, { fontSize: spec.fontSize, lineHeight: spec.lineHeight }];
+    })
+  ) as Record<number, { fontSize: string; lineHeight: string }>
 );
 
-export type TextSize = keyof typeof sizeStyle;
-
 export const weightStyle = styleVariants({
-  regular: { fontWeight: scale.body2.regular.fontWeight },
-  medium: { fontWeight: scale.body2.medium.fontWeight },
-  bold: { fontWeight: scale.body2.bold.fontWeight },
+  regular: { fontWeight: classes.typography.text5.regular.fontWeight },
+  medium: { fontWeight: classes.typography.text5.medium.fontWeight },
+  bold: { fontWeight: classes.typography.text5.bold.fontWeight },
 });
 
 export type TextWeight = keyof typeof weightStyle;
@@ -46,16 +42,19 @@ export type TextWeight = keyof typeof weightStyle;
  * Declared after `sizeStyle` on purpose: both set `line-height` at equal
  * specificity, so source order is what lets this win.
  *
- * Only the steps a paragraph is actually set in have one. Asking for it on a
- * heading is not an error — there is simply nothing to override, and silently
- * doing nothing is better than throwing over a line height.
+ * Only the steps a paragraph is actually run at have one. Asking for it
+ * elsewhere is not an error — there is nothing to override, and silently doing
+ * nothing beats throwing over a line height.
  */
 export const readingStyle = styleVariants(
   Object.fromEntries(
-    steps
-      .filter(step => scale[step].reading)
-      .map(step => [step, { lineHeight: scale[step].reading!.lineHeight }])
-  ) as Record<string, { lineHeight: string }>
+    textScale
+      .filter(spec => 'reading' in spec)
+      .map(({ step }) => [
+        step,
+        { lineHeight: classes.typography[`text${step}` as 'text5'].reading!.lineHeight },
+      ])
+  ) as Record<number, { lineHeight: string }>
 );
 
 /**
@@ -65,8 +64,8 @@ export const readingStyle = styleVariants(
  * values can cross the build boundary, and a `Set` does not survive that — it
  * arrives as `{}`, and calling `.has` on it throws at render.
  */
-export const hasReading: Record<string, true> = Object.fromEntries(
-  Object.keys(readingStyle).map(step => [step, true])
+export const hasReading: Record<number, true> = Object.fromEntries(
+  textScale.filter(spec => 'reading' in spec).map(({ step }) => [step, true])
 );
 
 /*

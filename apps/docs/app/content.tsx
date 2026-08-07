@@ -62,11 +62,11 @@ export default function Home() {
             <div className={css.layerBody}>
               <div className={css.layerHead}>
                 <code>{layer.name}</code>
-                <Text as="span" size="body3" color="assistive">
+                <Text as="span" size={4} color="assistive">
                   {layer.role}
                 </Text>
               </div>
-              <Text size="body2" color="assistive">
+              <Text size={5} color="assistive">
                 {layer.detail}
               </Text>
             </div>
@@ -94,7 +94,7 @@ export default function Home() {
           {componentItems.map(item => (
             <Link key={item.href} href={item.href} className={css.tile}>
               <div className={css.tileHead}>
-                <Text as="span" size="body2" weight="bold">
+                <Text as="span" size={5} weight="bold">
                   {item.label}
                 </Text>
                 {item.compound && (
@@ -103,7 +103,7 @@ export default function Home() {
                   </Badge>
                 )}
               </div>
-              <Text size="body3" color="assistive">
+              <Text size={4} color="assistive">
                 {item.summary}
               </Text>
             </Link>
@@ -129,7 +129,7 @@ import '@minuk-hwang-design-system/components-react/button/style';`}
               <Card.Description>The tokens ship as a Tailwind v4 theme.</Card.Description>
             </Card.Header>
             <Card.Body>
-              <Text size="body3" color="assistive">
+              <Text size={4} color="assistive">
                 One import gives you <code>bg-surface-default</code>,{' '}
                 <code>text-status-error-strong</code> and the rest — with no <code>dark:</code>{' '}
                 anywhere, because the utilities compile to the variables the theme swaps.

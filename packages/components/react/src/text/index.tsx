@@ -1,4 +1,4 @@
-import type { TextStep } from '@minuk-hwang-design-system/style-tokens';
+import type { TextSize } from '@minuk-hwang-design-system/style-tokens';
 import clsx from 'clsx';
 import * as React from 'react';
 
@@ -10,18 +10,12 @@ import * as css from './styles.css';
  * ============================================
  */
 
-/**
- * The bottom ten steps of the scale, defined in the token package.
- *
- * Text stops at `title3` because nothing above 24px is ever run as body copy —
- * a 28px paragraph is a heading that forgot to say so. `Heading` takes the top
- * ten, and the six they share are the band where either is a real answer.
- */
-export type TextSize = TextStep;
+export type { TextSize };
 
 export type TextProps = Omit<React.HTMLAttributes<HTMLElement>, 'color'> & {
   /** Element to render. Pick the one that is true of the content. */
   as?: React.ElementType;
+  /** 1 is the smallest. Ten steps, 12px to 24px. */
   size?: TextSize;
   weight?: css.TextWeight;
   /**
@@ -44,19 +38,19 @@ export type TextProps = Omit<React.HTMLAttributes<HTMLElement>, 'color'> & {
  */
 
 /**
- * Body text at one of the system's steps.
+ * Body text at one of ten steps.
  *
  * `size` chooses the step; `as` chooses the element. They are separate on
  * purpose — a caption that has to be a `dd` is still a caption, and collapsing
  * the two is how a document outline quietly stops matching what is on screen.
  *
  * For anything that is a heading, reach for `Heading`. It takes a `level`
- * rather than an element, so the outline cannot be left to whoever remembered.
+ * rather than an element, so the outline is not left to whoever remembered.
  */
 export const Text = React.forwardRef<HTMLElement, TextProps>(function Text(
   {
     as: Component = 'p',
-    size = 'body2',
+    size = 5,
     weight = 'regular',
     leading = 'normal',
     color = 'normal',

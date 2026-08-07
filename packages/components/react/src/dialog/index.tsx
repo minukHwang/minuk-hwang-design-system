@@ -78,7 +78,7 @@ const Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
  * its title starts a new region rather than replacing the document's.
  */
 const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(function DialogTitle(
-  { level = 2, size = 'heading2', ...props },
+  { level = 2, size = 4, ...props },
   ref
 ) {
   return (
@@ -89,7 +89,7 @@ const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(functi
 });
 
 const Description = React.forwardRef<HTMLParagraphElement, TextProps>(function DialogDescription(
-  { size = 'body2', color = 'assistive', ...props },
+  { size = 5, color = 'assistive', ...props },
   ref
 ) {
   return (

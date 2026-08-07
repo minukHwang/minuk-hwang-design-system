@@ -70,7 +70,7 @@ export default function PopoverPage() {
             <Button variant="ghost">Why 0.48?</Button>
           </Popover.Trigger>
           <Popover.Content>
-            <Text size="body3" color="assistive">
+            <Text size={4} color="assistive">
               Eight per cent black moves a white ground by 20/255 and a near-black one by 2. The
               dark theme needs a heavier ink to land at the same separation.
             </Text>

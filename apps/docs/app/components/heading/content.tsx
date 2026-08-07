@@ -2,36 +2,28 @@
 
 import { Heading } from '@minuk-hwang-design-system/components-react/heading';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
-import { classes, headingSteps } from '@minuk-hwang-design-system/style-tokens';
+import {
+  classes,
+  headingScale,
+  headingSizeForLevel,
+} from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
 import { Callout, Preview, PropsTable, Prose } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
-const scale = classes.typography;
+const step = (n: number) => classes.typography[`heading${n}` as 'heading6'];
 const px = (rem: string) => Math.round(parseFloat(rem) * 16);
 
-/** The top ten of the fourteen. Below `body2` a heading stops being one. */
-const HEADING_STEPS = headingSteps;
-
 const LEVELS = [1, 2, 3, 4, 5, 6] as const;
-
-const DEFAULT_SIZE: Record<(typeof LEVELS)[number], string> = {
-  1: 'title1',
-  2: 'title2',
-  3: 'title3',
-  4: 'heading1',
-  5: 'heading2',
-  6: 'headline',
-};
 
 export default function HeadingPage() {
   return (
     <Page
       eyebrow="Primitives"
       title="Heading"
-      lede="A heading. level sets both the element and the default size, so the document outline cannot be left to whoever remembered to pass an element."
+      lede="A heading at one of ten steps, numbered from its own 1. level sets both the element and the default size, so the outline cannot be left to whoever remembered to pass an element."
     >
       <Preview
         title="level — the element and a default size"
@@ -43,7 +35,10 @@ export default function HeadingPage() {
           <div key={level} className={css.stepRow}>
             <span className={css.stepMeta}>
               {`<h${level}>`}
-              <span className={css.stepSize}>{DEFAULT_SIZE[level]}</span>
+              <span className={css.stepSize}>
+                size={headingSizeForLevel[level]} ·{' '}
+                {px(step(headingSizeForLevel[level]).regular.fontSize)}px
+              </span>
             </span>
             <Heading level={level} truncate>
               같은 색에 이름이 둘이면 언젠가 갈라진다
@@ -63,21 +58,21 @@ export default function HeadingPage() {
         title="size — independent of level"
         stack
         code={`{/* Still an h3 in the outline, only smaller on screen. */}
-<Heading level={3} size="body2">A card title</Heading>`}
+<Heading level={3} size={1}>A card title</Heading>`}
       >
         <div className={css.stepRow}>
           <span className={css.stepMeta}>
-            {'<h2> · title2'}
+            {'<h2> · size=7'}
             <span className={css.stepSize}>default</span>
           </span>
           <Heading level={2}>기본 크기</Heading>
         </div>
         <div className={css.stepRow}>
           <span className={css.stepMeta}>
-            {'<h2> · body2'}
+            {'<h2> · size=1'}
             <span className={css.stepSize}>overridden</span>
           </span>
-          <Heading level={2} size="body2">
+          <Heading level={2} size={1}>
             개요는 그대로, 크기만 작게
           </Heading>
         </div>
@@ -92,17 +87,19 @@ export default function HeadingPage() {
       </Prose>
 
       <Preview title="the ten steps a heading can take" stack>
-        {HEADING_STEPS.map(step => {
-          const spec = scale[step].regular;
+        {[...headingScale].reverse().map(({ step: n }) => {
+          const spec = step(n).regular;
           return (
-            <div key={step} className={css.stepRow}>
+            <div key={n} className={css.stepRow}>
               <span className={css.stepMeta}>
-                {step}
+                size={'{'}
+                {n}
+                {'}'}
                 <span className={css.stepSize}>
                   {px(spec.fontSize)}/{px(spec.lineHeight)}
                 </span>
               </span>
-              <Heading level={2} size={step} truncate>
+              <Heading level={2} size={n} truncate>
                 디자인 시스템
               </Heading>
             </div>
@@ -137,7 +134,7 @@ export default function HeadingPage() {
             },
             {
               name: 'size',
-              type: 'display1 | display2 | title1–3 | heading1–2 | headline | body1 | body2',
+              type: '1 – 10',
               default: 'from level',
               description: 'Changes the appearance only. The outline stays whatever level said.',
             },

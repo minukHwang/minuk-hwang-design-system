@@ -36,7 +36,7 @@ export default function CardPage() {
             <Card.Description>Colour, spacing, type, shadow, motion</Card.Description>
           </Card.Header>
           <Card.Body>
-            <Text size="body3" color="assistive">
+            <Text size={4} color="assistive">
               Four consumption formats from one source, so none of them can drift.
             </Text>
           </Card.Body>
@@ -58,7 +58,7 @@ export default function CardPage() {
         {(['flat', 'outlined', 'elevated'] as const).map(elevation => (
           <Card.Root key={elevation} elevation={elevation} style={{ width: 180 }}>
             <Card.Body>
-              <Text size="body2" weight="bold">
+              <Text size={5} weight="bold">
                 {elevation}
               </Text>
             </Card.Body>

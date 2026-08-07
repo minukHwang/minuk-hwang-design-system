@@ -1,93 +1,104 @@
 /**
- * Metadata about the type scale.
+ * The two type scales.
  *
  * Separate from `variables` and `classes` because it is neither: `vars` becomes
  * CSS custom properties and `classes` becomes utility classes, and both
- * generators walk every member of their namespace. An ordered list of step
- * names put in either one comes out as nonsense — `--steps-0`, `.scale-3`.
+ * generators walk every member of their namespace.
+ *
+ * ---
+ *
+ * There are two ladders, not one shared by two components.
+ *
+ * A single scale with role names — `display1`, `title2`, `body3` — made the
+ * name carry two things at once: what the step is for, and where it sits. Once
+ * `Heading` and `Text` existed, the component said the role too, so
+ * `<Text size="title3">` read as a contradiction and `<Heading size="title2">`
+ * said the same thing twice.
+ *
+ * Numbering each ladder from its own 1 removes that. The component says what
+ * the text is; the number says how big. Nothing says it twice.
+ *
+ * Six pixel values appear in both ladders, and that is not the duplication it
+ * looks like. `heading[3]` and `text[7]` are two design decisions that agree
+ * today at 18px — not one decision written down twice. Under the old shared
+ * scale they could not disagree, which is the actual defect: retuning the
+ * smallest heading also moved a body step nobody was thinking about.
  */
-
-/** Every step, largest first. */
-export const typographySteps = [
-  'display1',
-  'display2',
-  'title1',
-  'title2',
-  'title3',
-  'heading1',
-  'heading2',
-  'headline',
-  'body1',
-  'body2',
-  'body3',
-  'label',
-  'footnote',
-  'caption',
-] as const;
-
-export type TypographyStep = (typeof typographySteps)[number];
 
 /*
  * ============================================
- * Component slices
+ * Heading
  * ============================================
  */
 
 /**
- * The ten steps `Heading` accepts, and the ten `Text` accepts.
+ * Ten steps, smallest first.
  *
- * Written out rather than sliced from the list above. `typographySteps.slice(0, 10)`
- * returns the right values and the wrong type — TypeScript widens a sliced
- * tuple back to the full union, so `size` accepted all fourteen while claiming
- * to accept ten. A restriction that only exists in a comment is not one.
- *
- * The six in the middle appear in both on purpose. A card title set at 16px is
- * a real thing and so is a lead paragraph at 24px; below `body2` a heading
- * stops being one, and above `title3` body copy is a heading that forgot to say
- * so. The assertions underneath fail the build if either list drifts out of the
- * scale or stops overlapping where it should.
+ * Stops at 16px because below that a heading stops being one, and reaches 60
+ * because a landing page occasionally needs it. Steps 9 and 10 are not the
+ * default for any level — they are asked for by name.
  */
-export const headingSteps = [
-  'display1',
-  'display2',
-  'title1',
-  'title2',
-  'title3',
-  'heading1',
-  'heading2',
-  'headline',
-  'body1',
-  'body2',
+export const headingScale = [
+  { step: 1, size: 16, line: 21 },
+  { step: 2, size: 17, line: 22 },
+  { step: 3, size: 18, line: 23 },
+  { step: 4, size: 20, line: 25 },
+  { step: 5, size: 22, line: 28 },
+  { step: 6, size: 24, line: 30 },
+  { step: 7, size: 28, line: 34 },
+  { step: 8, size: 34, line: 41 },
+  { step: 9, size: 40, line: 48 },
+  { step: 10, size: 60, line: 72 },
 ] as const;
 
-export const textSteps = [
-  'title3',
-  'heading1',
-  'heading2',
-  'headline',
-  'body1',
-  'body2',
-  'body3',
-  'label',
-  'footnote',
-  'caption',
-] as const;
+export type HeadingSize = (typeof headingScale)[number]['step'];
 
-export type HeadingStep = (typeof headingSteps)[number];
-export type TextStep = (typeof textSteps)[number];
-
-/*
- * Compile-time checks. Each slice has to be part of the scale, and between them
- * they have to cover it — otherwise a step exists that no component can render.
- */
-type Assert<T extends true> = T;
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 /**
- * Exported so `noUnusedLocals` does not strip the checks it cannot see the
- * point of. They have no runtime shape — reading them is how the build fails.
+ * What each level looks like when nothing says otherwise.
+ *
+ * A default rather than a rule. An `h3` opening a page and an `h3` inside a
+ * card want different sizes and the same place in the outline, so `size`
+ * overrides the look while `level` keeps the meaning.
  */
-export type ScaleInvariants = [
-  Assert<HeadingStep extends TypographyStep ? true : false>,
-  Assert<TextStep extends TypographyStep ? true : false>,
-  Assert<TypographyStep extends HeadingStep | TextStep ? true : false>,
-];
+export const headingSizeForLevel: Record<HeadingLevel, HeadingSize> = {
+  1: 8,
+  2: 7,
+  3: 6,
+  4: 5,
+  5: 4,
+  6: 3,
+};
+
+/*
+ * ============================================
+ * Text
+ * ============================================
+ */
+
+/**
+ * Ten steps, smallest first.
+ *
+ * `reading` is a second line height at the same size, for text set as a
+ * paragraph rather than scanned as a label — 1.31 against 1.63 at step 5. It
+ * exists on the middle four, which are the sizes a paragraph is actually run
+ * at; 12 and 13 are captions, and 20 upwards is a lede that wants its leading
+ * chosen deliberately.
+ */
+export const textScale = [
+  { step: 1, size: 12, line: 16 },
+  { step: 2, size: 13, line: 18 },
+  { step: 3, size: 14, line: 19, reading: 22 },
+  { step: 4, size: 15, line: 20, reading: 24 },
+  { step: 5, size: 16, line: 21, reading: 26 },
+  { step: 6, size: 17, line: 22, reading: 28 },
+  { step: 7, size: 18, line: 23 },
+  { step: 8, size: 20, line: 25 },
+  { step: 9, size: 22, line: 28 },
+  { step: 10, size: 24, line: 30 },
+] as const;
+
+export type TextSize = (typeof textScale)[number]['step'];
+
+export type TypographyWeight = 'regular' | 'medium' | 'bold';
