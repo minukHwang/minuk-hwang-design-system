@@ -106,8 +106,13 @@ export const PropsTable = ({ rows }: { rows: PropRow[] }) => (
         </tr>
       </thead>
       <tbody>
-        {rows.map(row => (
-          <tr key={row.name}>
+        {/*
+         * Keyed by position, not by name. A compound component can legitimately
+         * take the same prop on two parts — `value` on Root and on Item — and a
+         * reference table should not be the thing that crashes over it.
+         */}
+        {rows.map((row, index) => (
+          <tr key={index}>
             <td>
               <code>{row.name}</code>
             </td>

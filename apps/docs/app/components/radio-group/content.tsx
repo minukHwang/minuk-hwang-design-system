@@ -72,14 +72,14 @@ export default function RadioGroupPage() {
       <Section title="Props">
         <PropsTable
           rows={[
-            { name: 'value', type: 'string', description: 'Controlled selection, on Root.' },
+            { name: 'Root.value', type: 'string', description: 'Controlled selection.' },
             {
-              name: 'defaultValue',
+              name: 'Root.defaultValue',
               type: 'string',
               description: 'Uncontrolled initial selection.',
             },
-            { name: 'onValueChange', type: '(value: string) => void', description: '' },
-            { name: 'value', type: 'string', description: 'On Item — what this option is worth.' },
+            { name: 'Root.onValueChange', type: '(value: string) => void', description: '' },
+            { name: 'Item.value', type: 'string', description: 'What this option is worth.' },
           ]}
         />
       </Section>
