@@ -20,8 +20,11 @@ export default function SelectPage() {
         code={`<Select.Root defaultValue="public">
   <Select.Trigger><Select.Value /></Select.Trigger>
   <Select.Content>
-    <Select.Item value="public">Public</Select.Item>
-    <Select.Item value="restricted">Restricted</Select.Item>
+    <Select.Group>
+      <Select.Label>Registry</Select.Label>
+      <Select.Item value="public">Public</Select.Item>
+      <Select.Item value="restricted">Restricted</Select.Item>
+    </Select.Group>
   </Select.Content>
 </Select.Root>`}
       >
@@ -31,19 +34,30 @@ export default function SelectPage() {
               <Select.Value placeholder="Choose access…" />
             </Select.Trigger>
             <Select.Content>
-              <Select.Label>Registry</Select.Label>
-              <Select.Item value="public">Public</Select.Item>
-              <Select.Item value="restricted">Restricted</Select.Item>
+              <Select.Group>
+                <Select.Label>Registry</Select.Label>
+                <Select.Item value="public">Public</Select.Item>
+                <Select.Item value="restricted">Restricted</Select.Item>
+              </Select.Group>
               <Select.Separator />
-              <Select.Label>Internal</Select.Label>
-              <Select.Item value="private">Private</Select.Item>
-              <Select.Item value="none" disabled>
-                Unpublished
-              </Select.Item>
+              <Select.Group>
+                <Select.Label>Internal</Select.Label>
+                <Select.Item value="private">Private</Select.Item>
+                <Select.Item value="none" disabled>
+                  Unpublished
+                </Select.Item>
+              </Select.Group>
             </Select.Content>
           </Select.Root>
         </div>
       </Preview>
+
+      <Callout>
+        <code>Select.Label</code> only works inside <code>Select.Group</code>, and throws if it is
+        not — the label is the group&apos;s accessible name, so a label with no group is a name
+        attached to nothing. The version of this example without the wrapper prerendered without
+        complaint, because the list only mounts when it opens.
+      </Callout>
 
       <Callout tone="warning">
         A native <code>select</code> gets the platform&apos;s own picker on mobile, which is usually
@@ -114,7 +128,15 @@ export default function SelectPage() {
               description: 'The list. Viewport and scroll buttons included.',
             },
             { name: 'Select.Item', description: 'One option, with the check-mark gutter.' },
-            { name: 'Select.Label', description: 'Heading for a group. Skipped by the keyboard.' },
+            {
+              name: 'Select.Group',
+              description: 'Wraps a label and the items it names. Required around Select.Label.',
+            },
+            {
+              name: 'Select.Label',
+              description:
+                'Names the group it is in. Skipped by the keyboard, and throws outside a Group.',
+            },
             { name: 'Select.Separator', description: 'Divider between groups.' },
           ]}
         />
