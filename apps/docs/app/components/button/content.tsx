@@ -5,17 +5,35 @@ import { Icon } from '@minuk-hwang-design-system/components-react/icon';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function ButtonPage() {
   return (
     <Page
       eyebrow="Actions"
       title="Button"
-      lede="Four variants and three sizes, on top of the headless button in base-react. Press handling and the keyboard contract come from that layer, so this one is only appearance."
+      lede="Runs an action — submitting a form, opening a dialog. Press handling and the keyboard contract come from base-react, so this layer is only appearance."
     >
       <Preview
-        title="variant"
+        code={`<Button>
+  <Icon name="add" size={18} />
+  Create
+</Button>`}
+      >
+        <Button>
+          <Icon name="add" size={18} />
+          Create
+        </Button>
+      </Preview>
+
+      <Preview
+        title="Variant"
+        description={
+          <>
+            Use <code>variant</code> to say what the button is for. At most one <code>primary</code>{' '}
+            per view.
+          </>
+        }
         code={`<Button variant="primary">Publish</Button>
 <Button variant="secondary">Save draft</Button>
 <Button variant="ghost">Preview</Button>
@@ -27,16 +45,14 @@ export default function ButtonPage() {
         <Button variant="danger">Delete</Button>
       </Preview>
 
-      <Prose>
-        <p>
-          <code>primary</code> is the one action a screen is about — at most one per view.{' '}
-          <code>secondary</code> is every other real action, <code>ghost</code> is for toolbars and
-          card corners, <code>danger</code> is for deleting.
-        </p>
-      </Prose>
-
       <Preview
-        title="size"
+        title="Size"
+        description={
+          <>
+            Use <code>size</code> to set the height: 40, 48 or 56px. <code>Input</code> and{' '}
+            <code>Select</code> use the same three, so a field and its submit line up.
+          </>
+        }
         code={`<Button size="s">Small</Button>
 <Button size="m">Medium</Button>
 <Button size="l">Large</Button>`}
@@ -46,15 +62,9 @@ export default function ButtonPage() {
         <Button size="l">Large</Button>
       </Preview>
 
-      <Prose>
-        <p>
-          Heights are fixed at 40, 48 and 56px, and <code>Input</code> and <code>Select</code> use
-          the same three — a text field and its submit sit on one line without either being nudged.
-        </p>
-      </Prose>
-
       <Preview
-        title="icons are children"
+        title="With icons"
+        description="Nest icons directly inside the button, before or after the label. The gap is applied for you."
         code={`<Button>
   <Icon name="add" size={18} />
   Create
@@ -63,10 +73,6 @@ export default function ButtonPage() {
 <Button variant="secondary">
   Export
   <Icon name="download" size={18} />
-</Button>
-
-<Button variant="ghost" iconOnly aria-label="More">
-  <Icon name="more_horiz" />
 </Button>`}
       >
         <Button>
@@ -77,23 +83,45 @@ export default function ButtonPage() {
           Export
           <Icon name="download" size={18} />
         </Button>
+      </Preview>
+
+      <Preview
+        title="Icon only"
+        description={
+          <>
+            Use <code>iconOnly</code> for a square button whose whole content is one icon.
+          </>
+        }
+        code={`<Button variant="ghost" iconOnly aria-label="More">
+  <Icon name="more_horiz" />
+</Button>`}
+      >
         <Button variant="ghost" iconOnly aria-label="More">
           <Icon name="more_horiz" />
+        </Button>
+        <Button iconOnly aria-label="Add">
+          <Icon name="add" />
+        </Button>
+        <Button variant="secondary" iconOnly aria-label="Settings">
+          <Icon name="settings" />
         </Button>
       </Preview>
 
       <Callout tone="warning">
-        <p>
-          <code>iconOnly</code> squares the button but does not name it. Pass{' '}
-          <code>aria-label</code>, or a screen reader has nothing to read.
-        </p>
+        <code>iconOnly</code> squares the button but does not name it. Pass <code>aria-label</code>,
+        or a screen reader has nothing to read.
       </Callout>
 
       <Preview
-        title="state"
+        title="Loading and disabled"
+        description={
+          <>
+            <code>loading</code> swaps the label for a spinner and blocks interaction;{' '}
+            <code>disabled</code> means not available. One says wait, the other says no.
+          </>
+        }
         code={`<Button loading>Publishing</Button>
-<Button disabled>Publish</Button>
-<Button variant="secondary" disabled>Save draft</Button>`}
+<Button disabled>Publish</Button>`}
       >
         <Button loading>Publishing</Button>
         <Button disabled>Publish</Button>
@@ -102,18 +130,15 @@ export default function ButtonPage() {
         </Button>
       </Preview>
 
-      <Prose>
-        <p>
-          <code>loading</code> swaps the label for a spinner, blocks interaction and sets{' '}
-          <code>aria-busy</code>. Separate from <code>disabled</code>: one means &ldquo;wait&rdquo;,
-          the other &ldquo;not available&rdquo;.
-        </p>
-      </Prose>
-
       <Preview
-        title="rendering as something else"
-        code={`// Same appearance, same keyboard contract, different element.
-<Button as="a" href="/tokens/colour" variant="secondary">
+        title="As a link"
+        description={
+          <>
+            Use <code>as=&quot;a&quot;</code> when it navigates. It keeps the tab order, the
+            modified click, and the fact that a link ignores the space bar.
+          </>
+        }
+        code={`<Button as="a" href="/tokens/colour" variant="secondary">
   Read the colour tokens
 </Button>`}
       >
@@ -121,14 +146,6 @@ export default function ButtonPage() {
           Read the colour tokens
         </Button>
       </Preview>
-
-      <Prose>
-        <p>
-          A link that looks like a button is still a link — it belongs in the tab order, opens in a
-          new tab on a modified click, and should not answer the space bar. The base layer keeps
-          that true.
-        </p>
-      </Prose>
 
       <Section title="Props">
         <PropsTable

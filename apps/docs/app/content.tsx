@@ -20,22 +20,22 @@ const LAYERS = [
       'Colour, spacing, radius, type, shadow and motion. Ships in four forms — CSS variables, TypeScript objects, utility classes, and a Tailwind v4 theme — all generated from one source.',
   },
   {
-    name: 'styles',
-    role: 'Shared style layer',
+    name: 'behavior-react',
+    role: 'What Radix does not cover',
     detail:
-      'Sprinkles and recipes built on the tokens. Extracted into its own package because compiling it inside every consumer duplicated the same stylesheet 25 times over.',
+      'Press handling for button-like elements, so a link or a div styled as a button still answers the keyboard. 137 lines — the rest of the behaviour is Radix.',
   },
   {
     name: 'base-react',
     role: 'Behaviour, no appearance',
     detail:
-      'Eighteen headless primitives. Radix where WAI-ARIA already specifies the contract, hand-written where the behaviour is ours. 5.6 KB of our own code.',
+      'Eighteen headless primitives. Radix where WAI-ARIA already specifies the contract, hand-written where the behaviour is ours. 5.8 KB of our own code.',
   },
   {
     name: 'components-react',
     role: 'One styled implementation',
     detail:
-      'Twenty-two components on top of the base layer. Replaceable by design — anyone wanting a different look takes the layer below and brings their own CSS.',
+      'Twenty-three components on top of the base layer, plus Theme. Replaceable by design — anyone wanting a different look takes the layer below and brings their own CSS.',
   },
 ];
 

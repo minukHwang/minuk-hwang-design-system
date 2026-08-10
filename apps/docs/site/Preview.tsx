@@ -12,8 +12,16 @@ import css from './preview.module.css';
  */
 
 export type PreviewProps = {
-  /** Short statement of what the example shows. Not a caption of the obvious. */
+  /** What the example shows, as a heading. Usually the prop being demonstrated. */
   title?: string;
+  /**
+   * One sentence saying what to do with it.
+   *
+   * One. Anything that needs a second sentence is either a trap, which belongs
+   * in a `Callout`, or the reasoning behind a decision, which belongs in a
+   * commit message.
+   */
+  description?: React.ReactNode;
   /** The source, shown under the example. Written by hand so it stays copy-pasteable. */
   code?: string;
   /** Lays the examples out in a column rather than a wrapping row. */
@@ -35,24 +43,36 @@ export type PreviewProps = {
  * arrow keys, and a broken build shows up as a broken docs site rather than as
  * a screenshot that stayed correct.
  *
- * The frame around it is the system too: `Text` for the caption, `Heading` for
- * section titles, `Alert` for callouts. What is left in the stylesheet is
- * layout, which is the part the system does not claim to own.
+ * The frame around it is the system too: `Text` for the description, `Heading`
+ * for the title, `Alert` for callouts. What is left in the stylesheet is layout,
+ * which is the part the system does not claim to own.
+ *
+ * The title used to be a small monospace caption inside the frame, with the
+ * explanation somewhere else on the page as a paragraph. Nobody reads a
+ * documentation page that way. Title, one sentence, example — in that order, and
+ * the sentence is what the paragraphs collapsed into.
  */
-export const Preview = ({ title, code, stack, children }: PreviewProps) => (
-  <figure className={css.figure}>
+export const Preview = ({ title, description, code, stack, children }: PreviewProps) => (
+  <section className={css.example}>
     {title && (
-      <Text as="figcaption" size={1} color="assistive" className={css.title}>
+      <Heading level={2} size={5}>
         {title}
+      </Heading>
+    )}
+    {description && (
+      <Text size={4} color="assistive" className={css.description}>
+        {description}
       </Text>
     )}
-    <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
-    {code && (
-      <pre className={css.code}>
-        <code>{code.trim()}</code>
-      </pre>
-    )}
-  </figure>
+    <figure className={css.figure}>
+      <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
+      {code && (
+        <pre className={css.code}>
+          <code>{code.trim()}</code>
+        </pre>
+      )}
+    </figure>
+  </section>
 );
 
 /**
