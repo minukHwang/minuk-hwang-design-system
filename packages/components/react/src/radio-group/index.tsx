@@ -79,3 +79,19 @@ const Item = React.forwardRef<React.ElementRef<typeof Base.Item>, RadioGroupItem
  */
 
 export const RadioGroup = { Root, Item };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `RadioGroup` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `RadioGroup.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<RadioGroupRoot>`
+ * renders from a server component; `RadioGroup.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const RadioGroupRoot = Root;
+export const RadioGroupItem = Item;

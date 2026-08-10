@@ -131,7 +131,27 @@ const runBuild = ({
 
   /** Emits ESM and CJS in parallel. */
   async function executeBuild() {
-    const esmConfig = { ...baseConfig, format: 'esm' };
+    /**
+     * Code shared by two entry points is hoisted into a chunk both import,
+     * rather than copied into each.
+     *
+     * Without it, building per component means building each one as if it were
+     * alone: Button pulls in Spinner, Spinner is also its own entry, and a page
+     * using both ships that code twice. It showed up first in the stylesheets —
+     * the spinner's `@keyframes` was in three of them.
+     *
+     * ESM only. `splitting` needs static `import`, and CJS has no equivalent to
+     * hoist into, so esbuild rejects it outright.
+     *
+     * The trade is that a component's entry is no longer one self-contained
+     * file. That is fine for a package consumed through a bundler, which is what
+     * `exports` already assumes.
+     */
+    const esmConfig = {
+      ...baseConfig,
+      format: 'esm',
+      splitting: buildMode === 'separate',
+    };
 
     const cjsConfig = {
       ...baseConfig,

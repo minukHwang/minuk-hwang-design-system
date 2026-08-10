@@ -72,7 +72,7 @@ const Root = React.forwardRef<HTMLDivElement, AlertRootProps>(function AlertRoot
  * Always decorative: the tone is already carried by the text, and reading
  * "error icon" before the message adds nothing.
  */
-const AlertIcon = ({ name, className }: { name?: string; className?: string }) => {
+export const AlertIcon = ({ name, className }: { name?: string; className?: string }) => {
   const tone = React.useContext(AlertContext);
   return (
     <Icon
@@ -137,3 +137,22 @@ const Action = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
 );
 
 export const Alert = { Root, Icon: AlertIcon, Body, Title, Description, Action };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Alert` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Alert.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<AlertRoot>`
+ * renders from a server component; `Alert.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const AlertRoot = Root;
+export const AlertBody = Body;
+export const AlertTitle = Title;
+export const AlertDescription = Description;
+export const AlertAction = Action;

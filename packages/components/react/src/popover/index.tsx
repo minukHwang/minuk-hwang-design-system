@@ -51,3 +51,23 @@ export const Popover = {
   Content,
   Arrow,
 };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Popover` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Popover.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<PopoverRoot>`
+ * renders from a server component; `Popover.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const PopoverRoot = Base.Root;
+export const PopoverTrigger = Base.Trigger;
+export const PopoverAnchor = Base.Anchor;
+export const PopoverClose = Base.Close;
+export const PopoverContent = Content;
+export const PopoverArrow = Arrow;

@@ -129,3 +129,26 @@ export const Dialog = {
   Body,
   Footer,
 };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Dialog` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Dialog.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<DialogRoot>`
+ * renders from a server component; `Dialog.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const DialogRoot = BaseDialog.Root;
+export const DialogTrigger = BaseDialog.Trigger;
+export const DialogClose = BaseDialog.Close;
+export const DialogContent = Content;
+export const DialogHeader = Header;
+export const DialogTitle = Title;
+export const DialogDescription = Description;
+export const DialogBody = Body;
+export const DialogFooter = Footer;

@@ -61,3 +61,21 @@ const Content = React.forwardRef<
  */
 
 export const Accordion = { Root: Base.Root, Item, Trigger, Content };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Accordion` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Accordion.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<AccordionRoot>`
+ * renders from a server component; `Accordion.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const AccordionRoot = Base.Root;
+export const AccordionItem = Item;
+export const AccordionTrigger = Trigger;
+export const AccordionContent = Content;

@@ -125,28 +125,29 @@ const Root = React.forwardRef<HTMLDivElement, FieldRootProps>(function FieldRoot
  * Label for the control. Clicking it focuses the control, because `htmlFor`
  * is filled in from context rather than left to the caller.
  */
-const FieldLabel = React.forwardRef<HTMLLabelElement, React.LabelHTMLAttributes<HTMLLabelElement>>(
-  function FieldLabel({ className, children, ...props }, ref) {
-    const { controlId, required, disabled } = useField('Label');
+export const FieldLabel = React.forwardRef<
+  HTMLLabelElement,
+  React.LabelHTMLAttributes<HTMLLabelElement>
+>(function FieldLabel({ className, children, ...props }, ref) {
+  const { controlId, required, disabled } = useField('Label');
 
-    return (
-      <Label
-        {...props}
-        ref={ref}
-        htmlFor={controlId}
-        className={clsx(css.label, disabled && css.disabled, className)}
-      >
-        {children}
-        {/* aria-hidden because `required` on the control already says this. */}
-        {required && (
-          <span className={css.required} aria-hidden>
-            *
-          </span>
-        )}
-      </Label>
-    );
-  }
-);
+  return (
+    <Label
+      {...props}
+      ref={ref}
+      htmlFor={controlId}
+      className={clsx(css.label, disabled && css.disabled, className)}
+    >
+      {children}
+      {/* aria-hidden because `required` on the control already says this. */}
+      {required && (
+        <span className={css.required} aria-hidden>
+          *
+        </span>
+      )}
+    </Label>
+  );
+});
 
 /**
  * Render prop rather than a wrapper, because the control might be an `input`, a
@@ -202,7 +203,7 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescr
  * in the tree and let the root decide when they are true. `role="alert"` makes a
  * screen reader announce it the moment it appears.
  */
-const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
+export const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
   { size = 2, color = 'error', ...props },
   ref
 ) {
@@ -231,3 +232,20 @@ const FieldError = React.forwardRef<HTMLElement, TextProps>(function FieldError(
  */
 
 export const Field = { Root, Label: FieldLabel, Control, Description, Error: FieldError };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Field` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Field.Root` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<FieldRoot>`
+ * renders from a server component; `Field.Root` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const FieldRoot = Root;
+export const FieldControl = Control;
+export const FieldDescription = Description;

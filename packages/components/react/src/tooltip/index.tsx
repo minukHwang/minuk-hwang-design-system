@@ -50,3 +50,22 @@ export const Tooltip = {
   Content,
   Arrow,
 };
+
+/**
+ * The parts again, as named exports.
+ *
+ * `Tooltip` is one object held by one binding, and a `'use client'` module's
+ * exports do not cross into a server component as values — each becomes a
+ * reference to a client component. A reference has no properties, so
+ * `Tooltip.Provider` reads as `undefined` and React reports an invalid element
+ * type. The namespace only works from another client component.
+ *
+ * Naming each part gives the boundary something it can carry. `<TooltipProvider>`
+ * renders from a server component; `Tooltip.Provider` still works everywhere it
+ * did before. Radix ships both for the same reason.
+ */
+export const TooltipProvider = Base.Provider;
+export const TooltipRoot = Base.Root;
+export const TooltipTrigger = Base.Trigger;
+export const TooltipContent = Content;
+export const TooltipArrow = Arrow;
