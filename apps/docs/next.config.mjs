@@ -21,7 +21,6 @@ const nextConfig = {
     '@minuk-hwang-design-system/base-react',
     '@minuk-hwang-design-system/behavior-react',
     '@minuk-hwang-design-system/style-tokens',
-    '@minuk-hwang-design-system/styles',
   ],
 };
 

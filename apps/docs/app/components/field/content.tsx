@@ -48,7 +48,7 @@ export default function FieldPage() {
               <Input
                 {...props}
                 placeholder="@scope/name"
-                defaultValue="@minuk-hwang-design-system/styles"
+                defaultValue="@minuk-hwang-design-system/components-react"
               />
             )}
           </Field.Control>

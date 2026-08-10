@@ -220,24 +220,15 @@ importers:
       '@minuk-hwang-design-system/base-react':
         specifier: workspace:^
         version: link:../../base/react
-      '@minuk-hwang-design-system/behavior-react':
-        specifier: workspace:^
-        version: link:../../behavior/react
       '@minuk-hwang-design-system/style-tokens':
         specifier: workspace:^
         version: link:../../style-tokens
-      '@minuk-hwang-design-system/styles':
-        specifier: workspace:^
-        version: link:../../styles
       '@vanilla-extract/css':
         specifier: ^1.15.3
         version: 1.17.4
       '@vanilla-extract/recipes':
         specifier: ^0.5.3
         version: 0.5.7(@vanilla-extract/css@1.17.4)
-      '@vanilla-extract/sprinkles':
-        specifier: ^1.6.2
-        version: 1.6.5(@vanilla-extract/css@1.17.4)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -288,37 +279,6 @@ importers:
       '@minuk-hwang-design-system/esbuild-config':
         specifier: workspace:^
         version: link:../esbuild-config
-      esbuild:
-        specifier: ^0.23.0
-        version: 0.23.1
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
-      typescript:
-        specifier: ^5.5.3
-        version: 5.9.2
-
-  packages/styles:
-    dependencies:
-      '@minuk-hwang-design-system/style-tokens':
-        specifier: workspace:^
-        version: link:../style-tokens
-      '@vanilla-extract/css':
-        specifier: ^1.15.3
-        version: 1.17.4
-      '@vanilla-extract/recipes':
-        specifier: ^0.5.3
-        version: 0.5.7(@vanilla-extract/css@1.17.4)
-      '@vanilla-extract/sprinkles':
-        specifier: ^1.6.2
-        version: 1.6.5(@vanilla-extract/css@1.17.4)
-    devDependencies:
-      '@minuk-hwang-design-system/esbuild-config':
-        specifier: workspace:^
-        version: link:../esbuild-config
-      '@vanilla-extract/esbuild-plugin':
-        specifier: ^2.3.8
-        version: 2.3.18(esbuild@0.23.1)
       esbuild:
         specifier: ^0.23.0
         version: 0.23.1
@@ -2884,14 +2844,6 @@ packages:
 
   /@vanilla-extract/recipes@0.5.7(@vanilla-extract/css@1.17.4):
     resolution: {integrity: sha512-Fvr+htdyb6LVUu+PhH61UFPhwkjgDEk8L4Zq9oIdte42sntpKrgFy90MyTRtGwjVALmrJ0pwRUVr8UoByYeW8A==}
-    peerDependencies:
-      '@vanilla-extract/css': ^1.0.0
-    dependencies:
-      '@vanilla-extract/css': 1.17.4
-    dev: false
-
-  /@vanilla-extract/sprinkles@1.6.5(@vanilla-extract/css@1.17.4):
-    resolution: {integrity: sha512-HOYidLONR/SeGk8NBAeI64I4gYdsMX9vJmniL13ZcLVwawyK0s2GUENEAcGA+GYLIoeyQB61UqmhqPodJry7zA==}
     peerDependencies:
       '@vanilla-extract/css': ^1.0.0
     dependencies:
