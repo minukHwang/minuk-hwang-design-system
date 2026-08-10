@@ -47,13 +47,21 @@ export const interactive = style({
  * Padding lives on each section rather than on the root, so a card can hold a
  * full-bleed image between two padded blocks without fighting a container that
  * has already inset everything.
+ *
+ * Each section pads itself on all four sides, and only the seam between two
+ * padded sections collapses. The header used to carry `padding-bottom: 0` and
+ * the footer `padding-top: 0`, which assumed a body was always between them: a
+ * card of nothing but a header had its text sitting on the bottom border, and a
+ * header beside a footer had the two touching. Media is deliberately not in the
+ * collapse rules — it has no padding of its own, so whatever follows it keeps
+ * its own.
  */
 
 export const header = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.spacing[4],
-  padding: `${vars.spacing[16]} ${vars.spacing[16]} 0`,
+  padding: vars.spacing[16],
 });
 
 export const body = style({
@@ -61,13 +69,22 @@ export const body = style({
   flexDirection: 'column',
   gap: vars.spacing[8],
   padding: vars.spacing[16],
+  selectors: {
+    // Two padded sections meeting would give 32px between them. The lower one
+    // drops its top padding so the seam is the same 16 as every other edge.
+    [`${header} + &`]: { paddingTop: 0 },
+  },
 });
 
 export const footer = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.spacing[8],
-  padding: `0 ${vars.spacing[16]} ${vars.spacing[16]}`,
+  padding: vars.spacing[16],
+  selectors: {
+    [`${header} + &`]: { paddingTop: 0 },
+    [`${body} + &`]: { paddingTop: 0 },
+  },
 });
 
 /** Pushes the footer's last child to the right — the usual cancel/confirm shape. */
