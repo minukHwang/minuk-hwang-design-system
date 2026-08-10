@@ -7,43 +7,13 @@
     "access": "public"
   },
   "exports": {
-    "./color": {
-      "types": "./dist/color/index.d.ts",
-      "import": "./dist/color/index.js",
-      "require": "./dist/color/index.cjs"
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs"
     },
-    "./color/style": "./dist/color/index.css",
-    "./layout": {
-      "types": "./dist/layout/index.d.ts",
-      "import": "./dist/layout/index.js",
-      "require": "./dist/layout/index.cjs"
-    },
-    "./layout/style": "./dist/layout/index.css",
-    "./spacing": {
-      "types": "./dist/spacing/index.d.ts",
-      "import": "./dist/spacing/index.js",
-      "require": "./dist/spacing/index.cjs"
-    },
-    "./spacing/style": "./dist/spacing/index.css",
-    "./border": {
-      "types": "./dist/border/index.d.ts",
-      "import": "./dist/border/index.js",
-      "require": "./dist/border/index.cjs"
-    },
-    "./border/style": "./dist/border/index.css",
-    "./shadow": {
-      "types": "./dist/shadow/index.d.ts",
-      "import": "./dist/shadow/index.js",
-      "require": "./dist/shadow/index.cjs"
-    },
-    "./shadow/style": "./dist/shadow/index.css",
-    "./typography": {
-      "types": "./dist/typography/index.d.ts",
-      "import": "./dist/typography/index.js",
-      "require": "./dist/typography/index.cjs"
-    },
-    "./typography/style": "./dist/typography/index.css",
-    "./package.json": "./package.json"
+    "./*/style": "./dist/*/index.css"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:type && pnpm build:js",

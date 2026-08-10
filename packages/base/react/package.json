@@ -7,97 +7,12 @@
     "access": "public"
   },
   "exports": {
-    "./accordion": {
-      "types": "./dist/accordion/index.d.ts",
-      "import": "./dist/accordion/index.js",
-      "require": "./dist/accordion/index.cjs"
-    },
-    "./alert-dialog": {
-      "types": "./dist/alert-dialog/index.d.ts",
-      "import": "./dist/alert-dialog/index.js",
-      "require": "./dist/alert-dialog/index.cjs"
-    },
-    "./avatar": {
-      "types": "./dist/avatar/index.d.ts",
-      "import": "./dist/avatar/index.js",
-      "require": "./dist/avatar/index.cjs"
-    },
-    "./button": {
-      "types": "./dist/button/index.d.ts",
-      "import": "./dist/button/index.js",
-      "require": "./dist/button/index.cjs"
-    },
-    "./checkbox": {
-      "types": "./dist/checkbox/index.d.ts",
-      "import": "./dist/checkbox/index.js",
-      "require": "./dist/checkbox/index.cjs"
-    },
-    "./dialog": {
-      "types": "./dist/dialog/index.d.ts",
-      "import": "./dist/dialog/index.js",
-      "require": "./dist/dialog/index.cjs"
-    },
-    "./dropdown-menu": {
-      "types": "./dist/dropdown-menu/index.d.ts",
-      "import": "./dist/dropdown-menu/index.js",
-      "require": "./dist/dropdown-menu/index.cjs"
-    },
-    "./label": {
-      "types": "./dist/label/index.d.ts",
-      "import": "./dist/label/index.js",
-      "require": "./dist/label/index.cjs"
-    },
-    "./popover": {
-      "types": "./dist/popover/index.d.ts",
-      "import": "./dist/popover/index.js",
-      "require": "./dist/popover/index.cjs"
-    },
-    "./radio-group": {
-      "types": "./dist/radio-group/index.d.ts",
-      "import": "./dist/radio-group/index.js",
-      "require": "./dist/radio-group/index.cjs"
-    },
-    "./select": {
-      "types": "./dist/select/index.d.ts",
-      "import": "./dist/select/index.js",
-      "require": "./dist/select/index.cjs"
-    },
-    "./separator": {
-      "types": "./dist/separator/index.d.ts",
-      "import": "./dist/separator/index.js",
-      "require": "./dist/separator/index.cjs"
-    },
-    "./slot": {
-      "types": "./dist/slot/index.d.ts",
-      "import": "./dist/slot/index.js",
-      "require": "./dist/slot/index.cjs"
-    },
-    "./switch": {
-      "types": "./dist/switch/index.d.ts",
-      "import": "./dist/switch/index.js",
-      "require": "./dist/switch/index.cjs"
-    },
-    "./tabs": {
-      "types": "./dist/tabs/index.d.ts",
-      "import": "./dist/tabs/index.js",
-      "require": "./dist/tabs/index.cjs"
-    },
-    "./toast": {
-      "types": "./dist/toast/index.d.ts",
-      "import": "./dist/toast/index.js",
-      "require": "./dist/toast/index.cjs"
-    },
-    "./tooltip": {
-      "types": "./dist/tooltip/index.d.ts",
-      "import": "./dist/tooltip/index.js",
-      "require": "./dist/tooltip/index.cjs"
-    },
-    "./visually-hidden": {
-      "types": "./dist/visually-hidden/index.d.ts",
-      "import": "./dist/visually-hidden/index.js",
-      "require": "./dist/visually-hidden/index.cjs"
-    },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs"
+    }
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:type && pnpm build:js",

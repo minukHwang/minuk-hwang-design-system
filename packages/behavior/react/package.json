@@ -7,17 +7,12 @@
     "access": "public"
   },
   "exports": {
-    "./usePress": {
-      "types": "./dist/usePress/index.d.ts",
-      "import": "./dist/usePress/index.js",
-      "require": "./dist/usePress/index.cjs"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.cjs"
-    },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs"
+    }
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:type && pnpm build:js",
