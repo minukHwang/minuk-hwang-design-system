@@ -16,6 +16,7 @@ const fadeIn = keyframes({
 });
 
 export const content = style({
+  zIndex: vars.zIndex.tooltip,
   maxWidth: '260px',
   padding: `${vars.spacing[6]} ${vars.spacing[10]}`,
   borderRadius: vars.borderRadius[6],

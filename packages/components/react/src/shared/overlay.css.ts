@@ -80,6 +80,7 @@ export const panel = style({
 export const scrim = style({
   position: 'fixed',
   inset: 0,
+  zIndex: vars.zIndex.overlay,
   backgroundColor: surface.scrim,
   selectors: {
     '&[data-state="open"]': {
@@ -102,6 +103,7 @@ export const scrim = style({
  */
 
 export const menu = style({
+  zIndex: vars.zIndex.popover,
   minWidth: '180px',
   padding: vars.spacing[4],
 });

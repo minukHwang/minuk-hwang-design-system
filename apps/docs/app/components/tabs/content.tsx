@@ -48,7 +48,7 @@ export default function TabsPage() {
           </Tabs.Panel>
           <Tabs.Panel value="components">
             <Text size={5} color="assistive">
-              Twenty-two styled components, replaceable by design.
+              Twenty-three styled components, replaceable by design.
             </Text>
           </Tabs.Panel>
         </Tabs.Root>

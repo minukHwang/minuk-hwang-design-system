@@ -73,6 +73,7 @@ export const chevron = style({
 });
 
 export const content = style({
+  zIndex: vars.zIndex.popover,
   // Matches the trigger's width so the list does not jump wider than the control
   // it belongs to. Radix measures the trigger and publishes it here.
   minWidth: 'var(--radix-select-trigger-width)',

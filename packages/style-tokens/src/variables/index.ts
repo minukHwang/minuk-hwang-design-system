@@ -12,6 +12,7 @@ export * as typography from './typography';
 export * as motion from './motion';
 
 export * from './spacing';
+export * from './z-index';
 export * from './shadow';
 
 /*

@@ -220,7 +220,7 @@ export default function ColourPage() {
 
       <Preview
         title="White or black"
-        description={`Measured against the ${theme} theme. It lands seven and seven: red through blue carry white, the cyan-to-orange arc needs black.`}
+        description={`Seven and seven: red through blue carry white, the cyan-to-orange arc needs black. Both themes measure the same, because step 500 is deliberately the same lightness in each. (Reading the ${theme} theme.)`}
         stack
       >
         <div className={css.contrastList}>

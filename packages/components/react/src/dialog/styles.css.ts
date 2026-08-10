@@ -22,6 +22,7 @@ const contentOut = keyframes({
 
 export const content = style({
   position: 'fixed',
+  zIndex: vars.zIndex.modal,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

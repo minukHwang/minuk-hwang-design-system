@@ -58,7 +58,7 @@ const Sample = () => (
     <Card.Root elevation="outlined">
       <Card.Header>
         <Card.Title>components-react</Card.Title>
-        <Card.Description>Twenty-two components, one stylesheet each.</Card.Description>
+        <Card.Description>Twenty-three components, one stylesheet each.</Card.Description>
       </Card.Header>
     </Card.Root>
   </div>
@@ -71,7 +71,7 @@ export default function ThemePage() {
     <Page
       eyebrow="Tokens"
       title="Theme"
-      lede="Two dials, an accent and a radius, set on an ancestor. Twenty-two components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
+      lede="Two dials, an accent and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
       <Preview
         title="Try it"

@@ -136,7 +136,9 @@
 .toolbar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  /* The system's own scale. Overlays sit at 1000 and up, so a dialog covers
+     this rather than the other way round, which is what it used to do. */
+  z-index: var(--z-index-raised);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -262,7 +264,8 @@
   .sidebar {
     position: sticky;
     top: 0;
-    z-index: 20;
+    /* Above the toolbar, which is `raised`; still far below any overlay. */
+    z-index: calc(var(--z-index-raised) + 1);
     height: auto;
     padding: var(--spacing-12) 0;
     border-right: none;

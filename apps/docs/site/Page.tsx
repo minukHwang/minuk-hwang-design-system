@@ -26,7 +26,7 @@ export type PageProps = {
 
 /**
  * Every documentation page has the same head, so it lives here rather than
- * being retyped twenty-two times — which is also what stops one page from
+ * being retyped on thirty pages, which is also what stops one page from
  * quietly acquiring an `h2` where the rest have an `h1`.
  *
  * The head is built from `Heading` and `Text` rather than from element
