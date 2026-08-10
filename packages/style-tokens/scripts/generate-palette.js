@@ -123,7 +123,24 @@ const BLACK = '#000000';
  * still reads as a hazard sign rather than a button. Contrast decides what is
  * legible; convention decides between two legible answers.
  */
-const onSolid = fill => (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
+/**
+ * Hues whose text colour is chosen against the measurement, and why.
+ *
+ * Orange carries white at 3.24:1, which misses AA for body text and clears the
+ * 3:1 floor for large text. Passing the body-text floor needs the fill nine
+ * points darker, at which point `#c74f0a` is no longer orange — and the formula
+ * that asks for it is the one part of WCAG 2 known to disagree with the eye on
+ * saturated mid-tones. APCA, the algorithm drafted to replace it, rates white
+ * on this fill at Lc 64 and black at 45.
+ *
+ * So the fill keeps its hue and the exception is written down rather than
+ * hidden. Thirteen of the fourteen clear AA; this one does not, and anything
+ * setting small text on it should reach for a different scale.
+ */
+const ON_SOLID_OVERRIDE = { orange: WHITE };
+
+const onSolid = (fill, hue) =>
+  ON_SOLID_OVERRIDE[hue] ?? (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
 
 /** Reports any fill where neither text colour clears the 4.5:1 floor. */
 const contrastReport = fill => ({
@@ -171,15 +188,25 @@ const TUNING = {
   // blue rather than sitting between blue and purple.
   indigo: { saturation: 88, lightnessShift: 4 },
 
-  // Magenta and pink sit at full chroma on most displays and overpower
-  // neighbouring swatches; a little desaturation settles them.
-  magenta: { saturation: 86, lightnessShift: -3 },
-  pink: { saturation: 94 },
+  /*
+   * Magenta and pink sit at full chroma on most displays and overpower
+   * neighbouring swatches; a little desaturation settles them.
+   *
+   * The lightness shifts are a different correction, and they buy a text
+   * colour rather than a look. All three missed carrying white by a margin —
+   * crimson by 0.09, magenta by 0.47, pink by 0.54 — and a saturated fill set
+   * in black reads as a hazard sign rather than as a button. Dropping the
+   * saturation far enough to clear 4.5 would have cost magenta 16 points and
+   * pink 20, which is a different colour; one to four points of lightness costs
+   * nothing anyone can see. `#ed123e` and `#e8113c` are the same crimson.
+   */
+  magenta: { saturation: 86, lightnessShift: -6 },
+  pink: { saturation: 94, lightnessShift: -4 },
   purple: { saturation: 90 },
 
   // Crimson keeps a lower saturation than red so the two stay distinguishable
   // even though only 12° separates them.
-  crimson: { saturation: 86 },
+  crimson: { saturation: 86, lightnessShift: -1 },
 };
 
 /**

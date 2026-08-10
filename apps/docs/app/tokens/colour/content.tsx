@@ -190,9 +190,9 @@ export default function ColourPage() {
       <Prose>
         <p>
           Each status ramp carries an <code>onNormal</code> alongside these — the text colour that
-          clears WCAG AA on top of <code>normal</code>. Four of the fourteen hues are dark enough at
-          full chroma to carry white; the rest need black. Leaving that judgement to each component
-          is how a 2.29:1 green button gets shipped.
+          clears WCAG AA on top of <code>normal</code>. Eight of the fourteen hues carry white; the
+          cyan-to-amber arc is bright enough at full chroma that it needs black. Leaving that
+          judgement to each component is how a 2.29:1 green button gets shipped.
         </p>
       </Prose>
 
@@ -237,13 +237,25 @@ export default function ColourPage() {
           </div>
         </Preview>
 
+        <Prose>
+          <p>
+            <code>crimson</code>, <code>pink</code> and <code>magenta</code> used to take black.
+            They missed white by 0.09, 0.54 and 0.47 — legible, and wrong: a saturated fill set in
+            black reads as a hazard sign rather than as a button. Dropping their saturation far
+            enough to clear 4.5 would have cost magenta 16 points and pink 20, which is a different
+            colour. <strong>One to four points of lightness cost nothing anyone can see</strong>,
+            and all three carry white now.
+          </p>
+        </Prose>
+
         <Callout tone="warning">
-          <code>crimson</code>, <code>pink</code> and <code>magenta</code> are the awkward ones.
-          White misses by 0.09, 0.54 and 0.47, so all three take black — on saturated hues where
-          white is what the eye expects. They are legible and they look wrong, which is the
-          difference between passing an audit and being right. Dropping their saturation a few
-          points would let white clear, the same way red, orange, amber, yellow and blue were
-          already tuned.
+          <code>orange</code> is the one exception, and it is deliberate. White measures 3.24:1 on
+          it — under AA for body text, over the 3:1 floor for large text. Passing the body floor
+          needs the fill nine points darker, and <code>#c74f0a</code> is not orange. This is also
+          the case where WCAG 2 is known to disagree with the eye: its formula reads relative
+          luminance only, and on saturated mid-tones that inverts. APCA, drafted to replace it,
+          rates white here at Lc 64 against black at 45. The hue is kept and the exception is
+          written down; do not set small text on this fill.
         </Callout>
 
         <Prose>

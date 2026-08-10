@@ -147,7 +147,7 @@ const buildOnSolid = theme =>
           `  ! ${theme} ${name}-500 (${fill}) clears neither: white ${report.white.toFixed(2)}, black ${report.black.toFixed(2)}`
         );
       }
-      return [name, onSolid(fill)];
+      return [name, onSolid(fill, name)];
     })
   );
 
@@ -169,7 +169,7 @@ const contrastRows = theme =>
     const { white, black } = contrastReport(fill);
     return (
       `    ${name}: { fill: '${fill}', white: ${white.toFixed(2)}, ` +
-      `black: ${black.toFixed(2)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
+      `black: ${black.toFixed(2)}, chosen: '${onSolid(fill, name) === '#ffffff' ? 'white' : 'black'}' },`
     );
   }).join('\n');
 
