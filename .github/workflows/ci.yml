@@ -55,6 +55,15 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
+      # The documentation site imports all twenty-three components through the
+      # subpath they are published under, so building it is what proves the
+      # export map, the built output and the exported names still agree.
+      # `build:packages` alone does not: renaming an export that no other
+      # component imports passes it silently, and nineteen of the twenty-three
+      # are imported by nothing else.
+      - name: Build docs
+        run: pnpm --filter @minuk-hwang-design-system/docs build
+
       - name: Lint
         run: pnpm lint
 

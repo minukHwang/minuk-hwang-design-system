@@ -6,7 +6,5 @@
     // Source root, mirrored by the dist layout
     "rootDir": "./src"
   },
-  "include": ["src/**/*"],
-  // The barrel file is not an individual build target
-  "exclude": ["src/index.ts"]
+  "include": ["src/**/*"]
 }

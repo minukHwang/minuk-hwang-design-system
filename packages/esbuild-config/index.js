@@ -68,7 +68,13 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
 
   scanDirectory(srcDir);
 
-  // The barrel file is never built separately; consumers import subpaths
+  /*
+   * A barrel is never an entry. Building one would put every component back in
+   * a single file, and one `'use client'` in it would carry the whole package
+   * across the RSC boundary — which is the thing splitting the build exists to
+   * prevent. Packages that genuinely have one root module, like style-tokens,
+   * use `buildMode: 'bundle'` instead.
+   */
   return entryPoints.filter(entry => !entry.includes('src/index.ts'));
 };
 
