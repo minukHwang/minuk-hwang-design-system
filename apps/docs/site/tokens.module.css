@@ -242,24 +242,51 @@
 }
 
 /*
- * One fill, two halves. Split rather than shown twice side by side, because two
- * separate swatches let the eye compare each against the page instead of
- * against each other — and the question here is only which of the two is
- * easier to read on the same ground.
+ * Two swatches, not one split down the middle.
+ *
+ * They shared a background at first, which made the pair read as a single
+ * object with a seam in it — and a line struck through one side then looked
+ * like damage to the swatch rather than a verdict on the text. Separating them
+ * gives each text colour its own sample, and the strike has a whole box to
+ * cross.
  */
 .contrastFill {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-radius: var(--border-radius-8);
-  overflow: hidden;
+  gap: var(--spacing-8);
 }
 
 .contrastHalf {
-  padding: var(--spacing-12) var(--spacing-16);
+  position: relative;
+  padding: var(--spacing-14) var(--spacing-16);
+  border-radius: var(--border-radius-8);
   font-size: var(--font-size-15);
   font-weight: var(--font-weight-600);
   line-height: var(--line-height-22);
   text-align: center;
+  overflow: hidden;
+}
+
+/*
+ * The colour that was not chosen gets struck through, corner to corner, the way
+ * a brand guide crosses out the wrong logo lockup.
+ *
+ * Marking only the winner would leave the loser looking like a second valid
+ * option — which is exactly the impression this table exists to remove. The
+ * line is `currentColor`, so it is white on the white swatch and black on the
+ * black one, and never introduces a third colour.
+ */
+.contrastHalf[data-rejected]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top right,
+    transparent calc(50% - 1px),
+    currentColor calc(50% - 1px),
+    currentColor calc(50% + 1px),
+    transparent calc(50% + 1px)
+  );
 }
 
 .contrastMeta {

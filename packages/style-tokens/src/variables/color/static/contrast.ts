@@ -38,7 +38,7 @@ export const contrast: Record<'light' | 'dark', Record<string, ContrastMeasureme
     lime: { fill: '#6cb10b', white: 2.65, black: 7.93, chosen: 'black' },
     yellow: { fill: '#f2d40d', white: 1.48, black: 14.2, chosen: 'black' },
     amber: { fill: '#f59f0a', white: 2.13, black: 9.85, chosen: 'black' },
-    orange: { fill: '#f2610d', white: 3.24, black: 6.49, chosen: 'white' },
+    orange: { fill: '#f2610d', white: 3.24, black: 6.49, chosen: 'black' },
   },
   dark: {
     red: { fill: '#eb1414', white: 4.52, black: 4.64, chosen: 'white' },
@@ -54,6 +54,6 @@ export const contrast: Record<'light' | 'dark', Record<string, ContrastMeasureme
     lime: { fill: '#6cb10b', white: 2.65, black: 7.93, chosen: 'black' },
     yellow: { fill: '#f2d40d', white: 1.48, black: 14.2, chosen: 'black' },
     amber: { fill: '#f59f0a', white: 2.13, black: 9.85, chosen: 'black' },
-    orange: { fill: '#f2610d', white: 3.24, black: 6.49, chosen: 'white' },
+    orange: { fill: '#f2610d', white: 3.24, black: 6.49, chosen: 'black' },
   },
 };

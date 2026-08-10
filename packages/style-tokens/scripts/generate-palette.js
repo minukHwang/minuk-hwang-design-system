@@ -124,23 +124,24 @@ const BLACK = '#000000';
  * legible; convention decides between two legible answers.
  */
 /**
- * Hues whose text colour is chosen against the measurement, and why.
+ * Which text colour clears WCAG AA on top of a solid fill.
  *
- * Orange carries white at 3.24:1, which misses AA for body text and clears the
- * 3:1 floor for large text. Passing the body-text floor needs the fill nine
- * points darker, at which point `#c74f0a` is no longer orange — and the formula
- * that asks for it is the one part of WCAG 2 known to disagree with the eye on
- * saturated mid-tones. APCA, the algorithm drafted to replace it, rates white
- * on this fill at Lc 64 and black at 45.
+ * Measured rather than listed. The hand-maintained table this replaced was
+ * wrong in the dark theme and had no way of knowing.
  *
- * So the fill keeps its hue and the exception is written down rather than
- * hidden. Thirteen of the fourteen clear AA; this one does not, and anything
- * setting small text on it should reach for a different scale.
+ * White wins ties, and anything that clears the floor counts as a tie. Picking
+ * whichever number is larger put black on red — which passes at 4.64:1 and
+ * still reads as a hazard sign rather than as a button. Contrast decides what
+ * is legible; convention decides between two legible answers.
+ *
+ * There are no exceptions to this. There was one, briefly: orange carries
+ * white at 3.24:1, which misses the floor, and the argument for allowing it
+ * was that WCAG 2 is known to disagree with the eye on saturated mid-tones.
+ * The argument held and the exception still went — seven hues carrying white
+ * and seven carrying black is a straight split with nothing to explain, and a
+ * rule with one exception is a rule nobody trusts.
  */
-const ON_SOLID_OVERRIDE = { orange: WHITE };
-
-const onSolid = (fill, hue) =>
-  ON_SOLID_OVERRIDE[hue] ?? (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
+const onSolid = fill => (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
 
 /** Reports any fill where neither text colour clears the 4.5:1 floor. */
 const contrastReport = fill => ({

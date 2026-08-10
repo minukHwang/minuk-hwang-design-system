@@ -51,11 +51,11 @@ const Ramp = ({ name }: { name: string }) => (
 const AA = 4.5;
 
 /**
- * One fill, set in both text colours at once.
+ * One fill as two swatches, one per text colour, with the loser struck through.
  *
  * The rule that picks between them is a single comparison against 4.5, and on
- * several hues the two answers are close enough that the comparison is a
- * judgement rather than a calculation. Reading the two numbers tells you which;
+ * four of the hues both answers clear it — there the comparison is a judgement
+ * rather than a calculation. Reading the two numbers tells you which was taken;
  * seeing the two halves tells you whether you agree.
  */
 const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) => {
@@ -66,11 +66,19 @@ const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) =
 
   return (
     <div className={css.contrastRow}>
-      <div className={css.contrastFill} style={{ background: `var(--${hue}-500)` }}>
-        <span className={css.contrastHalf} style={{ color: '#ffffff' }}>
+      <div className={css.contrastFill}>
+        <span
+          className={css.contrastHalf}
+          style={{ background: `var(--${hue}-500)`, color: '#ffffff' }}
+          data-rejected={measured.chosen === 'black' || undefined}
+        >
           {hue} in white
         </span>
-        <span className={css.contrastHalf} style={{ color: '#000000' }}>
+        <span
+          className={css.contrastHalf}
+          style={{ background: `var(--${hue}-500)`, color: '#000000' }}
+          data-rejected={measured.chosen === 'white' || undefined}
+        >
           {hue} in black
         </span>
       </div>
@@ -190,9 +198,9 @@ export default function ColourPage() {
       <Prose>
         <p>
           Each status ramp carries an <code>onNormal</code> alongside these — the text colour that
-          clears WCAG AA on top of <code>normal</code>. Eight of the fourteen hues carry white; the
-          cyan-to-amber arc is bright enough at full chroma that it needs black. Leaving that
-          judgement to each component is how a 2.29:1 green button gets shipped.
+          clears WCAG AA on top of <code>normal</code>. It is measured rather than chosen, and the
+          section below shows the working. Leaving that judgement to each component is how a 2.29:1
+          green button gets shipped.
         </p>
       </Prose>
 
@@ -223,9 +231,9 @@ export default function ColourPage() {
             convention decides between two legible answers.
           </p>
           <p>
-            Below is every hue in both text colours at once, with what each measures. The close
-            calls are marked, because a margin of 0.09 is a decision someone should look at rather
-            than a fact.
+            Below is every hue in both text colours at once, with the one that was not taken struck
+            through. Where both clear the floor the row says so, because a tie is a decision someone
+            should look at rather than a fact.
           </p>
         </Prose>
 
@@ -239,26 +247,28 @@ export default function ColourPage() {
 
         <Prose>
           <p>
-            <code>crimson</code>, <code>pink</code> and <code>magenta</code> used to take black.
-            They missed white by 0.09, 0.54 and 0.47 — legible, and wrong: a saturated fill set in
-            black reads as a hazard sign rather than as a button. Dropping their saturation far
-            enough to clear 4.5 would have cost magenta 16 points and pink 20, which is a different
-            colour. <strong>One to four points of lightness cost nothing anyone can see</strong>,
-            and all three carry white now.
+            It lands seven and seven. Red through blue carry white; the cyan-to-orange arc is bright
+            enough at full chroma that it needs black.
           </p>
-        </Prose>
-
-        <Callout tone="warning">
-          <code>orange</code> is the one exception, and it is deliberate. White measures 3.24:1 on
-          it — under AA for body text, over the 3:1 floor for large text. Passing the body floor
-          needs the fill nine points darker, and <code>#c74f0a</code> is not orange. This is also
-          the case where WCAG 2 is known to disagree with the eye: its formula reads relative
-          luminance only, and on saturated mid-tones that inverts. APCA, drafted to replace it,
-          rates white here at Lc 64 against black at 45. The hue is kept and the exception is
-          written down; do not set small text on this fill.
-        </Callout>
-
-        <Prose>
+          <p>
+            <strong>The four warm hues were not always ties.</strong> <code>crimson</code>,{' '}
+            <code>pink</code> and <code>magenta</code> missed white by 0.09, 0.54 and 0.47 and took
+            black — legible, and wrong, since a saturated fill set in black reads as a hazard sign
+            rather than as a button. Desaturating them far enough to clear 4.5 would have cost
+            magenta sixteen points and pink twenty, which is a different colour. One to four points
+            of lightness cost nothing anyone can see.
+          </p>
+          <p>
+            <code>orange</code> was nearly an exception. White measures 3.24:1 on it — under AA for
+            body text, over the 3:1 floor for large text — and there was a real argument for
+            allowing it, because this is where WCAG 2 is known to disagree with the eye. Its formula
+            reads relative luminance alone, and on saturated mid-tones the answer inverts; APCA,
+            drafted to replace it, rates white here at Lc 64 against black at 45. The argument held
+            and the exception still went:{' '}
+            <strong>a rule with one exception is a rule nobody trusts</strong>. Moving orange four
+            degrees toward red makes the measurement agree at identical chroma, and that is kept in
+            reserve rather than spent.
+          </p>
           <p>
             Both themes measure the same today, because step 500 is deliberately the same lightness
             in each — a solid fill should not change identity when the theme flips. The measurement

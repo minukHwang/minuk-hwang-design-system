@@ -287,7 +287,7 @@ export const onSolid = {
   lime: '#000000',
   yellow: '#000000',
   amber: '#000000',
-  orange: '#ffffff',
+  orange: '#000000',
 };
 
 /* Theme surfaces and text. Authored, not generated. */
