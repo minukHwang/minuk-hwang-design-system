@@ -6,17 +6,18 @@ import { Dialog } from '@minuk-hwang-design-system/components-react/dialog';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function DialogPage() {
   return (
     <Page
       eyebrow="Overlays"
       title="Dialog"
-      lede="A modal panel. Focus trapping, scroll locking, Escape and the backdrop click all come from base-react — what this layer adds is the shape."
+      lede="A modal panel. Focus trapping, scroll locking, Escape and the backdrop click all come from base-react, so this layer only adds the shape."
     >
       <Preview
-        title="open it, then press Tab and Escape"
+        title="Basic"
+        description="Open it, then press Tab and Escape."
         code={`<Dialog.Root>
   <Dialog.Trigger asChild><Button>Publish</Button></Dialog.Trigger>
   <Dialog.Content>
@@ -67,11 +68,15 @@ export default function DialogPage() {
       </Preview>
 
       <Callout>
-        Tab through it — focus never leaves the dialog and returns to the trigger on close, and the
+        Tab through it. Focus never leaves the dialog and returns to the trigger on close, and the
         page behind does not scroll. None of that is written here; it is why the base layer exists.
       </Callout>
 
-      <Preview title="size" code={`<Dialog.Content size="s">…</Dialog.Content>`}>
+      <Preview
+        title="Size"
+        description="Use size to set the width. The body scrolls, not the page, so the actions never leave the screen."
+        code={`<Dialog.Content size="s">…</Dialog.Content>`}
+      >
         {(['s', 'm', 'l'] as const).map(size => (
           <Dialog.Root key={size}>
             <Dialog.Trigger asChild>
@@ -92,15 +97,8 @@ export default function DialogPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          The body scrolls, not the page. A dialog whose actions have scrolled off screen has no way
-          out, so the header and footer stay put and only the middle moves.
-        </p>
-      </Prose>
-
       <Callout tone="warning">
-        <code>Dialog.Title</code> is not really optional — without it the dialog has nothing to
+        <code>Dialog.Title</code> is not really optional. Without it the dialog has nothing to
         announce itself as, and Radix warns. If the design has no visible heading, wrap the title in{' '}
         <code>VisuallyHidden</code> rather than dropping it.
       </Callout>

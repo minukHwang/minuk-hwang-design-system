@@ -4,7 +4,7 @@ import { Chip } from '@minuk-hwang-design-system/components-react/chip';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const FILTERS = ['All', 'Design', 'Engineering', 'Research'];
 
@@ -24,7 +24,8 @@ export default function ChipPage() {
       lede="A pill-shaped control: filters, tags, toggles. Always focusable, which is the line between this and a Badge."
     >
       <Preview
-        title="toggling — click them"
+        title="Toggling"
+        description="Use selected with onSelectedChange. It becomes aria-pressed, and the stylesheet reads that attribute, so a chip cannot look selected while telling a screen reader it is not."
         code={`const [selected, setSelected] = useState<string[]>([]);
 
 <Chip selected={selected.includes(name)} onClick={() => toggle(name)}>
@@ -38,16 +39,9 @@ export default function ChipPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          <code>selected</code> becomes <code>aria-pressed</code>, and that attribute is what the
-          stylesheet reads. There is no separate visual state to fall out of sync —{' '}
-          <strong>a chip cannot look selected while telling a screen reader it is not</strong>.
-        </p>
-      </Prose>
-
       <Preview
-        title="removable — click the ×"
+        title="Removable"
+        description="Use onRemove to add a dismiss control inside the chip."
         code={`<Chip onRemove={() => remove(tag)}>{tag}</Chip>`}
       >
         {tags.length === 0 ? (
@@ -63,11 +57,15 @@ export default function ChipPage() {
 
       <Callout>
         With <code>onRemove</code> the chip holds a second control. Removing a filter and toggling
-        it are different actions, and putting both on one element leaves a keyboard user unable to
-        reach one of them. Tab to a chip and then again to reach its ×.
+        it are different actions, so they are different controls. Tab to a chip, then again to reach
+        its dismiss button.
       </Callout>
 
-      <Preview title="size" code={`<Chip size="s">Small</Chip>`}>
+      <Preview
+        title="Size"
+        description="Two heights, to sit beside small or medium controls."
+        code={`<Chip size="s">Small</Chip>`}
+      >
         <Chip size="s">Small</Chip>
         <Chip size="m">Medium</Chip>
         <Chip size="l">Large</Chip>

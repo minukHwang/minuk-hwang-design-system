@@ -1,10 +1,9 @@
 'use client';
 
-import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Prose } from '../../../site/Preview';
+import { Callout, Preview } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const SPACING = [0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64];
@@ -16,17 +15,13 @@ export default function ScalesPage() {
     <Page
       eyebrow="Tokens"
       title="Spacing, radius, type"
-      lede="Everything measurable is keyed by pixels. A design says 16 and the code says 16 — there is nothing to translate."
+      lede="Everything measurable is keyed by pixels. A design says 16 and the code says 16, with nothing to translate."
     >
-      <Prose>
-        <p>
-          T-shirt sizes buy nothing here and cost ordering. <code>s</code> beside <code>sm</code>,
-          and <code>base</code> in the middle of the ladder rather than at an end — nothing about
-          those names says which is bigger.
-        </p>
-      </Prose>
-
-      <Preview title="spacing" stack>
+      <Preview
+        title="Spacing"
+        description="Keyed by pixels. A design says 16 and the code says 16."
+        stack
+      >
         <div className={css.rows}>
           {SPACING.map(step => (
             <div key={step} className={css.row}>
@@ -40,11 +35,15 @@ export default function ScalesPage() {
 
       <Callout>
         <code>0</code> is a token for the same reason the rest are. Without it{' '}
-        <code>padding: 0</code> has to be written as a raw value — which is exactly the escape hatch
-        a scale exists to close, and it is the most common spacing value there is.
+        <code>padding: 0</code> has to be a raw value, which is exactly the escape hatch a scale
+        exists to close.
       </Callout>
 
-      <Preview title="radius" stack>
+      <Preview
+        title="Radius"
+        description="Also pixels. full is the one name left, because a pill is not a measurement."
+        stack
+      >
         <div className={css.rows}>
           {RADIUS.map(step => (
             <div key={step} className={css.row}>
@@ -67,14 +66,11 @@ export default function ScalesPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          <code>full</code> is the one name left, because it is not a measurement: it asks for a
-          pill whatever the element&apos;s height.
-        </p>
-      </Prose>
-
-      <Preview title="type" stack>
+      <Preview
+        title="Type"
+        description="Fourteen sizes and four weights, keyed the same way. Text and Heading pair them with line heights."
+        stack
+      >
         <div className={css.rows}>
           {FONT_SIZE.map(size => (
             <div key={size} className={css.row}>
@@ -88,24 +84,9 @@ export default function ScalesPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          Four weights — 400, 500, 600, 700 — and line heights keyed in pixels the same way. The
-          steps that pair a size with a line height live on{' '}
-          <Text as="span" size={5} color="link">
-            Text
-          </Text>{' '}
-          and{' '}
-          <Text as="span" size={5} color="link">
-            Heading
-          </Text>
-          , which have a ladder each. 600 is a token but not a <code>weight</code> value on them —
-          the interface uses it directly, where 700 is heavier than a control wants to be.
-        </p>
-      </Prose>
-
       <Preview
-        title="font family"
+        title="Font family"
+        description="Two faces. The token names them; loading them is the application's job."
         stack
         code={`fontFamily.main  // 'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif
 fontFamily.mono  // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace`}

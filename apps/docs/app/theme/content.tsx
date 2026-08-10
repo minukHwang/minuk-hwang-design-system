@@ -32,7 +32,7 @@ const Sample = () => (
     </div>
 
     <div className={css.sampleRow}>
-      <Input placeholder="Focus me — the ring is the accent" />
+      <Input placeholder="Focus me, the ring is the accent" />
     </div>
 
     <div className={css.sampleRow}>
@@ -71,9 +71,13 @@ export default function ThemePage() {
     <Page
       eyebrow="Tokens"
       title="Theme"
-      lede="Two dials — an accent and a radius — set on an ancestor. Twenty-two components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
+      lede="Two dials, an accent and a radius, set on an ancestor. Twenty-two components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
-      <Preview title="try it — the same dials as the toolbar above" stack>
+      <Preview
+        title="Try it"
+        description="The same dials as the toolbar above. Changing one here changes the whole site."
+        stack
+      >
         <div className={css.picker}>
           <div className={css.control}>
             <Text as="div" size={1} color="assistive" className={css.controlLabel}>
@@ -121,16 +125,9 @@ export default function ThemePage() {
         <Sample />
       </Preview>
 
-      <Prose>
-        <p>
-          Nothing above takes a colour prop. <code>Button</code> asks for{' '}
-          <code>variant=&quot;primary&quot;</code> and gets whatever the brand currently is — the
-          call site says what it means, the theme says what that looks like.
-        </p>
-      </Prose>
-
       <Preview
-        title="nesting — a region with its own accent"
+        title="Nesting"
+        description="Wrap a region in a second Theme to give it its own accent. Omitting a prop inherits rather than resets."
         stack
         code={`<Theme accentColor="teal" radius="full">
   <Pricing />
@@ -162,24 +159,11 @@ export default function ThemePage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          The selectors are unqualified — <code>[data-accent=&apos;teal&apos;]</code>, not{' '}
-          <code>html[data-accent=&apos;teal&apos;]</code> — so the nearest ancestor wins. Omitting a
-          prop inherits rather than resets, which is what lets a nested <code>Theme</code> change
-          only the radius.
-        </p>
-      </Prose>
-
-      <Section title="How it works">
-        <Prose>
-          <p>Two indirections in the token stylesheet, and nothing else anywhere.</p>
-        </Prose>
-
-        <Preview
-          title="the whole mechanism"
-          stack
-          code={`/* the ramp every accent token points at */
+      <Preview
+        title="How it works"
+        description="Two indirections in the token stylesheet, and nothing else anywhere."
+        stack
+        code={`/* the ramp every accent token points at */
 html                   { --accent-500: var(--blue-500);   … }
 [data-accent='purple'] { --accent-500: var(--purple-500); … }
 
@@ -188,22 +172,12 @@ html                 { --border-radius-factor: 1; }
 [data-radius='large'] { --border-radius-factor: 1.5; }
 
 --border-radius-8: calc(0.5rem * var(--border-radius-factor));`}
-        >
-          <Text size={4} color="assistive">
-            A component compiled against <code>var(--accent-500)</code> and{' '}
-            <code>var(--border-radius-8)</code> follows a rebrand it was built years before.
-          </Text>
-        </Preview>
-
-        <Prose>
-          <p>
-            <code>full</code> is a factor of 3, and that is enough because{' '}
-            <strong>a browser clamps a radius to half the box</strong>. A 48px button asks for 24px
-            and is a pill; a card asks for 36px and keeps it. The clamp is what tells controls apart
-            from containers.
-          </p>
-        </Prose>
-      </Section>
+      >
+        <Text size={4} color="assistive">
+          A component compiled against <code>var(--accent-500)</code> and{' '}
+          <code>var(--border-radius-8)</code> follows a rebrand it was built years before.
+        </Text>
+      </Preview>
 
       <Section title="Why there is no color prop on Button">
         <Prose>
@@ -221,7 +195,7 @@ html                 { --border-radius-factor: 1; }
           <p>
             Light and dark are still chosen on the <code>html</code> element, because the rule that
             follows the operating system has to ask whether the document as a whole has overridden
-            it. And <code>textColor.link</code> stays a fixed blue — whether a link should be the
+            it. And <code>textColor.link</code> stays a fixed blue: whether a link should be the
             brand colour or the colour people recognise as a link is not answered here.
           </p>
         </Prose>
@@ -232,7 +206,7 @@ html                 { --border-radius-factor: 1; }
           rows={[
             {
               name: 'accentColor',
-              type: '14 hues — red · crimson · pink · magenta · purple · indigo · blue · cyan · teal · green · lime · yellow · amber · orange',
+              type: '14 hues: red · crimson · pink · magenta · purple · indigo · blue · cyan · teal · green · lime · yellow · amber · orange',
               default: 'inherited',
               description:
                 'The text colour that clears AA on each fill is measured per theme, so this cannot put white on yellow.',

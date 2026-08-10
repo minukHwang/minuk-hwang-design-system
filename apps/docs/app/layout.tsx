@@ -44,7 +44,7 @@ import '@minuk-hwang-design-system/components-react/tooltip/style';
 export const metadata: Metadata = {
   title: {
     default: 'minuk-hwang design system',
-    template: '%s — minuk-hwang design system',
+    template: '%s · minuk-hwang design system',
   },
   description:
     'A four-layer design system: tokens, a shared style layer, headless behaviour, and styled components.',

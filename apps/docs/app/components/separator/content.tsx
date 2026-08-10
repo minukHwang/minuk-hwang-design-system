@@ -5,7 +5,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function SeparatorPage() {
   return (
@@ -14,13 +14,22 @@ export default function SeparatorPage() {
       title="Separator"
       lede="A divider between sections. Decorative by default, which is what stops a screen reader from reading the furniture."
     >
-      <Preview title="horizontal" stack code={`<Separator />`}>
+      <Preview
+        title="Horizontal"
+        description="The default. Use it between stacked sections."
+        stack
+        code={`<Separator />`}
+      >
         <Text size={5}>Tokens are generated, never hand-edited.</Text>
         <Separator />
         <Text size={5}>Change a hue in the generator and replay.</Text>
       </Preview>
 
-      <Preview title="vertical" code={`<Separator orientation="vertical" />`}>
+      <Preview
+        title="Vertical"
+        description="Use orientation to turn it, inside a flex row it stretches to fit."
+        code={`<Separator orientation="vertical" />`}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 24 }}>
           <Text as="span" size={4} color="assistive">
             Draft
@@ -35,15 +44,6 @@ export default function SeparatorPage() {
           </Text>
         </div>
       </Preview>
-
-      <Prose>
-        <p>
-          A line drawn between two lists is usually a visual convenience, and announcing
-          &ldquo;separator&rdquo; between every pair of items is noise. Pass{' '}
-          <code>decorative={'{false}'}</code> only when the line is the one thing saying two regions
-          are unrelated.
-        </p>
-      </Prose>
 
       <Section title="Props">
         <PropsTable

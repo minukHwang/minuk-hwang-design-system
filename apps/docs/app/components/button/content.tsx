@@ -12,7 +12,7 @@ export default function ButtonPage() {
     <Page
       eyebrow="Actions"
       title="Button"
-      lede="Runs an action — submitting a form, opening a dialog. Press handling and the keyboard contract come from base-react, so this layer is only appearance."
+      lede="Runs an action such as submitting a form or opening a dialog. Press handling and the keyboard contract come from base-react, so this layer is only appearance."
     >
       <Preview
         code={`<Button>
@@ -167,7 +167,7 @@ export default function ButtonPage() {
               type: 'boolean',
               default: 'false',
               description:
-                'Fills the container. Off by default — a button is as wide as its label.',
+                'Fills the container. Off by default, since a button is as wide as its label.',
             },
             {
               name: 'iconOnly',

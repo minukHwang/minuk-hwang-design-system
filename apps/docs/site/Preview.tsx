@@ -3,6 +3,7 @@ import { Heading } from '@minuk-hwang-design-system/components-react/heading';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
+import { CodeBlock } from './CodeBlock';
 import css from './preview.module.css';
 
 /*
@@ -66,11 +67,7 @@ export const Preview = ({ title, description, code, stack, children }: PreviewPr
     )}
     <figure className={css.figure}>
       <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
-      {code && (
-        <pre className={css.code}>
-          <code>{code.trim()}</code>
-        </pre>
-      )}
+      {code && <CodeBlock code={code} />}
     </figure>
   </section>
 );

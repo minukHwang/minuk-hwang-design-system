@@ -6,7 +6,7 @@ import { Icon } from '@minuk-hwang-design-system/components-react/icon';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function DropdownMenuPage() {
   const [tag, setTag] = React.useState('latest');
@@ -16,10 +16,11 @@ export default function DropdownMenuPage() {
     <Page
       eyebrow="Overlays"
       title="Dropdown menu"
-      lede="Actions from a trigger. A menu is not a styled list — it has roving focus, typeahead, and a role a screen reader recognises."
+      lede="Actions from a trigger. A menu is not a styled list: it has roving focus, typeahead, and a role a screen reader recognises."
     >
       <Preview
-        title="open it, then type 'un'"
+        title="Basic"
+        description="Open it and start typing. Focus jumps to the matching item."
         code={`<DropdownMenu.Root>
   <DropdownMenu.Trigger asChild>
     <Button variant="secondary">Actions</Button>
@@ -56,13 +57,13 @@ export default function DropdownMenuPage() {
       </Preview>
 
       <Callout>
-        Open the menu and start typing — focus jumps to the matching item. Typeahead, arrow keys,
-        Escape and outside-click dismissal all come from the base layer, and all of them are things
-        a hand-rolled menu ships without.
+        Typeahead, arrow keys, Escape and outside-click dismissal all come from the base layer. All
+        of them are things a hand-rolled menu ships without.
       </Callout>
 
       <Preview
-        title="checkbox and radio items"
+        title="Checkbox and radio items"
+        description="These keep a gutter for the indicator, so the list does not shift sideways when one becomes selected."
         code={`<DropdownMenu.CheckboxItem checked={dryRun} onCheckedChange={setDryRun}>
   Dry run
 </DropdownMenu.CheckboxItem>
@@ -93,20 +94,8 @@ export default function DropdownMenuPage() {
         </DropdownMenu.Root>
       </Preview>
 
-      <Prose>
-        <p>
-          Plain items sit flush; checkbox and radio items keep a gutter for the indicator, so a list
-          of options does not shift sideways when one becomes selected.
-        </p>
-        <p>
-          Highlighting is driven by <code>data-highlighted</code>, which the base layer sets for
-          both pointer and keyboard. Styling <code>:hover</code> instead is the bug where arrowing
-          through a menu highlights nothing until you touch the mouse.
-        </p>
-      </Prose>
-
       <Callout tone="warning">
-        <code>destructive</code> tints a row red. Colour alone does not carry that meaning — the
+        <code>destructive</code> tints a row red. Colour alone does not carry that meaning, so the
         label still has to say &ldquo;Unpublish&rdquo;.
       </Callout>
 

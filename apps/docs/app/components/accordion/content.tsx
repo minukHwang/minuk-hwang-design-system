@@ -4,13 +4,13 @@ import { Accordion } from '@minuk-hwang-design-system/components-react/accordion
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const ITEMS = [
   [
     'a',
     'Why is the shadow colour a separate token?',
-    'A shadow works by darkening what is behind it, so how opaque it has to be depends on how dark that already is. Eight per cent black moves a white ground by 20/255 and a near-black one by 2 — the geometry can be shared, the ink cannot.',
+    'A shadow works by darkening what is behind it, so how opaque it has to be depends on how dark that already is. Eight per cent black moves a white ground by 20/255 and a near-black one by 2, so the geometry can be shared but the ink cannot.',
   ],
   [
     'b',
@@ -32,7 +32,8 @@ export default function AccordionPage() {
       lede="Collapsible sections. Each trigger sits inside a heading element, which is what lets a screen reader user jump between sections rather than tab through every one."
     >
       <Preview
-        title="single — one open at a time"
+        title="One at a time"
+        description='Use type="single" when only one section should be open.'
         stack
         code={`<Accordion.Root type="single" collapsible defaultValue="a">
   <Accordion.Item value="a">
@@ -52,7 +53,8 @@ export default function AccordionPage() {
       </Preview>
 
       <Preview
-        title="multiple — any number open"
+        title="Any number open"
+        description='Use type="multiple" to let sections open independently.'
         stack
         code={`<Accordion.Root type="multiple" defaultValue={['a', 'b']}>…</Accordion.Root>`}
       >
@@ -68,17 +70,9 @@ export default function AccordionPage() {
 
       <Callout>
         The height animates without anyone knowing the height. <code>height: auto</code> cannot be
-        animated, and measuring the panel in JavaScript breaks the moment its contents reflow — the
-        base layer measures it and publishes the result as a custom property, which is what the
-        keyframes read.
+        animated, and measuring the panel in JavaScript breaks the moment its contents reflow. The
+        base layer publishes the measurement as a custom property, which is what the keyframes read.
       </Callout>
-
-      <Prose>
-        <p>
-          Padding lives on an inner element rather than on the animated one. Animating a box whose
-          padding is part of its height makes the contents jump at the end of the transition.
-        </p>
-      </Prose>
 
       <Section title="Parts">
         <PartsList

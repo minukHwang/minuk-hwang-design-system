@@ -5,7 +5,7 @@ import { classes, textScale } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Preview, PropsTable, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const step = (n: number) => classes.typography[`text${n}` as 'text5'];
@@ -22,10 +22,11 @@ export default function TextPage() {
     <Page
       eyebrow="Primitives"
       title="Text"
-      lede="Body copy at one of ten steps, numbered from its own 1. Anything that is a heading belongs in Heading, which takes a level rather than an element so the document outline is not left to whoever remembered."
+      lede="Body copy at one of ten steps. Anything that is a heading belongs in Heading, which takes a level rather than an element."
     >
       <Preview
-        title="size — 1 is the smallest"
+        title="Size"
+        description="Use size to pick one of ten steps. 1 is 12px, 10 is 24px."
         stack
         code={`<Text size={5}>Interface copy.</Text>
 <Text size={2} color="assistive">A timestamp.</Text>`}
@@ -50,14 +51,9 @@ export default function TextPage() {
         })}
       </Preview>
 
-      <Callout>
-        This is its own ladder, not a slice of a shared one. <code>Heading</code> has ten steps of
-        its own, and six pixel values appear in both — two decisions that agree today at 18px, not
-        one written down twice.
-      </Callout>
-
       <Preview
-        title="weight"
+        title="Weight"
+        description="Use weight for emphasis: 400, 500 or 700."
         stack
         code={`<Text weight="regular">Running text.</Text>
 <Text weight="medium">A little emphasis.</Text>
@@ -75,7 +71,13 @@ export default function TextPage() {
       </Preview>
 
       <Preview
-        title="leading — same size, different job"
+        title="Leading"
+        description={
+          <>
+            Use <code>leading=&quot;reading&quot;</code> to open the line height for a paragraph. It
+            affects steps 3 to 6, the sizes a paragraph is run at.
+          </>
+        }
         stack
         code={`<Text>Two lines of interface copy.</Text>
 <Text leading="reading">A paragraph someone will actually read.</Text>`}
@@ -96,20 +98,9 @@ export default function TextPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          Interface copy is read in two-line bursts and wants to be compact; a paragraph wants room
-          between lines. <strong>Different requirements at the same size</strong>, which is why
-          leading is its own prop.
-        </p>
-        <p>
-          It has an effect on steps 3 to 6, the sizes a paragraph is actually run at. Asking for it
-          elsewhere is not an error — there is nothing to override.
-        </p>
-      </Prose>
-
       <Preview
-        title="colour is semantic only"
+        title="Color"
+        description="Use color to name a role. There is no palette step here, on purpose."
         stack
         code={`<Text color="assistive">Captions and timestamps</Text>
 <Text color="error">Something went wrong</Text>`}
@@ -132,16 +123,9 @@ export default function TextPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          There is no <code>crimson600</code> here on purpose. A prop that accepts any palette step
-          lets every caller invent a new meaning for red; these answer a question about the content
-          instead.
-        </p>
-      </Prose>
-
       <Preview
-        title="overflow"
+        title="Overflow"
+        description="Use truncate for one line, or lines to clamp to a number of them."
         stack
         code={`<Text truncate>One line, then an ellipsis.</Text>
 <Text lines={2}>Two lines, then an ellipsis.</Text>`}

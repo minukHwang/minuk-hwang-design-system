@@ -4,7 +4,7 @@ import { Badge } from '@minuk-hwang-design-system/components-react/badge';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const TONES = ['neutral', 'accent', 'info', 'success', 'warning', 'error'] as const;
 
@@ -13,10 +13,11 @@ export default function BadgePage() {
     <Page
       eyebrow="Display"
       title="Badge"
-      lede="A small label reporting state the user cannot change. Not interactive and not focusable — if it can be clicked or dismissed, it is a Chip."
+      lede="A small label reporting state the user cannot change. Not interactive and not focusable: if it can be clicked or dismissed, it is a Chip."
     >
       <Preview
-        title="tone"
+        title="Tone"
+        description="Use tone to say what the state is. Text and background come from the same status scale, so the pair clears AA by construction."
         code={`<Badge tone="success">Live</Badge>\n<Badge tone="error">Failed</Badge>`}
       >
         {TONES.map(tone => (
@@ -26,7 +27,11 @@ export default function BadgePage() {
         ))}
       </Preview>
 
-      <Preview title="solid" code={`<Badge tone="error" solid>Blocked</Badge>`}>
+      <Preview
+        title="Solid"
+        description="Use solid when the badge has to carry across a busy row. The text colour is the one measured to pass on that fill."
+        code={`<Badge tone="error" solid>Blocked</Badge>`}
+      >
         {TONES.map(tone => (
           <Badge key={tone} tone={tone} solid>
             {tone}
@@ -34,22 +39,16 @@ export default function BadgePage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          Tinted by default and filled on request. The tinted set uses each status scale&apos;s{' '}
-          <code>surface</code> with text at <code>strong</code>, which clears WCAG AA by
-          construction; the filled set uses <code>normal</code> with <code>onNormal</code>, which
-          records the text colour that passes on that fill. Neither combination needs checking by
-          hand.
-        </p>
-      </Prose>
-
       <Callout tone="warning">
         A tone carries meaning only to people who can see it. If the meaning matters, put it in the
-        words — &ldquo;Failed&rdquo; beside a red badge, not a red badge alone.
+        words: &ldquo;Failed&rdquo; beside a red badge, not a red badge alone.
       </Callout>
 
-      <Preview title="size" code={`<Badge size="s">3</Badge>`}>
+      <Preview
+        title="Size"
+        description="Two sizes, matching the two chip heights."
+        code={`<Badge size="s">3</Badge>`}
+      >
         <Badge size="s" tone="accent">
           small
         </Badge>

@@ -5,7 +5,7 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const NAMES = [
   'search',
@@ -30,7 +30,8 @@ export default function IconPage() {
       lede="A Material Symbols glyph. The font arrives with the token stylesheet, so there is nothing to install and no sprite sheet to keep in sync."
     >
       <Preview
-        title="names"
+        title="Names"
+        description="Use name with any Material Symbols name."
         code={`<Icon name="search" />
 <Icon name="chevron_right" size={16} />`}
       >
@@ -54,7 +55,8 @@ export default function IconPage() {
       </Preview>
 
       <Preview
-        title="size follows the type scale"
+        title="Size"
+        description="Use size to match the text beside it. The five sizes are type steps, so an icon next to 14px text can be told to be 14px."
         code={`<Icon name="settings" size={14} />
 <Icon name="settings" size={20} />
 <Icon name="settings" size={24} />`}
@@ -64,19 +66,10 @@ export default function IconPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          Sizes match the type steps so an icon beside 14px text can be told to be 14px. The glyph
-          is laid out as <code>inline-flex</code> rather than inline text, which is what keeps it on
-          the same baseline instead of a couple of pixels low.
-        </p>
-      </Prose>
-
       <Callout>
-        Without <code>label</code> the icon is hidden from screen readers, and that is the right
-        default — most icons sit next to the words they illustrate, and announcing both makes the
-        interface read like it stutters. Pass <code>label</code> only when the icon is the only
-        thing saying what something is.
+        Without <code>label</code> the icon is hidden from screen readers, which is the right
+        default: most icons sit next to the words they illustrate. Pass <code>label</code> only when
+        the icon is the only thing saying what something is.
       </Callout>
 
       <Section title="Props">

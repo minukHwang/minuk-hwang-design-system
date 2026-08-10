@@ -5,7 +5,7 @@ import { Spinner } from '@minuk-hwang-design-system/components-react/spinner';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function SpinnerPage() {
   return (
@@ -15,7 +15,8 @@ export default function SpinnerPage() {
       lede="Indeterminate progress. Takes its colour from whatever it sits in, so it needs no variant per surface."
     >
       <Preview
-        title="size"
+        title="Size"
+        description="Use size in pixels. Stroke width is derived from it, so a small ring does not read as a smudge."
         code={`<Spinner size={16} />\n<Spinner size={24} />\n<Spinner size={32} />`}
       >
         <Spinner size={16} />
@@ -24,19 +25,11 @@ export default function SpinnerPage() {
         <Spinner size={32} />
       </Preview>
 
-      <Prose>
-        <p>
-          The ring is drawn entirely in <code>border</code>, with one side transparent — a complete
-          ring spinning looks static. Stroke width scales with size, because a 32px ring with a
-          1.5px stroke reads as a hairline and a 16px one with 3px reads as a smudge.
-        </p>
-        <p>
-          Colour is <code>currentColor</code>, which is why the same component works on a filled
-          button and on the page without being told which.
-        </p>
-      </Prose>
-
-      <Preview title="inside a button" code={`<Button loading>Publishing</Button>`}>
+      <Preview
+        title="Inside a button"
+        description="Button renders one for you when loading is set, in whatever colour the variant is."
+        code={`<Button loading>Publishing</Button>`}
+      >
         <Button loading>Publishing</Button>
         <Button variant="secondary" loading>
           Saving
@@ -45,18 +38,6 @@ export default function SpinnerPage() {
           Deleting
         </Button>
       </Preview>
-
-      <Prose>
-        <p>
-          <code>Button</code> already sets <code>aria-busy</code>, so the spinner inside it stays
-          hidden from screen readers. Standing alone it takes a <code>label</code> and becomes a{' '}
-          <code>role=&quot;status&quot;</code> live region.
-        </p>
-        <p>
-          Under <code>prefers-reduced-motion</code> the token stylesheet collapses the duration to
-          0.01ms rather than removing the animation, so the ring stops instead of disappearing.
-        </p>
-      </Prose>
 
       <Section title="Props">
         <PropsTable

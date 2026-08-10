@@ -17,13 +17,13 @@ const LAYERS = [
     name: 'style-tokens',
     role: 'Values, and nothing else',
     detail:
-      'Colour, spacing, radius, type, shadow and motion. Ships in four forms — CSS variables, TypeScript objects, utility classes, and a Tailwind v4 theme — all generated from one source.',
+      'Colour, spacing, radius, type, shadow and motion. Ships in four forms: CSS variables, TypeScript objects, utility classes, and a Tailwind v4 theme, all generated from one source.',
   },
   {
     name: 'behavior-react',
     role: 'What Radix does not cover',
     detail:
-      'Press handling for button-like elements, so a link or a div styled as a button still answers the keyboard. 137 lines — the rest of the behaviour is Radix.',
+      'Press handling for button-like elements, so a link or a div styled as a button still answers the keyboard. 137 lines; the rest of the behaviour is Radix.',
   },
   {
     name: 'base-react',
@@ -35,7 +35,7 @@ const LAYERS = [
     name: 'components-react',
     role: 'One styled implementation',
     detail:
-      'Twenty-three components on top of the base layer, plus Theme. Replaceable by design — anyone wanting a different look takes the layer below and brings their own CSS.',
+      'Twenty-three components on top of the base layer, plus Theme. Replaceable by design: anyone wanting a different look takes the layer below and brings their own CSS.',
   },
 ];
 
@@ -50,8 +50,8 @@ export default function Home() {
         <p>
           The layers exist so a decision made in one does not have to be remade in the others. A
           colour is chosen once in <code>style-tokens</code>, a focus trap implemented once in{' '}
-          <code>base-react</code>, a button&apos;s appearance decided once here — and swapping any
-          of the three leaves the other two standing.
+          <code>base-react</code>, a button&apos;s appearance decided once here. Swapping any of the
+          three leaves the other two standing.
         </p>
       </Prose>
 
@@ -128,7 +128,7 @@ import '@minuk-hwang-design-system/components-react/button/style';`}
             <Card.Body>
               <Text size={4} color="assistive">
                 One import gives you <code>bg-surface-default</code>,{' '}
-                <code>text-status-error-strong</code> and the rest — with no <code>dark:</code>{' '}
+                <code>text-status-error-strong</code> and the rest, with no <code>dark:</code>{' '}
                 anywhere, because the utilities compile to the variables the theme swaps.
               </Text>
             </Card.Body>

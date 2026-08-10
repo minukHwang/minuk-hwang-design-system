@@ -4,11 +4,11 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Prose } from '../../../site/Preview';
+import { Callout, Preview } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const STEPS = [
-  ['xs', 'Resting card — separation only'],
+  ['xs', 'Resting card, separation only'],
   ['s', 'Raised: a hovered card, a small menu'],
   ['m', 'Floating: dropdown, popover, tooltip, toast'],
   ['l', 'Overlay: dialog, drawer'],
@@ -21,15 +21,11 @@ export default function ShadowPage() {
       title="Shadow"
       lede="Geometry and colour are separate tokens, and only the colour follows the theme. Switch themes in the sidebar and watch these hold their weight."
     >
-      <Prose>
-        <p>
-          How far something floats is a fact about the layout; how much it darkens what is behind it
-          depends on what is behind it. Eight per cent black moves a white ground by 20/255 and a
-          near-black one by 2, so the ink is a token and the geometry is not.
-        </p>
-      </Prose>
-
-      <Preview title="the ladder" stack>
+      <Preview
+        title="The ladder"
+        description="Four steps. Every one above xs is two layers: a tight direct shadow over a wide, soft ambient one, which is what makes it read as cast rather than painted on."
+        stack
+      >
         <div className={css.shadowStage}>
           {STEPS.map(([name]) => (
             <div key={name} className={css.shadowItem}>
@@ -42,7 +38,11 @@ export default function ShadowPage() {
         </div>
       </Preview>
 
-      <Preview title="what each is for" stack>
+      <Preview
+        title="What each is for"
+        description="Pick by how far the thing is meant to float, not by how dark you want it."
+        stack
+      >
         <div className={css.rows}>
           {STEPS.map(([name, use]) => (
             <div key={name} className={css.row}>
@@ -54,15 +54,11 @@ export default function ShadowPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          Every step above <code>xs</code> is two layers, which is what makes a shadow read as cast
-          rather than painted on: a tight <em>direct</em> offset further down, over a wide, soft{' '}
-          <em>ambient</em> barely offset at all.
-        </p>
-      </Prose>
-
-      <Preview title="up — the same ladder, mirrored" stack>
+      <Preview
+        title="Cast upward"
+        description="Use shadow.up for anything pinned to the bottom of the screen, where content passes above it and a downward shadow lands on nothing."
+        stack
+      >
         <div className={css.shadowStage}>
           {STEPS.map(([name]) => (
             <div key={name} className={css.shadowItem}>
@@ -75,15 +71,6 @@ export default function ShadowPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          Light comes from above, so shadows fall downward by default. Anything pinned to the bottom
-          of the screen — a sheet, a tab bar, a sticky footer — has content passing above it, and a
-          downward shadow lands on nothing. Direction is a modifier on elevation rather than a value
-          beside it, so <code>shadow.up.m</code> is the same weight cast the other way.
-        </p>
-      </Prose>
-
       <Callout>
         <p>
           The ink is <code>0.08 / 0.14</code> on light and <code>0.48 / 0.72</code> on dark. The
@@ -91,14 +78,6 @@ export default function ShadowPage() {
           gets for free.
         </p>
       </Callout>
-
-      <Prose>
-        <p>
-          These keep t-shirt names while the rest of the system moved to pixels, because a shadow is
-          four lengths and a colour. <code>shadow[16]</code> would be naming one of five values
-          arbitrarily.
-        </p>
-      </Prose>
     </Page>
   );
 }

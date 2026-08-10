@@ -5,7 +5,7 @@ import { Input, Textarea } from '@minuk-hwang-design-system/components-react/inp
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function InputPage() {
   return (
@@ -15,24 +15,19 @@ export default function InputPage() {
       lede="A text control and nothing else. The label, the description and the error belong to Field, which also wires the ids between them."
     >
       <Preview
-        title="size"
+        title="Size"
+        description="Three heights, the same three Button and Select use, so a field and its submit line up."
         stack
         code={`<Input size="s" />\n<Input size="m" />\n<Input size="l" />`}
       >
-        <Input size="s" placeholder="Small — 40px" />
-        <Input size="m" placeholder="Medium — 48px" />
-        <Input size="l" placeholder="Large — 56px" />
+        <Input size="s" placeholder="Small, 40px" />
+        <Input size="m" placeholder="Medium, 48px" />
+        <Input size="l" placeholder="Large, 56px" />
       </Preview>
 
-      <Prose>
-        <p>
-          The three heights are the same three <code>Button</code> and <code>Select</code> use, so a
-          field and its submit line up without either being nudged.
-        </p>
-      </Prose>
-
       <Preview
-        title="state"
+        title="State"
+        description="The error appearance comes from aria-invalid, which Field.Root sets from its own state."
         stack
         code={`<Input aria-invalid />
 <Input disabled />
@@ -50,19 +45,18 @@ export default function InputPage() {
         red border on a control that still announces itself as valid.
       </Callout>
 
-      <Preview title="textarea" stack code={`<Textarea rows={4} />`}>
+      <Preview
+        title="Textarea"
+        description="Resizes vertically only, because horizontal resize breaks whatever column the field sits in."
+        stack
+        code={`<Textarea rows={4} />`}
+      >
         <Textarea defaultValue="Splits shadows into geometry and per-theme ink." />
       </Preview>
 
-      <Prose>
-        <p>
-          Resizes vertically only. Horizontal resize breaks whatever column the field sits in, and
-          nobody has ever wanted it.
-        </p>
-      </Prose>
-
       <Preview
-        title="in a Field"
+        title="In a Field"
+        description="Field.Control passes the id and the aria attributes down."
         stack
         code={`<Field.Root required>
   <Field.Label>Package name</Field.Label>

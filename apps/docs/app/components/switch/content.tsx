@@ -4,16 +4,21 @@ import { Switch } from '@minuk-hwang-design-system/components-react/switch';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function SwitchPage() {
   return (
     <Page
       eyebrow="Forms"
       title="Switch"
-      lede="On or off, taking effect immediately. If the change needs a Save button it is a Checkbox — the shape is a promise about when something happens."
+      lede="On or off, taking effect immediately. If the change needs a Save button it is a Checkbox: the shape is a promise about when something happens."
     >
-      <Preview title="state" stack code={`<Switch defaultChecked>Publish provenance</Switch>`}>
+      <Preview
+        title="State"
+        description="Give it a label as children, or use it bare inside a row that already has one."
+        stack
+        code={`<Switch defaultChecked>Publish provenance</Switch>`}
+      >
         <Switch defaultChecked>Publish provenance</Switch>
         <Switch>Dry run</Switch>
         <Switch disabled>Two-factor required</Switch>
@@ -24,16 +29,9 @@ export default function SwitchPage() {
 
       <Callout tone="warning">
         A switch in a form with a Save button is the usual misuse. The user flips it, walks away,
-        and finds out later that nothing was saved — the control told them it had already happened.
+        and finds out later that nothing was saved, because the control told them it had already
+        happened.
       </Callout>
-
-      <Prose>
-        <p>
-          The knob moves with <code>translateX</code> rather than a changing offset, so the browser
-          can animate it on the compositor. Animating <code>left</code> would lay the whole track
-          out on every frame for a control that is 44px wide.
-        </p>
-      </Prose>
 
       <Section title="Props">
         <PropsTable

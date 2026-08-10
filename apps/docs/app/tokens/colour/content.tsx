@@ -6,7 +6,7 @@ import * as React from 'react';
 
 import { useResolvedAppearance } from '../../../site/dials';
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, Prose } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const STEPS = [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 990];
@@ -100,7 +100,7 @@ const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) =
         >
           black {measured.black.toFixed(2)}
         </span>
-        {bothClear && <span className={css.contrastNote}>either clears — convention picked</span>}
+        {bothClear && <span className={css.contrastNote}>either clears, convention picked</span>}
         {nearMiss && (
           <span className={css.contrastNote}>
             {measured.chosen === 'white' ? 'black' : 'white'} misses by {(AA - rejected).toFixed(2)}
@@ -118,19 +118,13 @@ export default function ColourPage() {
     <Page
       eyebrow="Tokens"
       title="Colour"
-      lede="Fourteen chromatic scales and three neutrals, thirteen steps each, generated rather than picked. Switch the theme in the toolbar — every swatch below moves."
+      lede="Fourteen chromatic scales and three neutrals, thirteen steps each, generated rather than picked. Switch the theme in the toolbar and every swatch below moves."
     >
-      <Prose>
-        <p>
-          <strong>
-            Step 10 sits closest to the background and 990 furthest from it, in both themes.
-          </strong>{' '}
-          The light scales run light to dark and the dark scales the other way, so a component names
-          a step once and it reads correctly either way.
-        </p>
-      </Prose>
-
-      <Preview title="chromatic — 10 → 990, left to right" stack>
+      <Preview
+        title="Chromatic"
+        description="Fourteen hues, thirteen steps each, 10 to 990 left to right."
+        stack
+      >
         <div className={css.ramps}>
           {HUES.map(hue => (
             <Ramp key={hue} name={hue} />
@@ -138,7 +132,11 @@ export default function ColourPage() {
         </div>
       </Preview>
 
-      <Preview title="neutral — ordered by how much blue they carry" stack>
+      <Preview
+        title="Neutral"
+        description="Three of them, ordered by how much blue they carry."
+        stack
+      >
         <div className={css.ramps}>
           {NEUTRALS.map(name => (
             <Ramp key={name} name={name} />
@@ -150,7 +148,7 @@ export default function ColourPage() {
         <p>
           No two hues sit closer than 14°, the point where two ramps stop reading as separate
           families. Equal HSL lightness is not equal perceived brightness, so cyan and green are
-          pulled down — without that, <code>teal-500</code> is <code>#00ffea</code>.
+          pulled down. Without that, <code>teal-500</code> is <code>#00ffea</code>.
         </p>
       </Prose>
 
@@ -160,7 +158,11 @@ export default function ColourPage() {
         decision to make errors crimson.
       </Callout>
 
-      <Preview title="semantic" stack>
+      <Preview
+        title="Semantic"
+        description="What a colour is for. Reach for these, not a raw step."
+        stack
+      >
         <div className={css.ramps}>
           {SEMANTIC.map(([group, keys]) => (
             <div key={group} className={css.ramp}>
@@ -194,15 +196,11 @@ export default function ColourPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          Each status ramp carries an <code>onNormal</code> — the text colour that clears WCAG AA on
-          top of <code>normal</code>. It is measured rather than chosen; the section below shows the
-          working.
-        </p>
-      </Prose>
-
-      <Preview title="text on each status fill" stack>
+      <Preview
+        title="Text on each fill"
+        description="onNormal records the colour that clears AA on that fill, so no component has to decide."
+        stack
+      >
         {STATUS.map(status => (
           <div
             key={status}
@@ -220,41 +218,17 @@ export default function ColourPage() {
         ))}
       </Preview>
 
-      <Section title="White or black on each fill">
-        <Prose>
-          <p>
-            The rule is one comparison: <strong>white if it clears 4.5, otherwise black</strong>.
-            Below is every hue in both colours at once, with the one that lost struck through. Where
-            both clear, the row says so.
-          </p>
-        </Prose>
-
-        <Preview title={`measured against the ${theme} theme`} stack>
-          <div className={css.contrastList}>
-            {HUES.map(hue => (
-              <ContrastRow key={hue} hue={hue} theme={theme} />
-            ))}
-          </div>
-        </Preview>
-
-        <Prose>
-          <p>
-            It lands seven and seven. Red through blue carry white; the cyan-to-orange arc is bright
-            enough at full chroma to need black.
-          </p>
-          <p>
-            <code>crimson</code>, <code>pink</code> and <code>magenta</code> missed white by 0.09,
-            0.54 and 0.47 and used to take black. Desaturating them far enough to clear 4.5 would
-            have cost magenta sixteen points and pink twenty — a different colour. One to four
-            points of lightness cost nothing anyone can see.
-          </p>
-          <p>
-            <code>orange</code> keeps black at 3.24:1, which is where WCAG 2 is known to disagree
-            with the eye: its formula reads relative luminance alone, and APCA rates white here at
-            Lc 64 against black at 45. Seven and seven with no exceptions won.
-          </p>
-        </Prose>
-      </Section>
+      <Preview
+        title="White or black"
+        description={`Measured against the ${theme} theme. It lands seven and seven: red through blue carry white, the cyan-to-orange arc needs black.`}
+        stack
+      >
+        <div className={css.contrastList}>
+          {HUES.map(hue => (
+            <ContrastRow key={hue} hue={hue} theme={theme} />
+          ))}
+        </div>
+      </Preview>
     </Page>
   );
 }

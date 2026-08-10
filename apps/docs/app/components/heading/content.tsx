@@ -9,7 +9,7 @@ import {
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const step = (n: number) => classes.typography[`heading${n}` as 'heading6'];
@@ -22,10 +22,11 @@ export default function HeadingPage() {
     <Page
       eyebrow="Primitives"
       title="Heading"
-      lede="A heading at one of ten steps, numbered from its own 1. level sets both the element and the default size, so the outline cannot be left to whoever remembered to pass an element."
+      lede="A heading at one of ten steps. The level prop sets both the element and the default size, so the outline is never left to whoever remembered."
     >
       <Preview
-        title="level — the element and a default size"
+        title="Level"
+        description="Use level to set the element and, with it, a default size."
         stack
         code={`<Heading level={1}>Publish</Heading>
 <Heading level={2}>Before you start</Heading>`}
@@ -48,12 +49,12 @@ export default function HeadingPage() {
 
       <Callout>
         <code>level</code> is required. A default would let three headings on a page silently
-        produce three <code>h1</code>s — the screen looks right and the outline is wrong, which is
-        the failure nobody catches.
+        produce three <code>h1</code>s: the screen looks right and the outline is wrong.
       </Callout>
 
       <Preview
-        title="size — independent of level"
+        title="Size"
+        description="Use size to change the appearance without touching the outline."
         stack
         code={`{/* Still an h3 in the outline, only smaller on screen. */}
 <Heading level={3} size={1}>A card title</Heading>`}
@@ -76,19 +77,11 @@ export default function HeadingPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          An <code>h3</code> opening a page and an <code>h3</code> inside a card want different
-          sizes and the same place in the outline. Overriding <code>size</code> changes only what it
-          looks like —{' '}
-          <strong>
-            the outline stays whatever <code>level</code> said
-          </strong>
-          .
-        </p>
-      </Prose>
-
-      <Preview title="the ten steps a heading can take" stack>
+      <Preview
+        title="The ten steps"
+        description="16px to 60px. Below 16 a heading stops being one; above 24 body copy is a heading that forgot to say so."
+        stack
+      >
         {[...headingScale].reverse().map(({ step: n }) => {
           const spec = step(n).regular;
           return (
@@ -108,14 +101,6 @@ export default function HeadingPage() {
           );
         })}
       </Preview>
-
-      <Prose>
-        <p>
-          Ten steps here and ten in <code>Text</code>, out of fourteen — the six in the middle
-          belong to both. Below 16px a heading stops being one; above 24px body copy is a heading
-          that forgot to say so. Weight defaults to <code>bold</code>.
-        </p>
-      </Prose>
 
       <Section title="Props">
         <PropsTable

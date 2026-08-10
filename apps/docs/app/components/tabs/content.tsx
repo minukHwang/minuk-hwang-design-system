@@ -5,17 +5,18 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function TabsPage() {
   return (
     <Page
       eyebrow="Navigation"
       title="Tabs"
-      lede="One view at a time from a small set. Radix supplies the roving tabindex and the aria-controls wiring — the parts that make a tab strip a tab strip rather than a row of buttons."
+      lede="One view at a time from a small set. Radix supplies the roving tabindex and the aria-controls wiring, the parts that make a tab strip a tab strip rather than a row of buttons."
     >
       <Preview
-        title="focus a tab, then use the arrow keys"
+        title="Basic"
+        description="Focus a tab, then use the arrow keys. The strip is one tab stop; Tab again reaches the panel."
         stack
         code={`<Tabs.Root defaultValue="tokens">
   <Tabs.List>
@@ -36,7 +37,7 @@ export default function TabsPage() {
           </Tabs.List>
           <Tabs.Panel value="tokens">
             <Text size={5} color="assistive">
-              Colour, spacing, radius, type, shadow and motion — four consumption formats generated
+              Colour, spacing, radius, type, shadow and motion. Four consumption formats generated
               from one source.
             </Text>
           </Tabs.Panel>
@@ -55,22 +56,9 @@ export default function TabsPage() {
 
       <Callout>
         The whole strip is one tab stop. Tab into it, then arrow between tabs and Tab again to reach
-        the panel — that is what a screen reader user expects, and it is the part most hand-rolled
-        tab strips miss.
+        the panel. That is what a screen reader user expects, and the part most hand-rolled tab
+        strips miss.
       </Callout>
-
-      <Prose>
-        <p>
-          The active indicator is a pseudo-element on the tab rather than one bar that slides. A
-          sliding bar has to be measured in JavaScript and re-measured on every resize and font
-          load; this is CSS that cannot fall out of sync.
-        </p>
-        <p>
-          It grows with <code>scaleX</code> from the left — the motif the previous version had,
-          kept, but on <code>duration[200]</code> instead of the hard-coded 0.5s it ran at, which
-          was slow enough that fast switching left the bar trailing behind.
-        </p>
-      </Prose>
 
       <Section title="Parts">
         <PartsList
@@ -81,7 +69,7 @@ export default function TabsPage() {
             {
               name: 'Tabs.Panel',
               description:
-                'Its content. Named for what it is — Radix calls this Content, which reads oddly beside Dialog.Content.',
+                'Its content. Named for what it is; Radix calls this Content, which reads oddly beside Dialog.Content.',
             },
           ]}
         />

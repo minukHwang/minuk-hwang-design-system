@@ -7,17 +7,18 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function CardPage() {
   return (
     <Page
       eyebrow="Display"
       title="Card"
-      lede="A sectioned container. Compound because the order, count and contents of the sections belong to the caller — a title prop fixes one arrangement and makes the rest impossible."
+      lede="A sectioned container. Compound because the order, count and contents of the sections belong to the caller."
     >
       <Preview
-        title="sections"
+        title="Sections"
+        description="Use the parts you need, in the order you need them. All of them are optional."
         code={`<Card.Root>
   <Card.Header>
     <Card.Title>style-tokens</Card.Title>
@@ -50,7 +51,8 @@ export default function CardPage() {
       </Preview>
 
       <Preview
-        title="elevation"
+        title="Elevation"
+        description="Use elevation to pick a border or a shadow. They are alternatives, not a scale: doing both reads as indecision."
         code={`<Card.Root elevation="flat" />
 <Card.Root elevation="outlined" />
 <Card.Root elevation="elevated" />`}
@@ -66,17 +68,9 @@ export default function CardPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          These are alternatives rather than a scale. A border draws a hard edge and a shadow
-          implies height; doing both reads as indecision. Overlays are the exception — they sit on
-          arbitrary content, so <code>Dialog</code> and <code>Popover</code> take the shadow to say
-          they are above and the border to hold their edge against a busy background.
-        </p>
-      </Prose>
-
       <Preview
-        title="interactive"
+        title="Interactive"
+        description="Use interactive to add hover and focus affordances to a card that is part of a control."
         code={`<Card.Root elevation="elevated" interactive>…</Card.Root>`}
       >
         <Card.Root elevation="elevated" interactive style={{ maxWidth: 300 }}>
@@ -100,7 +94,7 @@ export default function CardPage() {
 
       <Callout tone="warning">
         <code>interactive</code> adds hover and focus affordances. It does not make the card
-        clickable — a div with an onClick is not reachable by keyboard. Put the handler on a real
+        clickable, and a div with an onClick is not reachable by keyboard. Put the handler on a real
         button or link inside, or make the whole card one.
       </Callout>
 
@@ -115,7 +109,8 @@ export default function CardPage() {
             { name: 'Card.Header', description: 'Title and description.' },
             {
               name: 'Card.Title',
-              description: 'Defaults to h3 — a card is almost never the top of a document outline.',
+              description:
+                'Defaults to h3, since a card is almost never the top of a document outline.',
             },
             { name: 'Card.Description', description: 'Assistive-coloured subtitle.' },
             { name: 'Card.Body', description: 'The main content.' },

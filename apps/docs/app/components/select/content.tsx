@@ -5,7 +5,7 @@ import { Select } from '@minuk-hwang-design-system/components-react/select';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function SelectPage() {
   return (
@@ -15,7 +15,8 @@ export default function SelectPage() {
       lede="One choice from many. A styled listbox rather than a native select, which is a trade rather than a free win."
     >
       <Preview
-        title="open it — then type to jump"
+        title="Basic"
+        description="Open it and type to jump to an option."
         stack
         code={`<Select.Root defaultValue="public">
   <Select.Trigger><Select.Value /></Select.Trigger>
@@ -54,7 +55,7 @@ export default function SelectPage() {
 
       <Callout>
         <code>Select.Label</code> only works inside <code>Select.Group</code> and throws if it is
-        not — the label is the group&apos;s accessible name, so a label with no group names nothing.
+        not. The label is the group&apos;s accessible name, so a label with no group names nothing.
       </Callout>
 
       <Callout tone="warning">
@@ -63,19 +64,9 @@ export default function SelectPage() {
         or grouping the native element cannot express.
       </Callout>
 
-      <Prose>
-        <p>
-          <code>Select.Content</code> folds in the viewport and both scroll buttons, because every
-          select needs all three in that order.
-        </p>
-        <p>
-          The trigger matches <code>Input</code> exactly — same heights, same border, same focus
-          ring. Two controls in one column that differ by a pixel look like a mistake.
-        </p>
-      </Prose>
-
       <Preview
-        title="in a Field"
+        title="In a Field"
+        description="Field.Control hands its props to the trigger."
         stack
         code={`<Field.Root>
   <Field.Label>Access</Field.Label>

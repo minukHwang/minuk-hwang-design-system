@@ -5,7 +5,7 @@ import { Input, Textarea } from '@minuk-hwang-design-system/components-react/inp
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function FieldPage() {
   return (
@@ -14,17 +14,9 @@ export default function FieldPage() {
       title="Field"
       lede="Groups a label, a control, and whatever explains it. This is the component that most repays being compound, because everything it does is invisible when it is done wrong."
     >
-      <Prose>
-        <p>
-          A label points at its control&apos;s id, the control points back at its description and
-          its error, and an invalid control has to say so where a screen reader can hear it. Four
-          ids, three attributes, every one silently skippable — the field looks right either way.{' '}
-          <code>Field.Root</code> holds them in context so the wiring happens once.
-        </p>
-      </Prose>
-
       <Preview
-        title="the whole thing"
+        title="Everything wired"
+        description="Field.Root holds the ids in context, so the label points at the control and the control points back at its description and error."
         stack
         code={`<Field.Root required>
   <Field.Label>Package name</Field.Label>
@@ -59,7 +51,8 @@ export default function FieldPage() {
       </Callout>
 
       <Preview
-        title="invalid"
+        title="Invalid"
+        description='Field.Error renders nothing while the root is valid, and carries role="alert" when it appears.'
         stack
         code={`<Field.Root invalid={Boolean(error)}>
   <Field.Label>Version</Field.Label>
@@ -74,17 +67,9 @@ export default function FieldPage() {
         </Field.Root>
       </Preview>
 
-      <Prose>
-        <p>
-          <code>Field.Error</code> renders nothing while the root is valid, and carries{' '}
-          <code>role=&quot;alert&quot;</code> when it appears so it is announced on arrival. The red
-          border is not a prop — the control styles itself from <code>aria-invalid</code>, so an
-          error state cannot be drawn on a control that still announces itself as valid.
-        </p>
-      </Prose>
-
       <Preview
-        title="description and error together"
+        title="Description and error"
+        description="The description stays when the field goes invalid, because an error adds to the guidance rather than replacing it."
         stack
         code={`<Field.Root invalid>
   <Field.Label>Release notes</Field.Label>
@@ -101,39 +86,22 @@ export default function FieldPage() {
         </Field.Root>
       </Preview>
 
-      <Prose>
-        <p>
-          The description stays when the field goes invalid: an error adds to the guidance rather
-          than replacing it. <code>aria-describedby</code> lists the error first, so that is read
-          first.
-        </p>
-      </Prose>
-
-      <Section title="Why a render prop">
-        <Prose>
-          <p>
-            <code>Field.Control</code> hands the props over instead of wrapping the control, because
-            the control might be an <code>input</code>, a <code>textarea</code>, a{' '}
-            <code>Select</code>, or something the system has never seen. Cloning an unknown child to
-            inject props guesses at its API.
-          </p>
-        </Prose>
-        <Preview
-          title="what Field.Control passes"
-          code={`<Field.Control>
-  {({ id, 'aria-describedby': describedBy, 'aria-invalid': invalid, disabled, required }) => (
-    <MyOwnControl id={id} aria-describedby={describedBy} … />
-  )}
+      <Preview
+        title="What Field.Control passes"
+        description="It hands the props over instead of wrapping the control, so the control can be an input, a textarea, a Select, or something the system has never seen."
+        code={`<Field.Control>
+{({ id, 'aria-describedby': describedBy, 'aria-invalid': invalid, disabled, required }) => (
+  <MyOwnControl id={id} aria-describedby={describedBy} … />
+)}
 </Field.Control>`}
-        >
-          <Field.Root>
-            <Field.Label>Anything at all</Field.Label>
-            <Field.Control>
-              {props => <Input {...props} placeholder="Your control, our wiring" />}
-            </Field.Control>
-          </Field.Root>
-        </Preview>
-      </Section>
+      >
+        <Field.Root>
+          <Field.Label>Anything at all</Field.Label>
+          <Field.Control>
+            {props => <Input {...props} placeholder="Your control, our wiring" />}
+          </Field.Control>
+        </Field.Root>
+      </Preview>
 
       <Section title="Parts">
         <PartsList

@@ -5,7 +5,7 @@ import { Button } from '@minuk-hwang-design-system/components-react/button';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const TONES = [
   [
@@ -34,7 +34,8 @@ export default function AlertPage() {
       lede="An inline message about the state of something on the page. Compound because the parts are optional and their order is the caller's."
     >
       <Preview
-        title="tone"
+        title="Tone"
+        description="Use tone to say what kind of message it is. Alert.Icon picks its own glyph from it, so the tone is written once."
         stack
         code={`<Alert.Root tone="warning">
   <Alert.Icon />
@@ -55,32 +56,21 @@ export default function AlertPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          The tone travels by context, so <code>Alert.Icon</code> picks its own glyph and colour
-          without being told twice. Pass a <code>name</code> to override it.
-        </p>
-        <p>
-          Tinted rather than filled: an alert is usually one of several things on a page, and a
-          saturated block is a poor neighbour — it pulls attention permanently rather than while it
-          matters.
-        </p>
-      </Prose>
-
       <Preview
-        title="one line, or with an action"
+        title="With an action"
+        description="Anything placed after Alert.Body is pushed to the far edge and centred against the block."
         stack
         code={`<Alert.Root tone="neutral">
   <Alert.Icon name="info" />
   <Alert.Body>
-    <Alert.Description>Nothing to publish — the working tree is clean.</Alert.Description>
+    <Alert.Description>Nothing to publish: the working tree is clean.</Alert.Description>
   </Alert.Body>
 </Alert.Root>`}
       >
         <Alert.Root tone="neutral">
           <Alert.Icon name="info" />
           <Alert.Body>
-            <Alert.Description>Nothing to publish — the working tree is clean.</Alert.Description>
+            <Alert.Description>Nothing to publish: the working tree is clean.</Alert.Description>
           </Alert.Body>
         </Alert.Root>
         <Alert.Root tone="error">
@@ -97,8 +87,8 @@ export default function AlertPage() {
 
       <Callout tone="warning">
         <code>live</code> makes a screen reader announce the alert as it appears. Use it for
-        something that arrived in response to an action, and leave it off for a banner that was on
-        the page all along — otherwise it is read out on every navigation.
+        something that arrived in response to an action. Leave it off for a banner that was on the
+        page all along, or it is read out on every navigation.
       </Callout>
 
       <Section title="Parts">

@@ -5,20 +5,20 @@ import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Prose } from '../../../site/Preview';
+import { Callout, Preview } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const DURATIONS = [
   [70, 'Hover and press colour changes'],
   [100, 'Checkbox, switch, icon rotation'],
   [150, 'Tooltip, badge, inline expand'],
-  [200, 'The default — popover, dropdown, toast'],
+  [200, 'The default: popover, dropdown, toast'],
   [300, 'Dialog, drawer'],
   [400, 'Bottom sheet, page transition'],
 ] as const;
 
 const EASINGS = [
-  ['standard', 'cubic-bezier(0.2, 0, 0, 1)', 'Moves and resizes — anything staying on screen'],
+  ['standard', 'cubic-bezier(0.2, 0, 0, 1)', 'Moves and resizes: anything staying on screen'],
   ['entrance', 'cubic-bezier(0.05, 0.7, 0.1, 1)', 'Appearing. Decelerates so it lands'],
   ['exit', 'cubic-bezier(0.3, 0, 0.8, 0.15)', 'Leaving. Accelerates, and can be quicker'],
   ['linear', 'linear', 'Spinners and progress'],
@@ -33,16 +33,9 @@ export default function MotionPage() {
       title="Motion"
       lede="The base layer animates by setting data-state and leaving the transition to CSS. Without these tokens every component picks its own number."
     >
-      <Prose>
-        <p>
-          <strong>Distance sets duration.</strong> A tooltip travels almost nowhere and is done in
-          150ms; a sheet crossing the screen needs 400ms or it reads as a jump cut. One duration for
-          both makes the small thing sluggish and the large thing violent.
-        </p>
-      </Prose>
-
       <Preview
-        title="press play — all six start together"
+        title="Duration"
+        description="Distance sets duration. A tooltip travels almost nowhere and is done in 150ms; a sheet crossing the screen needs 400ms or it reads as a jump cut."
         stack
         code={`transitionDuration: vars.motion.duration[200];
 transitionTimingFunction: vars.motion.easing.standard;`}
@@ -71,16 +64,11 @@ transitionTimingFunction: vars.motion.easing.standard;`}
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          <strong>Direction sets easing.</strong> Something arriving decelerates so that it lands
-          rather than stops; something leaving accelerates and can be quicker than its entrance,
-          because nobody waits out a dismissal they already asked for. The curves are Material
-          3&apos;s emphasized pair.
-        </p>
-      </Prose>
-
-      <Preview title="easing" stack>
+      <Preview
+        title="Easing"
+        description="Direction sets easing. Something arriving decelerates so it lands; something leaving accelerates, because nobody waits out a dismissal they asked for."
+        stack
+      >
         <div className={css.rows}>
           {EASINGS.map(([name, curve, use]) => (
             <div key={name} className={css.row}>
@@ -94,18 +82,8 @@ transitionTimingFunction: vars.motion.easing.standard;`}
 
       <Callout>
         Durations are numbers because they are measurable; easings are names because a curve is four
-        numbers — the same argument that keeps shadows on t-shirt sizes.
+        numbers, the same argument that keeps shadows on t-shirt sizes.
       </Callout>
-
-      <Prose>
-        <p>
-          Under <code>prefers-reduced-motion: reduce</code> every duration collapses to{' '}
-          <code>0.01ms</code>, in both stylesheets. Not zero — <code>transitionend</code> still has
-          to fire, or a component waiting on it never finishes. It is a floor rather than a
-          preference: interface animation makes some people motion sick, and the OS setting is how
-          they say so.
-        </p>
-      </Prose>
     </Page>
   );
 }

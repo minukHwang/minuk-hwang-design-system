@@ -15,10 +15,11 @@ export default function PopoverPage() {
     <Page
       eyebrow="Overlays"
       title="Popover"
-      lede="An anchored panel holding interactive content. The distinction from Tooltip is not size — it is whether anything inside can be focused."
+      lede="An anchored panel holding interactive content. The distinction from Tooltip is not size, it is whether anything inside can be focused."
     >
       <Preview
-        title="open it — the input is reachable"
+        title="Basic"
+        description="Open it. The input inside is reachable by keyboard, which is what separates this from a tooltip."
         code={`<Popover.Root>
   <Popover.Trigger asChild><Button variant="secondary">Rename</Button></Popover.Trigger>
   <Popover.Content>
@@ -59,7 +60,8 @@ export default function PopoverPage() {
       </Callout>
 
       <Preview
-        title="with an arrow"
+        title="With an arrow"
+        description="Add Popover.Arrow to point at the trigger."
         code={`<Popover.Content>
   …
   <Popover.Arrow />

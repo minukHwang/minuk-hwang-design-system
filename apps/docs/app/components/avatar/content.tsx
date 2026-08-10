@@ -4,7 +4,7 @@ import { Avatar } from '@minuk-hwang-design-system/components-react/avatar';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
@@ -16,7 +16,8 @@ export default function AvatarPage() {
       lede="A user or entity image with a fallback. Compound because loading an image is a state machine, not a prop."
     >
       <Preview
-        title="size"
+        title="Size"
+        description="Use size in pixels. The fallback text scales with it."
         code={`<Avatar.Root size="m">\n  <Avatar.Image src={url} alt="" />\n  <Avatar.Fallback>MH</Avatar.Fallback>\n</Avatar.Root>`}
       >
         {SIZES.map(size => (
@@ -26,22 +27,9 @@ export default function AvatarPage() {
         ))}
       </Preview>
 
-      <Prose>
-        <p>
-          A <code>src</code> prop with an <code>?? initials</code> default does not work here.{' '}
-          <code>Avatar.Image</code> renders only once the file has actually decoded, and{' '}
-          <code>Avatar.Fallback</code> fills the gap until then — collapsing that into one prop
-          either flashes the initials over a perfectly good cached image, or leaves a broken-image
-          glyph when the URL 404s.
-        </p>
-        <p>
-          <code>delayMs</code> on the fallback keeps it from appearing at all for an image that
-          resolves in a few milliseconds.
-        </p>
-      </Prose>
-
       <Preview
-        title="fallback while an image fails"
+        title="Fallback"
+        description="Avatar.Fallback fills the gap until the image decodes, and stays if it never does. Use delayMs so it does not flash for an image that resolves instantly."
         code={`<Avatar.Root>
   <Avatar.Image src="/does-not-exist.png" alt="" />
   <Avatar.Fallback delayMs={300}>MH</Avatar.Fallback>

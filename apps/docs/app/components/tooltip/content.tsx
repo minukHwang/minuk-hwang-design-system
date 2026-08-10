@@ -6,7 +6,7 @@ import { Tooltip } from '@minuk-hwang-design-system/components-react/tooltip';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 const ACTIONS = [
   ['content_copy', 'Copy install command'],
@@ -19,10 +19,11 @@ export default function TooltipPage() {
     <Page
       eyebrow="Overlays"
       title="Tooltip"
-      lede="A short label shown on hover or focus. Only ever supplementary — it is invisible on touch and gone the moment focus moves."
+      lede="A short label shown on hover or focus. Only ever supplementary: it is invisible on touch and gone the moment focus moves."
     >
       <Preview
-        title="hover, or tab to them"
+        title="Basic"
+        description="Hover, or tab to them. Mount Tooltip.Provider once near the app root so a row of icon buttons shares one open delay."
         code={`<Tooltip.Provider>
   <Tooltip.Root>
     <Tooltip.Trigger asChild>
@@ -53,21 +54,9 @@ export default function TooltipPage() {
 
       <Callout tone="warning">
         A tooltip is not a label. The buttons above carry <code>aria-label</code> as well, because a
-        screen reader user on a touch device will never see the tooltip — and anything a user must
-        read to proceed belongs in the interface itself.
+        screen reader user on a touch device will never see the tooltip. Anything a user must read
+        to proceed belongs in the interface itself.
       </Callout>
-
-      <Prose>
-        <p>
-          Mount <code>Tooltip.Provider</code> once near the app root. It shares the open and close
-          delays, which is what stops a row of icon buttons from each running its own — move along
-          the row above and only the first one waits.
-        </p>
-        <p>
-          Inverted rather than panelled: a tooltip floats over content instead of sitting on it, and
-          at this size a border would be most of what you see.
-        </p>
-      </Prose>
 
       <Section title="Parts">
         <PartsList

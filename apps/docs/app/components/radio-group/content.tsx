@@ -4,7 +4,7 @@ import { RadioGroup } from '@minuk-hwang-design-system/components-react/radio-gr
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
-import { Callout, PartsList, Preview, PropsTable, Prose, Section } from '../../../site/Preview';
+import { PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 
 export default function RadioGroupPage() {
   return (
@@ -14,36 +14,25 @@ export default function RadioGroupPage() {
       lede="Exactly one choice from a small set. Round, because that shape is what says the options are exclusive."
     >
       <Preview
-        title="the whole group is one tab stop"
+        title="One tab stop"
+        description="Tab into the group, then use the arrow keys. Radix gives it a roving tabindex, so the group is one stop and the arrows move between options."
         stack
         code={`<RadioGroup.Root defaultValue="minor">
-  <RadioGroup.Item value="patch">Patch — bug fixes only</RadioGroup.Item>
-  <RadioGroup.Item value="minor">Minor — new tokens</RadioGroup.Item>
-  <RadioGroup.Item value="major">Major — a token was renamed</RadioGroup.Item>
+  <RadioGroup.Item value="patch">Patch: bug fixes only</RadioGroup.Item>
+  <RadioGroup.Item value="minor">Minor: new tokens</RadioGroup.Item>
+  <RadioGroup.Item value="major">Major: a token was renamed</RadioGroup.Item>
 </RadioGroup.Root>`}
       >
         <RadioGroup.Root defaultValue="minor">
-          <RadioGroup.Item value="patch">Patch — bug fixes only</RadioGroup.Item>
-          <RadioGroup.Item value="minor">Minor — new tokens, nothing removed</RadioGroup.Item>
-          <RadioGroup.Item value="major">Major — a token was renamed</RadioGroup.Item>
+          <RadioGroup.Item value="patch">Patch: bug fixes only</RadioGroup.Item>
+          <RadioGroup.Item value="minor">Minor: new tokens, nothing removed</RadioGroup.Item>
+          <RadioGroup.Item value="major">Major: a token was renamed</RadioGroup.Item>
         </RadioGroup.Root>
       </Preview>
 
-      <Callout>
-        Tab into the group and then use the arrow keys. Radix gives it a roving tabindex, so the
-        whole group is one stop and the arrows move between options — the behaviour a screen reader
-        user expects, and the part hand-rolled radio groups almost always miss.
-      </Callout>
-
-      <Prose>
-        <p>
-          Above five or so options this becomes a wall of text. Use <code>Select</code> there — the
-          trade is that a radio group shows every choice at once and a select does not.
-        </p>
-      </Prose>
-
       <Preview
-        title="disabled"
+        title="Disabled"
+        description="Disable the root for the whole group, or one item on its own."
         stack
         code={`<RadioGroup.Item value="major" disabled>…</RadioGroup.Item>`}
       >
@@ -51,7 +40,7 @@ export default function RadioGroupPage() {
           <RadioGroup.Item value="patch">Patch</RadioGroup.Item>
           <RadioGroup.Item value="minor">Minor</RadioGroup.Item>
           <RadioGroup.Item value="major" disabled>
-            Major — needs a maintainer
+            Major: needs a maintainer
           </RadioGroup.Item>
         </RadioGroup.Root>
       </Preview>
