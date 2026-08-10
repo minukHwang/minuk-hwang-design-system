@@ -48,10 +48,10 @@ export default function Home() {
     >
       <Prose>
         <p>
-          The layers exist so that a decision made in one of them does not have to be remade in the
-          others. A colour is chosen once, in <code>style-tokens</code>; a focus trap is implemented
-          once, in <code>base-react</code>; a button&apos;s appearance is decided once here — and
-          swapping any of the three leaves the other two standing.
+          The layers exist so a decision made in one does not have to be remade in the others. A
+          colour is chosen once in <code>style-tokens</code>, a focus trap implemented once in{' '}
+          <code>base-react</code>, a button&apos;s appearance decided once here — and swapping any
+          of the three leaves the other two standing.
         </p>
       </Prose>
 
@@ -77,8 +77,7 @@ export default function Home() {
       <Callout>
         Every example on this site is the built package, rendered by this page. A dialog here traps
         focus and a tab strip answers arrow keys, because they are the same files an install
-        produces — so a broken build shows up as broken documentation rather than as a screenshot
-        that stayed correct.
+        produces.
       </Callout>
 
       <Section title="Components">

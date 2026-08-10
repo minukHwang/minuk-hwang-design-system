@@ -29,10 +29,9 @@ export default function ButtonPage() {
 
       <Prose>
         <p>
-          <strong>Primary</strong> is the one action a screen is about, so at most one per view —
-          two primaries is the interface failing to say which matters. <strong>Secondary</strong> is
-          every other real action, <strong>ghost</strong> is for toolbars and card corners where a
-          box would be noise, and <strong>danger</strong> is for deleting and nothing else.
+          <code>primary</code> is the one action a screen is about — at most one per view.{' '}
+          <code>secondary</code> is every other real action, <code>ghost</code> is for toolbars and
+          card corners, <code>danger</code> is for deleting.
         </p>
       </Prose>
 
@@ -49,10 +48,8 @@ export default function ButtonPage() {
 
       <Prose>
         <p>
-          Heights are fixed at 40, 48 and 56px so a row of buttons lines up whether or not each one
-          holds an icon. The same three heights drive <code>Input</code> and <code>Select</code>,
-          which is what lets a text field and its submit sit on one line without either being
-          nudged.
+          Heights are fixed at 40, 48 and 56px, and <code>Input</code> and <code>Select</code> use
+          the same three — a text field and its submit sit on one line without either being nudged.
         </p>
       </Prose>
 
@@ -85,18 +82,11 @@ export default function ButtonPage() {
         </Button>
       </Preview>
 
-      <Prose>
-        <p>
-          The version this replaced took <code>icon</code>, <code>leftSubText</code> and{' '}
-          <code>rightSubText</code> as props, which meant a fifth slot needed a sixth prop and the
-          order of the slots belonged to the component rather than to the caller. As children, an
-          icon goes wherever it is written.
-        </p>
-      </Prose>
-
       <Callout tone="warning">
-        <code>iconOnly</code> makes the button square but does not give it a name. An icon is not
-        text, so a screen reader has nothing to read — pass <code>aria-label</code>.
+        <p>
+          <code>iconOnly</code> squares the button but does not name it. Pass{' '}
+          <code>aria-label</code>, or a screen reader has nothing to read.
+        </p>
       </Callout>
 
       <Preview
@@ -114,10 +104,9 @@ export default function ButtonPage() {
 
       <Prose>
         <p>
-          <code>loading</code> swaps the label for a spinner and blocks interaction, and the base
-          layer sets <code>aria-busy</code> so the state is announced rather than only drawn. It is
-          separate from <code>disabled</code> on purpose: one means &ldquo;wait&rdquo;, the other
-          means &ldquo;not available&rdquo;, and the cursor says which.
+          <code>loading</code> swaps the label for a spinner, blocks interaction and sets{' '}
+          <code>aria-busy</code>. Separate from <code>disabled</code>: one means &ldquo;wait&rdquo;,
+          the other &ldquo;not available&rdquo;.
         </p>
       </Prose>
 
@@ -135,10 +124,9 @@ export default function ButtonPage() {
 
       <Prose>
         <p>
-          A link that looks like a button is still a link — it belongs in the tab order, it opens in
-          a new tab on the modified click, and it should not answer the space bar. The base layer
-          keeps all of that true for <code>a</code> and <code>div</code> without the styling
-          changing.
+          A link that looks like a button is still a link — it belongs in the tab order, opens in a
+          new tab on a modified click, and should not answer the space bar. The base layer keeps
+          that true.
         </p>
       </Prose>
 

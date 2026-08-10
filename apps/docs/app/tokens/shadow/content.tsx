@@ -23,13 +23,9 @@ export default function ShadowPage() {
     >
       <Prose>
         <p>
-          How far something floats above the page is a fact about the layout. How much it darkens
-          what is behind it depends entirely on what is behind it —{' '}
-          <strong>
-            eight per cent black moves a white ground by 20/255 and a near-black one by 2
-          </strong>
-          . The values used to be literal <code>rgba(0, 0, 0, 0.1)</code>, so a card that floated in
-          the light theme went flat in the dark one and nothing in the type system noticed.
+          How far something floats is a fact about the layout; how much it darkens what is behind it
+          depends on what is behind it. Eight per cent black moves a white ground by 20/255 and a
+          near-black one by 2, so the ink is a token and the geometry is not.
         </p>
       </Prose>
 
@@ -61,8 +57,8 @@ export default function ShadowPage() {
       <Prose>
         <p>
           Every step above <code>xs</code> is two layers, which is what makes a shadow read as cast
-          rather than painted on: <code>direct</code> is tight and offset further down — the key
-          light — over an <code>ambient</code> that is wide, soft and barely offset.
+          rather than painted on: a tight <em>direct</em> offset further down, over a wide, soft{' '}
+          <em>ambient</em> barely offset at all.
         </p>
       </Prose>
 
@@ -81,31 +77,26 @@ export default function ShadowPage() {
 
       <Prose>
         <p>
-          Light comes from above, so everything casts down and that is the default. Anything pinned
-          to the bottom edge of the screen — a bottom sheet, a tab bar, a sticky footer — has
-          content passing <strong>above</strong> it rather than below, and a downward shadow there
-          lands on nothing.
-        </p>
-        <p>
-          Direction is a modifier on elevation, not a value beside it. An earlier version had{' '}
-          <code>elevatedTop</code> and <code>elevatedBottom</code> sitting in the same flat list as{' '}
-          <code>xs</code> through <code>l</code>, which mixed two axes — you could not ask for a
-          subtle bottom bar or an emphatic one, only for the single weight someone had baked in.
+          Light comes from above, so shadows fall downward by default. Anything pinned to the bottom
+          of the screen — a sheet, a tab bar, a sticky footer — has content passing above it, and a
+          downward shadow lands on nothing. Direction is a modifier on elevation rather than a value
+          beside it, so <code>shadow.up.m</code> is the same weight cast the other way.
         </p>
       </Prose>
 
       <Callout>
-        The alphas are 0.08 / 0.14 on light and 0.48 / 0.72 on dark. The six-fold jump looks drastic
-        and is not — it is what puts the dark theme back at roughly the separation the light one
-        gets for free. Shadow is not carrying elevation alone there either: the dark surfaces
-        already step 11 points apart, so these reinforce a difference rather than invent one.
+        <p>
+          The ink is <code>0.08 / 0.14</code> on light and <code>0.48 / 0.72</code> on dark. The
+          six-fold jump is what puts the dark theme back at roughly the separation the light one
+          gets for free.
+        </p>
       </Callout>
 
       <Prose>
         <p>
           These keep t-shirt names while the rest of the system moved to pixels, because a shadow is
-          four lengths and a colour. There is no single number to key it by, and{' '}
-          <code>shadow[16]</code> would be naming one of five values arbitrarily.
+          four lengths and a colour. <code>shadow[16]</code> would be naming one of five values
+          arbitrarily.
         </p>
       </Prose>
     </Page>

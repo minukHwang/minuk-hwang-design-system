@@ -1,7 +1,6 @@
 'use client';
 
 import { Heading } from '@minuk-hwang-design-system/components-react/heading';
-import { Text } from '@minuk-hwang-design-system/components-react/text';
 import {
   classes,
   headingScale,
@@ -48,10 +47,9 @@ export default function HeadingPage() {
       </Preview>
 
       <Callout>
-        <code>level</code> is required. Radix Themes defaults it to <code>h1</code>, which means
-        three headings on a page silently produce three <code>h1</code>s — the screen looks right
-        and the outline is wrong, which is the failure nobody catches. A required prop costs one
-        keystroke and cannot be forgotten.
+        <code>level</code> is required. A default would let three headings on a page silently
+        produce three <code>h1</code>s — the screen looks right and the outline is wrong, which is
+        the failure nobody catches.
       </Callout>
 
       <Preview
@@ -82,7 +80,11 @@ export default function HeadingPage() {
         <p>
           An <code>h3</code> opening a page and an <code>h3</code> inside a card want different
           sizes and the same place in the outline. Overriding <code>size</code> changes only what it
-          looks like — <strong>the outline stays whatever level said</strong>.
+          looks like —{' '}
+          <strong>
+            the outline stays whatever <code>level</code> said
+          </strong>
+          .
         </p>
       </Prose>
 
@@ -109,16 +111,9 @@ export default function HeadingPage() {
 
       <Prose>
         <p>
-          Ten here and ten in{' '}
-          <Text as="span" color="link">
-            Text
-          </Text>
-          , out of fourteen — the six in the middle belong to both. A heading below 16px stops being
-          one, and body copy above 24px is a heading that forgot to say so.
-        </p>
-        <p>
-          Weight defaults to <code>bold</code>, because a heading no heavier than the text under it
-          is doing nothing a paragraph could not.
+          Ten steps here and ten in <code>Text</code>, out of fourteen — the six in the middle
+          belong to both. Below 16px a heading stops being one; above 24px body copy is a heading
+          that forgot to say so. Weight defaults to <code>bold</code>.
         </p>
       </Prose>
 

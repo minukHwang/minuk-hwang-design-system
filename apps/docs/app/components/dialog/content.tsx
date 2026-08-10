@@ -67,9 +67,8 @@ export default function DialogPage() {
       </Preview>
 
       <Callout>
-        Tab through it — focus never leaves the dialog, and it returns to the trigger on close. The
-        page behind it does not scroll. None of that is written here; it is the reason the base
-        layer exists.
+        Tab through it — focus never leaves the dialog and returns to the trigger on close, and the
+        page behind does not scroll. None of that is written here; it is why the base layer exists.
       </Callout>
 
       <Preview title="size" code={`<Dialog.Content size="s">…</Dialog.Content>`}>
@@ -97,11 +96,6 @@ export default function DialogPage() {
         <p>
           The body scrolls, not the page. A dialog whose actions have scrolled off screen has no way
           out, so the header and footer stay put and only the middle moves.
-        </p>
-        <p>
-          It rises 8px as it opens rather than scaling from the centre. A popover scales because it
-          belongs to the trigger it grew from; a dialog does not belong to anything on the page, and
-          scaling makes it look inflated.
         </p>
       </Prose>
 

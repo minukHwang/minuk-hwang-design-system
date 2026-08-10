@@ -16,15 +16,10 @@ export default function FieldPage() {
     >
       <Prose>
         <p>
-          A label has to point at its control&apos;s id. A control has to point back at its
-          description and its error. An invalid control has to say so in a way a screen reader
-          hears. That is four ids and three attributes, and{' '}
-          <strong>every one of them is silently skippable</strong> — the field looks right either
-          way, and only a screen reader knows it is not.
-        </p>
-        <p>
-          Holding them in context means the wiring happens once, here, rather than at every call
-          site.
+          A label points at its control&apos;s id, the control points back at its description and
+          its error, and an invalid control has to say so where a screen reader can hear it. Four
+          ids, three attributes, every one silently skippable — the field looks right either way.{' '}
+          <code>Field.Root</code> holds them in context so the wiring happens once.
         </p>
       </Prose>
 
@@ -81,18 +76,10 @@ export default function FieldPage() {
 
       <Prose>
         <p>
-          <code>Field.Error</code> renders nothing while the root is valid, so a form can keep its
-          messages in the tree and let the root decide when they are true. When it does appear it
-          carries <code>role=&quot;alert&quot;</code>, which is what makes a screen reader announce
-          it at the moment it shows up rather than waiting for the user to arrive at it.
-        </p>
-        <p>
-          The red border on the input is not a prop. The control styles itself from{' '}
-          <code>aria-invalid</code>, which <code>Field.Root</code> sets — so{' '}
-          <strong>
-            there is no way to draw an error state on a control that still announces itself as valid
-          </strong>
-          .
+          <code>Field.Error</code> renders nothing while the root is valid, and carries{' '}
+          <code>role=&quot;alert&quot;</code> when it appears so it is announced on arrival. The red
+          border is not a prop — the control styles itself from <code>aria-invalid</code>, so an
+          error state cannot be drawn on a control that still announces itself as valid.
         </p>
       </Prose>
 
@@ -116,10 +103,9 @@ export default function FieldPage() {
 
       <Prose>
         <p>
-          The description stays when the field goes invalid — an error adds to the guidance rather
-          than replacing it, and hiding the format hint at the moment someone got the format wrong
-          is exactly backwards. <code>aria-describedby</code> lists the error first, so that is what
-          gets read first.
+          The description stays when the field goes invalid: an error adds to the guidance rather
+          than replacing it. <code>aria-describedby</code> lists the error first, so that is read
+          first.
         </p>
       </Prose>
 
@@ -129,8 +115,7 @@ export default function FieldPage() {
             <code>Field.Control</code> hands the props over instead of wrapping the control, because
             the control might be an <code>input</code>, a <code>textarea</code>, a{' '}
             <code>Select</code>, or something the system has never seen. Cloning an unknown child to
-            inject props guesses at its API; handing them over lets the caller spread them wherever
-            they belong.
+            inject props guesses at its API.
           </p>
         </Prose>
         <Preview

@@ -15,7 +15,7 @@ import * as React from 'react';
 
 import { useDials } from '../../site/dials';
 import { Page } from '../../site/Page';
-import { Callout, PropsTable, Preview, Prose, Section } from '../../site/Preview';
+import { PropsTable, Preview, Prose, Section } from '../../site/Preview';
 import css from '../../site/theme.module.css';
 
 /** A sample wide enough to judge a hue on: fills, tints, borders, focus, text. */
@@ -124,9 +124,8 @@ export default function ThemePage() {
       <Prose>
         <p>
           Nothing above takes a colour prop. <code>Button</code> asks for{' '}
-          <code>variant=&quot;primary&quot;</code> and gets whatever the brand currently is, which
-          is the point of a semantic layer — <strong>the call site says what it means</strong> and
-          the theme says what that looks like.
+          <code>variant=&quot;primary&quot;</code> and gets whatever the brand currently is — the
+          call site says what it means, the theme says what that looks like.
         </p>
       </Prose>
 
@@ -165,10 +164,10 @@ export default function ThemePage() {
 
       <Prose>
         <p>
-          The attribute selectors are unqualified — <code>[data-accent=&apos;teal&apos;]</code>, not{' '}
-          <code>html[data-accent=&apos;teal&apos;]</code> — so the nearest ancestor wins and custom
-          property inheritance carries it down. Omitting a prop inherits rather than resets, which
-          is what lets a nested <code>Theme</code> change only the radius.
+          The selectors are unqualified — <code>[data-accent=&apos;teal&apos;]</code>, not{' '}
+          <code>html[data-accent=&apos;teal&apos;]</code> — so the nearest ancestor wins. Omitting a
+          prop inherits rather than resets, which is what lets a nested <code>Theme</code> change
+          only the radius.
         </p>
       </Prose>
 
@@ -196,21 +195,12 @@ html                 { --border-radius-factor: 1; }
           </Text>
         </Preview>
 
-        <Callout>
-          Radius used to compile to <code>border-radius: 0.5rem</code> in all seventeen stylesheets
-          that use it — a literal baked in at build time, with nothing left for a theme to change.
-          The tokens now ship the value and the name separately, which is the same split the colour
-          tokens have always had between <code>$static</code> and <code>$palette</code>.
-        </Callout>
-
         <Prose>
           <p>
-            <code>full</code> is a factor of 3, not a huge number, and that is enough because{' '}
+            <code>full</code> is a factor of 3, and that is enough because{' '}
             <strong>a browser clamps a radius to half the box</strong>. A 48px button asks for 24px
-            and is a pill; a card asks for 36px and keeps it, because the card is taller than 72px.
-            The clamp is what tells controls apart from containers, which is how one number means
-            &quot;pill&quot; for one and &quot;generously round&quot; for the other. Turning it up
-            further only rounds the containers — the controls are already at their maximum.
+            and is a pill; a card asks for 36px and keeps it. The clamp is what tells controls apart
+            from containers.
           </p>
         </Prose>
       </Section>
@@ -219,13 +209,9 @@ html                 { --border-radius-factor: 1; }
         <Prose>
           <p>
             <code>variant</code> carries meaning: <code>primary</code> is the one action a screen is
-            about, <code>danger</code> is deleting and nothing else. A{' '}
-            <code>color=&quot;teal&quot;</code> beside it would let each call site invent a fifth
-            meaning, and the two props would disagree about which one the button is.
-          </p>
-          <p>
-            The flexibility belongs one level up, where it is a decision made once.{' '}
-            <strong>An application picks a brand; a button says what it does.</strong>
+            about, <code>danger</code> is deleting. A <code>color</code> beside it would let each
+            call site invent a fifth meaning. An application picks a brand; a button says what it
+            does.
           </p>
         </Prose>
       </Section>
@@ -233,15 +219,10 @@ html                 { --border-radius-factor: 1; }
       <Section title="What is not here">
         <Prose>
           <p>
-            Light and dark are still chosen on the <code>html</code> element rather than through{' '}
-            <code>Theme</code>, because the rule that follows the operating system has to be able to
-            ask whether the document as a whole has overridden it. A dark region inside a light page
-            is a change to that cascade, not a third prop.
-          </p>
-          <p>
-            <code>textColor.link</code> is a fixed blue and does not follow the accent. Whether a
-            link should be the brand colour or the colour people already recognise as a link is a
-            real question, and it has not been answered here.
+            Light and dark are still chosen on the <code>html</code> element, because the rule that
+            follows the operating system has to ask whether the document as a whole has overridden
+            it. And <code>textColor.link</code> stays a fixed blue — whether a link should be the
+            brand colour or the colour people recognise as a link is not answered here.
           </p>
         </Prose>
       </Section>

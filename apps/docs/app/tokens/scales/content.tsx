@@ -20,10 +20,9 @@ export default function ScalesPage() {
     >
       <Prose>
         <p>
-          T-shirt sizes buy nothing here and cost ordering. The radius scale these replaced had a
-          step named <code>s</code> at 4px sitting beside one named <code>sm</code> at 6px, and{' '}
-          <code>base</code> at 8px in the middle of the ladder rather than at an end.{' '}
-          <strong>Nothing about those names says which is bigger.</strong>
+          T-shirt sizes buy nothing here and cost ordering. <code>s</code> beside <code>sm</code>,
+          and <code>base</code> in the middle of the ladder rather than at an end — nothing about
+          those names says which is bigger.
         </p>
       </Prose>
 
@@ -70,7 +69,7 @@ export default function ScalesPage() {
 
       <Prose>
         <p>
-          <code>full</code> is the one name left, because it is not a measurement — it asks for a
+          <code>full</code> is the one name left, because it is not a measurement: it asks for a
           pill whatever the element&apos;s height.
         </p>
       </Prose>
@@ -91,8 +90,8 @@ export default function ScalesPage() {
 
       <Prose>
         <p>
-          Four weights — 400, 500, 600, 700 — and line heights keyed the same way in pixels. The
-          steps that combine a size with a line height live on{' '}
+          Four weights — 400, 500, 600, 700 — and line heights keyed in pixels the same way. The
+          steps that pair a size with a line height live on{' '}
           <Text as="span" size={5} color="link">
             Text
           </Text>{' '}
@@ -100,12 +99,8 @@ export default function ScalesPage() {
           <Text as="span" size={5} color="link">
             Heading
           </Text>
-          , which have a ladder each.
-        </p>
-        <p>
-          600 is a token but not a <code>weight</code> value on those components. The interface uses
-          it directly — buttons, tab triggers — where 700 is heavier than a control wants to be.
-          What it is no longer is the meaning of <code>bold</code>, which is 700 everywhere.
+          , which have a ladder each. 600 is a token but not a <code>weight</code> value on them —
+          the interface uses it directly, where 700 is heavier than a control wants to be.
         </p>
       </Prose>
 
@@ -132,11 +127,9 @@ fontFamily.mono  // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, 
       </Preview>
 
       <Callout>
-        The token names the face; fetching it is the application&apos;s job — the same way Tailwind
-        names <code>font-sans</code> and leaves the <code>@font-face</code> to you. Shipping the
-        binary would charge every consumer for a typeface they may already self-host. This site
-        loads Pretendard from a CDN in its own <code>layout.tsx</code>, which is exactly what a
-        consumer has to do.
+        The token names the face; fetching it is the application&apos;s job, the same way Tailwind
+        names <code>font-sans</code> and leaves the <code>@font-face</code> to you. This site loads
+        Pretendard from a CDN in its own <code>layout.tsx</code>.
       </Callout>
     </Page>
   );

@@ -125,8 +125,8 @@ export default function ColourPage() {
           <strong>
             Step 10 sits closest to the background and 990 furthest from it, in both themes.
           </strong>{' '}
-          That is why the light scales run light to dark and the dark scales run the other way: a
-          component names a step once and it reads correctly either way.
+          The light scales run light to dark and the dark scales the other way, so a component names
+          a step once and it reads correctly either way.
         </p>
       </Prose>
 
@@ -148,17 +148,16 @@ export default function ColourPage() {
 
       <Prose>
         <p>
-          Hues are spaced so no two neighbours sit closer than 14° — the point where two ramps stop
-          reading as separate families. Equal HSL lightness is not equal perceived brightness, so
-          cyan and green are pulled down; without that correction <code>teal-500</code> comes out as{' '}
-          <code>#00ffea</code>, a highlighter no interface can use.
+          No two hues sit closer than 14°, the point where two ramps stop reading as separate
+          families. Equal HSL lightness is not equal perceived brightness, so cyan and green are
+          pulled down — without that, <code>teal-500</code> is <code>#00ffea</code>.
         </p>
       </Prose>
 
       <Callout>
-        Components should reach for the semantic tokens below, not for a raw step.{' '}
-        <code>pink500</code> says what a colour is; <code>status.error.normal</code> says what it is
-        for, and only the second survives a decision to make errors crimson.
+        Reach for the semantic tokens below, not a raw step. <code>pink500</code> says what a colour
+        is; <code>status.error.normal</code> says what it is for, and only the second survives a
+        decision to make errors crimson.
       </Callout>
 
       <Preview title="semantic" stack>
@@ -197,10 +196,9 @@ export default function ColourPage() {
 
       <Prose>
         <p>
-          Each status ramp carries an <code>onNormal</code> alongside these — the text colour that
-          clears WCAG AA on top of <code>normal</code>. It is measured rather than chosen, and the
-          section below shows the working. Leaving that judgement to each component is how a 2.29:1
-          green button gets shipped.
+          Each status ramp carries an <code>onNormal</code> — the text colour that clears WCAG AA on
+          top of <code>normal</code>. It is measured rather than chosen; the section below shows the
+          working.
         </p>
       </Prose>
 
@@ -226,14 +224,8 @@ export default function ColourPage() {
         <Prose>
           <p>
             The rule is one comparison: <strong>white if it clears 4.5, otherwise black</strong>.
-            Not &quot;whichever number is larger&quot; — that put black on red, which passes at 4.64
-            and reads as a hazard sign rather than as a button. Contrast decides what is legible;
-            convention decides between two legible answers.
-          </p>
-          <p>
-            Below is every hue in both text colours at once, with the one that was not taken struck
-            through. Where both clear the floor the row says so, because a tie is a decision someone
-            should look at rather than a fact.
+            Below is every hue in both colours at once, with the one that lost struck through. Where
+            both clear, the row says so.
           </p>
         </Prose>
 
@@ -248,32 +240,18 @@ export default function ColourPage() {
         <Prose>
           <p>
             It lands seven and seven. Red through blue carry white; the cyan-to-orange arc is bright
-            enough at full chroma that it needs black.
+            enough at full chroma to need black.
           </p>
           <p>
-            <strong>The four warm hues were not always ties.</strong> <code>crimson</code>,{' '}
-            <code>pink</code> and <code>magenta</code> missed white by 0.09, 0.54 and 0.47 and took
-            black — legible, and wrong, since a saturated fill set in black reads as a hazard sign
-            rather than as a button. Desaturating them far enough to clear 4.5 would have cost
-            magenta sixteen points and pink twenty, which is a different colour. One to four points
-            of lightness cost nothing anyone can see.
+            <code>crimson</code>, <code>pink</code> and <code>magenta</code> missed white by 0.09,
+            0.54 and 0.47 and used to take black. Desaturating them far enough to clear 4.5 would
+            have cost magenta sixteen points and pink twenty — a different colour. One to four
+            points of lightness cost nothing anyone can see.
           </p>
           <p>
-            <code>orange</code> was nearly an exception. White measures 3.24:1 on it — under AA for
-            body text, over the 3:1 floor for large text — and there was a real argument for
-            allowing it, because this is where WCAG 2 is known to disagree with the eye. Its formula
-            reads relative luminance alone, and on saturated mid-tones the answer inverts; APCA,
-            drafted to replace it, rates white here at Lc 64 against black at 45. The argument held
-            and the exception still went:{' '}
-            <strong>a rule with one exception is a rule nobody trusts</strong>. Moving orange four
-            degrees toward red makes the measurement agree at identical chroma, and that is kept in
-            reserve rather than spent.
-          </p>
-          <p>
-            Both themes measure the same today, because step 500 is deliberately the same lightness
-            in each — a solid fill should not change identity when the theme flips. The measurement
-            is still taken per theme, since that is a decision that could be revisited and the table
-            should notice when it is.
+            <code>orange</code> keeps black at 3.24:1, which is where WCAG 2 is known to disagree
+            with the eye: its formula reads relative luminance alone, and APCA rates white here at
+            Lc 64 against black at 45. Seven and seven with no exceptions won.
           </p>
         </Prose>
       </Section>

@@ -52,9 +52,8 @@ export default function TextPage() {
 
       <Callout>
         This is its own ladder, not a slice of a shared one. <code>Heading</code> has ten steps of
-        its own, and six pixel values appear in both — two design decisions that agree today at
-        18px, rather than one written down twice. Retuning the smallest heading should not move a
-        body step nobody was thinking about.
+        its own, and six pixel values appear in both — two decisions that agree today at 18px, not
+        one written down twice.
       </Callout>
 
       <Preview
@@ -74,14 +73,6 @@ export default function TextPage() {
           </div>
         ))}
       </Preview>
-
-      <Prose>
-        <p>
-          <code>bold</code> is 700 at every step. It used to be 700 on the large steps and 600 on
-          the small ones, so the same prop produced two different weights depending on how large the
-          text was — a difference nobody chose and nothing recorded.
-        </p>
-      </Prose>
 
       <Preview
         title="leading — same size, different job"
@@ -108,15 +99,12 @@ export default function TextPage() {
       <Prose>
         <p>
           Interface copy is read in two-line bursts and wants to be compact; a paragraph wants room
-          between lines or the eye loses its place returning to the left margin.{' '}
-          <strong>Those are different requirements at the same size</strong>, which is why leading
-          is its own prop rather than a value hidden inside the weight.
+          between lines. <strong>Different requirements at the same size</strong>, which is why
+          leading is its own prop.
         </p>
         <p>
-          It has an effect on steps 3 to 6 — the sizes a paragraph is actually run at. 1 and 2 are
-          captions, and 8 upwards is a lede that wants its leading chosen deliberately. Asking for
-          it elsewhere is not an error: there is nothing to override, and silently doing nothing
-          beats throwing over a line height.
+          It has an effect on steps 3 to 6, the sizes a paragraph is actually run at. Asking for it
+          elsewhere is not an error — there is nothing to override.
         </p>
       </Prose>
 
@@ -148,8 +136,7 @@ export default function TextPage() {
         <p>
           There is no <code>crimson600</code> here on purpose. A prop that accepts any palette step
           lets every caller invent a new meaning for red; these answer a question about the content
-          instead. A genuine one-off belongs in the caller&apos;s own class, where it reads as the
-          exception it is.
+          instead.
         </p>
       </Prose>
 

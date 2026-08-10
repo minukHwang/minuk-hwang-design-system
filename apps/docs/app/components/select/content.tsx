@@ -53,28 +53,24 @@ export default function SelectPage() {
       </Preview>
 
       <Callout>
-        <code>Select.Label</code> only works inside <code>Select.Group</code>, and throws if it is
-        not — the label is the group&apos;s accessible name, so a label with no group is a name
-        attached to nothing. The version of this example without the wrapper prerendered without
-        complaint, because the list only mounts when it opens.
+        <code>Select.Label</code> only works inside <code>Select.Group</code> and throws if it is
+        not — the label is the group&apos;s accessible name, so a label with no group names nothing.
       </Callout>
 
       <Callout tone="warning">
-        A native <code>select</code> gets the platform&apos;s own picker on mobile, which is usually
-        better than anything a web page can draw. Reach for this one when options need icons,
-        descriptions or grouping the native element cannot express — not by default.
+        A native <code>select</code> gets the platform&apos;s own picker on mobile, which usually
+        beats anything a web page can draw. Reach for this one when options need icons, descriptions
+        or grouping the native element cannot express.
       </Callout>
 
       <Prose>
         <p>
           <code>Select.Content</code> folds in the viewport and both scroll buttons, because every
-          select needs all three in that order and leaving them to the caller only creates
-          opportunities to omit one and ship a list that cannot be scrolled.
+          select needs all three in that order.
         </p>
         <p>
-          The trigger is built to match <code>Input</code> exactly — same heights, same border, same
-          focus ring. Two controls in one column that differ by a pixel look like a mistake rather
-          than a distinction.
+          The trigger matches <code>Input</code> exactly — same heights, same border, same focus
+          ring. Two controls in one column that differ by a pixel look like a mistake.
         </p>
       </Prose>
 
