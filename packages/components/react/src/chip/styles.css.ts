@@ -18,7 +18,20 @@ export const chipRecipe = recipe({
     display: 'inline-flex',
     alignItems: 'center',
     gap: vars.spacing[4],
-    borderRadius: vars.borderRadius.full,
+    /*
+     * Step 24 rather than the pill token, so the chip has more than two shapes.
+     *
+     * On the pill it was a pill at four of the dial's five positions and a square
+     * at the fifth — `none` or nothing. A chip is 28 to 34px tall, so 24 clamps to
+     * a pill from `medium` up: the default stays exactly the pill it was, and
+     * `small` gains a rounded rectangle of its own.
+     *
+     * Three shapes out of five is the ceiling for a control this short, since
+     * 24 × 1.5 is long past half of 34. A control this size cannot use the whole
+     * ladder, which is the argument against a `radius` prop that would offer five
+     * values and deliver three.
+     */
+    borderRadius: vars.borderRadius[24],
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: border.normal,
