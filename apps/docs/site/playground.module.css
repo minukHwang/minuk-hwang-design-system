@@ -1,0 +1,75 @@
+/*
+ * Layout only.
+ *
+ * Nothing here paints: no colour, no radius, no border. Every surface on this
+ * page is a component's own, because the page exists to judge those surfaces
+ * against each other and a wrapper with opinions of its own would be one more
+ * thing in the picture that the system did not put there.
+ */
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+}
+
+.board > h2 {
+  margin: var(--spacing-12) 0 0;
+}
+
+.board > h2:first-child {
+  margin-top: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-10);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
+  min-width: 0;
+}
+
+/* The search field takes the slack, so the controls beside it keep their widths. */
+.grow {
+  flex: 1;
+  min-width: 200px;
+}
+
+.select {
+  width: 170px;
+}
+
+/*
+ * Two panels side by side, because a card and a form disagreeing about padding
+ * or corner is only visible when they are level with each other.
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-16);
+  align-items: start;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
+}
