@@ -158,6 +158,20 @@ export const textColor = {
    */
   assistive: palette.text.assistive,
   /**
+   * Between `normal` and `assistive`, at step 800.
+   *
+   * For text that is the point of the element it sits in but should not carry
+   * the weight of body copy — an avatar's initials being the case that wanted
+   * it. `assistive` is picked to recede against a pale surface and measures
+   * 3.42:1 on a step-200 fill; `normal` clears by so much it reads as a label
+   * shouting. This sits at 6.98:1 on light and 6.58:1 on dark.
+   *
+   * The value was already in the stylesheet and in `$palette` — the ramp emits
+   * `--text-alternative` for every neutral family — and only this pointer was
+   * missing, so nothing could reach it without leaving the semantic layer.
+   */
+  alternative: palette.text.alternative,
+  /**
    * Text on an inverted surface — one painted `textColor.normal`, which a
    * tooltip and a solid neutral badge both are.
    *
