@@ -100,3 +100,6 @@ Thumbs.db
 
 # Browser-automation scratch: screenshots and page snapshots from a session.
 .playwright-mcp/
+
+# A verification build writes here so it cannot delete the dev server's .next
+.next-verify/

@@ -8,6 +8,21 @@
  * source — if the published artifact is broken, this site breaks with it.
  */
 const nextConfig = {
+  /**
+   * A production build writes somewhere else when asked to.
+   *
+   * `next build` empties `.next` and rewrites it, and `next dev` is reading that
+   * same directory — so a build run while the site is open deletes the manifests
+   * the dev server is holding, and it dies with ENOENT on
+   * `routes-manifest.json`. Verifying a change should not take down the window
+   * the change is being looked at in.
+   *
+   * `NEXT_DIST_DIR=.next-verify pnpm --filter docs build` gives that build its
+   * own directory and leaves the running server alone. Unset, everything behaves
+   * exactly as before.
+   */
+  distDir: process.env.NEXT_DIST_DIR || '.next',
+
   /*
    * The repo lints everything with one ESLint config, and CI runs it as its own
    * step. Letting `next build` lint again would run a second, differently
