@@ -23,7 +23,7 @@ const Sample = () => (
   <div className={css.sample}>
     <div className={css.sampleRow}>
       <Button>
-        <Icon name="rocket_launch" size={18} />
+        <Icon name="rocket_launch" />
         Publish
       </Button>
       <Button variant="secondary">Preview</Button>
@@ -71,7 +71,7 @@ export default function ThemePage() {
     <Page
       eyebrow="Tokens"
       title="Theme"
-      lede="Two dials, an accent and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
+      lede="Three dials, an accent, a grey and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
       <Preview
         title="Try it"
@@ -130,7 +130,13 @@ export default function ThemePage() {
         description="Wrap a region in a second Theme to give it its own accent. Omitting a prop inherits rather than resets."
         stack
         code={`<Theme accentColor="teal" radius="full">
-  <Pricing />
+  <Button size="s">Upgrade</Button>
+  <Badge tone="accent">Popular</Badge>
+</Theme>
+
+<Theme accentColor="crimson" radius="none">
+  <Button size="s">Cancel plan</Button>
+  <Badge tone="accent">Legacy</Badge>
 </Theme>`}
       >
         <div className={css.nested}>
@@ -163,15 +169,41 @@ export default function ThemePage() {
         title="How it works"
         description="Two indirections in the token stylesheet, and nothing else anywhere."
         stack
-        code={`/* the ramp every accent token points at */
-html                   { --accent-500: var(--blue-500);   … }
-[data-accent='purple'] { --accent-500: var(--purple-500); … }
+        language="css"
+        code={`/* one ramp, and a block per hue that replaces it */
+html {
+  --accent-500: var(--blue-500);
+}
 
-/* radius as a multiplier, so the steps keep their relationship */
-html                 { --border-radius-factor: 1; }
-[data-radius='large'] { --border-radius-factor: 1.5; }
+[data-accent='purple'] {
+  --accent-500: var(--purple-500);
+}
 
---border-radius-8: calc(0.5rem * var(--border-radius-factor));`}
+/* radius is a multiplier, plus a flag for the shape it cannot describe */
+html {
+  --border-radius-factor: 1;
+  --border-radius-pill-full: 0;
+}
+
+[data-radius='large'] {
+  --border-radius-factor: 1.5;
+}
+
+[data-radius='full'] {
+  --border-radius-pill-full: 999px;
+}
+
+/* the steps are restated wherever the factor is, so a nested Theme recomputes them */
+html,
+[data-radius] {
+  --border-radius-8: calc(0.5rem * var(--border-radius-factor));
+}
+
+/* and this is what a component was compiled against, years earlier */
+.button {
+  background-color: var(--accent-500);
+  border-radius: max(var(--border-radius-8), var(--border-radius-pill-full));
+}`}
       >
         <Text size={4} color="assistive">
           A component compiled against <code>var(--accent-500)</code> and{' '}
@@ -210,6 +242,13 @@ html                 { --border-radius-factor: 1; }
               default: 'inherited',
               description:
                 'The text colour that clears AA on each fill is measured per theme, so this cannot put white on yellow.',
+            },
+            {
+              name: 'neutralColor',
+              type: `'mono' | 'gray' | 'slate'`,
+              default: 'inherited',
+              description:
+                'Which grey the surfaces and borders are drawn from. mono has no hue in it; gray and slate lean toward blue. Text does not move with it.',
             },
             {
               name: 'radius',

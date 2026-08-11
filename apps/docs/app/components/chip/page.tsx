@@ -26,6 +26,7 @@ export default function ChipPage() {
       <Preview
         title="Toggling"
         description="Use selected with onSelectedChange. It becomes aria-pressed, and the stylesheet reads that attribute, so a chip cannot look selected while telling a screen reader it is not."
+        language="tsx"
         code={`const [selected, setSelected] = useState<string[]>([]);
 
 <Chip selected={selected.includes(name)} onClick={() => toggle(name)}>

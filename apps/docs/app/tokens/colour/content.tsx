@@ -26,7 +26,7 @@ const HUES = [
   'amber',
   'orange',
 ];
-const NEUTRALS = ['neutral', 'gray', 'slate'];
+const NEUTRALS = ['mono', 'gray', 'slate'];
 
 const SEMANTIC = [
   ['surface', ['canvas', 'default', 'hover', 'pressed', 'selected']],

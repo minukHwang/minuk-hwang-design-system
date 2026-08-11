@@ -32,8 +32,18 @@ export default function IconPage() {
       <Preview
         title="Names"
         description="Use name with any Material Symbols name."
-        code={`<Icon name="search" />
-<Icon name="chevron_right" size={16} />`}
+        code={`<Icon name="search" size={24} />
+<Icon name="close" size={24} />
+<Icon name="check" size={24} />
+<Icon name="add" size={24} />
+<Icon name="delete" size={24} />
+<Icon name="settings" size={24} />
+<Icon name="expand_more" size={24} />
+<Icon name="chevron_right" size={24} />
+<Icon name="info" size={24} />
+<Icon name="warning" size={24} />
+<Icon name="error" size={24} />
+<Icon name="more_horiz" size={24} />`}
       >
         {NAMES.map(name => (
           <span
@@ -58,6 +68,8 @@ export default function IconPage() {
         title="Size"
         description="Use size to match the text beside it. The five sizes are type steps, so an icon next to 14px text can be told to be 14px."
         code={`<Icon name="settings" size={14} />
+<Icon name="settings" size={16} />
+<Icon name="settings" size={18} />
 <Icon name="settings" size={20} />
 <Icon name="settings" size={24} />`}
       >
@@ -83,8 +95,9 @@ export default function IconPage() {
             {
               name: 'size',
               type: '14 | 16 | 18 | 20 | 24',
-              default: '20',
-              description: 'Matches the type scale.',
+              default: '—',
+              description:
+                'Matches the type scale. Left off, the glyph takes the size its container asked for, which is 20 on a page and 16, 18 or 20 inside a small, medium or large Button.',
             },
             {
               name: 'color',

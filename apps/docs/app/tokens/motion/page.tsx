@@ -37,8 +37,6 @@ export default function MotionPage() {
         title="Duration"
         description="Distance sets duration. A tooltip travels almost nowhere and is done in 150ms; a sheet crossing the screen needs 400ms or it reads as a jump cut."
         stack
-        code={`transitionDuration: vars.motion.duration[200];
-transitionTimingFunction: vars.motion.easing.standard;`}
       >
         <Button size="s" variant="secondary" onClick={() => setRun(n => n + 1)}>
           {run === 0 ? 'Play' : 'Play again'}

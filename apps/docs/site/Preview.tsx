@@ -27,6 +27,12 @@ export type PreviewProps = {
   code?: string;
   /** Lays the examples out in a column rather than a wrapping row. */
   stack?: boolean;
+  /**
+   * Grammar for the source underneath. Most examples are JSX; the few that show
+   * a stylesheet or a shell command are not, and highlighting those as JSX
+   * colours the punctuation of a language they are not written in.
+   */
+  language?: string;
   children: React.ReactNode;
 };
 
@@ -53,7 +59,7 @@ export type PreviewProps = {
  * documentation page that way. Title, one sentence, example — in that order, and
  * the sentence is what the paragraphs collapsed into.
  */
-export const Preview = ({ title, description, code, stack, children }: PreviewProps) => (
+export const Preview = ({ title, description, code, stack, language, children }: PreviewProps) => (
   <section className={css.example}>
     {title && (
       <Heading level={2} size={5}>
@@ -67,7 +73,7 @@ export const Preview = ({ title, description, code, stack, children }: PreviewPr
     )}
     <figure className={css.figure}>
       <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
-      {code && <CodeBlock code={code} />}
+      {code && <CodeBlock code={code} language={language} />}
     </figure>
   </section>
 );

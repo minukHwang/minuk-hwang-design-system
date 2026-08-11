@@ -61,13 +61,29 @@
   font-size: var(--font-size-13);
   line-height: var(--line-height-21);
   color: var(--text-color-normal);
+  /*
+   * No ligatures. A monospace face that joins `--` into one long dash is a nice
+   * touch in application code and a lie in a stylesheet: every custom property
+   * on this site begins with two hyphens, and the glyph shown for them is one a
+   * reader would then type. `=>`, `!=` and `>=` join the same way and are read
+   * the same way; this is the only place the difference is load-bearing.
+   */
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
   overflow-x: auto;
   white-space: pre;
   tab-size: 2;
 }
 
+/*
+ * A highlighted block is made of `code` spans, one per token, and the inline
+ * chip treatment would draw a tinted box with a ring around every keyword.
+ */
 .code code {
   background: none;
+  box-shadow: none;
   padding: 0;
   font-size: inherit;
 }
@@ -115,6 +131,11 @@
   padding: var(--spacing-10) var(--spacing-16) var(--spacing-10) 0;
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
+}
+
+/* The rule under the last prop has nothing below it to separate from. */
+.table tr:last-child td {
+  border-bottom: none;
 }
 
 .type {

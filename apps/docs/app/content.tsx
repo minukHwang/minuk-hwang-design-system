@@ -111,6 +111,7 @@ export default function Home() {
 
       <Section title="Install">
         <Preview
+          language="bash"
           code={`pnpm add @minuk-hwang-design-system/components-react
 
 // Tokens carry the CSS variables every component reads.

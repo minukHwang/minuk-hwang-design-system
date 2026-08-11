@@ -1,5 +1,6 @@
 'use client';
 
+import { Theme } from '@minuk-hwang-design-system/components-react/theme';
 import * as React from 'react';
 
 import { Page } from '../../../site/Page';
@@ -41,29 +42,46 @@ export default function ScalesPage() {
 
       <Preview
         title="Radius"
-        description="Also pixels. full is the one name left, because a pill is not a measurement."
+        description="Also pixels, plus two names that are not measurements: half is the roundest a square can be at any size, full is a pill at any height. These swatches are pinned to the medium scale, so they keep showing the values the scale defines while the radius dial moves everything else."
         stack
       >
-        <div className={css.rows}>
-          {RADIUS.map(step => (
-            <div key={step} className={css.row}>
-              <span className={css.token}>borderRadius[{step}]</span>
-              <span className={css.value}>{step}px</span>
+        {/*
+         * Pinned, because a specimen has to keep saying what it is a specimen
+         * of. Every swatch here reads the same properties the dial rewrites, so
+         * with the dial on `large` this table would claim borderRadius[8] is
+         * 12px. A second Theme is how the system already scopes that, which
+         * makes this the documentation using its own answer.
+         */}
+        <Theme radius="medium">
+          <div className={css.rows}>
+            {RADIUS.map(step => (
+              <div key={step} className={css.row}>
+                <span className={css.token}>borderRadius[{step}]</span>
+                <span className={css.value}>{step}px</span>
+                <span
+                  className={css.radiusChip}
+                  style={{ borderRadius: `var(--border-radius-${step})` }}
+                />
+              </div>
+            ))}
+            <div className={css.row}>
+              <span className={css.token}>borderRadius.half</span>
+              <span className={css.value}>50%</span>
               <span
-                className={css.radiusChip}
-                style={{ borderRadius: `var(--border-radius-${step})` }}
+                className={`${css.radiusChip} ${css.radiusChipSquare}`}
+                style={{ borderRadius: 'var(--border-radius-half)' }}
               />
             </div>
-          ))}
-          <div className={css.row}>
-            <span className={css.token}>borderRadius.full</span>
-            <span className={css.value}>999px</span>
-            <span
-              className={css.radiusChip}
-              style={{ borderRadius: 'var(--border-radius-full)' }}
-            />
+            <div className={css.row}>
+              <span className={css.token}>borderRadius.full</span>
+              <span className={css.value}>999px</span>
+              <span
+                className={css.radiusChip}
+                style={{ borderRadius: 'var(--border-radius-full)' }}
+              />
+            </div>
           </div>
-        </div>
+        </Theme>
       </Preview>
 
       <Preview
@@ -86,24 +104,32 @@ export default function ScalesPage() {
 
       <Preview
         title="Font family"
-        description="Two faces. The token names them; loading them is the application's job."
+        description="Three faces. The token names them; loading them is the application's job."
         stack
-        code={`fontFamily.main  // 'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif
-fontFamily.mono  // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace`}
+        language="javascript"
+        code={`fontFamily.main   // 'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif
+fontFamily.serif  // 'Pretendard Serif', 'Nanum Myeongjo', 'Apple SD Gothic Neo', Georgia, 'Times New Roman', serif
+fontFamily.mono   // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace`}
       >
         <div className={css.rows}>
-          <div className={css.row}>
-            <span className={css.token}>fontFamily.main</span>
-            <span style={{ fontFamily: 'var(--font-family-main)', fontSize: 18 }}>
-              디자인 시스템 Design System 0123
-            </span>
-          </div>
-          <div className={css.row}>
-            <span className={css.token}>fontFamily.mono</span>
-            <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: 18 }}>
-              디자인 시스템 Design System 0123
-            </span>
-          </div>
+          {(['main', 'serif', 'mono'] as const).map(family => (
+            <div key={family} className={css.familyRow}>
+              <span className={css.token}>fontFamily.{family}</span>
+              {/*
+               * The same three lines for each face, broken by hand rather than
+               * left to wrap. Comparing two faces means comparing the same
+               * glyphs in the same order, and a wrap puts them in different
+               * places for every stack.
+               */}
+              <span className={css.specimen} style={{ fontFamily: `var(--font-family-${family})` }}>
+                디자인 시스템
+                <br />
+                Design System
+                <br />
+                0123
+              </span>
+            </div>
+          ))}
         </div>
       </Preview>
 

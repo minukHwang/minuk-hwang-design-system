@@ -20,9 +20,9 @@ export default function InputPage() {
         stack
         code={`<Input size="s" />\n<Input size="m" />\n<Input size="l" />`}
       >
-        <Input size="s" placeholder="Small, 40px" />
-        <Input size="m" placeholder="Medium, 48px" />
-        <Input size="l" placeholder="Large, 56px" />
+        <Input size="s" placeholder="Small, 32px" />
+        <Input size="m" placeholder="Medium, 40px" />
+        <Input size="l" placeholder="Large, 48px" />
       </Preview>
 
       <Preview

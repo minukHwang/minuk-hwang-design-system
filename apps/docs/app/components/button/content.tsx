@@ -6,6 +6,7 @@ import * as React from 'react';
 
 import { Page } from '../../../site/Page';
 import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
+import css from '../../../site/tokens.module.css';
 
 export default function ButtonPage() {
   return (
@@ -16,12 +17,12 @@ export default function ButtonPage() {
     >
       <Preview
         code={`<Button>
-  <Icon name="add" size={18} />
+  <Icon name="add" />
   Create
 </Button>`}
       >
         <Button>
-          <Icon name="add" size={18} />
+          <Icon name="add" />
           Create
         </Button>
       </Preview>
@@ -49,7 +50,7 @@ export default function ButtonPage() {
         title="Size"
         description={
           <>
-            Use <code>size</code> to set the height: 40, 48 or 56px. <code>Input</code> and{' '}
+            Use <code>size</code> to set the height: 32, 40 or 48px. <code>Input</code> and{' '}
             <code>Select</code> use the same three, so a field and its submit line up.
           </>
         }
@@ -63,26 +64,60 @@ export default function ButtonPage() {
       </Preview>
 
       <Preview
-        title="With icons"
-        description="Nest icons directly inside the button, before or after the label. The gap is applied for you."
-        code={`<Button>
-  <Icon name="add" size={18} />
-  Create
-</Button>
-
-<Button variant="secondary">
+        title="Full width"
+        description={
+          <>
+            <code>fullWidth</code> fills the container. Use it where the container is already the
+            decision — a form, a sheet, a card — and leave it off in a row, where a button as wide
+            as its label is what tells you how much it does.
+          </>
+        }
+        stack
+        code={`<Button fullWidth>Continue</Button>
+<Button fullWidth variant="secondary">
+  <Icon name="download" />
   Export
-  <Icon name="download" size={18} />
 </Button>`}
       >
-        <Button>
-          <Icon name="add" size={18} />
-          Create
-        </Button>
-        <Button variant="secondary">
+        <Button fullWidth>Continue</Button>
+        <Button fullWidth variant="secondary">
+          <Icon name="download" />
           Export
-          <Icon name="download" size={18} />
         </Button>
+      </Preview>
+
+      <Preview
+        title="With icons"
+        description="Nest icons directly inside the button, before or after the label. The size sets the glyph and the gap, and gives the icon's side a few pixels of padding back so it does not read as looser than the other."
+        stack
+        code={`<Button size="l"><Icon name="add" />Create</Button>
+<Button size="l" variant="secondary">Export<Icon name="download" /></Button>
+<Button size="l" variant="secondary">No icon</Button>
+
+<Button size="m"><Icon name="add" />Create</Button>
+<Button size="m" variant="secondary">Export<Icon name="download" /></Button>
+<Button size="m" variant="secondary">No icon</Button>
+
+<Button size="s"><Icon name="add" />Create</Button>
+<Button size="s" variant="secondary">Export<Icon name="download" /></Button>
+<Button size="s" variant="secondary">No icon</Button>`}
+      >
+        {(['l', 'm', 's'] as const).map(size => (
+          <div key={size} className={css.controlRow}>
+            <span className={css.controlRowLabel}>{size}</span>
+            <Button size={size}>
+              <Icon name="add" />
+              Create
+            </Button>
+            <Button size={size} variant="secondary">
+              Export
+              <Icon name="download" />
+            </Button>
+            <Button size={size} variant="secondary">
+              No icon
+            </Button>
+          </div>
+        ))}
       </Preview>
 
       <Preview
@@ -94,6 +129,12 @@ export default function ButtonPage() {
         }
         code={`<Button variant="ghost" iconOnly aria-label="More">
   <Icon name="more_horiz" />
+</Button>
+<Button iconOnly aria-label="Add">
+  <Icon name="add" />
+</Button>
+<Button variant="secondary" iconOnly aria-label="Settings">
+  <Icon name="settings" />
 </Button>`}
       >
         <Button variant="ghost" iconOnly aria-label="More">
@@ -121,7 +162,8 @@ export default function ButtonPage() {
           </>
         }
         code={`<Button loading>Publishing</Button>
-<Button disabled>Publish</Button>`}
+<Button disabled>Publish</Button>
+<Button variant="secondary" disabled>Save draft</Button>`}
       >
         <Button loading>Publishing</Button>
         <Button disabled>Publish</Button>
@@ -160,20 +202,21 @@ export default function ButtonPage() {
               name: 'size',
               type: `'s' | 'm' | 'l'`,
               default: `'m'`,
-              description: '40, 48 or 56px tall. Shared with Input and Select.',
+              description: '32, 40 or 48px tall. Shared with Input and Select.',
             },
             {
-              name: 'block',
+              name: 'fullWidth',
               type: 'boolean',
               default: 'false',
               description:
-                'Fills the container. Off by default, since a button is as wide as its label.',
+                'Fills the container. Off by default, since a button is as wide as its label. Cannot be combined with iconOnly.',
             },
             {
               name: 'iconOnly',
               type: 'boolean',
               default: 'false',
-              description: 'Square. Needs an aria-label, since there is no text to read.',
+              description:
+                'Square. Needs an aria-label, since there is no text to read. Cannot be combined with fullWidth.',
             },
             {
               name: 'loading',

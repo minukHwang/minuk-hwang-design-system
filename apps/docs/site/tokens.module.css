@@ -52,6 +52,18 @@
   font-size: var(--font-size-14);
 }
 
+/*
+ * A separator belongs between two rows, not after the last one. Left on, the
+ * final rule reads as the start of a row that never arrived — most visible
+ * inside a `Preview`, where the frame already draws the bottom edge and the two
+ * lines sit a few pixels apart.
+ */
+.row:last-child,
+.familyRow:last-child,
+.durationRow:last-child {
+  border-bottom: none;
+}
+
 .token {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
@@ -72,11 +84,45 @@
   background: var(--accent-normal);
 }
 
+/*
+ * A face is judged on how it sets a paragraph, not on how it sets a word, so the
+ * specimen gets the reading line height rather than the tight one the rest of
+ * this table uses.
+ */
+.specimen {
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-28);
+}
+
+/*
+ * Two columns rather than the three the token rows use. There is no value to
+ * print here — the value is the type — so a middle column would be an empty
+ * lane between the name and the thing it names.
+ */
+.familyRow {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--spacing-16);
+  align-items: center;
+  padding: var(--spacing-12) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
 .radiusChip {
   width: 56px;
   height: 40px;
   border: 1px solid var(--border-strong);
   background: var(--surface-default);
+}
+
+/*
+ * Square, because `half` is a percentage and a percentage resolves against both
+ * axes: on the 56×40 chip beside it, 50% draws a 28×20 ellipse rather than the
+ * circle the token is named for. Showing it on the shape it applies to says more
+ * than a caption would.
+ */
+.radiusChipSquare {
+  width: 40px;
 }
 
 .shadowChip {
@@ -225,6 +271,26 @@
     grid-template-columns: 1fr;
     gap: var(--spacing-4);
   }
+}
+
+/*
+ * One size per row, so the three are read down a column rather than across a
+ * wrapping line. Baseline alignment would sit buttons of three heights on their
+ * labels; these are boxes, so they centre.
+ */
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  width: 100%;
+}
+
+.controlRowLabel {
+  flex: none;
+  width: 24px;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-12);
+  color: var(--text-color-assistive);
 }
 
 /* ── contrast comparison ────────────────────────────────────── */

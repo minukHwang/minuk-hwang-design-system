@@ -28,8 +28,16 @@ export default function TextPage() {
         title="Size"
         description="Use size to pick one of ten steps. 1 is 12px, 10 is 24px."
         stack
-        code={`<Text size={5}>Interface copy.</Text>
-<Text size={2} color="assistive">A timestamp.</Text>`}
+        code={`<Text size={10} truncate>{SAMPLE}</Text>
+<Text size={9} truncate>{SAMPLE}</Text>
+<Text size={8} truncate>{SAMPLE}</Text>
+<Text size={7} truncate>{SAMPLE}</Text>
+<Text size={6} truncate>{SAMPLE}</Text>
+<Text size={5} truncate>{SAMPLE}</Text>
+<Text size={4} truncate>{SAMPLE}</Text>
+<Text size={3} truncate>{SAMPLE}</Text>
+<Text size={2} truncate>{SAMPLE}</Text>
+<Text size={1} truncate>{SAMPLE}</Text>`}
       >
         {[...textScale].reverse().map(({ step: n }) => {
           const spec = step(n).regular;
@@ -55,9 +63,9 @@ export default function TextPage() {
         title="Weight"
         description="Use weight for emphasis: 400, 500 or 700."
         stack
-        code={`<Text weight="regular">Running text.</Text>
-<Text weight="medium">A little emphasis.</Text>
-<Text weight="bold">A label that has to be found.</Text>`}
+        code={`<Text weight="regular">{SAMPLE}</Text>
+<Text weight="medium">{SAMPLE}</Text>
+<Text weight="bold">{SAMPLE}</Text>`}
       >
         {WEIGHTS.map(weight => (
           <div key={weight} className={css.stepRow}>
@@ -79,8 +87,8 @@ export default function TextPage() {
           </>
         }
         stack
-        code={`<Text>Two lines of interface copy.</Text>
-<Text leading="reading">A paragraph someone will actually read.</Text>`}
+        code={`<Text leading="normal">{PARAGRAPH}</Text>
+<Text leading="reading">{PARAGRAPH}</Text>`}
       >
         {(['normal', 'reading'] as const).map(leading => (
           <div key={leading} className={css.stepRow}>
@@ -102,8 +110,14 @@ export default function TextPage() {
         title="Color"
         description="Use color to name a role. There is no palette step here, on purpose."
         stack
-        code={`<Text color="assistive">Captions and timestamps</Text>
-<Text color="error">Something went wrong</Text>`}
+        code={`<Text color="strong">strong</Text>
+<Text color="normal">normal</Text>
+<Text color="assistive">assistive</Text>
+<Text color="link">link</Text>
+<Text color="accent">accent</Text>
+<Text color="success">success</Text>
+<Text color="warning">warning</Text>
+<Text color="error">error</Text>`}
       >
         {(
           [
@@ -127,8 +141,9 @@ export default function TextPage() {
         title="Overflow"
         description="Use truncate for one line, or lines to clamp to a number of them."
         stack
-        code={`<Text truncate>One line, then an ellipsis.</Text>
-<Text lines={2}>Two lines, then an ellipsis.</Text>`}
+        code={`<Text truncate>{SAMPLE}</Text>
+<Text lines={2}>{SAMPLE}</Text>
+<Text lines={3}>{SAMPLE}</Text>`}
       >
         <div style={{ maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Text truncate>{SAMPLE}</Text>

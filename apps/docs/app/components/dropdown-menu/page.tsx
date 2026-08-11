@@ -36,7 +36,7 @@ export default function DropdownMenuPage() {
           <DropdownMenu.Trigger asChild>
             <Button variant="secondary">
               Actions
-              <Icon name="expand_more" size={18} />
+              <Icon name="expand_more" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>
@@ -76,7 +76,7 @@ export default function DropdownMenuPage() {
           <DropdownMenu.Trigger asChild>
             <Button variant="secondary">
               Publish options
-              <Icon name="expand_more" size={18} />
+              <Icon name="expand_more" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>

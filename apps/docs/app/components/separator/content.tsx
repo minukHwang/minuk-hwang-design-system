@@ -45,6 +45,48 @@ export default function SeparatorPage() {
         </div>
       </Preview>
 
+      <Preview
+        title="Thickness"
+        description={
+          <>
+            <code>size</code> is the thickness in pixels. It doubles, because the difference between
+            1 and 2 is the whole difference at the thin end and nobody can tell 12 from 14 at the
+            other. The length comes from whatever the rule sits in.
+          </>
+        }
+        stack
+        code={`<Separator size={1} />
+<Separator size={2} />
+<Separator size={4} />
+<Separator size={8} />
+<Separator size={16} />`}
+      >
+        {([1, 2, 4, 8, 16] as const).map(size => (
+          <React.Fragment key={size}>
+            <Text size={2} color="assistive">
+              {size}
+            </Text>
+            <Separator size={size} />
+          </React.Fragment>
+        ))}
+      </Preview>
+
+      <Preview
+        title="Vertical, thickened"
+        description="The same prop sets the width when the rule runs down."
+        code={`<Separator orientation="vertical" size={2} />`}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, height: 24 }}>
+          <Text as="span" size={4} color="assistive">
+            Tokens
+          </Text>
+          <Separator orientation="vertical" size={2} />
+          <Text as="span" size={4} color="assistive">
+            Components
+          </Text>
+        </div>
+      </Preview>
+
       <Section title="Props">
         <PropsTable
           rows={[
@@ -53,6 +95,12 @@ export default function SeparatorPage() {
               type: `'horizontal' | 'vertical'`,
               default: `'horizontal'`,
               description: 'Vertical stretches to its flex parent.',
+            },
+            {
+              name: 'size',
+              type: '1 | 2 | 4 | 8 | 16',
+              default: '1',
+              description: 'Thickness in pixels. Height when horizontal, width when vertical.',
             },
             {
               name: 'decorative',

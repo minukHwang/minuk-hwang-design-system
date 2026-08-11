@@ -17,6 +17,8 @@ const px = (rem: string) => Math.round(parseFloat(rem) * 16);
 
 const LEVELS = [1, 2, 3, 4, 5, 6] as const;
 
+const SAMPLE = '같은 색에 이름이 둘이면 언젠가 갈라진다';
+
 export default function HeadingPage() {
   return (
     <Page
@@ -28,8 +30,12 @@ export default function HeadingPage() {
         title="Level"
         description="Use level to set the element and, with it, a default size."
         stack
-        code={`<Heading level={1}>Publish</Heading>
-<Heading level={2}>Before you start</Heading>`}
+        code={`<Heading level={1} truncate>{SAMPLE}</Heading>
+<Heading level={2} truncate>{SAMPLE}</Heading>
+<Heading level={3} truncate>{SAMPLE}</Heading>
+<Heading level={4} truncate>{SAMPLE}</Heading>
+<Heading level={5} truncate>{SAMPLE}</Heading>
+<Heading level={6} truncate>{SAMPLE}</Heading>`}
       >
         {LEVELS.map(level => (
           <div key={level} className={css.stepRow}>
@@ -41,7 +47,7 @@ export default function HeadingPage() {
               </span>
             </span>
             <Heading level={level} truncate>
-              같은 색에 이름이 둘이면 언젠가 갈라진다
+              {SAMPLE}
             </Heading>
           </div>
         ))}
@@ -56,8 +62,10 @@ export default function HeadingPage() {
         title="Size"
         description="Use size to change the appearance without touching the outline."
         stack
-        code={`{/* Still an h3 in the outline, only smaller on screen. */}
-<Heading level={3} size={1}>A card title</Heading>`}
+        code={`<Heading level={2}>기본 크기</Heading>
+
+{/* Still an h2 in the outline, only smaller on screen. */}
+<Heading level={2} size={1}>개요는 그대로, 크기만 작게</Heading>`}
       >
         <div className={css.stepRow}>
           <span className={css.stepMeta}>
