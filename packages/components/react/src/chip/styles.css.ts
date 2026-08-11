@@ -82,6 +82,17 @@ export type ChipVariants = RecipeVariants<typeof chipRecipe>;
  * keyboard user needs to reach both.
  */
 export const remove = style({
+  /*
+   * The glyph is 14px on a small chip and the box around it was the same, which
+   * is a 14×14 target. WCAG 2.2 asks for 24×24, and the exception for targets
+   * with clearance does not apply — this one is inside another target.
+   *
+   * The hit area is a pseudo-element rather than padding, because padding here
+   * would make the chip taller to hold it: a small chip is 28px, and 24px of
+   * target plus the chip's own 4px of vertical padding does not fit inside that.
+   * An overlay takes the same 24px without asking the layout for any of it.
+   */
+  position: 'relative',
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -94,6 +105,15 @@ export const remove = style({
   cursor: 'pointer',
   opacity: 0.7,
   selectors: {
+    '&::after': {
+      content: '',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '24px',
+      height: '24px',
+    },
     '&:hover': { opacity: 1 },
     '&:focus-visible': {
       outline: `2px solid ${border.focus}`,
