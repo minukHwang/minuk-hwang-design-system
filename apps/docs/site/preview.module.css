@@ -106,7 +106,21 @@
 
 /* ── props table ────────────────────────────────────────────── */
 
+/*
+ * The same frame the live examples sit in.
+ *
+ * The table was loose on the page, so its rules ran to the width of the text in
+ * the last column and stopped — which made a reference table look like a
+ * paragraph that had been tabbed. Putting it in the bordered card the previews
+ * already use gives the rules something to run between, and makes the two kinds
+ * of block on a component page read as the same kind of thing.
+ *
+ * The border is on the scrolling box rather than the table, so a narrow screen
+ * scrolls the columns inside a frame that stays put.
+ */
 .tableScroll {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-12);
   overflow-x: auto;
 }
 
@@ -116,19 +130,25 @@
   border-collapse: collapse;
 }
 
+/* Its own surface, so the header reads as a header without a heavier rule. */
+.table thead {
+  background: var(--surface-default);
+}
+
 .table th {
   text-align: left;
-  padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) 0;
-  border-bottom: 1px solid var(--border-normal);
+  padding: var(--spacing-10) var(--spacing-16);
+  border-bottom: 1px solid var(--border-subtle);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-12);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: var(--font-weight-400);
+  white-space: nowrap;
 }
 
 .table td {
-  padding: var(--spacing-10) var(--spacing-16) var(--spacing-10) 0;
+  padding: var(--spacing-12) var(--spacing-16);
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
 }
@@ -138,7 +158,29 @@
   border-bottom: none;
 }
 
+/*
+ * Three tiers, because the columns hold three different kinds of thing.
+ *
+ * The name is what you type, so it is the accent. The type is what the prop
+ * accepts, so it is a chip in the surrounding grey: a chip because a type is
+ * mostly punctuation — `'s' | 'm' | 'l'` set as prose reads as a sentence with
+ * something wrong with it. The default is one short value and stays plain, since
+ * a box around every cell is a table of boxes.
+ *
+ * The chips come from the site's inline-code rule, which tints itself from
+ * `currentColor` — so setting the colour here is all it takes for the name's
+ * chip to arrive in the accent and the type's in the grey around it.
+ */
+.propName {
+  color: var(--accent-800);
+}
+
 .type {
+  font-size: var(--font-size-13);
+  white-space: nowrap;
+}
+
+.default {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
 }

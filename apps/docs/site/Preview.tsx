@@ -137,10 +137,12 @@ export const PropsTable = ({ rows }: { rows: PropRow[] }) => (
         {rows.map((row, index) => (
           <tr key={index}>
             <td>
-              <code>{row.name}</code>
+              <code className={css.propName}>{row.name}</code>
             </td>
-            <td className={css.type}>{row.type}</td>
-            <td className={css.type}>{row.default ?? '—'}</td>
+            <td>
+              <code className={css.type}>{row.type}</code>
+            </td>
+            <td className={css.default}>{row.default ?? '—'}</td>
             <td>{row.description}</td>
           </tr>
         ))}
