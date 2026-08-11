@@ -30,7 +30,14 @@ export const root = style({
   height: '24px',
   padding: '2px',
   border: 'none',
-  borderRadius: vars.borderRadius.full,
+  /*
+   * Step 12 rather than a pill, so the track follows the radius dial. The two
+   * agree at the default and above: the track is 24px tall, a browser holds
+   * `border-radius` to half the box, and 12 × 1 is already that half — so
+   * `medium` and everything rounder draw the pill the pill token drew, and only
+   * `small` and `none` differ, which is the point of asking for them.
+   */
+  borderRadius: vars.borderRadius[12],
   // Off is a filled track rather than an outlined one, so the two states differ
   // by colour alone and the control never changes shape. `strong` rather than
   // `normal` because the white thumb has to read against it.
@@ -61,7 +68,17 @@ export const thumb = style({
   display: 'block',
   width: '20px',
   height: '20px',
-  borderRadius: vars.borderRadius.full,
+  /*
+   * The track's radius less the 2px it is inset by, so the two curves are
+   * concentric at every setting rather than only where both are round. At
+   * `small` that is a 6px track around a 4px thumb; taking `half` of the thumb
+   * instead would put 5px inside 6px and read as a thumb slightly too round for
+   * its slot.
+   *
+   * `max` guards the bottom: at `none` the track is 0 and the subtraction goes
+   * negative, which is not a radius.
+   */
+  borderRadius: `max(0px, calc(${vars.borderRadius[12]} - 2px))`,
   backgroundColor: surface.canvas,
   boxShadow: vars.shadow.xs,
   transform: 'translateX(0)',

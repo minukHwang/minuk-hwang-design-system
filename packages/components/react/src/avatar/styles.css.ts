@@ -9,9 +9,19 @@ export const root = style({
   alignItems: 'center',
   justifyContent: 'center',
   flex: 'none',
-  borderRadius: vars.borderRadius.full,
+  /*
+   * `half` rather than a pill, so the avatar follows the radius dial instead of
+   * standing outside it. A percentage is what makes that work across five sizes:
+   * 50% is a circle on a 24px avatar and on a 64px one alike, where a pixel step
+   * large enough to round the 64px would be past the 24px's clamp on the way.
+   *
+   * The factor carries it down the ladder — a rounded square at `small`, a
+   * square at `none` — and back up, since 75% at `large` is clamped to the same
+   * circle `medium` draws.
+   */
+  borderRadius: vars.borderRadius.half,
   backgroundColor: surface.default,
-  // The image is a circle by way of the root, so nothing square can escape it.
+  // The image is clipped by the root, so nothing square can escape it.
   overflow: 'hidden',
   userSelect: 'none',
 });

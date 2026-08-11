@@ -8,9 +8,16 @@
  * names says which is bigger, and `base` (8px) hid in the middle of the ladder
  * rather than at one end.
  *
- * `full` is the one name left, because it is not a measurement. It asks for a
- * pill regardless of the element's height, which is what the value is for — 999px
- * is simply past anything real.
+ * Two names are left, because neither is a measurement.
+ *
+ * `full` asks for a pill regardless of the element's height, which is what 999px
+ * is for — simply past anything real. `half` asks for the roundest a box can be
+ * at whatever size it happens to render, which is what a percentage is for: 50%
+ * of a square is a circle at 24px and at 64px alike. An avatar wants the second,
+ * and would need a different pixel step per size to get it from the first.
+ *
+ * `half` is only meaningful on a square. On a 80×32 box it draws 40px by 16px
+ * corners, which is a lozenge rather than a pill.
  *
  * ---
  *
@@ -36,6 +43,7 @@ const VALUES = {
   16: '1rem',
   24: '1.5rem',
   36: '2.25rem',
+  half: '50%', // the roundest a square can be, at any size
   full: '62.4375rem', // 999px, past anything real
 } as const;
 
@@ -44,3 +52,18 @@ export const borderRadiusValues = VALUES;
 export const borderRadius = Object.fromEntries(
   Object.keys(VALUES).map(step => [step, `var(--border-radius-${step})`])
 ) as { [K in keyof typeof VALUES]: string };
+
+/**
+ * A radius that becomes a pill at `radius="full"` and is the given step at every
+ * other scale.
+ *
+ * `--border-radius-pill-full` is `0` on four of the five scales, so `max()`
+ * returns the step and the component is a rounded rectangle. On `full` it is
+ * 999px and wins, at every size the component has — which is the part a factor
+ * large enough to clamp a 40px control into a pill could not do for a 56px one.
+ *
+ * Used by the controls a consumer would expect to go pill-shaped together:
+ * buttons, badges, inputs, selects. A card or a dialog reads the step directly
+ * and stays a rectangle no matter where the dial is.
+ */
+export const pillWhenFull = (radius: string) => `max(${radius}, var(--border-radius-pill-full))`;

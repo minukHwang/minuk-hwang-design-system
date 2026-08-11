@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 const { surface, border, textColor, status } = vars.color.$semantic;
@@ -19,7 +19,9 @@ const trigger = style({
   justifyContent: 'space-between',
   gap: vars.spacing[8],
   width: '100%',
-  borderRadius: vars.borderRadius[8],
+  // The trigger is a control and follows the input; the list it opens is a
+  // surface and follows the popover. Only this half takes the pill.
+  borderRadius: pillWhenFull(vars.borderRadius[8]),
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
@@ -54,9 +56,9 @@ const trigger = style({
 });
 
 export const size = styleVariants({
-  s: [trigger, { height: '40px', padding: `0 ${vars.spacing[10]}` }],
-  m: [trigger, { height: '48px', padding: `0 ${vars.spacing[12]}` }],
-  l: [trigger, { height: '56px', padding: `0 ${vars.spacing[16]}` }],
+  s: [trigger, { height: '32px', padding: `0 ${vars.spacing[10]}` }],
+  m: [trigger, { height: '40px', padding: `0 ${vars.spacing[12]}` }],
+  l: [trigger, { height: '48px', padding: `0 ${vars.spacing[16]}` }],
 });
 
 export type SelectSize = keyof typeof size;

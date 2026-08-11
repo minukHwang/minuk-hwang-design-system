@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 const { accent, surface, border, textColor, status } = vars.color.$semantic;
@@ -14,7 +14,11 @@ export const badgeRecipe = recipe({
     display: 'inline-flex',
     alignItems: 'center',
     gap: vars.spacing[4],
-    borderRadius: vars.borderRadius[4],
+    // Goes pill-shaped with the buttons at `full`, and stays a rectangle with
+    // them everywhere else. The chip beside it is a pill at every setting but
+    // `none`, which is the difference between the two components rather than a
+    // disagreement about the dial.
+    borderRadius: pillWhenFull(vars.borderRadius[4]),
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'transparent',

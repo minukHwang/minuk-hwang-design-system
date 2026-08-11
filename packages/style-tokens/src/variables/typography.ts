@@ -63,5 +63,19 @@ export const lineHeight = {
  */
 export const fontFamily = {
   main: "'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif",
+  /**
+   * For the places a serif says something a sans cannot: a long-form article, a
+   * pull quote, a piece of editorial inside an otherwise plain interface.
+   *
+   * Nothing in the system reaches for it. It is named so that an application
+   * that wants one has somewhere to put it, and so that the choice is a token
+   * rather than a font stack copied into three stylesheets.
+   *
+   * The stack ends in the platform serifs rather than in a webfont, since like
+   * the other two this only names the face — fetching it stays the
+   * application's job.
+   */
+  serif:
+    "'Pretendard Serif', 'Nanum Myeongjo', 'Apple SD Gothic Neo', Georgia, 'Times New Roman', serif",
   mono: "'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
 };

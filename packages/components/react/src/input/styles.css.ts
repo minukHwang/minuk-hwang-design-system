@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 const { surface, border, textColor, status } = vars.color.$semantic;
@@ -14,7 +14,10 @@ const { opacity } = vars.color.$absolute;
  */
 const control = style({
   width: '100%',
-  borderRadius: vars.borderRadius[8],
+  // Pill-shaped at `full`, with the button it sits beside in a form. A field and
+  // its submit differing in shape is the kind of thing nobody names and everyone
+  // sees.
+  borderRadius: pillWhenFull(vars.borderRadius[8]),
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
@@ -50,9 +53,9 @@ const control = style({
 
 /** Heights match the button scale, so a control and its submit line up. */
 export const input = styleVariants({
-  s: [control, { height: '40px', padding: `0 ${vars.spacing[10]}` }],
-  m: [control, { height: '48px', padding: `0 ${vars.spacing[12]}` }],
-  l: [control, { height: '56px', padding: `0 ${vars.spacing[16]}` }],
+  s: [control, { height: '32px', padding: `0 ${vars.spacing[10]}` }],
+  m: [control, { height: '40px', padding: `0 ${vars.spacing[12]}` }],
+  l: [control, { height: '48px', padding: `0 ${vars.spacing[16]}` }],
 });
 
 export type InputSize = keyof typeof input;
@@ -61,6 +64,13 @@ export const textarea = style([
   control,
   {
     display: 'block',
+    /*
+     * Back to the plain step, undoing the pill the single-line control opts into.
+     * A pill is a shape for something one line tall; on a box that starts at 96px
+     * and grows as it is dragged, `full` would ask for a 48px corner and then a
+     * larger one, and the text inside would have to be inset to clear it.
+     */
+    borderRadius: vars.borderRadius[8],
     padding: `${vars.spacing[10]} ${vars.spacing[12]}`,
     minHeight: '96px',
     // Vertical only. Horizontal resize breaks whatever column the field sits in.

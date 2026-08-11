@@ -10,6 +10,11 @@ import { spinner } from './styles.css';
  */
 
 export type SpinnerProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /**
+   * Override the size the surrounding component asked for. Omit it inside a
+   * `Button`, which sizes its spinner exactly as it sizes its icons; elsewhere
+   * the default is 16px.
+   */
   size?: number;
   /**
    * Announced while work is in progress. Omit inside a control that already says
@@ -32,7 +37,7 @@ export type SpinnerProps = React.HTMLAttributes<HTMLSpanElement> & {
  * Stroke scales with size — a 16px ring with a 2px stroke reads as a smudge.
  */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(
-  { size = 16, label, className, ...props },
+  { size, label, className, ...props },
   ref
 ) {
   return (
@@ -40,12 +45,24 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function 
       {...props}
       ref={ref}
       className={clsx(spinner, className)}
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        borderWidth: `${Math.max(1.5, size / 10)}px`,
-        ...props.style,
-      }}
+      /*
+       * The dimensions, not the property the stylesheet reads — an explicit size
+       * is the size, and going through that property would hand it to the
+       * stylesheet's own arithmetic and come back two pixels short.
+       *
+       * Omitting `size` leaves this undefined, which is what lets the container
+       * decide. A default written here would overrule it.
+       */
+      style={
+        size
+          ? {
+              width: `${size}px`,
+              height: `${size}px`,
+              borderWidth: `${Math.max(1.5, size / 10)}px`,
+              ...props.style,
+            }
+          : props.style
+      }
       role={label ? 'status' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}

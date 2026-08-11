@@ -4,7 +4,12 @@ import { Separator as BaseSeparator } from '@minuk-hwang-design-system/base-reac
 import clsx from 'clsx';
 import * as React from 'react';
 
-import { orientation as orientationStyle, separator, SeparatorOrientation } from './styles.css';
+import {
+  orientation as orientationStyle,
+  separator,
+  SeparatorOrientation,
+  size as sizeStyle,
+} from './styles.css';
 
 /*
  * ============================================
@@ -14,6 +19,8 @@ import { orientation as orientationStyle, separator, SeparatorOrientation } from
 
 export type SeparatorProps = React.ComponentPropsWithoutRef<typeof BaseSeparator> & {
   orientation?: SeparatorOrientation;
+  /** Thickness in pixels. The length comes from whatever the rule sits in. */
+  size?: 1 | 2 | 4 | 8 | 16;
 };
 
 /*
@@ -31,13 +38,13 @@ export type SeparatorProps = React.ComponentPropsWithoutRef<typeof BaseSeparator
  * when the line is the only thing saying two regions are unrelated.
  */
 export const Separator = React.forwardRef<React.ElementRef<typeof BaseSeparator>, SeparatorProps>(
-  function Separator({ orientation = 'horizontal', className, ...props }, ref) {
+  function Separator({ orientation = 'horizontal', size = 1, className, ...props }, ref) {
     return (
       <BaseSeparator
         {...props}
         ref={ref}
         orientation={orientation}
-        className={clsx(separator, orientationStyle[orientation], className)}
+        className={clsx(separator, orientationStyle[orientation], sizeStyle[size], className)}
       />
     );
   }

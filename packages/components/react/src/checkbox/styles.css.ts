@@ -47,9 +47,20 @@ const control = style({
   },
 });
 
+/**
+ * The one radius in the system the dial cannot reach.
+ *
+ * A checkbox is square and a radio is round, and that is not decoration — it is
+ * how someone knows before clicking whether picking this one unpicks the other.
+ * Wire the radio to the dial and `radius="none"` squares it into a checkbox,
+ * leaving two controls that look identical and behave differently.
+ *
+ * So `50%` is written out. The checkbox beside it does follow the dial, because
+ * a rounder square is still a square.
+ */
 export const shape = styleVariants({
   checkbox: [control, { borderRadius: vars.borderRadius[4] }],
-  radio: [control, { borderRadius: vars.borderRadius.full }],
+  radio: [control, { borderRadius: '50%' }],
 });
 
 export const indicator = style({
@@ -58,11 +69,14 @@ export const indicator = style({
   justifyContent: 'center',
 });
 
-/** The dot inside a selected radio. Drawn rather than an icon, so it stays perfectly centred. */
+/**
+ * The dot inside a selected radio. Drawn rather than an icon, so it stays
+ * perfectly centred, and round for the same reason its container is.
+ */
 export const radioDot = style({
   width: '8px',
   height: '8px',
-  borderRadius: vars.borderRadius.full,
+  borderRadius: '50%',
   backgroundColor: 'currentColor',
 });
 
