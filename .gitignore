@@ -41,6 +41,12 @@ jspm_packages/
 # TypeScript cache
 *.tsbuildinfo
 
+# Written by `next build` and `next dev`, and it names the output directory it
+# was last built with — so a verification build run with NEXT_DIST_DIR left a
+# tracked file pointing at `.next-verify`, a path that is itself ignored.
+# Next regenerates it on every build, and CI builds before it lints.
+next-env.d.ts
+
 # Optional npm cache directory
 .npm
 
