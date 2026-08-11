@@ -28,10 +28,10 @@ export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & NonNullable<Bad
  * it in the text too — "Failed" beside a red badge, not a red badge alone.
  */
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  { size, tone, solid, className, ...props },
+  { size, tone, variant, className, ...props },
   ref
 ) {
   return (
-    <span {...props} ref={ref} className={clsx(badgeRecipe({ size, tone, solid }), className)} />
+    <span {...props} ref={ref} className={clsx(badgeRecipe({ size, tone, variant }), className)} />
   );
 });

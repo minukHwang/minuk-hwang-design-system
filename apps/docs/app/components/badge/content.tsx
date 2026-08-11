@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import { Page } from '../../../site/Page';
 import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
+import css from '../../../site/tokens.module.css';
 
 const TONES = ['neutral', 'accent', 'info', 'success', 'warning', 'error'] as const;
 
@@ -28,14 +29,22 @@ export default function BadgePage() {
       </Preview>
 
       <Preview
-        title="Solid"
-        description="Use solid when the badge has to carry across a busy row. The text colour is the one measured to pass on that fill."
-        code={`<Badge tone="error" solid>Blocked</Badge>`}
+        title="Variant"
+        description="Soft is the tint and the default. Solid is for the badge that has to carry across a busy row, on the text colour measured to pass on that fill. Outline puts no fill on the page, which is what a dense list of them wants."
+        stack
+        code={`<Badge tone="error">Blocked</Badge>
+<Badge tone="error" variant="solid">Blocked</Badge>
+<Badge tone="error" variant="outline">Blocked</Badge>`}
       >
-        {TONES.map(tone => (
-          <Badge key={tone} tone={tone} solid>
-            {tone}
-          </Badge>
+        {(['soft', 'solid', 'outline'] as const).map(variant => (
+          <div key={variant} className={css.controlRow}>
+            <span className={`${css.controlRowLabel} ${css.controlRowLabelWide}`}>{variant}</span>
+            {TONES.map(tone => (
+              <Badge key={tone} tone={tone} variant={variant}>
+                {tone}
+              </Badge>
+            ))}
+          </div>
         ))}
       </Preview>
 
@@ -46,8 +55,9 @@ export default function BadgePage() {
 
       <Preview
         title="Size"
-        description="Two sizes, matching the two chip heights."
-        code={`<Badge size="s">3</Badge>`}
+        description="Two sizes, and the difference is the type: 12px in a 20px box, or 13px in a 22px one."
+        code={`<Badge size="s" tone="accent">small</Badge>
+<Badge size="m" tone="accent">medium</Badge>`}
       >
         <Badge size="s" tone="accent">
           small
@@ -67,16 +77,17 @@ export default function BadgePage() {
               description: 'What the state is, not what colour it is.',
             },
             {
-              name: 'solid',
-              type: 'boolean',
-              default: 'false',
-              description: 'Filled rather than tinted, for the one badge that has to be seen.',
+              name: 'variant',
+              type: `'soft' | 'solid' | 'outline'`,
+              default: `'soft'`,
+              description:
+                'Tinted, filled, or an outline with no fill. The outline border is the tone’s subtle step, the same weight as every other hairline in the system.',
             },
             {
               name: 'size',
               type: `'s' | 'm'`,
               default: `'m'`,
-              description: 'Small for counts and inline markers.',
+              description: 'Small is 12px type for a count or an inline marker; medium is 13px.',
             },
           ]}
         />
