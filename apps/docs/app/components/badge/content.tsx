@@ -19,7 +19,12 @@ export default function BadgePage() {
       <Preview
         title="Tone"
         description="Use tone to say what the state is. Text and background come from the same status scale, so the pair clears AA by construction."
-        code={`<Badge tone="success">Live</Badge>\n<Badge tone="error">Failed</Badge>`}
+        code={`<Badge tone="neutral">neutral</Badge>
+<Badge tone="accent">accent</Badge>
+<Badge tone="info">info</Badge>
+<Badge tone="success">success</Badge>
+<Badge tone="warning">warning</Badge>
+<Badge tone="error">error</Badge>`}
       >
         {TONES.map(tone => (
           <Badge key={tone} tone={tone}>
@@ -32,9 +37,13 @@ export default function BadgePage() {
         title="Variant"
         description="Soft is the tint and the default. Solid is for the badge that has to carry across a busy row, on the text colour measured to pass on that fill. Outline puts no fill on the page, which is what a dense list of them wants."
         stack
-        code={`<Badge tone="error">Blocked</Badge>
-<Badge tone="error" variant="solid">Blocked</Badge>
-<Badge tone="error" variant="outline">Blocked</Badge>`}
+        code={`{(['soft', 'solid', 'outline'] as const).map(variant =>
+  TONES.map(tone => (
+    <Badge key={tone} tone={tone} variant={variant}>
+      {tone}
+    </Badge>
+  ))
+)}`}
       >
         {(['soft', 'solid', 'outline'] as const).map(variant => (
           <div key={variant} className={css.controlRow}>

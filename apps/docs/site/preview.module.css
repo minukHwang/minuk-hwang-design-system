@@ -140,6 +140,7 @@
   border-collapse: collapse;
 }
 
+/* Four columns: name, type, default, notes. */
 .table th:nth-child(1),
 .table td:nth-child(1) {
   width: 18%;
@@ -153,6 +154,17 @@
 .table th:nth-child(3),
 .table td:nth-child(3) {
   width: 14%;
+}
+
+/* Two columns, so the name takes what a compound part's name needs. */
+.partsTable th:nth-child(1),
+.partsTable td:nth-child(1) {
+  width: 30%;
+}
+
+.partsTable th:nth-child(2),
+.partsTable td:nth-child(2) {
+  width: auto;
 }
 
 /* Its own surface, so the header reads as a header without a heavier rule. */
@@ -222,33 +234,4 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   white-space: nowrap;
-}
-
-/* ── parts ──────────────────────────────────────────────────── */
-
-.parts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-}
-
-.parts li {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: var(--spacing-16);
-  align-items: baseline;
-}
-
-.parts code {
-  font-size: var(--font-size-13);
-}
-
-@media (max-width: 640px) {
-  .parts li {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-2);
-  }
 }

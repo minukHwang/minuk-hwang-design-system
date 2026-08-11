@@ -154,19 +154,36 @@ export const PropsTable = ({ rows }: { rows: PropRow[] }) => (
 /**
  * The parts of a compound component, and what each is responsible for.
  *
- * Separate from the props table because the question a reader has about a
- * compound component is which pieces exist and how they nest, not which
- * attributes each accepts.
+ * Its own list rather than a row in the props table, because the question a
+ * reader has about a compound component is which pieces exist and how they nest,
+ * not which attributes each accepts. It takes the same frame as that table, so
+ * two questions about one component do not look like two kinds of reference.
+ *
+ * A two-column grid before, with a fixed 200px first column — which stretched
+ * each name's chip to that width, giving five boxes with a word at the left edge
+ * of each and empty space after it. A chip should be the size of what it holds.
  */
 export const PartsList = ({ parts }: { parts: { name: string; description: string }[] }) => (
-  <Text as="ul" size={3} color="assistive" className={css.parts}>
-    {parts.map(part => (
-      <li key={part.name}>
-        <code>{part.name}</code>
-        <span>{part.description}</span>
-      </li>
-    ))}
-  </Text>
+  <div className={css.tableScroll}>
+    <Text as="table" size={3} color="assistive" className={`${css.table} ${css.partsTable}`}>
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>What it is</th>
+        </tr>
+      </thead>
+      <tbody>
+        {parts.map(part => (
+          <tr key={part.name}>
+            <td>
+              <code className={css.propName}>{part.name}</code>
+            </td>
+            <td>{part.description}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Text>
+  </div>
 );
 
 /**

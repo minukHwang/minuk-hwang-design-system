@@ -43,7 +43,14 @@ export default function ChipPage() {
       <Preview
         title="Removable"
         description="Use onRemove to add a dismiss control inside the chip."
-        code={`<Chip onRemove={() => remove(tag)}>{tag}</Chip>`}
+        code={`{tags.map(tag => (
+  <Chip key={tag} selected onRemove={() => remove(tag)}>
+    {tag}
+  </Chip>
+))}
+
+{/* when the last one goes */}
+<Chip onClick={() => reset()}>Reset</Chip>`}
       >
         {tags.length === 0 ? (
           <Chip onClick={() => setTags(['Korean', 'Tokens', 'Radix'])}>Reset</Chip>
@@ -65,7 +72,10 @@ export default function ChipPage() {
       <Preview
         title="Size"
         description="Two heights, to sit beside small or medium controls."
-        code={`<Chip size="s">Small</Chip>`}
+        code={`<Chip size="s">Small</Chip>
+<Chip size="m">Medium</Chip>
+<Chip size="l">Large</Chip>
+<Chip disabled>Disabled</Chip>`}
       >
         <Chip size="s">Small</Chip>
         <Chip size="m">Medium</Chip>
