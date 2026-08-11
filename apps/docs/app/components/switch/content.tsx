@@ -15,9 +15,12 @@ export default function SwitchPage() {
     >
       <Preview
         title="State"
-        description="Give it a label as children, or use it bare inside a row that already has one."
+        description="On, off, and either of those with disabled."
         stack
-        code={`<Switch defaultChecked>Publish provenance</Switch>`}
+        code={`<Switch defaultChecked>Publish provenance</Switch>
+<Switch>Dry run</Switch>
+<Switch disabled>Two-factor required</Switch>
+<Switch disabled defaultChecked>Signed commits enforced</Switch>`}
       >
         <Switch defaultChecked>Publish provenance</Switch>
         <Switch>Dry run</Switch>
@@ -25,6 +28,17 @@ export default function SwitchPage() {
         <Switch disabled defaultChecked>
           Signed commits enforced
         </Switch>
+      </Preview>
+
+      <Preview
+        title="Label"
+        description="Children put the label at the start of the row and the track at the end, filling the width. Omit them for the track alone, inline, when something else does the labelling."
+        stack
+        code={`<Switch defaultChecked>Publish provenance</Switch>
+<Switch defaultChecked />`}
+      >
+        <Switch defaultChecked>Publish provenance</Switch>
+        <Switch defaultChecked />
       </Preview>
 
       <Callout tone="warning">
@@ -38,13 +52,22 @@ export default function SwitchPage() {
           rows={[
             { name: 'checked', type: 'boolean', description: 'Controlled state.' },
             { name: 'defaultChecked', type: 'boolean', description: 'Uncontrolled initial state.' },
-            { name: 'onCheckedChange', type: '(checked: boolean) => void', description: '' },
+            {
+              name: 'onCheckedChange',
+              type: '(checked: boolean) => void',
+              description: 'Fires on every flip. This is where the change is applied.',
+            },
             {
               name: 'children',
               type: 'ReactNode',
               description: 'Label text. Omit to render the track alone.',
             },
-            { name: 'disabled', type: 'boolean', default: 'false', description: '' },
+            {
+              name: 'disabled',
+              type: 'boolean',
+              default: 'false',
+              description: 'Blocks the flip and dims the track, in either state.',
+            },
           ]}
         />
       </Section>

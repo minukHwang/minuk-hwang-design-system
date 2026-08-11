@@ -26,10 +26,26 @@ export default function CheckboxPage() {
         stack
         code={`<Checkbox
   checked={all ? true : some ? 'indeterminate' : false}
-  onCheckedChange={…}
+  onCheckedChange={() => setChecked(all ? [] : CHILDREN)}
 >
   Regenerate all scales
-</Checkbox>`}
+</Checkbox>
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingLeft: 28 }}>
+  {CHILDREN.map(name => (
+    <Checkbox
+      key={name}
+      checked={checked.includes(name)}
+      onCheckedChange={value =>
+        setChecked(current =>
+          value ? [...current, name] : current.filter(n => n !== name)
+        )
+      }
+    >
+      {name}
+    </Checkbox>
+  ))}
+</div>`}
       >
         <Checkbox
           checked={all ? true : some ? 'indeterminate' : false}
@@ -62,9 +78,12 @@ export default function CheckboxPage() {
 
       <Preview
         title="State"
-        description="Given children it renders the row and the label association; without them, the box alone."
+        description="On, off, and either of those with disabled."
         stack
-        code={`<Checkbox disabled>Sign with GPG</Checkbox>`}
+        code={`<Checkbox defaultChecked>Run tests before publishing</Checkbox>
+<Checkbox>Include prerelease tags</Checkbox>
+<Checkbox disabled>Sign with GPG</Checkbox>
+<Checkbox disabled defaultChecked>Publish provenance</Checkbox>`}
       >
         <Checkbox defaultChecked>Run tests before publishing</Checkbox>
         <Checkbox>Include prerelease tags</Checkbox>
@@ -72,6 +91,17 @@ export default function CheckboxPage() {
         <Checkbox disabled defaultChecked>
           Publish provenance
         </Checkbox>
+      </Preview>
+
+      <Preview
+        title="Label"
+        description="Children give the box a label and the association between them. Omit them for the box alone, when something else does the labelling."
+        stack
+        code={`<Checkbox defaultChecked>Run tests before publishing</Checkbox>
+<Checkbox defaultChecked />`}
+      >
+        <Checkbox defaultChecked>Run tests before publishing</Checkbox>
+        <Checkbox defaultChecked />
       </Preview>
 
       <Section title="Props">
@@ -86,14 +116,19 @@ export default function CheckboxPage() {
             {
               name: 'onCheckedChange',
               type: `(checked: boolean | 'indeterminate') => void`,
-              description: '',
+              description: `Fires on every tick. Clicking a mixed box emits true, never 'indeterminate'.`,
             },
             {
               name: 'children',
               type: 'ReactNode',
               description: 'Label text. Omit to render the box alone.',
             },
-            { name: 'disabled', type: 'boolean', default: 'false', description: '' },
+            {
+              name: 'disabled',
+              type: 'boolean',
+              default: 'false',
+              description: 'Blocks the tick and dims the box, in any state.',
+            },
           ]}
         />
       </Section>

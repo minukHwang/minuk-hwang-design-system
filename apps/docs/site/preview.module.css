@@ -140,10 +140,17 @@
   border-collapse: collapse;
 }
 
-/* Four columns: name, type, default, notes. */
+/*
+ * Four columns: name, type, default, notes.
+ *
+ * 24% rather than 18%. A compound component names its props through the part
+ * that takes them — `Root.onValueChange` is eighteen characters of mono — and
+ * at 18% that ran past the column and printed on top of the type chip beside
+ * it. The width comes off Notes, which is prose and wraps.
+ */
 .table th:nth-child(1),
 .table td:nth-child(1) {
-  width: 18%;
+  width: 24%;
 }
 
 .table th:nth-child(2),
@@ -208,9 +215,21 @@
  * `currentColor` — so setting the colour here is all it takes for the name's
  * chip to arrive in the accent and the type's in the grey around it.
  */
+/*
+ * `nowrap` was the whole bug. A name that did not fit did not wrap and did not
+ * clip either — it drew straight over the next column, so `Root.onValueChange`
+ * and its type chip printed on top of each other.
+ *
+ * `anywhere` rather than `normal`, because a prop name has no spaces to break
+ * at. It only breaks when the column genuinely cannot hold the name, which the
+ * width above now covers for everything this system ships. `clone` keeps the
+ * chip closed on both lines if it ever does.
+ */
 .propName {
   color: var(--accent-800);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /*

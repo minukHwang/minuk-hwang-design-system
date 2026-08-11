@@ -14,7 +14,6 @@ import { Input } from '@minuk-hwang-design-system/components-react/input';
 import { Select } from '@minuk-hwang-design-system/components-react/select';
 import { Separator } from '@minuk-hwang-design-system/components-react/separator';
 import { Switch } from '@minuk-hwang-design-system/components-react/switch';
-import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
 import { Page } from '../../site/Page';
@@ -141,12 +140,7 @@ const Form = () => (
 
         <div className={css.checks}>
           <Checkbox defaultChecked>Ship a changelog</Checkbox>
-          <div className={css.row}>
-            <Switch defaultChecked aria-labelledby="notify" />
-            <Text as="span" id="notify" size={4}>
-              Notify watchers
-            </Text>
-          </div>
+          <Switch defaultChecked>Notify watchers</Switch>
         </div>
 
         <Separator />

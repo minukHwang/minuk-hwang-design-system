@@ -19,7 +19,7 @@ export default function RadioGroupPage() {
         stack
         code={`<RadioGroup.Root defaultValue="minor">
   <RadioGroup.Item value="patch">Patch: bug fixes only</RadioGroup.Item>
-  <RadioGroup.Item value="minor">Minor: new tokens</RadioGroup.Item>
+  <RadioGroup.Item value="minor">Minor: new tokens, nothing removed</RadioGroup.Item>
   <RadioGroup.Item value="major">Major: a token was renamed</RadioGroup.Item>
 </RadioGroup.Root>`}
       >
@@ -34,7 +34,16 @@ export default function RadioGroupPage() {
         title="Disabled"
         description="Disable the root for the whole group, or one item on its own."
         stack
-        code={`<RadioGroup.Item value="major" disabled>…</RadioGroup.Item>`}
+        code={`<RadioGroup.Root defaultValue="patch">
+  <RadioGroup.Item value="patch">Patch</RadioGroup.Item>
+  <RadioGroup.Item value="minor">Minor</RadioGroup.Item>
+  <RadioGroup.Item value="major" disabled>Major: needs a maintainer</RadioGroup.Item>
+</RadioGroup.Root>
+
+<RadioGroup.Root defaultValue="minor" disabled>
+  <RadioGroup.Item value="minor">Minor</RadioGroup.Item>
+  <RadioGroup.Item value="major">Major</RadioGroup.Item>
+</RadioGroup.Root>`}
       >
         <RadioGroup.Root defaultValue="patch">
           <RadioGroup.Item value="patch">Patch</RadioGroup.Item>
@@ -42,6 +51,10 @@ export default function RadioGroupPage() {
           <RadioGroup.Item value="major" disabled>
             Major: needs a maintainer
           </RadioGroup.Item>
+        </RadioGroup.Root>
+        <RadioGroup.Root defaultValue="minor" disabled>
+          <RadioGroup.Item value="minor">Minor</RadioGroup.Item>
+          <RadioGroup.Item value="major">Major</RadioGroup.Item>
         </RadioGroup.Root>
       </Preview>
 
@@ -67,8 +80,24 @@ export default function RadioGroupPage() {
               type: 'string',
               description: 'Uncontrolled initial selection.',
             },
-            { name: 'Root.onValueChange', type: '(value: string) => void', description: '' },
+            {
+              name: 'Root.onValueChange',
+              type: '(value: string) => void',
+              description: "Fires with the chosen item's value.",
+            },
+            {
+              name: 'Root.disabled',
+              type: 'boolean',
+              default: 'false',
+              description: 'Disables every option in the group.',
+            },
             { name: 'Item.value', type: 'string', description: 'What this option is worth.' },
+            {
+              name: 'Item.disabled',
+              type: 'boolean',
+              default: 'false',
+              description: 'Disables one option. The arrow keys skip it.',
+            },
           ]}
         />
       </Section>
