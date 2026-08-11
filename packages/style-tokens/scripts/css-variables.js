@@ -29,6 +29,8 @@ const renderGroup = (groupName, group, indent = '\t') =>
 /** Renders every group in a theme's scale set. */
 const renderTheme = (scales, indent = '\t') =>
   Object.entries(scales)
+    // `text` is emitted as ramp pointers instead, so it follows `data-neutral`.
+    .filter(([groupName]) => groupName !== 'text')
     .map(([groupName, group]) => renderGroup(groupName, group, indent))
     .join('\n\n');
 
@@ -74,8 +76,91 @@ const accentRamp = (hue, indent = '\t') =>
     `${indent}--accent-on-solid: var(--on-solid-${hue});`,
   ].join('\n');
 
+/**
+ * Every semantic token whose value is read off the accent ramp.
+ *
+ * These have to be repeated in each hue's block, and that is not a nicety. A
+ * custom property's `var()` references are substituted where the property is
+ * declared, not where it is used — so `--accent-normal: var(--accent-500)`,
+ * declared once on `html`, resolves against the accent `html` has and hands
+ * every descendant that finished colour. A nested block that changes
+ * `--accent-500` changes nothing the components read, because they read
+ * `--accent-normal`, and that was settled two elements up.
+ *
+ * Collected by looking for the reference rather than by listing the names, so a
+ * semantic token added later cannot quietly opt out of nesting.
+ */
+const accentDerived = (indent = '\t') =>
+  Object.entries(theme.vars.color.$semantic)
+    .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group, indent))
+    .join('\n')
+    .split('\n')
+    .filter(line => /var\(--accent-/.test(line))
+    .join('\n');
+
 const accentBlocks = () =>
-  theme.accentColors.map(hue => `[data-accent='${hue}'] {\n${accentRamp(hue)}\n}`).join('\n\n');
+  theme.accentColors
+    .map(hue => `[data-accent='${hue}'] {\n${accentRamp(hue)}\n${accentDerived()}\n}`)
+    .join('\n\n');
+
+/**
+ * The neutral ramp, and one block per family that can replace it.
+ *
+ * `--neutral-*` is a pointer, not a family — which is why the pure grey is
+ * called `mono`. Written the other way the selected block would read
+ * `--neutral-10: var(--neutral-10)`, a cycle the browser throws away.
+ */
+const neutralRamp = (family, indent = '\t') =>
+  theme.neutralSteps
+    .map(step => `${indent}--neutral-${step}: var(--${family}-${step});`)
+    .join('\n');
+
+/**
+ * The surfaces and borders that resolve through the neutral ramp, repeated in
+ * each family's block for the reason the accent's are: a `var()` inside a custom
+ * property is substituted where that property is declared, so a semantic token
+ * defined once on `html` is already the grey `html` chose.
+ */
+const neutralDerived = (indent = '\t') =>
+  Object.entries(theme.vars.color.$semantic)
+    .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group, indent))
+    .join('\n')
+    .split('\n')
+    .filter(line => /var\(--neutral-/.test(line))
+    .join('\n');
+
+const neutralBlocks = () =>
+  theme.neutralColors
+    .map(
+      family =>
+        `[data-neutral='${family}'] {\n${neutralRamp(family)}\n${textRamp()}\n${neutralDerived()}\n}`
+    )
+    .join('\n\n');
+
+/**
+ * The text greys, expressed as steps on the neutral ramp.
+ *
+ * They were authored by hand, and measuring them showed they had been picked off
+ * that ramp anyway: in the dark theme all four are the mono step exactly, and in
+ * the light theme two of them are. So they were steps written out as literals,
+ * which is the one form that cannot follow `data-neutral` — a page on `slate`
+ * had slate panels and borders around pure grey body copy.
+ *
+ * Two light values move by being written this way. `strong` was #000000 and
+ * becomes the 990 step, and `assistive` had been nudged a shade darker than 600
+ * to clear 4.5:1. Both still measure well above it, at 18.3:1 and 5.4:1 on the
+ * canvas.
+ *
+ * `inverse` is not here. It is white on a filled surface, and white is white.
+ */
+const TEXT_STEPS = { normal: 950, assistive: 600, alternative: 800, strong: 990 };
+
+const textRamp = (indent = '\t') =>
+  Object.entries(TEXT_STEPS)
+    .map(([role, step]) => `${indent}--text-${role}: var(--neutral-${step});`)
+    .join('\n');
+
+const PILL = theme.borderRadiusValues.full;
 
 /**
  * Radius, as a value multiplied by a factor.
@@ -84,7 +169,11 @@ const accentBlocks = () =>
  * zero times anything is zero, and a pill is not a measurement the factor can
  * scale — 999px times 2 is still a pill. `full` reads a property of its own so
  * that `radius="none"` can square it, which is what asking for no radius means
- * even on an avatar.
+ * even on a chip.
+ *
+ * `half` goes through the multiplication like any other step, because a
+ * percentage is a measurement: 50% × 0.5 is a rounded square and 50% × 1.5 is
+ * clamped back to a circle, which is the ladder a square box wants.
  *
  * Named `--border-radius-factor` rather than `--radius-factor` to stay out of
  * Tailwind's `--radius-*` namespace, where it would have generated a
@@ -99,21 +188,48 @@ const renderRadius = (indent = '\t') =>
     })
     .join('\n');
 
+/**
+ * The two pill flags, which point opposite ways.
+ *
+ * `--border-radius-pill` is a pill on every scale but `none`; components that
+ * are pill-shaped by nature read it. `--border-radius-pill-full` is zero on
+ * every scale but `full`, and components that should go pill-shaped only when
+ * asked read it through `max()`, so the step wins until it doesn't.
+ */
+const pillFlags = (scale, indent = '\t') => [
+  `${indent}--border-radius-pill: ${scale === 'none' ? '0rem' : PILL};`,
+  `${indent}--border-radius-pill-full: ${scale === 'full' ? PILL : '0rem'};`,
+];
+
 const radiusDefaults = indent =>
   [
     `${indent}--border-radius-factor: ${theme.radiusFactors[theme.defaultRadiusScale]};`,
-    `${indent}--border-radius-pill: ${theme.borderRadiusValues.full};`,
+    ...pillFlags(theme.defaultRadiusScale, indent),
   ].join('\n');
 
+/**
+ * A scale's block carries the whole ladder, not just the factor it multiplies.
+ *
+ * For the same reason the accent blocks repeat their semantic tokens. Each step
+ * is `calc(0.5rem * var(--border-radius-factor))`, and that multiplication
+ * happens where the step is declared — so a ladder declared only on `html` is a
+ * ladder already multiplied by the factor `html` had. Descendants inherit the
+ * answer, not the sum, and a nested `<Theme radius>` moved a number nothing
+ * would read again.
+ *
+ * It cost fifty declarations to fix, which is what the whole thing weighs
+ * gzipped once ten of them repeat five times over.
+ */
 const radiusBlocks = () =>
   theme.radiusScales
-    .map(scale => {
-      const lines = [`\t--border-radius-factor: ${theme.radiusFactors[scale]};`];
-      // A pill is the one corner the factor cannot flatten, so `none` says so.
-      if (scale === 'none') lines.push('\t--border-radius-pill: 0rem;');
-      else lines.push(`\t--border-radius-pill: ${theme.borderRadiusValues.full};`);
-      return `[data-radius='${scale}'] {\n${lines.join('\n')}\n}`;
-    })
+    .map(
+      scale =>
+        `[data-radius='${scale}'] {\n${[
+          `\t--border-radius-factor: ${theme.radiusFactors[scale]};`,
+          ...pillFlags(scale),
+          renderRadius(),
+        ].join('\n')}\n}`
+    )
     .join('\n\n');
 
 /**
@@ -173,6 +289,8 @@ export const generateCssVariables = () => {
     renderTheme($static.light),
     absolute,
     accentRamp(theme.defaultAccentColor),
+    neutralRamp(theme.defaultNeutralColor),
+    textRamp(),
     radiusDefaults('\t'),
     renderRadius(),
     semantic,
@@ -200,7 +318,7 @@ export const generateCssVariables = () => {
  */
 export const cssVariableBlocks = () => {
   const { light, dark, darkClass, lightClass } = generateCssVariables();
-  return [light, dark, darkClass, lightClass, accentBlocks(), radiusBlocks()];
+  return [light, dark, darkClass, lightClass, accentBlocks(), neutralBlocks(), radiusBlocks()];
 };
 
 /** Webfonts the token set names. Bare specifiers, resolved by the consumer's bundler. */

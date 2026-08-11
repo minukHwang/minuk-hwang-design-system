@@ -223,20 +223,20 @@ export const orange = {
 
 /* Neutrals, ordered by how much blue they carry. */
 
-export const neutral = {
-  10: 'var(--neutral-10)',
-  50: 'var(--neutral-50)',
-  100: 'var(--neutral-100)',
-  200: 'var(--neutral-200)',
-  300: 'var(--neutral-300)',
-  400: 'var(--neutral-400)',
-  500: 'var(--neutral-500)',
-  600: 'var(--neutral-600)',
-  700: 'var(--neutral-700)',
-  800: 'var(--neutral-800)',
-  900: 'var(--neutral-900)',
-  950: 'var(--neutral-950)',
-  990: 'var(--neutral-990)',
+export const mono = {
+  10: 'var(--mono-10)',
+  50: 'var(--mono-50)',
+  100: 'var(--mono-100)',
+  200: 'var(--mono-200)',
+  300: 'var(--mono-300)',
+  400: 'var(--mono-400)',
+  500: 'var(--mono-500)',
+  600: 'var(--mono-600)',
+  700: 'var(--mono-700)',
+  800: 'var(--mono-800)',
+  900: 'var(--mono-900)',
+  950: 'var(--mono-950)',
+  990: 'var(--mono-990)',
 };
 export const gray = {
   10: 'var(--gray-10)',

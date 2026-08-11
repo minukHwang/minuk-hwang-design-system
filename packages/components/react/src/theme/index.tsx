@@ -1,4 +1,8 @@
-import type { AccentColor, RadiusScale } from '@minuk-hwang-design-system/style-tokens';
+import type {
+  AccentColor,
+  NeutralColor,
+  RadiusScale,
+} from '@minuk-hwang-design-system/style-tokens';
 import clsx from 'clsx';
 import * as React from 'react';
 
@@ -10,7 +14,7 @@ import * as css from './styles.css';
  * ============================================
  */
 
-export type { AccentColor, RadiusScale };
+export type { AccentColor, NeutralColor, RadiusScale };
 
 export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -20,6 +24,14 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
    * it, so this cannot quietly put white on yellow.
    */
   accentColor?: AccentColor;
+  /**
+   * Which grey family the surfaces and borders are drawn from.
+   *
+   * `mono` is grey with no hue in it; `gray` and `slate` lean progressively
+   * toward blue. Text does not move with this — those values answer to contrast
+   * against the surfaces rather than to the family they sit on.
+   */
+  neutralColor?: NeutralColor;
   /**
    * How round every corner in the system is.
    *
@@ -65,10 +77,18 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
  * and putting them on `<html>` by hand works identically. It exists so that the
  * set of legal values is a type rather than something to look up.
  */
-export const Theme = ({ accentColor, radius, className, children, ...props }: ThemeProps) => (
+export const Theme = ({
+  accentColor,
+  neutralColor,
+  radius,
+  className,
+  children,
+  ...props
+}: ThemeProps) => (
   <div
     {...props}
     data-accent={accentColor}
+    data-neutral={neutralColor}
     data-radius={radius}
     className={clsx(css.root, className)}
   >

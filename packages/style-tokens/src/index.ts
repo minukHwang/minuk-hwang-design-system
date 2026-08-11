@@ -11,8 +11,12 @@ export * as classes from './classes';
 export { headingScale, textScale, headingSizeForLevel } from './scale';
 export type { HeadingSize, HeadingLevel, TextSize, TypographyWeight } from './scale';
 
-/* Radius literals, kept out of `vars` so the generator does not self-reference. */
-export { borderRadiusValues } from './variables/radius';
+/*
+ * Radius literals, kept out of `vars` so the generator does not self-reference,
+ * and the pill helper beside them because it is a function — anything left in
+ * `vars` is walked and emitted as a custom property.
+ */
+export { borderRadiusValues, pillWhenFull } from './variables/radius';
 
 /*
  * What white and black measure against each solid fill. Data about the colours
@@ -27,8 +31,11 @@ export {
   accentColors,
   accentSteps,
   defaultAccentColor,
+  neutralColors,
+  defaultNeutralColor,
+  neutralSteps,
   radiusScales,
   radiusFactors,
   defaultRadiusScale,
 } from './theme';
-export type { AccentColor, RadiusScale } from './theme';
+export type { AccentColor, NeutralColor, RadiusScale } from './theme';

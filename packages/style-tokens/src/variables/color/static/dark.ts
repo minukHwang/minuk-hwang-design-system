@@ -225,7 +225,7 @@ export const orange = {
 
 /* Neutrals, ordered by how much blue they carry. */
 
-export const neutral = {
+export const mono = {
   990: '#ededed',
   950: '#e3e3e3',
   900: '#d9d9d9',

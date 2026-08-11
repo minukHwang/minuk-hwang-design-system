@@ -11,10 +11,26 @@
  * variant" of their surface.
  */
 
-import { accentSteps } from '../../theme';
+import { accentSteps, neutralSteps } from '../../theme';
 
 import { color, dim } from './absolute';
 import * as palette from './palette';
+
+/**
+ * The neutral ramp, on the same indirection as the accent.
+ *
+ * `--neutral-*` is not a family. It is whichever of `mono`, `gray` and `slate`
+ * the document is currently using, and `data-neutral` on an ancestor is what
+ * chooses. Surfaces and borders read this rather than a family directly, so a
+ * product that wants its greys to lean blue says so once.
+ *
+ * Text is deliberately not here. Those values are picked for contrast against
+ * the surfaces rather than sampled off the same ramp, and a neutral that shifted
+ * the body copy with the panels would be trading legibility for a tint.
+ */
+const neutralScale = Object.fromEntries(
+  neutralSteps.map(step => [step, `var(--neutral-${step})`])
+) as typeof palette.mono;
 
 /*
  * ============================================
@@ -37,13 +53,13 @@ export const surface = {
    *
    * Everything below is a surface a component paints *on top of* this one.
    */
-  canvas: palette.neutral[10],
+  canvas: neutralScale[10],
   /** Resting state of an interactive surface. */
-  default: palette.neutral[50],
-  hover: palette.neutral[100],
-  pressed: palette.neutral[200],
+  default: neutralScale[50],
+  hover: neutralScale[100],
+  pressed: neutralScale[200],
   /** Selected or otherwise held-active, distinct from a transient press. */
-  selected: palette.neutral[200],
+  selected: neutralScale[200],
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
 };
@@ -103,7 +119,6 @@ const accentScale = Object.fromEntries(
 ) as typeof palette.blue;
 
 export const accent = buildRamp(accentScale, 'var(--accent-on-solid)', 700);
-
 /*
  * ============================================
  * Borders
@@ -112,11 +127,11 @@ export const accent = buildRamp(accentScale, 'var(--accent-on-solid)', 700);
 
 export const border = {
   /** Dividers and other separators between non-interactive content. */
-  subtle: palette.neutral[100],
+  subtle: neutralScale[100],
   /** Default outline for inputs, cards and similar containers. */
-  normal: palette.neutral[200],
+  normal: neutralScale[200],
   /** Hovered or selected containers. */
-  strong: palette.neutral[400],
+  strong: neutralScale[400],
   /**
    * Keyboard focus ring. Kept separate because it carries an accessibility
    * requirement the others do not: 3:1 against whatever sits next to it.
