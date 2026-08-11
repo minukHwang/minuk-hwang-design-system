@@ -160,12 +160,20 @@ input[type='search']::-webkit-search-results-decoration {
   -moz-appearance: none;
 }
 
+/*
+ * The appearance reset stays; the box-sizing that used to travel with it does
+ * not.
+ *
+ * `content-box` here came from the reset this file grew out of, and it made
+ * `input[type="search"]` the one element in the system outside the `border-box`
+ * rule at the top. Every control sets a fixed height and pads inside it, so a
+ * search field added its padding to that height instead and came out taller
+ * than the button beside it. Nothing on the documentation site uses the type,
+ * which is the only reason it went unnoticed.
+ */
 input[type='search'] {
   -webkit-appearance: none;
   -moz-appearance: none;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 input {
