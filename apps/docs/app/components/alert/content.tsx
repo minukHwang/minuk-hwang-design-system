@@ -37,13 +37,15 @@ export default function AlertPage() {
         title="Tone"
         description="Use tone to say what kind of message it is. Alert.Icon picks its own glyph from it, so the tone is written once."
         stack
-        code={`<Alert.Root tone="warning">
-  <Alert.Icon />
-  <Alert.Body>
-    <Alert.Title>Token nearly expired</Alert.Title>
-    <Alert.Description>Rotate it before the next release.</Alert.Description>
-  </Alert.Body>
-</Alert.Root>`}
+        code={`{TONES.map(([tone, title, description]) => (
+  <Alert.Root key={tone} tone={tone}>
+    <Alert.Icon />
+    <Alert.Body>
+      <Alert.Title>{title}</Alert.Title>
+      <Alert.Description>{description}</Alert.Description>
+    </Alert.Body>
+  </Alert.Root>
+))}`}
       >
         {TONES.map(([tone, title, description]) => (
           <Alert.Root key={tone} tone={tone}>
@@ -58,13 +60,22 @@ export default function AlertPage() {
 
       <Preview
         title="With an action"
-        description="Anything placed after Alert.Body is pushed to the far edge and centred against the block."
+        description="Anything placed after Alert.Body is pushed to the far edge and centred against the block. A button there takes the alert's tone rather than the document's accent."
         stack
         code={`<Alert.Root tone="neutral">
   <Alert.Icon name="info" />
   <Alert.Body>
     <Alert.Description>Nothing to publish: the working tree is clean.</Alert.Description>
   </Alert.Body>
+</Alert.Root>
+
+<Alert.Root tone="error">
+  <Alert.Icon />
+  <Alert.Body>
+    <Alert.Title>Two packages need rebuilding</Alert.Title>
+    <Alert.Description>They depend on this one at workspace:^.</Alert.Description>
+  </Alert.Body>
+  <Button size="s">Rebuild</Button>
 </Alert.Root>`}
       >
         <Alert.Root tone="neutral">
@@ -79,9 +90,7 @@ export default function AlertPage() {
             <Alert.Title>Two packages need rebuilding</Alert.Title>
             <Alert.Description>They depend on this one at workspace:^.</Alert.Description>
           </Alert.Body>
-          <Button size="s" variant="secondary">
-            Rebuild
-          </Button>
+          <Button size="s">Rebuild</Button>
         </Alert.Root>
       </Preview>
 

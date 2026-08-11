@@ -86,6 +86,16 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button
       {...props}
       ref={ref}
       loading={loading}
+      /*
+       * The variant on the element, not only in the class name.
+       *
+       * A container that tints its own contents needs to know which buttons it
+       * may recolour: an `Alert` can safely take over a secondary or ghost
+       * button, and must not touch a filled one, whose text colour was measured
+       * against its own fill. The recipe's class is hashed, so the attribute is
+       * the only thing another stylesheet can select on.
+       */
+      data-variant={variant ?? 'primary'}
       data-leading-icon={hasLeading || undefined}
       data-trailing-icon={hasTrailing || undefined}
       className={clsx(
