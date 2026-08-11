@@ -13,7 +13,7 @@
 
 import { accentSteps, neutralSteps } from '../../theme';
 
-import { color, dim } from './absolute';
+import { dim } from './absolute';
 import * as palette from './palette';
 
 /**
@@ -157,8 +157,20 @@ export const textColor = {
    * 4.5:1 floor that applies to small text regardless of its role.
    */
   assistive: palette.text.assistive,
-  /** Text on a filled or inverted surface. */
-  inverse: color.white,
+  /**
+   * Text on an inverted surface — one painted `textColor.normal`, which a
+   * tooltip and a solid neutral badge both are.
+   *
+   * The page's own background rather than white. `inverse` was `color.white`,
+   * which inverts nothing: the surface under it follows the theme and white does
+   * not, so in dark it was #ffffff on #e3e3e3 and measured 1.28:1. Taking the
+   * canvas makes the pair actually opposite, at 16.96:1 on light and 14.35:1 on
+   * dark.
+   *
+   * Not for text on a coloured fill. Those read `onNormal`, which is measured
+   * per hue per theme.
+   */
+  inverse: surface.canvas,
   link: palette.blue[600],
 };
 
