@@ -91,8 +91,28 @@ export const thumb = style({
   },
 });
 
+/**
+ * Label first, track at the far end.
+ *
+ * The other way round is the checkbox arrangement, and it is right there: a
+ * checkbox is an item in a list being ticked, so the box leads and the label
+ * follows it. A switch is a setting, and a list of settings is read as names
+ * down the left edge with their states down the right — which is what iOS,
+ * macOS, Android and every settings page built on them do.
+ *
+ * That needs a width to push against, so a labelled switch fills its container.
+ * A bare `<Switch />` never reaches this rule and stays inline at 44px, which is
+ * the way out for a switch sitting inside a sentence.
+ *
+ * The gap survives `space-between` as a minimum, so a label long enough to fill
+ * the row still cannot touch the track. 12, the same as the checkbox row, so the
+ * two labelled controls sit the same distance from the thing they name even
+ * though only one of them shows the gap at rest.
+ */
 export const row = style({
   display: 'flex',
   alignItems: 'center',
-  gap: vars.spacing[10],
+  justifyContent: 'space-between',
+  gap: vars.spacing[12],
+  width: '100%',
 });

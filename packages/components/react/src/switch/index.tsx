@@ -51,12 +51,15 @@ export const Switch = React.forwardRef<React.ElementRef<typeof Base.Root>, Switc
 
     if (!children) return control;
 
+    // The label leads and the control follows, which is the order a settings row
+    // is read in. `htmlFor` does not care about the order, so this costs nothing
+    // in the accessibility tree — it is the visual arrangement that was wrong.
     return (
       <div className={css.row}>
-        {control}
         <Label htmlFor={controlId} className={rowLabel} data-disabled={disabled || undefined}>
           {children}
         </Label>
+        {control}
       </div>
     );
   }
