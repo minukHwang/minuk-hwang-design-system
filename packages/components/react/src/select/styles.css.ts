@@ -1,4 +1,4 @@
-import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 const { surface, border, textColor, status } = vars.color.$semantic;
@@ -27,8 +27,7 @@ const trigger = style({
   borderColor: border.normal,
   color: textColor.normal,
   backgroundColor: surface.canvas,
-  fontSize: vars.typography.fontSize[16],
-  lineHeight: vars.typography.lineHeight[21],
+  ...textMetrics(16),
   fontFamily: 'inherit',
   textAlign: 'left',
   cursor: 'pointer',

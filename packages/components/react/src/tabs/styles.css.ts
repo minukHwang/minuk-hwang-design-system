@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 
 const { border, textColor } = vars.color.$semantic;
@@ -42,8 +42,7 @@ export const trigger = style({
   border: 'none',
   color: textColor.assistive,
   backgroundColor: 'transparent',
-  fontSize: vars.typography.fontSize[15],
-  lineHeight: vars.typography.lineHeight[20],
+  ...textMetrics(15),
   fontFamily: 'inherit',
   fontWeight: vars.typography.fontWeight[600],
   whiteSpace: 'nowrap',

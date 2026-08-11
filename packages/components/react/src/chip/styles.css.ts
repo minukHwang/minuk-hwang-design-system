@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
@@ -66,18 +66,15 @@ export const chipRecipe = recipe({
     size: {
       s: {
         padding: `${vars.spacing[4]} ${vars.spacing[8]}`,
-        fontSize: vars.typography.fontSize[13],
-        lineHeight: vars.typography.lineHeight[18],
+        ...textMetrics(13),
       },
       m: {
         padding: `${vars.spacing[6]} ${vars.spacing[12]}`,
-        fontSize: vars.typography.fontSize[14],
-        lineHeight: vars.typography.lineHeight[19],
+        ...textMetrics(14),
       },
       l: {
         padding: `${vars.spacing[6]} ${vars.spacing[12]}`,
-        fontSize: vars.typography.fontSize[15],
-        lineHeight: vars.typography.lineHeight[20],
+        ...textMetrics(15),
       },
     },
   },

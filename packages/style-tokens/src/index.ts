@@ -8,8 +8,16 @@ export * as classes from './classes';
  * neither: `vars` becomes CSS custom properties and `classes` becomes utility
  * classes, and both generators walk every member of their namespace.
  */
-export { headingScale, textScale, headingSizeForLevel } from './scale';
-export type { HeadingSize, HeadingLevel, TextSize, TypographyWeight } from './scale';
+export { headingScale, textScale, headingSizeForLevel, textMetrics } from './scale';
+export type {
+  HeadingSize,
+  HeadingLevel,
+  TextSize,
+  TextPixels,
+  ReadingPixels,
+  TextMetrics,
+  TypographyWeight,
+} from './scale';
 
 /*
  * Radius literals, kept out of `vars` so the generator does not self-reference,

@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
 const { surface, border, textColor, accent } = vars.color.$semantic;
@@ -125,8 +125,7 @@ export const item = style({
   padding: `${vars.spacing[8]} ${vars.spacing[10]} ${vars.spacing[8]} ${vars.spacing[28]}`,
   borderRadius: vars.borderRadius[6],
   color: textColor.normal,
-  fontSize: vars.typography.fontSize[14],
-  lineHeight: vars.typography.lineHeight[20],
+  ...textMetrics(14),
   cursor: 'pointer',
   userSelect: 'none',
   outline: 'none',
@@ -155,8 +154,7 @@ export const itemIndicator = style({
 export const label = style({
   padding: `${vars.spacing[6]} ${vars.spacing[10]}`,
   color: textColor.assistive,
-  fontSize: vars.typography.fontSize[12],
-  lineHeight: vars.typography.lineHeight[16],
+  ...textMetrics(12),
   fontWeight: vars.typography.fontWeight[600],
 });
 

@@ -1,4 +1,4 @@
-import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 const { accent, surface, border, textColor, status } = vars.color.$semantic;
@@ -46,13 +46,11 @@ export const badgeRecipe = recipe({
     size: {
       s: {
         padding: `${vars.spacing[2]} ${vars.spacing[6]}`,
-        fontSize: vars.typography.fontSize[12],
-        lineHeight: vars.typography.lineHeight[16],
+        ...textMetrics(12),
       },
       m: {
         padding: `${vars.spacing[2]} ${vars.spacing[6]}`,
-        fontSize: vars.typography.fontSize[13],
-        lineHeight: vars.typography.lineHeight[18],
+        ...textMetrics(13),
       },
     },
 

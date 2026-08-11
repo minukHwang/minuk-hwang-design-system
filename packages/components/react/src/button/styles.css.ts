@@ -1,4 +1,4 @@
-import { vars, pillWhenFull } from '@minuk-hwang-design-system/style-tokens';
+import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { createVar, style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
@@ -131,8 +131,7 @@ export const buttonRecipe = recipe({
           [gap]: '4px',
         },
         height: '32px',
-        fontSize: vars.typography.fontSize[14],
-        lineHeight: vars.typography.lineHeight[19],
+        ...textMetrics(14),
       },
       m: {
         vars: {
@@ -142,8 +141,7 @@ export const buttonRecipe = recipe({
           [gap]: '5px',
         },
         height: '40px',
-        fontSize: vars.typography.fontSize[15],
-        lineHeight: vars.typography.lineHeight[20],
+        ...textMetrics(15),
       },
       l: {
         vars: {
@@ -153,8 +151,7 @@ export const buttonRecipe = recipe({
           [gap]: '6px',
         },
         height: '48px',
-        fontSize: vars.typography.fontSize[17],
-        lineHeight: vars.typography.lineHeight[22],
+        ...textMetrics(17),
       },
     },
 

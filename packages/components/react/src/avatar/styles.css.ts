@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 const { surface, textColor } = vars.color.$semantic;
@@ -85,9 +85,9 @@ export const fallback = style({
 
 /** Scaled with the avatar, so initials fill the circle the same way at any size. */
 export const fallbackText = styleVariants({
-  xs: { fontSize: vars.typography.fontSize[12] },
-  s: { fontSize: vars.typography.fontSize[13] },
-  m: { fontSize: vars.typography.fontSize[14] },
-  l: { fontSize: vars.typography.fontSize[16] },
-  xl: { fontSize: vars.typography.fontSize[20] },
+  xs: textMetrics(12),
+  s: textMetrics(13),
+  m: textMetrics(14),
+  l: textMetrics(16),
+  xl: textMetrics(20),
 });

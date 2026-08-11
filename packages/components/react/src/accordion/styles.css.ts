@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
 const { border, textColor, surface } = vars.color.$semantic;
@@ -35,8 +35,7 @@ export const trigger = style({
   border: 'none',
   color: textColor.normal,
   backgroundColor: 'transparent',
-  fontSize: vars.typography.fontSize[16],
-  lineHeight: vars.typography.lineHeight[24],
+  ...textMetrics(16),
   fontFamily: 'inherit',
   fontWeight: vars.typography.fontWeight[600],
   textAlign: 'left',
@@ -87,6 +86,5 @@ export const content = style({
 export const contentInner = style({
   padding: `0 ${vars.spacing[4]} ${vars.spacing[16]}`,
   color: textColor.assistive,
-  fontSize: vars.typography.fontSize[15],
-  lineHeight: vars.typography.lineHeight[22],
+  ...textMetrics(15, 'reading'),
 });

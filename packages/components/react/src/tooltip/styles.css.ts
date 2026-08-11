@@ -1,4 +1,4 @@
-import { vars } from '@minuk-hwang-design-system/style-tokens';
+import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
 const { textColor } = vars.color.$semantic;
@@ -22,8 +22,7 @@ export const content = style({
   borderRadius: vars.borderRadius[6],
   color: textColor.inverse,
   backgroundColor: textColor.normal,
-  fontSize: vars.typography.fontSize[13],
-  lineHeight: vars.typography.lineHeight[18],
+  ...textMetrics(13),
   boxShadow: vars.shadow.s,
   transformOrigin: 'var(--radix-tooltip-content-transform-origin)',
   selectors: {

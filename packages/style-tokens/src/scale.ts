@@ -1,3 +1,5 @@
+import { typography } from './variables';
+
 /**
  * The two type scales.
  *
@@ -102,3 +104,66 @@ export const textScale = [
 export type TextSize = (typeof textScale)[number]['step'];
 
 export type TypographyWeight = 'regular' | 'medium' | 'bold';
+
+/*
+ * ============================================
+ * Reading the scale from a component
+ * ============================================
+ */
+
+/** A size in the text ladder, named by its pixel value the way a component thinks of it. */
+export type TextPixels = (typeof textScale)[number]['size'];
+
+/** The four middle steps, which are the only ones with a second line height. */
+export type ReadingPixels = Extract<(typeof textScale)[number], { reading: number }>['size'];
+
+const BY_PIXELS = new Map(textScale.map(entry => [entry.size, entry]));
+
+/**
+ * A size and the line height the scale pairs with it.
+ *
+ * `Text` and `Heading` read the ladder through `classes.typography`, which also
+ * carries a weight. A control cannot use that: a button picks its own weight,
+ * and the size has to sit on the control itself so padding and icons can be
+ * measured against it. So every control reached past the ladder and wrote the
+ * two values out separately — `fontSize[14]` on one line and `lineHeight[19]`
+ * on the next.
+ *
+ * Which worked by memory, and memory is not a constraint. Of the twenty
+ * pairings in the component layer, eighteen matched the scale, `Accordion` had
+ * 16/24 and 15/22 where the scale says 21 and 20, and `Avatar` set five sizes
+ * with no line height at all. Nothing could have caught any of that, because
+ * nothing was being asked.
+ *
+ * Taking one number and returning both makes those three cases unwriteable.
+ *
+ * Keyed by pixels rather than by step: a component author is choosing a 14px
+ * label, and `textMetrics(3)` would need looking up to read. The step numbers
+ * stay where they are useful, on `Text`'s own `size` prop.
+ *
+ * @example
+ * s: { ...textMetrics(14), height: '32px' }
+ * body: { ...textMetrics(16, 'reading') }
+ */
+export type TextMetrics = { fontSize: string; lineHeight: string };
+
+export function textMetrics(size: TextPixels): TextMetrics;
+export function textMetrics(size: ReadingPixels, mode: 'reading'): TextMetrics;
+export function textMetrics(size: TextPixels, mode: 'tight' | 'reading' = 'tight'): TextMetrics {
+  const entry = BY_PIXELS.get(size);
+  if (!entry) throw new Error(`${size}px is not a step on the text scale.`);
+
+  // `reading` is absent below step 3 and above step 6, and the overloads say so
+  // — but a JavaScript caller is not bound by them, and silently handing back
+  // the tight line would be the same quiet mismatch this exists to remove.
+  if (mode === 'reading' && !('reading' in entry)) {
+    throw new Error(`${size}px has no reading line height. It is a caption size, not a paragraph.`);
+  }
+
+  const line = mode === 'reading' && 'reading' in entry ? entry.reading : entry.line;
+
+  return {
+    fontSize: typography.fontSize[entry.size],
+    lineHeight: typography.lineHeight[line],
+  };
+}
