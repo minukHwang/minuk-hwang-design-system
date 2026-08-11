@@ -1,6 +1,10 @@
 'use client';
 
-import type { AccentColor, RadiusScale } from '@minuk-hwang-design-system/style-tokens';
+import type {
+  AccentColor,
+  NeutralColor,
+  RadiusScale,
+} from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 /*
@@ -14,9 +18,11 @@ export type Appearance = 'light' | 'dark' | 'system';
 type Dials = {
   appearance: Appearance;
   accent: AccentColor;
+  neutral: NeutralColor;
   radius: RadiusScale;
   setAppearance: (value: Appearance) => void;
   setAccent: (value: AccentColor) => void;
+  setNeutral: (value: NeutralColor) => void;
   setRadius: (value: RadiusScale) => void;
 };
 
@@ -44,6 +50,7 @@ const DialsContext = React.createContext<Dials | null>(null);
 export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
   const [appearance, setAppearance] = React.useState<Appearance>('system');
   const [accent, setAccent] = React.useState<AccentColor>('blue');
+  const [neutral, setNeutral] = React.useState<NeutralColor>('mono');
   const [radius, setRadius] = React.useState<RadiusScale>('medium');
 
   // Read once on mount rather than during render: the server has no
@@ -53,10 +60,12 @@ export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
     const stored = {
       theme: window.localStorage.getItem('theme') as Appearance | null,
       accent: window.localStorage.getItem('accent') as AccentColor | null,
+      neutral: window.localStorage.getItem('neutral') as NeutralColor | null,
       radius: window.localStorage.getItem('radius') as RadiusScale | null,
     };
     if (stored.theme) setAppearance(stored.theme);
     if (stored.accent) setAccent(stored.accent);
+    if (stored.neutral) setNeutral(stored.neutral);
     if (stored.radius) setRadius(stored.radius);
   }, []);
 
@@ -82,13 +91,27 @@ export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
   }, [accent]);
 
   React.useEffect(() => {
+    document.documentElement.setAttribute('data-neutral', neutral);
+    window.localStorage.setItem('neutral', neutral);
+  }, [neutral]);
+
+  React.useEffect(() => {
     document.documentElement.setAttribute('data-radius', radius);
     window.localStorage.setItem('radius', radius);
   }, [radius]);
 
   const value = React.useMemo(
-    () => ({ appearance, accent, radius, setAppearance, setAccent, setRadius }),
-    [appearance, accent, radius]
+    () => ({
+      appearance,
+      accent,
+      neutral,
+      radius,
+      setAppearance,
+      setAccent,
+      setNeutral,
+      setRadius,
+    }),
+    [appearance, accent, neutral, radius]
   );
 
   return <DialsContext.Provider value={value}>{children}</DialsContext.Provider>;

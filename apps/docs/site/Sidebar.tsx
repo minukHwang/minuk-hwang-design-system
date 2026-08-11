@@ -9,6 +9,7 @@ import * as React from 'react';
 
 import css from './chrome.module.css';
 import { nav } from './nav';
+import { useNav } from './nav-state';
 
 /*
  * ============================================
@@ -23,7 +24,7 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
     <>
       {nav.map(section => (
         <div key={section.title} className={css.section}>
-          <Text as="div" size={1} color="assistive" className={css.sectionTitle}>
+          <Text as="div" size={1} color="accent" className={css.sectionTitle}>
             {section.title}
           </Text>
           {section.items.map(item => {
@@ -59,9 +60,10 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
   );
 };
 
-const Brand = () => (
+/** Lives in the top bar now, beside the dials, rather than above the link list. */
+export const Brand = () => (
   <Link href="/" className={css.brand}>
-    <Text as="span" size={7} weight="bold" color="strong">
+    <Text as="span" size={6} weight="bold" color="strong">
       minuk-hwang
     </Text>
     <Text as="span" size={1} color="assistive" className={css.brandNote}>
@@ -69,6 +71,33 @@ const Brand = () => (
     </Text>
   </Link>
 );
+
+/**
+ * Opens the link list on a narrow screen. Rendered in the top bar rather than
+ * beside the list it opens, so a phone gets one bar instead of two.
+ *
+ * `ghost` rather than `secondary`: it sits in a bar that already has an edge,
+ * and a second box drawn around a single icon reads as a control that is somehow
+ * more pressed than the ones beside it.
+ */
+export const MenuButton = () => {
+  const { open, setOpen } = useNav();
+
+  return (
+    <Button
+      size="s"
+      iconOnly
+      variant="ghost"
+      className={css.menuButton}
+      onClick={() => setOpen(!open)}
+      aria-expanded={open}
+      aria-controls="docs-nav"
+      aria-label={open ? 'Close navigation' : 'Open navigation'}
+    >
+      <Icon name={open ? 'close' : 'menu'} />
+    </Button>
+  );
+};
 
 /*
  * ============================================
@@ -79,9 +108,9 @@ const Brand = () => (
 /**
  * Two presentations of one list.
  *
- * Wide: a column beside the content, where the brand stays put and only the
- * links scroll. The dials are not here — they moved to the toolbar above the
- * content, where fourteen swatches have room to be a row rather than a grid.
+ * Wide: a column beside the content, holding nothing but the links. The brand
+ * and the dials both sit in the top bar, which spans the window and therefore
+ * has room for fourteen swatches in a row.
  *
  * Narrow: a bar with a disclosure, because twenty-eight links stacked above the
  * article means every visit starts by scrolling past the table of contents.
@@ -91,11 +120,11 @@ const Brand = () => (
  */
 export const Sidebar = () => {
   const pathname = usePathname();
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = useNav();
 
   // Navigating closes it. Without this the menu stays open over the page you
   // just asked for, which reads as the tap not having worked.
-  React.useEffect(() => setOpen(false), [pathname]);
+  React.useEffect(() => setOpen(false), [pathname, setOpen]);
 
   // Escape closes it, the same as every other overlay in the system.
   React.useEffect(() => {
@@ -105,7 +134,7 @@ export const Sidebar = () => {
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [open]);
+  }, [open, setOpen]);
 
   // The page behind an open menu should not scroll under it.
   React.useEffect(() => {
@@ -119,24 +148,6 @@ export const Sidebar = () => {
 
   return (
     <nav className={css.sidebar} aria-label="Documentation">
-      <div className={css.head}>
-        <Brand />
-        <div className={css.headActions}>
-          <Button
-            size="s"
-            iconOnly
-            variant="secondary"
-            className={css.menuButton}
-            onClick={() => setOpen(value => !value)}
-            aria-expanded={open}
-            aria-controls="docs-nav"
-            aria-label={open ? 'Close navigation' : 'Open navigation'}
-          >
-            <Icon name={open ? 'close' : 'menu'} size={20} />
-          </Button>
-        </div>
-      </div>
-
       <div id="docs-nav" className={css.nav} data-open={open || undefined}>
         <NavList onNavigate={() => setOpen(false)} />
       </div>

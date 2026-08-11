@@ -1,57 +1,114 @@
 /* ── shell ──────────────────────────────────────────────────── */
 
+/*
+ * One bar across the window: the brand on the left, the dials on the right.
+ *
+ * They were in two places before — the brand at the top of the sidebar, the
+ * dials in a bar inside the reading column — and the column is 780px while the
+ * dials come to around 800, so they wrapped onto a second line. Given the whole
+ * window they fit on one, and the sidebar gets to be nothing but its links.
+ */
+.topbar {
+  position: relative;
+  flex: none;
+  /* The system's own scale. Overlays sit at 1000 and up, so a dialog covers
+     this rather than the other way round. */
+  z-index: calc(var(--z-index-raised) + 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  height: var(--topbar);
+  padding: 0 var(--spacing-20);
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-canvas) 82%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+/* The disclosure and the brand travel together at the left end of the bar. */
+.topbarStart {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+/* The single light/dark toggle, which replaces the three-way group on a phone. */
+.narrowOnly {
+  display: none;
+}
+
 .shell {
+  flex: 1;
+  min-height: 0;
   display: grid;
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
-  min-height: 100vh;
 }
 
 /*
- * A flex column rather than one scrolling box, so the brand and the theme
- * toggle stay put and only the link list moves. Putting the toggle at the end
- * of a scrolling sidebar meant it was below the fold on every screen shorter
- * than the nav — a control nobody can find is a control that does not exist.
+ * Nothing but the links now. The brand and the dials moved to the bar above,
+ * which spans the window and therefore has room for both.
  */
 .sidebar {
-  position: sticky;
-  top: 0;
-  align-self: start;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 0;
   /*
    * No horizontal padding on the sidebar itself. It would sit between the
    * scrollbar and the border as a reserved empty lane, which reads as a gap
    * rather than as breathing room. The children carry their own insets instead,
    * so the scrollbar can sit against the edge where it belongs.
    */
-  padding: var(--spacing-24) 0;
-  border-right: 1px solid var(--border-subtle);
+  padding: var(--spacing-16) 0;
   background: var(--surface-canvas);
 }
 
-.head {
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  padding: 0 var(--spacing-16) var(--spacing-16);
-}
-
+/*
+ * The scrollbar is always there and only visible on hover.
+ *
+ * Hiding it by narrowing the track would reflow twenty-eight links every time
+ * the pointer crossed the sidebar. Fading the thumb instead costs no layout: the
+ * lane is reserved either way, and what changes is a colour.
+ */
 .nav {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: var(--spacing-12) var(--spacing-2) 0 var(--spacing-8);
-  border-top: 1px solid var(--border-subtle);
+  padding: var(--spacing-4) var(--spacing-2) 0 var(--spacing-8);
+  scrollbar-color: transparent transparent;
 }
 
+.nav:hover,
+.nav:focus-within {
+  scrollbar-color: var(--border-normal) transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  transition: background-color var(--duration-150) var(--easing-standard);
+}
+
+.nav:hover::-webkit-scrollbar-thumb,
+.nav:focus-within::-webkit-scrollbar-thumb {
+  background-color: var(--border-normal);
+}
+
+.nav:hover::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-strong);
+}
+
+/*
+ * A row in the bar rather than a stack in a column. The two lines sat one above
+ * the other when this was the head of the sidebar; on a 56px bar they would set
+ * the height, so they run side by side with the label after the name.
+ */
 .brand {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  padding: 0 var(--spacing-8);
+  align-items: baseline;
+  gap: var(--spacing-8);
+  flex: none;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 /*
@@ -65,6 +122,25 @@
 
 .section + .section {
   margin-top: var(--spacing-20);
+}
+
+/*
+ * The accent rather than the assistive grey. These are the only headings in the
+ * chrome, and in grey they sat at the same weight as the links under them — so
+ * twenty-eight links read as one list rather than as six groups.
+ *
+ * Step 800 rather than the 700 that `Text color="accent"` gives. In dark it is
+ * the paler of the two, which is what a label wants; in light it is the deeper,
+ * which is what the measurements want — 700 comes to 3.49:1 on the canvas when
+ * the accent is yellow, and this is 12px uppercase, so 4.5 applies. 800 is the
+ * first step that clears it on all fourteen hues in both themes.
+ *
+ * Doubled selector because `Text` writes its colour with a class of its own, and
+ * the two are otherwise a tie decided by which stylesheet the bundler emitted
+ * last.
+ */
+.sectionTitle.sectionTitle {
+  color: var(--accent-800);
 }
 
 .sectionTitle {
@@ -113,40 +189,43 @@
  * stopping short of both edges, which reads as a misaligned box rather than as
  * a bar.
  */
+/* The one scrolling region on the page. */
 .main {
   min-width: 0;
+  overflow-y: auto;
 }
 
 .content {
+  /* The tail clears the floating panel, so the last line of a page is readable
+     rather than sitting behind it. */
   padding: var(--spacing-40) var(--spacing-40) var(--spacing-64);
 }
 
 /* ── toolbar ────────────────────────────────────────────────── */
 
 /*
- * Sticky, because the point of the dials is to try a colour against whatever is
- * on screen. Reaching them means scrolling to the top, changing one, and
- * scrolling back to where you were — which is enough friction that nobody
- * compares two hues on the same component.
- *
- * Translucent rather than opaque: content passing underneath should read as
- * passing underneath. `backdrop-filter` is progressive — without it the
- * fallback is a flat surface, which is merely less pretty.
+ * The dials, as the right-hand half of the top bar. No positioning of its own —
+ * the bar is what stays on screen, and this is what sits in it.
  */
 .toolbar {
-  position: sticky;
-  top: 0;
-  /* The system's own scale. Overlays sit at 1000 and up, so a dialog covers
-     this rather than the other way round, which is what it used to do. */
-  z-index: var(--z-index-raised);
+  min-width: 0;
+}
+
+/*
+ * One row, always. It scrolls sideways rather than growing a second line,
+ * because a bar that changes height moves the whole page under it.
+ */
+.toolbarRow {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--spacing-10);
-  padding: var(--spacing-8) var(--spacing-40);
-  border-bottom: 1px solid var(--border-subtle);
-  background: color-mix(in srgb, var(--surface-canvas) 82%, transparent);
-  backdrop-filter: blur(12px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.toolbarRow::-webkit-scrollbar {
+  display: none;
 }
 
 .toolGroup {
@@ -201,6 +280,7 @@
 
 .article {
   max-width: var(--content);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-32);
@@ -233,9 +313,7 @@
 /* ── mobile disclosure ──────────────────────────────────────── */
 
 /*
- * Hidden until the sidebar stops being a sidebar. Rendering the button always
- * and hiding it here keeps one nav list in the document — two copies would be
- * two sets of links for a screen reader to walk.
+ * Hidden until the sidebar stops being a sidebar.
  *
  * Doubled selector because the element is a `Button`, and its own
  * `display: inline-flex` is a single class like this one. Ties go to whichever
@@ -261,26 +339,13 @@
    * A bar rather than a column, stuck to the top so the disclosure stays
    * reachable from anywhere on a long page.
    */
+  /*
+   * No longer a bar of its own. The disclosure moved to the top bar, so all
+   * that is left here is the list it opens — which takes no room at all until
+   * it does.
+   */
   .sidebar {
-    position: sticky;
-    top: 0;
-    /* Above the toolbar, which is `raised`; still far below any overlay. */
-    z-index: calc(var(--z-index-raised) + 1);
-    height: auto;
-    padding: var(--spacing-12) 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .head {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-16);
-    padding: 0 var(--spacing-16);
-  }
-
-  .headActions {
+    z-index: var(--z-index-raised);
     padding: 0;
   }
 
@@ -294,22 +359,32 @@
    */
   .nav {
     display: none;
-    max-height: calc(100vh - 76px);
-    padding: var(--spacing-12) var(--spacing-2) var(--spacing-8) var(--spacing-8);
-    margin-top: var(--spacing-12);
+    max-height: calc(100vh - var(--topbar));
+    padding: var(--spacing-12) var(--spacing-2) var(--spacing-12) var(--spacing-8);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--surface-canvas);
   }
 
   .nav[data-open] {
     display: block;
   }
 
+  /*
+   * Starts below the top bar rather than at the top of the window.
+   *
+   * Covering the bar dimmed it: the bar is 82% opaque with a `backdrop-filter`,
+   * so it samples and blurs whatever sits behind it, and what sat behind it was
+   * the scrim. The bar is not part of what the menu covers — its close button is
+   * the way out — so it should not be behind the veil either.
+   */
   .scrim {
     display: block;
     position: fixed;
-    inset: 0;
+    top: var(--topbar);
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: -1;
-    width: 100%;
-    height: 100vh;
     padding: 0;
     border: none;
     background: var(--surface-scrim);
@@ -321,18 +396,31 @@
   }
 
   /*
-   * Not sticky on a narrow screen. The sidebar is already a sticky bar here, and
-   * a second one under it would need to know how tall the first is — a number
-   * that changes the moment the brand wraps.
-   *
-   * The swatches scroll sideways instead of wrapping, so the bar stays one row
-   * high. Fourteen 20px circles need 336px, which no phone has.
+   * Edge to edge, because centring an 800px panel on a 390px screen centres it
+   * off both sides. It keeps its own horizontal scroll: fourteen 20px swatches
+   * need 336px before anything else, which no phone has.
    */
-  .toolbar {
-    position: static;
-    padding: var(--spacing-8) var(--spacing-20);
-    overflow-x: auto;
-    flex-wrap: nowrap;
+  .topbar {
+    gap: var(--spacing-12);
+    padding: 0 var(--spacing-12) 0 var(--spacing-16);
+  }
+
+  /*
+   * Everything but light/dark comes off the bar on a phone. Fourteen swatches
+   * and two selects on a 390px bar is a horizontal scroll inside a fixed bar —
+   * two scrolls in one gesture, and the one people want is the page. Choosing an
+   * accent is something you do at a desk with components in front of you.
+   *
+   * It has to sit here rather than in a media block of its own further up: a
+   * media query adds no specificity, so `.wideOnly` losing to `.toolGroup` was
+   * only ever a question of which came last.
+   */
+  .wideOnly {
+    display: none;
+  }
+
+  .narrowOnly.narrowOnly {
+    display: inline-flex;
   }
 
   .toolGroup {

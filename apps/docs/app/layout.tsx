@@ -3,7 +3,8 @@ import * as React from 'react';
 
 import css from '../site/chrome.module.css';
 import { DialsProvider } from '../site/dials';
-import { Sidebar } from '../site/Sidebar';
+import { NavProvider } from '../site/nav-state';
+import { Brand, MenuButton, Sidebar } from '../site/Sidebar';
 import { Toolbar } from '../site/Toolbar';
 
 import './globals.css';
@@ -80,13 +81,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <DialsProvider>
-          <div className={css.shell}>
-            <Sidebar />
-            <main className={css.main}>
+          <NavProvider>
+            <header className={css.topbar}>
+              <div className={css.topbarStart}>
+                <MenuButton />
+                <Brand />
+              </div>
               <Toolbar />
-              <div className={css.content}>{children}</div>
-            </main>
-          </div>
+            </header>
+            <div className={css.shell}>
+              <Sidebar />
+              <main className={css.main}>
+                <div className={css.content}>{children}</div>
+              </main>
+            </div>
+          </NavProvider>
         </DialsProvider>
       </body>
     </html>

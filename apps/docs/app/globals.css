@@ -10,11 +10,25 @@
 
 :root {
   --sidebar: 248px;
+  --topbar: 56px;
   --content: 780px;
 }
 
+/*
+ * The document does not scroll; the article does.
+ *
+ * With the page as the scroller the scrollbar ran the full height of the window
+ * and crossed the top bar, which is fixed — so the bar had a scrollbar beside it
+ * for a region it does not contain. Giving the body the viewport's height and
+ * letting the content column overflow puts the bar outside the scrolling area,
+ * which is what it looks like it is.
+ */
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
   background: var(--neutral-10);
   color: var(--text-color-normal);
 }
@@ -35,10 +49,37 @@ a {
   color: inherit;
 }
 
+/*
+ * Inline code, tinted from `currentColor` rather than painted a fixed grey.
+ *
+ * It was `--neutral-50`, which is a colour chosen for one surface and used on
+ * every surface. On the page it was a grey chip on a grey page — 1.12:1, close
+ * enough to invisible. Inside a `Callout`, which is `Alert` on the accent tone,
+ * it was a grey chip sitting on an accent-tinted panel, belonging to neither.
+ *
+ * Mixing the text colour into transparent makes the chip a function of wherever
+ * it lands: neutral in prose, blue in an accent callout, amber in a warning one,
+ * and it flips with the theme for free — in dark the text is the lighter of the
+ * two, so the tint lifts the chip off the surface, and in light it sinks it.
+ *
+ * The ring carries most of the definition, at twice the strength of the fill.
+ * Contrast between text and background is what a fill spends to be seen, and
+ * inline code has no contrast to spare on a tone like `warning`, whose text
+ * already measures 4.48:1 on its own surface. A ring spends none of it.
+ */
 code {
   font-family: var(--font-family-mono);
   font-size: 0.88em;
-  background: var(--neutral-50);
+  /* For the reason the code blocks turn them off: `--accent-500` is two
+     hyphens, and a face that draws them as one dash is showing a name nobody
+     can type. */
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
+  color: inherit;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent);
   padding: 1px 5px;
   border-radius: var(--border-radius-4);
 }
