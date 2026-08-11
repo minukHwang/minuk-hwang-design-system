@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky",
     "dev": "nx dev",
-    "dev:docs": "pnpm build:packages && pnpm --filter @minuk-hwang-design-system/docs dev",
+    "dev:docs": "pnpm build:packages && pnpm --parallel --filter @minuk-hwang-design-system/style-tokens --filter @minuk-hwang-design-system/base-react --filter @minuk-hwang-design-system/behavior-react --filter @minuk-hwang-design-system/components-react --filter @minuk-hwang-design-system/docs dev",
     "build:docs": "pnpm build:packages && pnpm --filter @minuk-hwang-design-system/docs build",
     "graph": "nx run-many --target=build --graph",
     "build": "nx build",

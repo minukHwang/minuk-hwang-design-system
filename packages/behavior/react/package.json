@@ -17,6 +17,7 @@
   "scripts": {
     "build": "pnpm clean && pnpm build:type && pnpm build:js",
     "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
+    "dev": "node build.js --dev --watch",
     "build:js": "node build.js",
     "build:type": "tsc --emitDeclarationOnly",
     "clean": "rimraf dist",
