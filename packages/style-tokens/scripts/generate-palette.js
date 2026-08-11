@@ -45,6 +45,54 @@ const LIGHT_LADDER = [99, 95, 90, 80, 70, 60, 50, 41, 32, 23, 15, 10, 7];
  */
 const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
 
+/*
+ * ============================================
+ * TODO: the ladders are not perceptually even
+ * ============================================
+ *
+ * Measured, not suspected. Gaps below are OKLab lightness between neighbouring
+ * steps, which is roughly how far apart two swatches look.
+ *
+ *   dark    teal   500→600  0.126    600→700  0.016     eight times apart
+ *           lime   500→600  0.182    600→700  0.024      seven
+ *           blue   500→600  0.096    600→700  0.078      even
+ *
+ * The cause is that both ladders are HSL lightness, and HSL lightness is not
+ * perceptual: at L 60 a teal is far brighter to the eye than a blue, so every
+ * hue walks the same numbers and covers a different distance. Blue comes out
+ * even because these ladders were measured off blue in the first place, which is
+ * exactly why nothing looked wrong from here.
+ *
+ * Yellow shows the same fault from both sides, because its 500 is already very
+ * light (OKLab L 0.869) and therefore near one end of whichever ladder it is on:
+ *
+ *   dark    500→600  0.029   600→700  0.022    six steps share the 0.066 above it
+ *   light    10→50   0.012    50→100  0.017    six steps share the 0.12 below it
+ *
+ * Two other things worth writing down before anyone starts:
+ *
+ * 1. Apple ships every system colour as a light/dark pair and the dark one is
+ *    brighter in all twelve — +0.009 on red, +0.021 on blue, +0.11 on cyan,
+ *    averaging +0.040 in OKLab lightness with the chroma left alone. The lift is
+ *    largest on the low-chroma hues. Our 500 is pinned identical across themes,
+ *    so the system has none of it at the one step that carries the brand.
+ *
+ * 2. Two attempts failed, both by draining the colour:
+ *      - generating as now and rewriting each step's lightness afterwards, then
+ *        clipping the old chroma into the new gamut. Cost the dark yellow 0.019
+ *        of chroma at 500 and the dark lime 0.030 at 600.
+ *      - keeping the dark 500 and lowering the light one to open the split.
+ *        Lowering an HSL lightness below 50 lowers chroma with it, so the light
+ *        theme went muddy at 0.03 of split.
+ *    Both say the same thing: lightness and chroma cannot be moved separately
+ *    while the generator is HSL. Doing this properly means generating in OKLCH,
+ *    where the two are independent up to the sRGB gamut boundary.
+ *
+ * Whatever replaces this has to keep the contrast pass honest — `onSolid` is
+ * measured per hue per theme, and five hues clear AA on white by less than a
+ * tenth of a point, so any lift to a dark fill flips them onto black.
+ */
+
 /**
  * Hues of the colours this system ships, in degrees.
  *
@@ -75,9 +123,15 @@ const HUES = {
  * The three sit where Tailwind's neutral / gray / slate sit, which is also where
  * the CSS keyword `slategray` lands. Saturation is what separates them; the hue
  * barely moves.
+ *
+ * The pure one is `mono` rather than `neutral` because `--neutral-*` is not a
+ * family, it is the pointer — whichever of these three the document is currently
+ * using, exactly as `--accent-*` is whichever hue the document is using. Naming
+ * a family the same as the pointer would make the block that selects it read
+ * `--neutral-10: var(--neutral-10)`, which is a cycle the browser discards.
  */
 const NEUTRALS = {
-  neutral: { hue: 0, saturation: 0 },
+  mono: { hue: 0, saturation: 0 },
   gray: { hue: 214, saturation: 10 },
   slate: { hue: 218, saturation: 19 },
 };
