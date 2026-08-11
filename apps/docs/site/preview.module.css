@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-12);
+  border-radius: var(--docs-radius-12);
   overflow: hidden;
 }
 
@@ -120,14 +120,39 @@
  */
 .tableScroll {
   border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-12);
+  border-radius: var(--docs-radius-12);
   overflow-x: auto;
 }
 
+/*
+ * Fixed columns, because the type column will otherwise take whatever it needs.
+ *
+ * A union like `'neutral' | 'accent' | 'info' | 'success' | 'warning' | 'error'`
+ * is one unbreakable line if you let it be, and it pushed Default and Notes off
+ * the side — where Notes, squeezed to a few characters, wrapped into a cell tall
+ * enough to leave the rest of the row empty. Shares of the width, and the type
+ * wraps at the separators instead.
+ */
 .table {
   width: 100%;
-  min-width: 560px;
+  min-width: 520px;
+  table-layout: fixed;
   border-collapse: collapse;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 18%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 32%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 14%;
 }
 
 /* Its own surface, so the header reads as a header without a heavier rule. */
@@ -173,16 +198,30 @@
  */
 .propName {
   color: var(--accent-800);
+  white-space: nowrap;
 }
 
+/*
+ * `clone` so a wrapped type keeps its chip on every line rather than opening one
+ * box at the start and closing it three lines later.
+ */
 .type {
   font-size: var(--font-size-13);
-  white-space: nowrap;
+  /*
+   * Leading for the chip, not for the text. The chip is about 18px tall and the
+   * table's own line height is 19, so two wrapped lines of a long union arrived
+   * with a pixel between the boxes and read as one block with a seam in it.
+   */
+  line-height: var(--line-height-26);
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .default {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
+  white-space: nowrap;
 }
 
 /* ── parts ──────────────────────────────────────────────────── */

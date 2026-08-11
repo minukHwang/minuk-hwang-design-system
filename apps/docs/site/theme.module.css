@@ -36,7 +36,7 @@
   height: 26px;
   padding: 0;
   border: 1px solid var(--border-normal);
-  border-radius: var(--border-radius-full);
+  border-radius: var(--docs-radius-full);
   background: var(--accent-500);
   cursor: pointer;
   transition: transform var(--duration-70) var(--easing-standard);
@@ -87,6 +87,6 @@
   gap: var(--spacing-12);
   padding: var(--spacing-16);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-12);
+  border-radius: var(--docs-radius-12);
   background: var(--surface-default);
 }

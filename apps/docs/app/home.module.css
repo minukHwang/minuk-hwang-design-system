@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-12);
+  border-radius: var(--docs-radius-12);
   overflow: hidden;
 }
 
@@ -30,7 +30,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: var(--border-radius-full);
+  border-radius: var(--docs-radius-full);
   background: var(--surface-default);
   color: var(--text-color-assistive);
   font-family: var(--font-family-mono);
@@ -65,7 +65,7 @@
   gap: var(--spacing-4);
   padding: var(--spacing-14) var(--spacing-16);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-10);
+  border-radius: var(--docs-radius-10);
   background: var(--surface-canvas);
   text-decoration: none;
   transition:
