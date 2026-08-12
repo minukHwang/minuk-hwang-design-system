@@ -15,8 +15,8 @@ const LEVELS = [
 ] as const;
 
 const FILLS = [
-  ['subtle', 'A quiet badge or banner, and a disabled control.'],
-  ['strong', 'One step firmer, where subtle would collide with a hovered surface.'],
+  ['surface', 'A quiet badge or banner, and a disabled control.'],
+  ['subtle', 'A tonal button, and the well behind an avatar. One step firmer.'],
 ] as const;
 
 /**
@@ -76,17 +76,17 @@ export default function ElevationPage() {
       </Preview>
 
       <Preview
-        title="Fills"
-        description="Not levels. A neutral element paints itself one of these, and they move towards white in dark because a badge on a dark card is only visible if it is lighter."
+        title="The neutral tone"
+        description="Not levels. Neutral is a tone like the other five, so a grey badge and a grey button are built the way a red one is."
         stack
       >
         <div className={css.rows}>
           {FILLS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
               <Text as="span" size={2} className={css.token}>
-                fill.{name}
+                neutral.{name}
               </Text>
-              <span className={css.levelChip} style={{ background: `var(--fill-${name})` }} />
+              <span className={css.levelChip} style={{ background: `var(--neutral-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
               </Text>
@@ -201,12 +201,12 @@ export default function ElevationPage() {
       <Section title="Tokens">
         <div className={css.rows}>
           {[
-            ['background.base', 'neutral 10'],
-            ['background.raised', 'neutral 50'],
+            ['background.base', 'neutral 50 on light, neutral 10 on dark'],
+            ['background.raised', 'white on light, neutral 50 on dark'],
             ['background.overlay', 'raised, mixed 5% towards white'],
             ['background.scrim', 'dim 500, behind a modal'],
-            ['fill.subtle', 'neutral 100'],
-            ['fill.strong', 'neutral 200'],
+            ['neutral.surface', 'neutral 100'],
+            ['neutral.subtle', 'neutral 200'],
             ['state.hover', 'dim 100 on light, lighten 100 on dark'],
             ['state.pressed', 'dim 200 on light, lighten 200 on dark'],
           ].map(([name, value]) => (

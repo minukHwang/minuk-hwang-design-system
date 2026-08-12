@@ -32,6 +32,7 @@ const NEUTRALS = ['mono', 'gray', 'slate'];
 const SEMANTIC = [
   ['background', ['base', 'raised', 'overlay']],
   ['fill', ['subtle', 'strong']],
+  ['neutral', ['surface', 'subtle', 'normal', 'strong']],
   ['border', ['subtle', 'normal', 'strong', 'focus']],
   ['accent', ['surface', 'subtle', 'normal', 'strong']],
 ] as const;
@@ -71,14 +72,14 @@ const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) =
       <div className={css.contrastFill}>
         <span
           className={css.contrastHalf}
-          style={{ background: `var(--${hue}-500)`, color: '#ffffff' }}
+          style={{ background: `var(--${hue}-${measured.step})`, color: '#ffffff' }}
           data-rejected={measured.chosen === 'black' || undefined}
         >
           {hue} in white
         </span>
         <span
           className={css.contrastHalf}
-          style={{ background: `var(--${hue}-500)`, color: '#000000' }}
+          style={{ background: `var(--${hue}-${measured.step})`, color: '#000000' }}
           data-rejected={measured.chosen === 'white' || undefined}
         >
           {hue} in black
@@ -224,7 +225,7 @@ export default function ColourPage() {
 
       <Preview
         title="Semantic"
-        description="What a colour is for. Background is the level a thing sits on, fill is a neutral thing sitting on it, and each hue carries the four roles below."
+        description="What a colour is for. Background is the level a thing sits on, fill is a panel cut into it, and every tone including neutral carries the four roles below."
         stack
       >
         <div className={css.ramps}>
@@ -265,18 +266,21 @@ export default function ColourPage() {
         description="onNormal records the colour that clears AA on that fill, so no component has to decide."
         stack
       >
-        {STATUS.map(status => (
+        {[
+          ['neutral', '--neutral-normal', '--neutral-on-normal'],
+          ...STATUS.map(s => [`status.${s}`, `--status-${s}-normal`, `--status-${s}-on-normal`]),
+        ].map(([name, bg, fg]) => (
           <div
-            key={status}
+            key={name}
             style={{
               padding: '12px 16px',
               borderRadius: 8,
-              background: `var(--status-${status}-normal)`,
-              color: `var(--status-${status}-on-normal)`,
+              background: `var(${bg})`,
+              color: `var(${fg})`,
             }}
           >
             <Text as="span" size={5} weight="bold" style={{ color: 'inherit' }}>
-              status.{status}.onNormal
+              {name}.onNormal
             </Text>
           </div>
         ))}
@@ -284,11 +288,11 @@ export default function ColourPage() {
 
       <Preview
         title="White or black"
-        description={`Seven and seven: red through blue carry white, the cyan-to-orange arc needs black. Both themes measure the same, because step 500 is deliberately the same lightness in each. (Reading the ${theme} theme.)`}
+        description={`Seven and seven across the hues: red through blue carry white, the cyan-to-orange arc needs black, and both themes agree because step 500 is the same lightness in each. The three greys are measured at 950 instead, where a solid neutral fill sits, and they are the only rows that answer differently in the two themes. (Reading the ${theme} one.)`}
         stack
       >
         <div className={css.contrastList}>
-          {HUES.map(hue => (
+          {[...HUES, ...NEUTRALS].map(hue => (
             <ContrastRow key={hue} hue={hue} theme={theme} />
           ))}
         </div>

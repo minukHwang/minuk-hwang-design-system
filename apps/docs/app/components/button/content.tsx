@@ -37,11 +37,13 @@ export default function ButtonPage() {
         }
         code={`<Button variant="primary">Publish</Button>
 <Button variant="secondary">Save draft</Button>
+<Button variant="outline">Export</Button>
 <Button variant="ghost">Preview</Button>
 <Button variant="danger">Delete</Button>`}
       >
         <Button variant="primary">Publish</Button>
         <Button variant="secondary">Save draft</Button>
+        <Button variant="outline">Export</Button>
         <Button variant="ghost">Preview</Button>
         <Button variant="danger">Delete</Button>
       </Preview>
@@ -194,7 +196,7 @@ export default function ButtonPage() {
           rows={[
             {
               name: 'variant',
-              type: `'primary' | 'secondary' | 'ghost' | 'danger'`,
+              type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'`,
               default: `'primary'`,
               description: 'What the button is for, not what colour it is.',
             },
