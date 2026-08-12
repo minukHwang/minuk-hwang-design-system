@@ -11,26 +11,38 @@ import { Callout, Preview, Prose, Section } from '../site/Preview';
 
 import css from './home.module.css';
 
+/**
+ * Four packages across three layers, and the number says which layer.
+ *
+ * `base-react` and `behavior-react` share the second one, which is why two rows
+ * carry the same figure. The split between them is drawn by dependency rather
+ * than by size: `behavior-react` declares none at all, so a hook that has nothing
+ * to do with Radix does not arrive with seventeen Radix packages behind it.
+ */
 const LAYERS = [
   {
+    layer: 1,
     name: 'style-tokens',
     role: 'Values, and nothing else',
     detail:
       'Color, spacing, radius, type, shadow and motion. Ships in four forms: CSS variables, TypeScript objects, utility classes, and a Tailwind v4 theme, all generated from one source.',
   },
   {
+    layer: 2,
     name: 'behavior-react',
-    role: 'What Radix does not cover',
+    role: 'Not components, and no Radix',
     detail:
-      'Press handling for button-like elements, so a link or a div styled as a button still answers the keyboard. 137 lines; the rest of the behavior is Radix.',
+      'Press handling for button-like elements, so a link or a div styled as a button still answers the keyboard. Two hooks, 219 lines, and no dependencies at all.',
   },
   {
+    layer: 2,
     name: 'base-react',
     role: 'Behavior, no appearance',
     detail:
-      'Eighteen headless primitives. Radix where WAI-ARIA already specifies the contract, hand-written where the behavior is ours. 5.8 KB of our own code.',
+      'Eighteen headless components carrying keyboard, focus and ARIA and no styling whatsoever. Radix where WAI-ARIA already specifies the contract, hand-written where the behavior is ours.',
   },
   {
+    layer: 3,
     name: 'components-react',
     role: 'One styled implementation',
     detail:
@@ -42,8 +54,8 @@ export default function Home() {
   return (
     <Page
       eyebrow="Overview"
-      title="A design system in four layers"
-      lede="Built in four layers, so a decision lives in one of them rather than in all of them. Color is settled in the tokens, behavior in the base, appearance here."
+      title="A design system in three layers"
+      lede="Built in three layers, so a decision lives in one of them rather than in all of them. Color is settled in the tokens, behavior in the base, appearance here."
     >
       <Prose>
         <p>
@@ -56,9 +68,9 @@ export default function Home() {
       </Prose>
 
       <div className={css.layers}>
-        {LAYERS.map((layer, index) => (
+        {LAYERS.map(layer => (
           <div key={layer.name} className={css.layer}>
-            <div className={css.layerIndex}>{index + 1}</div>
+            <div className={css.layerIndex}>{layer.layer}</div>
             <div className={css.layerBody}>
               <div className={css.layerHead}>
                 <code>{layer.name}</code>
@@ -134,13 +146,13 @@ export default function App() {
       />
 
       <Callout>
-        Two things are the application&apos;s job rather than the library&apos;s, and both look like
-        bugs when they are missed. <strong>Light and dark</strong> are chosen with{' '}
+        One thing is the application&apos;s job rather than the library&apos;s, and it looks like a
+        bug when it is missed. <strong>Light and dark</strong> are chosen with{' '}
         <code>data-theme</code> on <code>&lt;html&gt;</code>; with the attribute absent the system
         follows the operating system, which is usually what you want but is not what you see if you
-        were expecting to control it. And the token stylesheet <em>names</em> Pretendard without
-        fetching it, the same way Tailwind names <code>font-sans</code> — a page that has not loaded
-        the face renders in the next fallback.
+        were expecting to control it. The typeface is not on that list: the token stylesheet brings
+        Pretendard with it, as the variable font&apos;s dynamic subset, so a page downloads the
+        unicode ranges it sets and no more.
       </Callout>
 
       <Preview

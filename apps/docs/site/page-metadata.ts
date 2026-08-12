@@ -1,5 +1,16 @@
 import type { Metadata } from 'next';
 
+/**
+ * Where this site lives, said once.
+ *
+ * It was written out in three files — the layout's `metadataBase`, the sitemap's
+ * every entry, and the pointer in `robots.txt` — which is three chances for a
+ * move to be half done. A canonical URL and a sitemap that disagree are worse
+ * than neither: the sitemap sends a crawler to a page whose own canonical tag
+ * points somewhere else, and the crawler believes the tag.
+ */
+export const SITE = 'https://ds.minukhwang.com';
+
 /*
  * ============================================
  * Descriptions
@@ -25,7 +36,7 @@ import type { Metadata } from 'next';
  * to get a description.
  */
 const DESCRIPTIONS: Record<string, string> = {
-  '/': 'Built in four layers, so a decision lives in one of them rather than in all of them. Color is settled in the tokens, behavior in the base, appearance in the components.',
+  '/': 'Built in three layers, so a decision lives in one of them rather than in all of them. Color is settled in the tokens, behavior in the base, appearance in the components.',
   '/playground':
     'One screen built out of the whole library. Turn a dial and judge the result where things sit next to each other, rather than on a page that shows one component at a time.',
 

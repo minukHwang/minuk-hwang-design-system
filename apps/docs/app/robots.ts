@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+import { SITE } from '../site/page-metadata';
+
 /**
  * Everything is public, and the sitemap says where everything is.
  *
@@ -10,6 +12,6 @@ import type { MetadataRoute } from 'next';
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: '*', allow: '/' },
-    sitemap: 'https://minuk-hwang-design-system.vercel.app/sitemap.xml',
+    sitemap: `${SITE}/sitemap.xml`,
   };
 }

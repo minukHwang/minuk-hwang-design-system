@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { allItems } from '../site/nav';
+import { SITE } from '../site/page-metadata';
 
 /**
  * The site's map, from the site's map.
@@ -19,7 +20,7 @@ import { allItems } from '../site/nav';
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return allItems.map(item => ({
-    url: `https://minuk-hwang-design-system.vercel.app${item.href}`,
+    url: `${SITE}${item.href}`,
     changeFrequency: 'weekly',
     priority: item.href === '/' ? 1 : item.href === '/playground' ? 0.8 : 0.6,
   }));

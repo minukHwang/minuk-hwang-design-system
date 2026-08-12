@@ -5,6 +5,7 @@ import * as React from 'react';
 import css from '../site/chrome.module.css';
 import { DialsProvider } from '../site/dials';
 import { NavProvider } from '../site/nav-state';
+import { SITE } from '../site/page-metadata';
 import { RepositoryLink } from '../site/RepositoryLink';
 import { Brand, MenuButton, Sidebar } from '../site/Sidebar';
 import { Toolbar } from '../site/Toolbar';
@@ -44,10 +45,21 @@ import '@minuk-hwang-design-system/components-react/theme/style';
 import '@minuk-hwang-design-system/components-react/text/style';
 import '@minuk-hwang-design-system/components-react/tooltip/style';
 
-const SITE = 'https://minuk-hwang-design-system.vercel.app';
-
+/*
+ * The layers as they are, which is not what this said.
+ *
+ * It named "a shared style layer", a package that existed for five days and was
+ * deleted once the components were rebuilt on the base layer and each one got
+ * its own stylesheet. This is the site's own description, the one a search result
+ * shows, so it was the most-read sentence in the repository and it described a
+ * package nobody could install.
+ *
+ * Three rather than four, because that is the count of layers. There are four
+ * packages: `base-react` and `behavior-react` share the middle one, split by
+ * dependency rather than by size.
+ */
 const DESCRIPTION =
-  'A design system in four layers: generated tokens, a shared style layer, headless behavior, and styled React components. Every color pairing is measured against WCAG rather than chosen, and the accent, gray and corner radius are dials you can turn while reading.';
+  'A design system in three layers: generated tokens, headless behavior, and styled React components. Every color pairing is measured against WCAG rather than chosen, and the accent, gray and corner radius are dials you can turn while reading.';
 
 /*
  * `metadataBase` is what makes every relative image below resolve.
@@ -148,26 +160,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={wordmark.variable}
       suppressHydrationWarning
     >
-      <head>
-        {/*
-         * Pretendard, which is what `--font-family-main` has named all along
-         * without anyone loading it — so every page has quietly been rendering
-         * in the next fallback, Helvetica.
-         *
-         * The token names the family; fetching it is the application's job, the
-         * same way Tailwind names `font-sans` and leaves the `@font-face` to
-         * you. A design system that shipped the binary would make every
-         * consumer pay for a typeface they may already self-host.
-         *
-         * The dynamic subset splits the face into unicode-range slices, so a
-         * page of Latin never downloads the 11,172 Hangul syllables.
-         */}
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
-        />
-      </head>
+      {/*
+       * No font link here.
+       *
+       * There was one, for Pretendard's dynamic subset off a CDN, written on the
+       * belief that the token stylesheet named the family without fetching it.
+       * It fetched it: `style-tokens.css` has imported Pretendard from the
+       * package since it was first generated. So the face arrived twice, by two
+       * routes, and the CDN copy was the one nobody could see was redundant.
+       *
+       * The token import is the dynamic subset now, which is what this link was
+       * reaching for, so removing it changes nothing on screen and drops a
+       * third-party connection from every page load.
+       */}
+      <head />
       <body>
         <DialsProvider>
           <NavProvider>

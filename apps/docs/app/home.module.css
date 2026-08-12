@@ -21,8 +21,12 @@
 }
 
 /*
- * Numbered because the layers really are ordered — each one may only reach
+ * Numbered because the layers really are ordered: each one may only reach
  * downwards, and that is the constraint the whole structure rests on.
+ *
+ * The number is the layer rather than the row, so two packages carry a 2. That
+ * repetition is the point. It is the one place on the page that shows four
+ * packages resolving into three layers without a sentence having to say so.
  */
 .layerIndex {
   display: flex;
