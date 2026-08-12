@@ -21,7 +21,13 @@ export default function FieldPage() {
         code={`<Field.Root required>
   <Field.Label>Package name</Field.Label>
   <Field.Control>
-    {props => <Input {...props} placeholder="@scope/name" />}
+    {props => (
+      <Input
+        {...props}
+        placeholder="@scope/name"
+        defaultValue="@minuk-hwang-design-system/components-react"
+      />
+    )}
   </Field.Control>
   <Field.Description>
     Lowercase, no spaces. This becomes the npm install target.
@@ -54,10 +60,10 @@ export default function FieldPage() {
         title="Invalid"
         description='Field.Error renders nothing while the root is valid, and carries role="alert" when it appears.'
         stack
-        code={`<Field.Root invalid={Boolean(error)}>
+        code={`<Field.Root invalid>
   <Field.Label>Version</Field.Label>
-  <Field.Control>{props => <Input {...props} />}</Field.Control>
-  <Field.Error>{error}</Field.Error>
+  <Field.Control>{props => <Input {...props} defaultValue="0.0.1" />}</Field.Control>
+  <Field.Error>A caret range does nothing below 0.1.0. Bump before publishing.</Field.Error>
 </Field.Root>`}
       >
         <Field.Root invalid>
@@ -80,7 +86,7 @@ export default function FieldPage() {
       >
         <Field.Root invalid>
           <Field.Label>Release notes</Field.Label>
-          <Field.Control>{props => <Textarea {...props} defaultValue="" />}</Field.Control>
+          <Field.Control>{props => <Textarea {...props} />}</Field.Control>
           <Field.Description>Markdown. Shown on the npm page.</Field.Description>
           <Field.Error>Cannot be empty for a minor release.</Field.Error>
         </Field.Root>
@@ -89,16 +95,41 @@ export default function FieldPage() {
       <Preview
         title="What Field.Control passes"
         description="It hands the props over instead of wrapping the control, so the control can be an input, a textarea, a Select, or something the system has never seen."
-        code={`<Field.Control>
-{({ id, 'aria-describedby': describedBy, 'aria-invalid': invalid, disabled, required }) => (
-  <MyOwnControl id={id} aria-describedby={describedBy} … />
-)}
-</Field.Control>`}
+        code={`<Field.Root>
+  <Field.Label>Anything at all</Field.Label>
+  <Field.Control>
+    {({ id, 'aria-describedby': describedBy, 'aria-invalid': invalid, disabled, required }) => (
+      <Input
+        id={id}
+        aria-describedby={describedBy}
+        aria-invalid={invalid}
+        disabled={disabled}
+        required={required}
+        placeholder="Your control, our wiring"
+      />
+    )}
+  </Field.Control>
+</Field.Root>`}
       >
         <Field.Root>
           <Field.Label>Anything at all</Field.Label>
           <Field.Control>
-            {props => <Input {...props} placeholder="Your control, our wiring" />}
+            {({
+              id,
+              'aria-describedby': describedBy,
+              'aria-invalid': invalid,
+              disabled,
+              required,
+            }) => (
+              <Input
+                id={id}
+                aria-describedby={describedBy}
+                aria-invalid={invalid}
+                disabled={disabled}
+                required={required}
+                placeholder="Your control, our wiring"
+              />
+            )}
           </Field.Control>
         </Field.Root>
       </Preview>

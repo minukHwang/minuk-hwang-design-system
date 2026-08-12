@@ -24,7 +24,11 @@ export default function CardPage() {
     <Card.Title>style-tokens</Card.Title>
     <Card.Description>Colour, spacing, type, shadow, motion</Card.Description>
   </Card.Header>
-  <Card.Body>…</Card.Body>
+  <Card.Body>
+    <Text size={4} color="assistive">
+      Four consumption formats from one source, so none of them can drift.
+    </Text>
+  </Card.Body>
   <Card.Footer align="end">
     <Button variant="ghost" size="s">Docs</Button>
     <Button size="s">Install</Button>
@@ -53,9 +57,13 @@ export default function CardPage() {
       <Preview
         title="Elevation"
         description="Use elevation to pick a border or a shadow. They are alternatives, not a scale: doing both reads as indecision."
-        code={`<Card.Root elevation="flat" />
-<Card.Root elevation="outlined" />
-<Card.Root elevation="elevated" />`}
+        code={`{(['flat', 'outlined', 'elevated'] as const).map(elevation => (
+  <Card.Root key={elevation} elevation={elevation}>
+    <Card.Body>
+      <Text size={5} weight="bold">{elevation}</Text>
+    </Card.Body>
+  </Card.Root>
+))}`}
       >
         {(['flat', 'outlined', 'elevated'] as const).map(elevation => (
           <Card.Root key={elevation} elevation={elevation} style={{ width: 180 }}>
@@ -71,7 +79,20 @@ export default function CardPage() {
       <Preview
         title="Interactive"
         description="Use interactive to add hover and focus affordances to a card that is part of a control."
-        code={`<Card.Root elevation="elevated" interactive>…</Card.Root>`}
+        code={`<Card.Root elevation="elevated" interactive>
+  <Card.Header>
+    <Card.Title>base-react</Card.Title>
+    <Card.Description>18 headless primitives</Card.Description>
+  </Card.Header>
+  <Card.Body>
+    {/* Card.Body stacks, so a row of badges brings its own wrapper. */}
+    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+      <Badge size="s" tone="accent">Radix</Badge>
+      <Badge size="s">5.6 KB</Badge>
+      <Badge size="s" tone="success">WAI-ARIA</Badge>
+    </div>
+  </Card.Body>
+</Card.Root>`}
       >
         <Card.Root elevation="elevated" interactive style={{ maxWidth: 300 }}>
           <Card.Header>

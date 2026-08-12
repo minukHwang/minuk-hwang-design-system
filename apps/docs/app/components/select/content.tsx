@@ -19,12 +19,20 @@ export default function SelectPage() {
         description="Open it and type to jump to an option."
         stack
         code={`<Select.Root defaultValue="public">
-  <Select.Trigger><Select.Value /></Select.Trigger>
+  <Select.Trigger>
+    <Select.Value placeholder="Choose access…" />
+  </Select.Trigger>
   <Select.Content>
     <Select.Group>
       <Select.Label>Registry</Select.Label>
       <Select.Item value="public">Public</Select.Item>
       <Select.Item value="restricted">Restricted</Select.Item>
+    </Select.Group>
+    <Select.Separator />
+    <Select.Group>
+      <Select.Label>Internal</Select.Label>
+      <Select.Item value="private">Private</Select.Item>
+      <Select.Item value="none" disabled>Unpublished</Select.Item>
     </Select.Group>
   </Select.Content>
 </Select.Root>`}
@@ -58,6 +66,12 @@ export default function SelectPage() {
         not. The label is the group&apos;s accessible name, so a label with no group names nothing.
       </Callout>
 
+      <Callout>
+        A value too long for the trigger truncates, and the list is free to be wider than the
+        trigger it drops from. The control has a width to keep in a form column; the list only has
+        to be readable, and stops at the edge of the viewport.
+      </Callout>
+
       <Callout tone="warning">
         A native <code>select</code> gets the platform&apos;s own picker on mobile, which usually
         beats anything a web page can draw. Reach for this one when options need icons, descriptions
@@ -68,16 +82,22 @@ export default function SelectPage() {
         title="In a Field"
         description="Field.Control hands its props to the trigger."
         stack
-        code={`<Field.Root>
+        code={`<Field.Root required>
   <Field.Label>Access</Field.Label>
   <Field.Control>
     {props => (
       <Select.Root>
-        <Select.Trigger {...props}><Select.Value /></Select.Trigger>
-        …
+        <Select.Trigger {...props}>
+          <Select.Value placeholder="Choose…" />
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Item value="public">Public</Select.Item>
+          <Select.Item value="private">Private</Select.Item>
+        </Select.Content>
       </Select.Root>
     )}
   </Field.Control>
+  <Field.Description>Public packages cannot be made private later.</Field.Description>
 </Field.Root>`}
       >
         <div style={{ width: 280 }}>
@@ -133,13 +153,21 @@ export default function SelectPage() {
         <PropsTable
           rows={[
             { name: 'value', type: 'string', description: 'Controlled selection, on Root.' },
-            { name: 'defaultValue', type: 'string', description: '' },
-            { name: 'onValueChange', type: '(value: string) => void', description: '' },
+            {
+              name: 'defaultValue',
+              type: 'string',
+              description: 'On Root. The starting choice when the value is left uncontrolled.',
+            },
+            {
+              name: 'onValueChange',
+              type: '(value: string) => void',
+              description: 'On Root. Fires with the value of the chosen item.',
+            },
             {
               name: 'size',
               type: `'s' | 'm' | 'l'`,
               default: `'m'`,
-              description: 'On Trigger. Matches Input and Button.',
+              description: 'On Trigger. Height, inset and type, all matching Input.',
             },
             {
               name: 'placeholder',

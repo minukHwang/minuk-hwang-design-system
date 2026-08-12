@@ -23,12 +23,23 @@ export default function DialogPage() {
   <Dialog.Content>
     <Dialog.Header>
       <Dialog.Title>Publish style-tokens?</Dialog.Title>
-      <Dialog.Description>Published versions cannot be replaced.</Dialog.Description>
+      <Dialog.Description>
+        This uploads 0.1.0 to the public npm registry. Published versions cannot be replaced.
+      </Dialog.Description>
     </Dialog.Header>
-    <Dialog.Body>…</Dialog.Body>
+    <Dialog.Body>
+      <Alert.Root tone="warning">
+        <Alert.Icon />
+        <Alert.Body>
+          <Alert.Description>
+            Two packages depend on this one at workspace:^ and will need rebuilding.
+          </Alert.Description>
+        </Alert.Body>
+      </Alert.Root>
+    </Dialog.Body>
     <Dialog.Footer>
       <Dialog.Close asChild><Button variant="secondary">Cancel</Button></Dialog.Close>
-      <Button>Publish</Button>
+      <Dialog.Close asChild><Button>Publish</Button></Dialog.Close>
     </Dialog.Footer>
   </Dialog.Content>
 </Dialog.Root>`}
@@ -75,7 +86,22 @@ export default function DialogPage() {
       <Preview
         title="Size"
         description="Use size to set the width. The body scrolls, not the page, so the actions never leave the screen."
-        code={`<Dialog.Content size="s">…</Dialog.Content>`}
+        code={`{(['s', 'm', 'l'] as const).map(size => (
+  <Dialog.Root key={size}>
+    <Dialog.Trigger asChild>
+      <Button variant="secondary">size {size}</Button>
+    </Dialog.Trigger>
+    <Dialog.Content size={size}>
+      <Dialog.Header>
+        <Dialog.Title>Size {size}</Dialog.Title>
+        <Dialog.Description>400, 520 and 720px at most.</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close asChild><Button variant="secondary">Close</Button></Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+))}`}
       >
         {(['s', 'm', 'l'] as const).map(size => (
           <Dialog.Root key={size}>
@@ -135,7 +161,11 @@ export default function DialogPage() {
         <PropsTable
           rows={[
             { name: 'open', type: 'boolean', description: 'Controlled state, on Root.' },
-            { name: 'onOpenChange', type: '(open: boolean) => void', description: '' },
+            {
+              name: 'onOpenChange',
+              type: '(open: boolean) => void',
+              description: 'On Root. Fires for every way out, including Escape and the scrim.',
+            },
             {
               name: 'size',
               type: `'s' | 'm' | 'l'`,

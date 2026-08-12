@@ -16,16 +16,22 @@ export default function InputPage() {
     >
       <Preview
         title="Size"
-        description="Three heights, the same three Button and Select use, so a field and its submit line up."
+        description="Height, inset and type all step together. The heights are Button's and Select's, so a field and its submit line up."
         stack
-        code={`<Input size="s" placeholder="Small, 32px" />
-<Input size="m" placeholder="Medium, 40px" />
-<Input size="l" placeholder="Large, 48px" />`}
+        code={`<Input size="s" placeholder="Small" />
+<Input size="m" placeholder="Medium" />
+<Input size="l" placeholder="Large" />`}
       >
-        <Input size="s" placeholder="Small, 32px" />
-        <Input size="m" placeholder="Medium, 40px" />
-        <Input size="l" placeholder="Large, 48px" />
+        <Input size="s" placeholder="Small" />
+        <Input size="m" placeholder="Medium" />
+        <Input size="l" placeholder="Large" />
       </Preview>
+
+      <Callout>
+        <code>m</code> keeps its 16px type where <code>Button</code>&apos;s middle size runs at 15.
+        Mobile Safari zooms the page when a field under 16px takes focus, and this is the default
+        size.
+      </Callout>
 
       <Preview
         title="State"
@@ -50,7 +56,7 @@ export default function InputPage() {
 
       <Preview
         title="Textarea"
-        description="Resizes vertically only, because horizontal resize breaks whatever column the field sits in."
+        description="Resizes vertically only, because horizontal resize breaks whatever column the field sits in. It takes no size prop and is built to sit under an Input at m."
         stack
         code={`<Textarea defaultValue="Splits shadows into geometry and per-theme ink." />`}
       >
