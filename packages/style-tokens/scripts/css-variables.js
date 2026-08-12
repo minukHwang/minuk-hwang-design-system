@@ -111,9 +111,13 @@ const accentBlocks = () =>
  * `--neutral-10: var(--neutral-10)`, a cycle the browser throws away.
  */
 const neutralRamp = (family, indent = '\t') =>
-  theme.neutralSteps
-    .map(step => `${indent}--neutral-${step}: var(--${family}-${step});`)
-    .join('\n');
+  [
+    ...theme.neutralSteps.map(step => `${indent}--neutral-${step}: var(--${family}-${step});`),
+    // Measured against this family's solid step, exactly as the accent's is
+    // against its hue's. Unlike the accent's it differs by theme, because a
+    // neutral's solid step is the far end of the ramp rather than its middle.
+    `${indent}--neutral-on-solid: var(--on-solid-${family});`,
+  ].join('\n');
 
 /**
  * The surfaces and borders that resolve through the neutral ramp, repeated in

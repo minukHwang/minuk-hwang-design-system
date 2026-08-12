@@ -238,7 +238,7 @@ export const mono = {
   200: '#cccccc',
   100: '#e6e6e6',
   50: '#f2f2f2',
-  10: '#ffffff',
+  10: '#fcfcfc',
 };
 export const gray = {
   990: '#101214',
@@ -253,7 +253,7 @@ export const gray = {
   200: '#c7cbd1',
   100: '#e3e5e8',
   50: '#f1f2f4',
-  10: '#ffffff',
+  10: '#fcfcfd',
 };
 export const slate = {
   990: '#0e1115',
@@ -268,7 +268,7 @@ export const slate = {
   200: '#c2c9d6',
   100: '#e1e4ea',
   50: '#f0f2f5',
-  10: '#ffffff',
+  10: '#fcfcfd',
 };
 
 /* Text colour that clears AA on each solid fill. Measured, not chosen. */
@@ -288,6 +288,9 @@ export const onSolid = {
   yellow: '#000000',
   amber: '#000000',
   orange: '#000000',
+  mono: '#ffffff',
+  gray: '#ffffff',
+  slate: '#ffffff',
 };
 
 /* Theme surfaces and text. Authored, not generated. */
@@ -304,7 +307,7 @@ export const stateInk = {
 };
 export const level = {
   base: 'var(--neutral-50)',
-  raised: 'var(--neutral-10)',
+  raised: 'var(--white)',
 };
 export const pageBackground = {
   base: 'var(--neutral-50)',

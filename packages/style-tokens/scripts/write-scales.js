@@ -127,7 +127,19 @@ const THEME_SEMANTICS = {
      */
     level: {
       base: 'var(--neutral-50)',
-      raised: 'var(--neutral-10)',
+      /*
+       * White, not a step.
+       *
+       * The surface a card is drawn on is the white everything else is measured
+       * against, and the ramp tops out at 99 — a white with a grey in it. Making
+       * the step reach 100 instead put an absolute value on a rung of a ladder
+       * that flips with the theme; reading the absolute here says the same thing
+       * without pretending it is a step.
+       *
+       * Only in this theme. Dark's card is a step, because there is no absolute
+       * to reach for at that end.
+       */
+      raised: 'var(--white)',
     },
     pageBackground: {
       base: 'var(--neutral-50)',
@@ -212,10 +224,25 @@ const header = theme => `/**
  * flip on which one it fails, and the failure is invisible until someone
  * measures it.
  */
+/**
+ * The step each family's solid fill is drawn from.
+ *
+ * A hue's is 500, the most saturated point on its ladder — which is what makes a
+ * solid accent badge read as that colour. A grey has no saturation, so its most
+ * present point is the far end instead, and 950 is where a solid neutral badge
+ * has always been.
+ *
+ * That difference is why the neutral answer is not the same in both themes while
+ * every hue's is: 500 holds one colour across the two ladders and 950 does not,
+ * so a neutral fill is near-black on light and near-white on dark, and the label
+ * that clears it flips with the theme.
+ */
+const SOLID_STEP = { chromatic: 500, neutral: 950 };
+
 const buildOnSolid = theme =>
-  Object.fromEntries(
-    CHROMATIC_ORDER.map(name => {
-      const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[500];
+  Object.fromEntries([
+    ...CHROMATIC_ORDER.map(name => {
+      const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[SOLID_STEP.chromatic];
       const report = contrastReport(fill);
       if (!report.passes) {
         console.warn(
@@ -223,8 +250,12 @@ const buildOnSolid = theme =>
         );
       }
       return [name, onSolid(fill)];
-    })
-  );
+    }),
+    ...Object.entries(NEUTRALS).map(([name, { hue, saturation }]) => [
+      name,
+      onSolid(buildScale(hue, theme, neutralTuning(saturation))[SOLID_STEP.neutral]),
+    ]),
+  ]);
 
 /**
  * The measurements behind each `onSolid`, kept rather than discarded.
@@ -239,18 +270,30 @@ const buildOnSolid = theme =>
  * the numbers ship, and the documentation renders them beside the fill.
  */
 const contrastRows = theme =>
-  CHROMATIC_ORDER.map(name => {
-    const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[500];
-    const { white, black } = contrastReport(fill);
-    // Two decimals, as a number rather than a string. `toFixed` alone emits
-    // `14.20`, which is not how JavaScript prints that number — so the file the
-    // generator wrote and the file the formatter leaves behind disagreed.
-    const num = value => Number(value.toFixed(2));
-    return (
-      `    ${name}: { fill: '${fill}', white: ${num(white)}, ` +
-      `black: ${num(black)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
-    );
-  }).join('\n');
+  [
+    ...CHROMATIC_ORDER.map(name => [
+      name,
+      buildScale(HUES[name], theme, TUNING[name] ?? {})[SOLID_STEP.chromatic],
+      SOLID_STEP.chromatic,
+    ]),
+    ...Object.entries(NEUTRALS).map(([name, { hue, saturation }]) => [
+      name,
+      buildScale(hue, theme, neutralTuning(saturation))[SOLID_STEP.neutral],
+      SOLID_STEP.neutral,
+    ]),
+  ]
+    .map(([name, fill, step]) => {
+      const { white, black } = contrastReport(fill);
+      // Two decimals, as a number rather than a string. `toFixed` alone emits
+      // `14.20`, which is not how JavaScript prints that number — so the file the
+      // generator wrote and the file the formatter leaves behind disagreed.
+      const num = value => Number(value.toFixed(2));
+      return (
+        `    ${name}: { step: ${step}, fill: '${fill}', white: ${num(white)}, ` +
+        `black: ${num(black)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
+      );
+    })
+    .join('\n');
 
 /**
  * Its own file rather than a group inside the per-theme scales.
@@ -282,10 +325,15 @@ const writeContrast = () => {
  * A judgement that cannot be inspected is indistinguishable from an accident, so
  * the numbers ship. It is also the only way to notice that retuning a hue left
  * its margin at 0.02.
+ *
+ * The three greys are measured too, at the far end of their ramp rather than the
+ * middle, which is where a solid neutral fill sits. They are the only rows whose
+ * answer differs between the themes.
  */
 
 export type ContrastMeasurement = {
-  /** The 500 step, which is what a solid fill uses. */
+  /** Which step the solid fill is drawn from: 500 for a hue, 950 for a grey. */
+  step: number;
   fill: string;
   /** Ratio against white text. AA wants 4.5 for body copy, 3 for large. */
   white: number;
@@ -311,7 +359,7 @@ ${body}
 
   blocks.push('\n/* Neutrals, ordered by how much blue they carry. */\n');
   Object.entries(NEUTRALS).forEach(([name, { hue, saturation }]) => {
-    blocks.push(renderScale(name, buildScale(hue, theme, neutralTuning(saturation, theme))));
+    blocks.push(renderScale(name, buildScale(hue, theme, neutralTuning(saturation))));
   });
 
   blocks.push('\n/* Text colour that clears AA on each solid fill. Measured, not chosen. */\n');

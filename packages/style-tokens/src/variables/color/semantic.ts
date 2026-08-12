@@ -99,30 +99,23 @@ export const background = {
  */
 
 /**
- * A neutral element painted *on* a background rather than a background of its
- * own: a quiet badge, a neutral banner, a disabled control, the well behind an
- * avatar's initials.
+ * A neutral panel on a background: a code block, a well, a disabled control.
  *
- * Its own group rather than a sixth entry beside `accent` and the four statuses,
- * because it does not fit that shape and pretending otherwise cost more than it
- * bought. Those ramps run `surface` 50, `normal` 500, `strong` 700 — a pale
- * tint, a saturated fill, and a text colour. A neutral has no saturated step:
- * mid-grey carries neither black nor white above 4:1, so a solid grey badge is
- * near-black, which puts `normal` and `strong` on the same value and leaves
- * `surface` at 100 because 50 is already the card. Three of the five entries
- * only lined up by name.
+ * Not the neutral tone, which is further down. A tone is what a badge or a
+ * button is *in* — it has a solid fill, a text colour measured against it, a
+ * border. This is a piece of quiet ground with nothing on it, and asking for
+ * `neutral.surface` to paint a code block would be naming a badge to get a
+ * colour.
  *
- * Two steps, named for weight rather than depth. `strong` is firmer, not deeper:
- * the avatar's well has to carry initials, not look sunk into the page.
- *
- * They move towards white in the dark theme, which would be wrong for a level
- * and is right here — a badge on a dark card is only visible if it is lighter.
- * That is the whole reason these are not `background`.
+ * They hold the same two steps today, and that is a coincidence of where the
+ * ramp has room rather than a reason to collapse them: a tone's tint answers to
+ * the text that has to read on it, and a well answers to the surface it is cut
+ * into.
  */
 export const fill = {
-  /** A quiet element on a background. */
+  /** A quiet panel. */
   subtle: neutralScale[100],
-  /** The same, one step firmer, where `subtle` would collide with a hover. */
+  /** One step firmer, where `subtle` would collide with a hovered surface. */
   strong: neutralScale[200],
 };
 
@@ -284,6 +277,69 @@ export const textColor = {
    */
   inverse: background.raised,
   link: palette.blue[600],
+};
+
+/*
+ * ============================================
+ * Neutral
+ * ============================================
+ */
+
+/**
+ * The sixth tone, built like the other five.
+ *
+ * A `Badge` has six tones and a `Button` has a neutral fill. Five of those read
+ * `accent` or `status.*`; the sixth had nowhere to read from and borrowed a fill
+ * from one group, its text from another and its border from a third. Written out
+ * here, `variant="secondary"` asks for `neutral.subtle` the way
+ * `variant="primary"` asks for `accent.normal`.
+ *
+ * Same roles as a hue, and two of the steps have to differ. `surface` is 100
+ * rather than 50, because 50 is not free — the neutral ramp is where the page
+ * and the card come from, and a badge tinted with the page is not tinted. And
+ * `normal` is the far end rather than the middle, for the reason written beside
+ * it: a hue's middle is its most saturated point, and a grey's is #808080.
+ */
+export const neutral = {
+  /** Filled background for a badge or banner. 50 belongs to the levels. */
+  surface: neutralScale[100],
+  /**
+   * A subtle fill, and the border of that banner.
+   *
+   * What a tonal button is filled with. A button has to read as a shape on every
+   * level it can land on and `surface` does not: it measures 1.16 against a card
+   * in the dark theme and 1.01 against a dialog. This clears the page, a card
+   * and a dialog in both themes, at 1.43 in the worst case.
+   */
+  subtle: neutralScale[200],
+  /**
+   * Solid fill, at the far end of the ramp rather than the middle of it.
+   *
+   * The one role that cannot take the step its hue counterpart takes. A hue's
+   * 500 is its most saturated point, which is what makes a solid accent badge
+   * read as that colour; a grey's 500 is #808080 and reads as nothing — it
+   * carries black at 5.32 and white at 3.95, so it is simultaneously muddy and
+   * short of somewhere comfortable to put the label.
+   *
+   * The far end has neither problem, and it is what a solid grey badge looks
+   * like everywhere: near-black on light, near-white on dark.
+   */
+  normal: neutralScale[950],
+  /** Text on `surface`. */
+  strong: neutralScale[700],
+  /**
+   * Text on `normal`.
+   *
+   * Measured, like every other tone's. The generator reads this family's solid
+   * step and picks whichever of black and white clears 4.5 on it.
+   *
+   * It is the one that genuinely differs by theme. A hue's solid step is 500,
+   * which holds the same colour on both ladders, so its label is the same
+   * answer twice; a grey's is the far end, which is near-black on light and
+   * near-white on dark, so the label flips with it — white clears 17.4 on the
+   * light fill, black clears 16.36 on the dark one.
+   */
+  onNormal: 'var(--neutral-on-solid)',
 };
 
 /*

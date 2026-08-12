@@ -311,16 +311,10 @@ const hslToHex = (h, s, l) => {
  */
 const buildScale = (hue, theme, tuning = {}) => {
   const ladder = theme === 'dark' ? DARK_LADDER : LIGHT_LADDER;
-  const { saturation = 100, lightnessShift = 0, lightnessByStep = {} } = tuning;
+  const { saturation = 100, lightnessShift = 0 } = tuning;
 
   return Object.fromEntries(
     STEPS.map((step, i) => {
-      // A step named outright skips the ladder and its clamps, which is what
-      // lets a surface step reach a lightness of 100 that the cap would have
-      // held at 99.
-      if (lightnessByStep[step] !== undefined) {
-        return [step, hslToHex(hue, saturation, lightnessByStep[step])];
-      }
       // The shift tapers off at both ends so the near-white and near-black
       // anchors stay aligned with every other scale.
       const taper = 1 - Math.abs(ladder[i] - 50) / 50;
@@ -331,28 +325,16 @@ const buildScale = (hue, theme, tuning = {}) => {
 };
 
 /**
- * The light neutrals reach pure white at their top step.
+ * Tuning for a neutral family. Saturation, and nothing else.
  *
- * The ladder tops out at 99, which is a white with a grey in it, and the surface
- * a card is drawn on should be the white the rest of the interface is measured
- * against. One point of lightness, and it is only reachable by naming the step,
- * because the generator clamps at 99.
- *
- * This held two steps for a while — 10 at 95 and 50 at 100 — to put the page
- * below the card in the light theme. It worked and it broke the ramp: 10 came
- * out darker than 50, so a swatch strip climbed, dropped and climbed again, and
- * `neutral-10` stopped meaning "the end of the ladder". Which step each level
- * reads is a question for the levels, and it is answered per theme in
- * `THEME_SEMANTICS`. The ramp only has to run one way.
- *
- * Neutrals only. The chromatic scales walk the same ladder, and a top step at
- * full lightness would turn every hue's palest tint white.
+ * Step 10 was pushed to a lightness of 100 here so that a light card could be
+ * pure white. That made a rung of the ladder identical to `color.white` — an
+ * absolute value and a step that flips with the theme, holding the same number
+ * by coincidence in one of them. Which step each level reads, and whether one of
+ * them reads white rather than a step at all, is a question for the levels; it
+ * is answered in `THEME_SEMANTICS` in write-scales.js.
  */
-const NEUTRAL_SURFACE_LIGHTNESS = { 10: 100 };
-
-/** Tuning for a neutral family, which carries the surface steps in light only. */
-const neutralTuning = (saturation, theme) =>
-  theme === 'light' ? { saturation, lightnessByStep: NEUTRAL_SURFACE_LIGHTNESS } : { saturation };
+const neutralTuning = saturation => ({ saturation });
 
 /**
  * Renders a scale as a TypeScript const declaration.
