@@ -50,6 +50,31 @@ const Trigger = React.forwardRef<React.ElementRef<typeof Base.Trigger>, SelectTr
 );
 
 /**
+ * The chosen option's label.
+ *
+ * It is the one part of the trigger that has to be allowed to shrink — without
+ * that a value longer than the control pushes the chevron out past the box — and
+ * a caller should not have to know that.
+ *
+ * The span around it is not decoration and must not be flattened away. Radix's
+ * own `Value` destructures `className` and `style` out of its props and renders
+ * the span without them, because it sets a `pointer-events` of its own; a class
+ * passed to it is silently dropped, which looks exactly like a stylesheet that
+ * did not load. So the truncation lives on an element we control, and the base's
+ * span sits inside it.
+ */
+const Value = React.forwardRef<
+  React.ElementRef<typeof Base.Value>,
+  React.ComponentPropsWithoutRef<typeof Base.Value>
+>(function SelectValue({ className, ...props }, ref) {
+  return (
+    <span className={clsx(css.value, className)}>
+      <Base.Value {...props} ref={ref} />
+    </span>
+  );
+});
+
+/**
  * The list.
  *
  * `Viewport` and the two scroll buttons are folded in here rather than exposed:
@@ -114,7 +139,7 @@ const Separator = React.forwardRef<
 
 export const Select = {
   Root: Base.Root,
-  Value: Base.Value,
+  Value,
   Group: Base.Group,
   Trigger,
   Content,
@@ -137,7 +162,7 @@ export const Select = {
  * did before. Radix ships both for the same reason.
  */
 export const SelectRoot = Base.Root;
-export const SelectValue = Base.Value;
+export const SelectValue = Value;
 export const SelectGroup = Base.Group;
 export const SelectTrigger = Trigger;
 export const SelectContent = Content;

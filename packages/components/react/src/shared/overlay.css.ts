@@ -182,7 +182,7 @@ export const item = style([
      */
     paddingTop: vars.spacing[8],
     paddingBottom: vars.spacing[8],
-    paddingLeft: `calc(${vars.spacing[28]} + ${ROW_BLEED})`,
+    paddingLeft: `calc(${vars.spacing[32]} + ${ROW_BLEED})`,
     paddingRight: `calc(${vars.spacing[10]} + ${ROW_BLEED})`,
     marginInline: `calc(-1 * ${ROW_BLEED})`,
     /*
@@ -226,15 +226,17 @@ export const itemFlush = style({
 export const itemIndicator = style({
   position: 'absolute',
   /*
-   * Four, not eight. The gutter the row reserves is 28 and the mark is 16 wide,
-   * so at eight it ended four pixels from the label and read as part of the
-   * word. At four it clears it by eight, the same gap the row keeps between any
-   * two of its own children.
+   * Eight in from the row, inside a gutter of 32.
+   *
+   * The mark is 16 wide, so this clears the label by eight — the gap the row
+   * keeps between any two of its own children. The pair moved together to get
+   * there: at 8 in a gutter of 28 the mark ran into the word, and pulling it to
+   * 4 fixed that by leaving it hanging off the row's left edge instead.
    *
    * Measured from the row's box, which moves at `radius="none"`. Without the
    * bleed the mark would follow it out and stop lining up with the label.
    */
-  left: `calc(${vars.spacing[4]} + ${ROW_BLEED})`,
+  left: `calc(${vars.spacing[8]} + ${ROW_BLEED})`,
   display: 'inline-flex',
   alignItems: 'center',
 });
