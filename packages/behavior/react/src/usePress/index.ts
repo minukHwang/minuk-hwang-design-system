@@ -75,27 +75,99 @@ export function usePress(opts: UsePressOptions = {}) {
     [disabled, onPress]
   );
 
+  /*
+   * --------------------------------------------
+   * 2. Pressed state
+   * --------------------------------------------
+   */
+
+  /**
+   * Whether the control is being held down, across every way of holding it.
+   *
+   * `:active` is the CSS answer and it is not enough on its own: it never fires
+   * for a keyboard activation, and on touch it is applied inconsistently — iOS
+   * Safari withholds it entirely unless the element or an ancestor carries a
+   * touch listener. A control that reacts to a mouse and not to a finger is the
+   * kind of gap that only shows up on a device nobody tested on.
+   *
+   * Reported as state rather than as a style, so this layer stays free of any
+   * opinion about what pressing should look like. The component layer turns it
+   * into `data-pressed` and decides the rest.
+   */
+  const [isPressed, setPressed] = React.useState(false);
+
+  /*
+   * The release is watched on the window rather than on the element. A pointer
+   * that goes down on a button and comes up somewhere else never fires
+   * `pointerup` on the button, and the control would stay visibly held after
+   * the finger had gone.
+   */
+  React.useEffect(() => {
+    if (!isPressed) return;
+    const release = () => setPressed(false);
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
+    return () => {
+      window.removeEventListener('pointerup', release);
+      window.removeEventListener('pointercancel', release);
+    };
+  }, [isPressed]);
+
   /** Signals the start of a press, before the click resolves */
   const onPointerDown = React.useCallback(
     (e: React.PointerEvent) => {
       if (disabled) return;
+      setPressed(true);
       onPressStart?.(e);
     },
     [disabled, onPressStart]
   );
 
   /*
+   * A keyboard press has no duration the browser reports, so it is held for as
+   * long as the key is. Enter repeats while held and Space does not, which is a
+   * browser difference this layer deliberately does not paper over: both end on
+   * `keyup`, and that is what turns the state off.
+   */
+  const onKeyDownPress = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (disabled) return;
+      if (e.key === 'Enter' || e.key === ' ') setPressed(true);
+    },
+    [disabled]
+  );
+
+  const onKeyUp = React.useCallback(() => setPressed(false), []);
+
+  /** A control that loses focus mid-press is no longer being pressed. */
+  const onBlur = React.useCallback(() => setPressed(false), []);
+
+  /*
    * --------------------------------------------
-   * 2. Return
+   * 3. Return
    * --------------------------------------------
    */
-  const pressProps = { onClick, onPointerDown };
+  const pressProps = {
+    onClick,
+    onPointerDown,
+    onKeyDown: onKeyDownPress,
+    onKeyUp,
+    onBlur,
+  };
 
   return {
+    /** True while the control is held, by pointer, touch or key. */
+    isPressed,
     /** For native `<button>`; keyboard activation is left to the browser */
     pressProps,
     /** For elements using `role="button"`, which need keyboard activation */
-    virtualPressProps: { ...pressProps, onKeyDown },
+    virtualPressProps: {
+      ...pressProps,
+      onKeyDown: (e: React.KeyboardEvent) => {
+        onKeyDownPress(e);
+        onKeyDown(e);
+      },
+    },
     /**
      * Layers press behavior onto props the consumer already supplied.
      *
@@ -107,7 +179,17 @@ export function usePress(opts: UsePressOptions = {}) {
         ...p,
         onClick: mergeHandlers(p.onClick, onClick),
         onPointerDown: mergeHandlers(p.onPointerDown, onPointerDown),
-        ...(virtual ? { onKeyDown: mergeHandlers(p.onKeyDown, onKeyDown) } : null),
+        onKeyUp: mergeHandlers(p.onKeyUp, onKeyUp),
+        onBlur: mergeHandlers(p.onBlur, onBlur),
+        onKeyDown: mergeHandlers(
+          p.onKeyDown,
+          virtual
+            ? (e: React.KeyboardEvent) => {
+                onKeyDownPress(e);
+                onKeyDown(e);
+              }
+            : onKeyDownPress
+        ),
       }) as T,
   };
 }

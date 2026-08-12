@@ -1,6 +1,7 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
+import { pressable } from '../shared/press.css';
 import { hoverLayer } from '../shared/state';
 
 const { border, textColor } = vars.color.$semantic;
@@ -27,31 +28,34 @@ export const item = style({
   borderBottom: `1px solid ${border.subtle}`,
 });
 
-export const trigger = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: vars.spacing[12],
-  width: '100%',
-  padding: `${vars.spacing[16]} ${vars.spacing[4]}`,
-  border: 'none',
-  color: textColor.normal,
-  backgroundColor: 'transparent',
-  ...textMetrics(16),
-  fontFamily: 'inherit',
-  fontWeight: vars.typography.fontWeight[600],
-  textAlign: 'left',
-  cursor: 'pointer',
-  selectors: {
-    '&:hover:not([data-disabled])': { backgroundImage: hoverLayer },
-    '&:focus-visible': {
-      outline: `2px solid ${border.focus}`,
-      outlineOffset: '-2px',
-      borderRadius: vars.borderRadius[4],
+export const trigger = style([
+  pressable,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: vars.spacing[12],
+    width: '100%',
+    padding: `${vars.spacing[16]} ${vars.spacing[4]}`,
+    border: 'none',
+    color: textColor.normal,
+    backgroundColor: 'transparent',
+    ...textMetrics(16),
+    fontFamily: 'inherit',
+    fontWeight: vars.typography.fontWeight[600],
+    textAlign: 'left',
+    cursor: 'pointer',
+    selectors: {
+      '&:hover:not([data-disabled])': { backgroundImage: hoverLayer },
+      '&:focus-visible': {
+        outline: `2px solid ${border.focus}`,
+        outlineOffset: '-2px',
+        borderRadius: vars.borderRadius[4],
+      },
+      '&[data-disabled]': { cursor: 'not-allowed', opacity: opacity.disabledContent },
     },
-    '&[data-disabled]': { cursor: 'not-allowed', opacity: opacity.disabledContent },
   },
-});
+]);
 
 export const chevron = style({
   flex: 'none',

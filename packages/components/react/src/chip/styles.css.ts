@@ -2,6 +2,7 @@ import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
+import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
 const { accent, surface, border, textColor } = vars.color.$semantic;
@@ -16,54 +17,57 @@ const { opacity } = vars.color.$absolute;
  * reader it is not.
  */
 export const chipRecipe = recipe({
-  base: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: vars.spacing[4],
-    /*
-     * Step 24 rather than the pill token, so the chip has more than two shapes.
-     *
-     * On the pill it was a pill at four of the dial's five positions and a square
-     * at the fifth — `none` or nothing. A chip is 28 to 34px tall, so 24 clamps to
-     * a pill from `medium` up: the default stays exactly the pill it was, and
-     * `small` gains a rounded rectangle of its own.
-     *
-     * Three shapes out of five is the ceiling for a control this short, since
-     * 24 × 1.5 is long past half of 34. A control this size cannot use the whole
-     * ladder, which is the argument against a `radius` prop that would offer five
-     * values and deliver three.
-     */
-    borderRadius: vars.borderRadius[24],
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: border.normal,
-    color: textColor.normal,
-    backgroundColor: surface.raised,
-    backgroundImage: restLayer,
-    whiteSpace: 'nowrap',
-    cursor: 'pointer',
-    transitionProperty: 'background-image, background-color, border-color, color',
-    transitionDuration: vars.motion.duration[70],
-    transitionTimingFunction: vars.motion.easing.standard,
+  base: [
+    pressable,
+    {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: vars.spacing[4],
+      /*
+       * Step 24 rather than the pill token, so the chip has more than two shapes.
+       *
+       * On the pill it was a pill at four of the dial's five positions and a square
+       * at the fifth — `none` or nothing. A chip is 28 to 34px tall, so 24 clamps to
+       * a pill from `medium` up: the default stays exactly the pill it was, and
+       * `small` gains a rounded rectangle of its own.
+       *
+       * Three shapes out of five is the ceiling for a control this short, since
+       * 24 × 1.5 is long past half of 34. A control this size cannot use the whole
+       * ladder, which is the argument against a `radius` prop that would offer five
+       * values and deliver three.
+       */
+      borderRadius: vars.borderRadius[24],
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: border.normal,
+      color: textColor.normal,
+      backgroundColor: surface.raised,
+      backgroundImage: restLayer,
+      whiteSpace: 'nowrap',
+      cursor: 'pointer',
+      transitionProperty: 'background-image, background-color, border-color, color',
+      transitionDuration: vars.motion.duration[70],
+      transitionTimingFunction: vars.motion.easing.standard,
 
-    selectors: {
-      '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
-      '&:focus-visible': {
-        outline: `2px solid ${border.focus}`,
-        outlineOffset: '2px',
-      },
-      '&[aria-pressed="true"]': {
-        color: accent.strong,
-        backgroundColor: accent.surface,
-        borderColor: accent.normal,
-      },
-      '&[aria-pressed="true"]:hover:not(:disabled)': { backgroundColor: accent.subtle },
-      '&:disabled': {
-        cursor: 'not-allowed',
-        opacity: opacity.disabledContainer,
+      selectors: {
+        '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
+        '&:focus-visible': {
+          outline: `2px solid ${border.focus}`,
+          outlineOffset: '2px',
+        },
+        '&[aria-pressed="true"]': {
+          color: accent.strong,
+          backgroundColor: accent.surface,
+          borderColor: accent.normal,
+        },
+        '&[aria-pressed="true"]:hover:not(:disabled)': { backgroundColor: accent.subtle },
+        '&:disabled': {
+          cursor: 'not-allowed',
+          opacity: opacity.disabledContainer,
+        },
       },
     },
-  },
+  ],
 
   variants: {
     size: {

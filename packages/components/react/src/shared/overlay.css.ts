@@ -1,6 +1,7 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
+import { pressable } from './press.css';
 import { hoverLayer } from './state';
 
 const { surface, border, textColor, accent } = vars.color.$semantic;
@@ -117,29 +118,32 @@ export const menu = style({
  * pointer and the keyboard. Styling `:hover` instead is the bug where arrowing
  * through a menu highlights nothing until you touch the mouse.
  */
-export const item = style({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  gap: vars.spacing[8],
-  // Left padding leaves room for a check mark, so a list of options does not
-  // shift sideways when one of them becomes selected.
-  padding: `${vars.spacing[8]} ${vars.spacing[10]} ${vars.spacing[8]} ${vars.spacing[28]}`,
-  borderRadius: vars.borderRadius[6],
-  color: textColor.normal,
-  ...textMetrics(14),
-  cursor: 'pointer',
-  userSelect: 'none',
-  outline: 'none',
-  selectors: {
-    '&[data-highlighted]': { backgroundImage: hoverLayer },
-    '&[data-state="checked"]': { color: accent.strong },
-    '&[data-disabled]': {
-      cursor: 'not-allowed',
-      opacity: opacity.disabledContent,
+export const item = style([
+  pressable,
+  {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    gap: vars.spacing[8],
+    // Left padding leaves room for a check mark, so a list of options does not
+    // shift sideways when one of them becomes selected.
+    padding: `${vars.spacing[8]} ${vars.spacing[10]} ${vars.spacing[8]} ${vars.spacing[28]}`,
+    borderRadius: vars.borderRadius[6],
+    color: textColor.normal,
+    ...textMetrics(14),
+    cursor: 'pointer',
+    userSelect: 'none',
+    outline: 'none',
+    selectors: {
+      '&[data-highlighted]': { backgroundImage: hoverLayer },
+      '&[data-state="checked"]': { color: accent.strong },
+      '&[data-disabled]': {
+        cursor: 'not-allowed',
+        opacity: opacity.disabledContent,
+      },
     },
   },
-});
+]);
 
 /** For menus with no selectable state, where the check-mark gutter would be dead space. */
 export const itemFlush = style({

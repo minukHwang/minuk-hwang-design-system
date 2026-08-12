@@ -76,7 +76,7 @@ export const BaseButton = React.forwardRef<HTMLElement, BaseButtonProps>(functio
    * 2. Custom Hooks
    * --------------------------------------------
    */
-  const { pressProps, virtualPressProps } = usePress({
+  const { isPressed, pressProps, virtualPressProps } = usePress({
     disabled: isDisabled,
     onPress: e => onClick?.(e as React.MouseEvent<HTMLElement>),
     onPressStart: e => onPointerDown?.(e as React.PointerEvent<HTMLElement>),
@@ -91,6 +91,16 @@ export const BaseButton = React.forwardRef<HTMLElement, BaseButtonProps>(functio
   const shared = {
     ...rest,
     'aria-busy': loading || undefined,
+    /*
+     * The press, as an attribute the stylesheet can select on.
+     *
+     * `:active` covers a mouse and little else — it never fires for a keyboard
+     * activation, and touch support for it is inconsistent enough that a
+     * control can react to a cursor and not to a finger. The hook watches all
+     * three; this is how it reaches CSS. What pressing looks like is decided a
+     * layer up, which is why this says only that it is happening.
+     */
+    'data-pressed': isPressed || undefined,
   };
 
   /*
@@ -105,7 +115,11 @@ export const BaseButton = React.forwardRef<HTMLElement, BaseButtonProps>(functio
       <button
         {...(shared as React.ButtonHTMLAttributes<HTMLButtonElement>)}
         {...pressProps}
-        onKeyDown={onKeyDown}
+        // Merged rather than replaced: `pressProps` puts a key handler here to
+        // track the press, and the caller's has to run alongside it. Neither
+        // fires `onPress`, so the double-activation the note above warns about
+        // is not in play.
+        onKeyDown={mergeHandlers(onKeyDown, pressProps.onKeyDown)}
         ref={ref as React.Ref<HTMLButtonElement>}
         type={type}
         disabled={isDisabled}

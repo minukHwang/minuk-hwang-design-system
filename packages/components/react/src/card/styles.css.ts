@@ -1,6 +1,7 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
+import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
 const { surface, border } = vars.color.$semantic;
@@ -30,19 +31,22 @@ export const elevation = styleVariants({
 
 export type CardElevation = keyof typeof elevation;
 
-export const interactive = style({
-  cursor: 'pointer',
-  transitionProperty: 'background-image, box-shadow',
-  transitionDuration: vars.motion.duration[100],
-  transitionTimingFunction: vars.motion.easing.standard,
-  selectors: {
-    '&:hover': { backgroundImage: hoverLayer, boxShadow: vars.shadow.s },
-    '&:focus-visible': {
-      outline: `2px solid ${border.focus}`,
-      outlineOffset: '2px',
+export const interactive = style([
+  pressable,
+  {
+    cursor: 'pointer',
+    transitionProperty: 'background-image, box-shadow',
+    transitionDuration: vars.motion.duration[100],
+    transitionTimingFunction: vars.motion.easing.standard,
+    selectors: {
+      '&:hover': { backgroundImage: hoverLayer, boxShadow: vars.shadow.s },
+      '&:focus-visible': {
+        outline: `2px solid ${border.focus}`,
+        outlineOffset: '2px',
+      },
     },
   },
-});
+]);
 
 /*
  * Sections.
