@@ -6,7 +6,7 @@ import { iconSize } from '../shared/icon-size.css';
 import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
-const { accent, background, border, status, textColor } = vars.color.$semantic;
+const { accent, background, border, neutral, status, textColor } = vars.color.$semantic;
 const { opacity } = vars;
 
 /**
@@ -171,11 +171,38 @@ export const buttonRecipe = recipe({
           '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
         },
       },
-      /** Everything else that is still a real action. */
+      /**
+       * Everything else that is still a real action.
+       *
+       * A filled button in the neutral tone: the tint a thing paints itself when
+       * it has no hue to take one from. It carries weight beside a primary
+       * without competing for the same colour, and unlike the outline it does
+       * not need a border to be a shape.
+       *
+       * The tone's own tint, the same one its badge is filled with.
+       *
+       * It is quiet against a dialog in the dark theme — `surface` and the
+       * overlay level are the same colour to within a part in 255 — which is the
+       * price of the button matching the badge. A dialog wanting a neutral
+       * button there should reach for `outline`.
+       */
       secondary: {
         color: textColor.normal,
-        // The canvas rather than the component surface, so a secondary button
-        // stays legible on a card that is already painted `surface.default`.
+        backgroundColor: neutral.surface,
+        selectors: {
+          '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
+        },
+      },
+      /**
+       * The same weight drawn as an edge instead of a fill.
+       *
+       * For a button on a surface that is already busy, or beside a filled one
+       * where two fills would read as two primaries. `raised` rather than
+       * transparent, so it stays a button on a page that has been tinted rather
+       * than a hole in it.
+       */
+      outline: {
+        color: textColor.normal,
         backgroundColor: background.raised,
         borderColor: border.normal,
         selectors: {

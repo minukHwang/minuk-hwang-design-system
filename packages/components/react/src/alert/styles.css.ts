@@ -1,7 +1,7 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 
-const { accent, fill, status, textColor } = vars.color.$semantic;
+const { accent, neutral, status } = vars.color.$semantic;
 
 export const root = style({
   display: 'flex',
@@ -36,12 +36,14 @@ globalStyle(`${root} > *:not([data-alert-part])`, {
  * border is a fraction of it: at full strength the outline of a small button
  * competes with the message it sits beside.
  *
- * Only the two variants that are not filled. A `primary` or `danger` button has
- * a text colour measured against its own fill, and inheriting the panel's would
- * put the tone's text on the accent's background — a pairing nothing has
- * checked.
+ * Only the two variants that are not filled. `primary` and `danger` have a text
+ * colour measured against their own fill, and inheriting the panel's would put
+ * the tone's text on the accent's background — a pairing nothing has checked.
+ * `secondary` is filled too, in the neutral tone, and a grey block on a red
+ * panel is the thing this rule exists to prevent; it is left alone here because
+ * an alert should be reaching for `outline` or `ghost` in the first place.
  */
-globalStyle(`${root} [data-variant='secondary'], ${root} [data-variant='ghost']`, {
+globalStyle(`${root} [data-variant='outline'], ${root} [data-variant='ghost']`, {
   color: 'inherit',
   backgroundColor: 'transparent',
   borderColor: `color-mix(in srgb, currentColor 32%, transparent)`,
@@ -56,7 +58,7 @@ globalStyle(`${root} [data-variant='secondary'], ${root} [data-variant='ghost']`
  * text and can darken for free.
  */
 globalStyle(
-  `${root} [data-variant='secondary']:hover:not(:disabled), ${root} [data-variant='ghost']:hover:not(:disabled)`,
+  `${root} [data-variant='outline']:hover:not(:disabled), ${root} [data-variant='ghost']:hover:not(:disabled)`,
   { borderColor: `color-mix(in srgb, currentColor 64%, transparent)` }
 );
 
@@ -72,8 +74,8 @@ globalStyle(
  */
 export const tone = styleVariants({
   neutral: {
-    color: textColor.normal,
-    backgroundColor: fill.subtle,
+    color: neutral.strong,
+    backgroundColor: neutral.surface,
   },
   accent: {
     color: accent.strong,
@@ -113,7 +115,7 @@ export type AlertTone = keyof typeof tone;
  * Without it an error alert answered itself with a blue button.
  */
 const solidAction: Record<AlertTone, { fill: string; label: string }> = {
-  neutral: { fill: textColor.normal, label: textColor.inverse },
+  neutral: { fill: neutral.normal, label: neutral.onNormal },
   accent: { fill: accent.normal, label: accent.onNormal },
   info: { fill: status.info.normal, label: status.info.onNormal },
   success: { fill: status.success.normal, label: status.success.onNormal },
