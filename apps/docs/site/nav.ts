@@ -38,6 +38,7 @@ export const nav: NavSection[] = [
     items: [
       { href: '/theme', label: 'Theme' },
       { href: '/tokens/colour', label: 'Colour' },
+      { href: '/tokens/elevation', label: 'Elevation' },
       { href: '/tokens/scales', label: 'Spacing, radius, type' },
       { href: '/tokens/shadow', label: 'Shadow' },
       { href: '/tokens/motion', label: 'Motion' },
