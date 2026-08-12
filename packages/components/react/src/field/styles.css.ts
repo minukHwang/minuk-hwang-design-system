@@ -28,7 +28,7 @@ export const required = style({
 });
 
 export const disabled = style({
-  opacity: opacity.disabledContent,
+  opacity: opacity.disabled,
 });
 
 /**

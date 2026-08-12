@@ -139,7 +139,7 @@ export const item = style([
       '&[data-state="checked"]': { color: accent.strong },
       '&[data-disabled]': {
         cursor: 'not-allowed',
-        opacity: opacity.disabledContent,
+        opacity: opacity.disabled,
       },
     },
   },

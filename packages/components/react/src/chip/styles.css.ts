@@ -63,7 +63,7 @@ export const chipRecipe = recipe({
         '&[aria-pressed="true"]:hover:not(:disabled)': { backgroundColor: accent.subtle },
         '&:disabled': {
           cursor: 'not-allowed',
-          opacity: opacity.disabledContainer,
+          opacity: opacity.disabled,
         },
       },
     },

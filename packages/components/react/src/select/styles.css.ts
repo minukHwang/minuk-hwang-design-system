@@ -49,7 +49,7 @@ const trigger = style({
     '&[data-disabled]': {
       cursor: 'not-allowed',
       backgroundColor: fill.subtle,
-      opacity: opacity.disabledContainer,
+      opacity: opacity.disabled,
     },
   },
 });

@@ -55,7 +55,7 @@ export const root = style({
     },
     '&[data-disabled]': {
       cursor: 'not-allowed',
-      opacity: opacity.disabledContainer,
+      opacity: opacity.disabled,
     },
   },
 });

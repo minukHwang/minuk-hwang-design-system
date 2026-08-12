@@ -44,7 +44,7 @@ const control = style({
     '&:disabled': {
       backgroundColor: fill.subtle,
       cursor: 'not-allowed',
-      opacity: opacity.disabledContainer,
+      opacity: opacity.disabled,
     },
     '&:read-only:not(:disabled)': { backgroundColor: fill.subtle },
   },

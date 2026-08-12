@@ -76,7 +76,7 @@ const control = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[data-disabled]': {
       cursor: 'not-allowed',
-      opacity: opacity.disabledContainer,
+      opacity: opacity.disabled,
     },
   },
 });
@@ -167,7 +167,7 @@ export const row = style({
  * label names a control rather than setting a paragraph, so it takes the tight
  * line the scale pairs with that size rather than the reading one.
  */
-const labelDisabled = { cursor: 'not-allowed', opacity: opacity.disabledContent } as const;
+const labelDisabled = { cursor: 'not-allowed', opacity: opacity.disabled } as const;
 
 export const rowLabel = style({
   ...textMetrics(15),

@@ -118,7 +118,7 @@ export const buttonRecipe = recipe({
         '&[aria-busy="true"]': { cursor: 'progress' },
         '&:disabled, &[aria-disabled="true"]': {
           cursor: 'not-allowed',
-          opacity: opacity.disabledContainer,
+          opacity: opacity.disabled,
         },
       },
     },

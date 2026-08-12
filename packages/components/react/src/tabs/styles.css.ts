@@ -76,7 +76,7 @@ export const trigger = style({
       outlineOffset: '-2px',
       borderRadius: vars.borderRadius[4],
     },
-    '&[data-disabled]': { cursor: 'not-allowed', opacity: opacity.disabledContent },
+    '&[data-disabled]': { cursor: 'not-allowed', opacity: opacity.disabled },
   },
 });
 
