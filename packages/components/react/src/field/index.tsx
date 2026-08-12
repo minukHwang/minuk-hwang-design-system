@@ -193,7 +193,16 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function FieldDescr
   const { descriptionId, register } = useField('Description');
   React.useEffect(() => register('description'), [register]);
 
-  return <Text {...props} ref={ref} id={descriptionId} size={size} color={color} />;
+  return (
+    <Text
+      {...props}
+      ref={ref}
+      id={descriptionId}
+      size={size}
+      color={color}
+      className={clsx(css.description, props.className)}
+    />
+  );
 });
 
 /**
