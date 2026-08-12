@@ -5,7 +5,7 @@ import { pressable } from '../shared/press.css';
 import { hoverLayer } from '../shared/state';
 
 const { border, textColor } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { opacity } = vars;
 
 /**
  * Height animation without knowing the height.

@@ -1,8 +1,8 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 
-const { accent, border, surface } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { accent, background, border } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * A switch takes effect immediately; a checkbox waits for a submit.
@@ -79,7 +79,7 @@ export const thumb = style({
    * negative, which is not a radius.
    */
   borderRadius: `max(0px, calc(${vars.borderRadius[12]} - 2px))`,
-  backgroundColor: surface.raised,
+  backgroundColor: background.raised,
   boxShadow: vars.shadow.xs,
   transform: 'translateX(0)',
   transitionProperty: 'transform',

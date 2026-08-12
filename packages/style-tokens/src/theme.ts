@@ -161,3 +161,36 @@ export const radiusFactors: Record<RadiusScale, number> = {
 };
 
 export const defaultRadiusScale: RadiusScale = 'medium';
+
+/*
+ * ============================================
+ * Page background
+ * ============================================
+ */
+
+/**
+ * Which level the page itself sits on.
+ *
+ * `base` is a page below the surfaces on it: a tinted ground with white cards,
+ * which is what a settings screen looks like on every platform. `raised` puts
+ * the page level with them, which is the white-page arrangement — and there the
+ * colour that separated a card from the page is gone, so the card has to say so
+ * with a border. `Card`'s `outlined` already does that.
+ *
+ * Two things make this unlike the other dials, and both are deliberate.
+ *
+ * It only moves in the light theme. Light reaches white at `raised` and has
+ * nothing above it, so bringing the page up is the only way to arrange the two
+ * levels differently; dark has room above `raised` and its page is already as
+ * far from white as it goes. There is no dark equivalent to ask for.
+ *
+ * And it is read at the root rather than per subtree. `Theme` renders a `div`,
+ * and the page is `body`, which no `div` contains — a nested one would recolour
+ * its own children and leave the page it was talking about untouched. So this
+ * belongs on the document, and a nested `Theme` ignores it.
+ */
+export const pageBackgrounds = ['base', 'raised'] as const;
+
+export type PageBackground = (typeof pageBackgrounds)[number];
+
+export const defaultPageBackground: PageBackground = 'base';

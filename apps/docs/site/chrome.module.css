@@ -21,7 +21,7 @@
   height: var(--topbar);
   padding: 0 var(--spacing-20);
   border-bottom: 1px solid var(--border-subtle);
-  background: color-mix(in srgb, var(--surface-base) 82%, transparent);
+  background: color-mix(in srgb, var(--background-base) 82%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -64,7 +64,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  background: var(--surface-base);
+  background: var(--background-base);
 }
 
 /*
@@ -275,7 +275,7 @@
 /* Two rings rather than a border, so the mark reads on a swatch of any hue. */
 .swatchActive {
   box-shadow:
-    0 0 0 2px var(--surface-base),
+    0 0 0 2px var(--background-base),
     0 0 0 4px var(--accent-500);
 }
 
@@ -366,7 +366,7 @@
     display: none;
     max-height: calc(100vh - var(--topbar));
     border-bottom: 1px solid var(--border-subtle);
-    background: var(--surface-base);
+    background: var(--background-base);
   }
 
   .nav[data-open] {
@@ -391,7 +391,7 @@
     z-index: -1;
     padding: 0;
     border: none;
-    background: var(--surface-scrim);
+    background: var(--background-scrim);
     cursor: default;
   }
 

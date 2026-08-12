@@ -1,6 +1,18 @@
 import './index.css';
 
 export * as vars from './variables';
+
+/*
+ * The generated per-theme scales, for the stylesheet generator and nothing else.
+ *
+ * Out of `vars.color`, where it sat as `$static` beside the three groups a
+ * component is meant to read. Its own note said reaching for it "almost always
+ * means a semantic token is missing", which is an odd thing to say about
+ * something shelved at eye level. It has to stay exported — the generator reads
+ * the built bundle, and esbuild emits one file — so it is moved rather than
+ * hidden: still reachable, no longer sitting in the token API.
+ */
+export * as generatedScales from './variables/color/static';
 export * as classes from './classes';
 
 /*
@@ -45,5 +57,7 @@ export {
   radiusScales,
   radiusFactors,
   defaultRadiusScale,
+  pageBackgrounds,
+  defaultPageBackground,
 } from './theme';
-export type { AccentColor, NeutralColor, RadiusScale } from './theme';
+export type { AccentColor, NeutralColor, RadiusScale, PageBackground } from './theme';

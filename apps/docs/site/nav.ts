@@ -34,7 +34,9 @@ export const nav: NavSection[] = [
     ],
   },
   {
-    title: 'Tokens',
+    // Not all of these are tokens — `Theme` is the dials — so the section is
+    // named for what they have in common instead.
+    title: 'Foundation',
     items: [
       { href: '/theme', label: 'Theme' },
       { href: '/tokens/colour', label: 'Colour' },

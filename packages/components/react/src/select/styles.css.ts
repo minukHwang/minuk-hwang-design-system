@@ -1,8 +1,8 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { fill, surface, border, textColor, status } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { background, border, neutral, status, textColor } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * The trigger is built to match `Input` exactly.
@@ -26,7 +26,7 @@ const trigger = style({
   borderStyle: 'solid',
   borderColor: border.normal,
   color: textColor.normal,
-  backgroundColor: surface.raised,
+  backgroundColor: background.raised,
   ...textMetrics(16),
   fontFamily: 'inherit',
   textAlign: 'left',
@@ -48,7 +48,7 @@ const trigger = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[data-disabled]': {
       cursor: 'not-allowed',
-      backgroundColor: fill.subtle,
+      backgroundColor: neutral.surface,
       opacity: opacity.disabledContainer,
     },
   },

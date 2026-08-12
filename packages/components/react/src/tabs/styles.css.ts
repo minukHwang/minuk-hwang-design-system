@@ -2,7 +2,7 @@ import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 
 const { border, textColor } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { opacity } = vars;
 
 export const root = style({
   display: 'flex',

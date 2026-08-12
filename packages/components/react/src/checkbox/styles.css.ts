@@ -1,8 +1,8 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 
-const { accent, surface, border, status } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { accent, background, border, status } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * Checkbox and radio share everything but the corner radius, which is the whole
@@ -55,7 +55,7 @@ const control = style({
   borderStyle: 'solid',
   borderColor: border.strong,
   color: accent.onNormal,
-  backgroundColor: surface.raised,
+  backgroundColor: background.raised,
   cursor: 'pointer',
   transitionProperty: 'background-color, border-color',
   transitionDuration: vars.motion.duration[70],

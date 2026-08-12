@@ -8,6 +8,7 @@
  */
 
 export * as color from './color';
+export * from './opacity';
 export * as typography from './typography';
 export * as motion from './motion';
 

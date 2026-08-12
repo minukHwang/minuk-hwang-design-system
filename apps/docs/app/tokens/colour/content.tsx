@@ -30,8 +30,8 @@ const HUES = [
 const NEUTRALS = ['mono', 'gray', 'slate'];
 
 const SEMANTIC = [
-  ['surface', ['base', 'raised', 'overlay']],
-  ['fill', ['subtle', 'strong']],
+  ['background', ['base', 'raised', 'overlay']],
+  ['neutral', ['surface', 'subtle', 'normal']],
   ['border', ['subtle', 'normal', 'strong', 'focus']],
   ['accent', ['surface', 'subtle', 'normal', 'strong']],
 ] as const;
@@ -146,80 +146,6 @@ export default function ColourPage() {
         </div>
       </Preview>
 
-      <Prose>
-        <p>
-          No two hues sit closer than 14°, the point where two ramps stop reading as separate
-          families. Equal HSL lightness is not equal perceived brightness, so cyan and green are
-          pulled down. Without that, <code>teal-500</code> is <code>#00ffea</code>.
-        </p>
-      </Prose>
-
-      <Callout>
-        Reach for the semantic tokens below, not a raw step. <code>pink500</code> says what a colour
-        is; <code>status.error.normal</code> says what it is for, and only the second survives a
-        decision to make errors crimson.
-      </Callout>
-
-      <Preview
-        title="Semantic"
-        description="What a colour is for. Surface is elevation and fill is what sits on it; see Elevation for the pair."
-        stack
-      >
-        <div className={css.ramps}>
-          {SEMANTIC.map(([group, keys]) => (
-            <div key={group} className={css.ramp}>
-              <div className={css.rampName}>{group}</div>
-              <div className={css.swatches}>
-                {keys.map(key => (
-                  <div
-                    key={key}
-                    className={css.swatch}
-                    style={{ background: `var(--${group}-${key})` }}
-                    title={`${group}.${key}`}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-          {STATUS.map(status => (
-            <div key={status} className={css.ramp}>
-              <div className={css.rampName}>status.{status}</div>
-              <div className={css.swatches}>
-                {STATUS_STEPS.map(step => (
-                  <div
-                    key={step}
-                    className={css.swatch}
-                    style={{ background: `var(--status-${status}-${step})` }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Preview>
-
-      <Preview
-        title="Text on each fill"
-        description="onNormal records the colour that clears AA on that fill, so no component has to decide."
-        stack
-      >
-        {STATUS.map(status => (
-          <div
-            key={status}
-            style={{
-              padding: '12px 16px',
-              borderRadius: 8,
-              background: `var(--status-${status}-normal)`,
-              color: `var(--status-${status}-on-normal)`,
-            }}
-          >
-            <Text as="span" size={5} weight="bold" style={{ color: 'inherit' }}>
-              status.{status}.onNormal
-            </Text>
-          </div>
-        ))}
-      </Preview>
-
       <Preview
         title="Absolute"
         description="Four groups that do not follow the theme. Black and white are literals; dim and lighten are operations that work over anything."
@@ -282,26 +208,78 @@ export default function ColourPage() {
         <code>color.black</code> or <code>color.white</code>, which already exist above.
       </Callout>
 
+      <Prose>
+        <p>
+          No two hues sit closer than 14°, the point where two ramps stop reading as separate
+          families. Equal HSL lightness is not equal perceived brightness, so cyan and green are
+          pulled down. Without that, <code>teal-500</code> is <code>#00ffea</code>.
+        </p>
+      </Prose>
+
+      <Callout>
+        Reach for the semantic tokens below, not a raw step. <code>pink500</code> says what a colour
+        is; <code>status.error.normal</code> says what it is for, and only the second survives a
+        decision to make errors crimson.
+      </Callout>
+
       <Preview
-        title="Opacity"
-        description="Two values, both for disabled, and the only ones that dim an element rather than paint over it."
+        title="Semantic"
+        description="What a colour is for. Background is elevation; every tone including neutral carries the same five roles."
         stack
       >
-        <div className={css.opacityDemo}>
-          <Text as="span" size={4}>
-            At rest
-          </Text>
+        <div className={css.ramps}>
+          {SEMANTIC.map(([group, keys]) => (
+            <div key={group} className={css.ramp}>
+              <div className={css.rampName}>{group}</div>
+              <div className={css.swatches}>
+                {keys.map(key => (
+                  <div
+                    key={key}
+                    className={css.swatch}
+                    style={{ background: `var(--${group}-${key})` }}
+                    title={`${group}.${key}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+          {STATUS.map(status => (
+            <div key={status} className={css.ramp}>
+              <div className={css.rampName}>status.{status}</div>
+              <div className={css.swatches}>
+                {STATUS_STEPS.map(step => (
+                  <div
+                    key={step}
+                    className={css.swatch}
+                    style={{ background: `var(--status-${status}-${step})` }}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-        <div className={css.opacityDemo} style={{ opacity: 'var(--opacity-disabled-container)' }}>
-          <Text as="span" size={4}>
-            opacity.disabledContainer, 0.12
-          </Text>
-        </div>
-        <div className={css.opacityDemo}>
-          <Text as="span" size={4} style={{ opacity: 'var(--opacity-disabled-content)' }}>
-            opacity.disabledContent, 0.38
-          </Text>
-        </div>
+      </Preview>
+
+      <Preview
+        title="Text on each fill"
+        description="onNormal records the colour that clears AA on that fill, so no component has to decide."
+        stack
+      >
+        {STATUS.map(status => (
+          <div
+            key={status}
+            style={{
+              padding: '12px 16px',
+              borderRadius: 8,
+              background: `var(--status-${status}-normal)`,
+              color: `var(--status-${status}-on-normal)`,
+            }}
+          >
+            <Text as="span" size={5} weight="bold" style={{ color: 'inherit' }}>
+              status.{status}.onNormal
+            </Text>
+          </div>
+        ))}
       </Preview>
 
       <Preview

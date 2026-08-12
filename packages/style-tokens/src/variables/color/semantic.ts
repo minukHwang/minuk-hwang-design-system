@@ -34,12 +34,18 @@ const neutralScale = Object.fromEntries(
 
 /*
  * ============================================
- * Surfaces
+ * Background
  * ============================================
  */
 
 /**
  * Levels, ordered from the page outwards. Elevation and nothing else.
+ *
+ * `background` rather than `surface`, because the ramps below already use
+ * `surface` for something else: `status.error.surface` is the fill a red badge
+ * paints itself, not a level. One word for a level and a fill made a badge and a
+ * dialog look like the same kind of thing. Apple calls this `systemBackground`
+ * and its two neighbours, which is the same distinction in the same order.
  *
  * These used to hold interaction states too — `hover` and `pressed` sat on the
  * same ladder as the page and the card, one rung apart. That made "one step up"
@@ -50,7 +56,7 @@ const neutralScale = Object.fromEntries(
  * So the ladder is levels, and interaction is `state` below, painted over
  * whichever level it lands on.
  */
-export const surface = {
+export const background = {
   /**
    * The page itself, and the one level an application is expected to change.
    *
@@ -78,35 +84,6 @@ export const surface = {
   overlay: `color-mix(in srgb, ${color.white} 5%, ${neutralScale[50]})`,
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
-};
-
-/*
- * ============================================
- * Fills
- * ============================================
- */
-
-/**
- * A neutral element sitting *on* a surface, rather than a surface of its own.
- *
- * These are what `status.error.surface` is for a red badge: the fill a small
- * thing paints itself when it has no hue to take one from. A neutral badge, a
- * neutral alert, a disabled control, the well behind an avatar's initials.
- *
- * They were levels for a while, named `sunken` and `deep`, and the names were
- * the bug. A level has to move away from white as it goes down, and these move
- * *towards* it in the dark theme — which is correct for a fill, because a badge
- * on a dark card is only visible if it is lighter, and wrong for a level. Once
- * they stopped claiming to be depth the contradiction went with the name.
- *
- * `strong` is firmer, not deeper. The avatar's well is dark enough to read
- * initials against, not sunk further into the page.
- */
-export const fill = {
-  /** A quiet element on a surface. */
-  subtle: neutralScale[100],
-  /** The same, one step firmer, where `subtle` would collide with a hover. */
-  strong: neutralScale[200],
 };
 
 /*
@@ -265,8 +242,47 @@ export const textColor = {
    * Not for text on a coloured fill. Those read `onNormal`, which is measured
    * per hue per theme.
    */
-  inverse: surface.raised,
+  inverse: background.raised,
   link: palette.blue[600],
+};
+
+/*
+ * ============================================
+ * Neutral
+ * ============================================
+ */
+
+/**
+ * The sixth tone, built like the other five.
+ *
+ * A `Badge` has six tones and five of them read a ramp — `status.error.surface`
+ * for the fill, `.strong` for the text on it, `.onNormal` for the text on the
+ * solid. The neutral one had nowhere to read from, so it borrowed: a fill from
+ * one group, its text from another, its border from a third. Same shape as its
+ * siblings, assembled by hand at every call site.
+ *
+ * Not `buildRamp`, because a neutral has no saturated step to be `normal`. A
+ * grey solid badge is near-black on light and near-white on dark, not mid-grey —
+ * #808080 carries neither text colour above 4:1. So `normal` sits at the far end
+ * of the ramp where the other tones sit at 500, and `strong` lands on the same
+ * step: on a pale grey the text that reads is the same near-black that a solid
+ * badge is filled with. For a hue those two differ; here they meet.
+ *
+ * Every value is what the components were already using, so nothing moves on
+ * screen. What changes is that a sixth tone can now be written the way the other
+ * five are.
+ */
+export const neutral = {
+  /** Filled background for a quiet badge or banner, and for a disabled control. */
+  surface: neutralScale[100],
+  /** Its border, and any fill that needs to sit clear of a hovered surface. */
+  subtle: neutralScale[200],
+  /** Solid fill. */
+  normal: neutralScale[950],
+  /** Text on `surface`. */
+  strong: neutralScale[950],
+  /** Text on `normal`. */
+  onNormal: background.raised,
 };
 
 /*

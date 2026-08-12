@@ -14,18 +14,18 @@ const LEVELS = [
 ] as const;
 
 const FILLS = [
-  ['subtle', 'A quiet element on a surface: a neutral badge, a disabled control.'],
-  ['strong', 'The same, one step firmer: the well behind an avatar\u2019s initials.'],
+  ['surface', 'A quiet badge or banner, and a disabled control.'],
+  ['subtle', 'Its border, and any fill that has to clear a hovered surface.'],
 ] as const;
 
 /**
  * The white-page arrangement, driven by the real mechanism rather than a mockup.
  *
- * Setting `--surface-base` to the raised value is exactly what an application
+ * Setting `--background-base` to the raised value is exactly what an application
  * does, so this block is the documentation and the demonstration at once: get it
  * wrong here and the example stops working.
  */
-const WHITE_PAGE = { '--surface-base': 'var(--surface-raised)' } as React.CSSProperties;
+const WHITE_PAGE = { '--background-base': 'var(--background-raised)' } as React.CSSProperties;
 
 export default function ElevationPage() {
   return (
@@ -43,9 +43,9 @@ export default function ElevationPage() {
           {LEVELS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
               <Text as="span" size={2} className={css.token}>
-                surface.{name}
+                background.{name}
               </Text>
-              <span className={css.levelChip} style={{ background: `var(--surface-${name})` }} />
+              <span className={css.levelChip} style={{ background: `var(--background-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
               </Text>
@@ -55,17 +55,17 @@ export default function ElevationPage() {
       </Preview>
 
       <Preview
-        title="Fills"
-        description="Not levels. These are what a neutral element paints itself when it has no hue to take a fill from, the way status.error.surface serves a red badge."
+        title="The neutral tone"
+        description="Not levels. Neutral is a tone like the other five, so a grey badge is built the same way a red one is."
         stack
       >
         <div className={css.rows}>
           {FILLS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
               <Text as="span" size={2} className={css.token}>
-                fill.{name}
+                neutral.{name}
               </Text>
-              <span className={css.levelChip} style={{ background: `var(--fill-${name})` }} />
+              <span className={css.levelChip} style={{ background: `var(--neutral-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
               </Text>
@@ -81,16 +81,16 @@ export default function ElevationPage() {
       >
         <div className={css.levelStage}>
           <Text as="span" size={2} color="assistive">
-            surface.base
+            background.base
           </Text>
           <div className={css.levelCard}>
             <Text as="span" size={3}>
-              surface.raised
+              background.raised
             </Text>
           </div>
           <div className={css.levelFloat}>
             <Text as="span" size={3}>
-              surface.overlay
+              background.overlay
             </Text>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function ElevationPage() {
               A row on the page
             </Text>
             <Text as="span" size={2} color="assistive">
-              surface.base
+              background.base
             </Text>
           </div>
           <div className={css.levelCard} style={{ padding: 6 }}>
@@ -122,7 +122,7 @@ export default function ElevationPage() {
                 A row on a card
               </Text>
               <Text as="span" size={2} color="assistive">
-                surface.raised
+                background.raised
               </Text>
             </div>
           </div>
@@ -137,15 +137,15 @@ export default function ElevationPage() {
 
       <Preview
         title="A white page"
-        description="Point base at raised. The page has no room left above it, so a card marks itself with a border instead of a colour."
+        description="Set pageBackground on the outermost Theme. It moves in the light theme only, and the page then has no room left above it, so a card marks itself with a border."
         stack
-        code={`<div style={{ '--surface-base': 'var(--surface-raised)' }}>
+        code={`<div style={{ '--background-base': 'var(--background-raised)' }}>
   <Card.Root elevation="outlined">…</Card.Root>
 </div>`}
       >
         <div className={css.levelStage} style={WHITE_PAGE}>
           <Text as="span" size={2} color="assistive">
-            surface.base, pointed at raised
+            pageBackground raised
           </Text>
           <div
             className={css.levelCard}
@@ -166,12 +166,12 @@ export default function ElevationPage() {
       <Section title="Tokens">
         <div className={css.rows}>
           {[
-            ['surface.base', 'neutral 10'],
-            ['surface.raised', 'neutral 50'],
-            ['surface.overlay', 'raised, mixed 5% towards white'],
-            ['surface.scrim', 'dim 500, behind a modal'],
-            ['fill.subtle', 'neutral 100'],
-            ['fill.strong', 'neutral 200'],
+            ['background.base', 'neutral 10'],
+            ['background.raised', 'neutral 50'],
+            ['background.overlay', 'raised, mixed 5% towards white'],
+            ['background.scrim', 'dim 500, behind a modal'],
+            ['neutral.surface', 'neutral 100'],
+            ['neutral.subtle', 'neutral 200'],
             ['state.hover', 'dim 100 on light, lighten 100 on dark'],
             ['state.pressed', 'dim 200 on light, lighten 200 on dark'],
           ].map(([name, value]) => (

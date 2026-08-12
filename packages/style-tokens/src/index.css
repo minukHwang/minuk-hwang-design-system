@@ -197,6 +197,15 @@ input:focus {
  * default, so those two are named explicitly rather than reaching for `*`.
  */
 body {
+  /*
+   * The page paints itself.
+   *
+   * It did not, and every consumer was left to work out that the ground under
+   * the components is `--background-base` — the docs site had been painting it
+   * by hand. A design system that ships a page level and then leaves the page
+   * unpainted has published half a decision.
+   */
+  background: var(--background-base);
   color: var(--text-color-normal);
   font-family: var(--font-family-main);
 }

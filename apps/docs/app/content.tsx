@@ -128,7 +128,7 @@ import '@minuk-hwang-design-system/components-react/button/style';`}
             </Card.Header>
             <Card.Body>
               <Text size={4} color="assistive">
-                One import gives you <code>bg-surface-raised</code>,{' '}
+                One import gives you <code>bg-background-raised</code>,{' '}
                 <code>text-status-error-strong</code> and the rest, with no <code>dark:</code>{' '}
                 anywhere, because the utilities compile to the variables the theme swaps.
               </Text>

@@ -2,7 +2,7 @@ import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 
 const { status } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { opacity } = vars;
 
 /**
  * Column with a single gap, so a field reads the same whether it has a

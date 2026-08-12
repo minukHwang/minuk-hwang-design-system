@@ -1,8 +1,8 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { fill, surface, border, textColor, status } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { background, border, neutral, status, textColor } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * Shared by `Input` and `Textarea`.
@@ -22,7 +22,7 @@ const control = style({
   borderStyle: 'solid',
   borderColor: border.normal,
   color: textColor.normal,
-  backgroundColor: surface.raised,
+  backgroundColor: background.raised,
   ...textMetrics(16),
   fontFamily: 'inherit',
   transitionProperty: 'border-color, box-shadow, background-color',
@@ -42,11 +42,11 @@ const control = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[aria-invalid]:focus': { boxShadow: `0 0 0 1px ${status.error.normal}` },
     '&:disabled': {
-      backgroundColor: fill.subtle,
+      backgroundColor: neutral.surface,
       cursor: 'not-allowed',
       opacity: opacity.disabledContainer,
     },
-    '&:read-only:not(:disabled)': { backgroundColor: fill.subtle },
+    '&:read-only:not(:disabled)': { backgroundColor: neutral.surface },
   },
 });
 

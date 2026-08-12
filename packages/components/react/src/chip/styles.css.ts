@@ -5,8 +5,8 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
-const { accent, surface, border, textColor } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { accent, background, border, textColor } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * Pill-shaped control: filters, tags, toggles.
@@ -41,7 +41,7 @@ export const chipRecipe = recipe({
       borderStyle: 'solid',
       borderColor: border.normal,
       color: textColor.normal,
-      backgroundColor: surface.raised,
+      backgroundColor: background.raised,
       backgroundImage: restLayer,
       whiteSpace: 'nowrap',
       cursor: 'pointer',

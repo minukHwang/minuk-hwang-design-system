@@ -160,6 +160,24 @@ const textRamp = (indent = '\t') =>
     .map(([role, step]) => `${indent}--text-${role}: var(--neutral-${step});`)
     .join('\n');
 
+/**
+ * The page's own level, which only has somewhere to go in the light theme.
+ *
+ * Scoped to light rather than emitted unconditionally, because `raised` in dark
+ * would drop the page onto the same value its cards use and leave them with
+ * nothing to separate them — see `pageBackgrounds`. Written against
+ * `:not([data-theme='dark'])` and repeated inside the media query, so it holds
+ * for an explicit light choice, for the default, and not for a dark one.
+ */
+const pageBlocks = () =>
+  theme.pageBackgrounds
+    .filter(level => level !== theme.defaultPageBackground)
+    .flatMap(level => [
+      `${SELECTOR}[data-page-background='${level}']:not([data-theme='dark']):not(.dark) {\n\t--background-base: var(--background-${level});\n}`,
+      `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}[data-page-background='${level}'][data-theme='light'], ${SELECTOR}[data-page-background='${level}'].light {\n\t\t--background-base: var(--background-${level});\n\t}\n}`,
+    ])
+    .join('\n\n');
+
 const PILL = theme.borderRadiusValues.full;
 
 /**
@@ -242,7 +260,8 @@ const radiusBlocks = () =>
  * names are the ones the theme blocks below rewrite.
  */
 export const generateCssVariables = () => {
-  const { $static, $absolute, $semantic } = theme.vars.color;
+  const { $absolute, $semantic } = theme.vars.color;
+  const { light: lightScales, dark: darkScales } = theme.generatedScales;
 
   // Absolute values sit in the light block because it doubles as the root.
   // They are not repeated per theme — that is what makes them absolute.
@@ -252,7 +271,6 @@ export const generateCssVariables = () => {
       .join('\n'),
     renderGroup('dim', $absolute.dim),
     renderGroup('lighten', $absolute.lighten),
-    renderGroup('opacity', $absolute.opacity),
   ].join('\n\n');
 
   // Semantic tokens resolve through the palette, so one definition covers both
@@ -286,7 +304,7 @@ export const generateCssVariables = () => {
     .join('\n\n');
 
   const root = [
-    renderTheme($static.light),
+    renderTheme(lightScales),
     absolute,
     accentRamp(theme.defaultAccentColor),
     neutralRamp(theme.defaultNeutralColor),
@@ -300,12 +318,12 @@ export const generateCssVariables = () => {
   return {
     light: `${SELECTOR} {\n${root}\n}`,
     // Only follow the OS when the page has not asked for a specific theme.
-    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]) {\n${renderTheme($static.dark, '\t\t')}\n\t}\n}`,
+    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]) {\n${renderTheme(darkScales, '\t\t')}\n\t}\n}`,
     darkClass: [`${SELECTOR}[data-theme="dark"]`, `${SELECTOR}.dark`]
-      .map(sel => `${sel} {\n${renderTheme($static.dark)}\n}`)
+      .map(sel => `${sel} {\n${renderTheme(darkScales)}\n}`)
       .join('\n\n'),
     lightClass: [`${SELECTOR}[data-theme="light"]`, `${SELECTOR}.light`]
-      .map(sel => `${sel} {\n${renderTheme($static.light)}\n}`)
+      .map(sel => `${sel} {\n${renderTheme(lightScales)}\n}`)
       .join('\n\n'),
   };
 };
@@ -318,7 +336,16 @@ export const generateCssVariables = () => {
  */
 export const cssVariableBlocks = () => {
   const { light, dark, darkClass, lightClass } = generateCssVariables();
-  return [light, dark, darkClass, lightClass, accentBlocks(), neutralBlocks(), radiusBlocks()];
+  return [
+    light,
+    dark,
+    darkClass,
+    lightClass,
+    accentBlocks(),
+    neutralBlocks(),
+    radiusBlocks(),
+    pageBlocks(),
+  ];
 };
 
 /** Webfonts the token set names. Bare specifiers, resolved by the consumer's bundler. */

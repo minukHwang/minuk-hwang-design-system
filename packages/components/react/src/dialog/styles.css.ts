@@ -1,7 +1,7 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 
-const { surface, border } = vars.color.$semantic;
+const { background, border } = vars.color.$semantic;
 
 /**
  * Rises 8px as it appears rather than scaling from the centre.
@@ -36,7 +36,7 @@ export const content = style({
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
-  backgroundColor: surface.overlay,
+  backgroundColor: background.overlay,
   boxShadow: vars.shadow.l,
   outline: 'none',
   selectors: {

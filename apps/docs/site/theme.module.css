@@ -48,7 +48,7 @@
 
 .swatchActive {
   box-shadow:
-    0 0 0 2px var(--surface-base),
+    0 0 0 2px var(--background-base),
     0 0 0 4px var(--accent-500);
 }
 
@@ -88,5 +88,5 @@
   padding: var(--spacing-16);
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius-12);
-  background: var(--surface-raised);
+  background: var(--background-raised);
 }

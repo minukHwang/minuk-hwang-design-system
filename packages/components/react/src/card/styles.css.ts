@@ -4,13 +4,13 @@ import { style, styleVariants } from '@vanilla-extract/css';
 import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
-const { surface, border } = vars.color.$semantic;
+const { background, border } = vars.color.$semantic;
 
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: vars.borderRadius[12],
-  backgroundColor: surface.raised,
+  backgroundColor: background.raised,
   backgroundImage: restLayer,
   overflow: 'hidden',
 });

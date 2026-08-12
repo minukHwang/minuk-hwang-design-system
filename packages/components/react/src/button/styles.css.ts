@@ -6,8 +6,8 @@ import { iconSize } from '../shared/icon-size.css';
 import { pressable } from '../shared/press.css';
 import { hoverLayer, restLayer } from '../shared/state';
 
-const { accent, surface, border, textColor, status } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { accent, background, border, status, textColor } = vars.color.$semantic;
+const { opacity } = vars;
 
 /**
  * The size's own horizontal padding, held in a property so the base can do
@@ -176,7 +176,7 @@ export const buttonRecipe = recipe({
         color: textColor.normal,
         // The canvas rather than the component surface, so a secondary button
         // stays legible on a card that is already painted `surface.default`.
-        backgroundColor: surface.raised,
+        backgroundColor: background.raised,
         borderColor: border.normal,
         selectors: {
           '&:hover:not(:disabled)': {

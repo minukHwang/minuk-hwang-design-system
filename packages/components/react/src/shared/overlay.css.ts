@@ -4,8 +4,8 @@ import { keyframes, style } from '@vanilla-extract/css';
 import { pressable } from './press.css';
 import { hoverLayer } from './state';
 
-const { surface, border, textColor, accent } = vars.color.$semantic;
-const { opacity } = vars.color.$absolute;
+const { accent, background, border, textColor } = vars.color.$semantic;
+const { opacity } = vars;
 
 /*
  * ============================================
@@ -72,7 +72,7 @@ export const panel = style({
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
-  backgroundColor: surface.overlay,
+  backgroundColor: background.overlay,
   boxShadow: vars.shadow.m,
   // Radix measures the space between the trigger and the viewport edge and
   // publishes it here. Without it a long menu near the bottom simply overflows.
@@ -84,7 +84,7 @@ export const scrim = style({
   position: 'fixed',
   inset: 0,
   zIndex: vars.zIndex.overlay,
-  backgroundColor: surface.scrim,
+  backgroundColor: background.scrim,
   selectors: {
     '&[data-state="open"]': {
       animationName: overlayIn,

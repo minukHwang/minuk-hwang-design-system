@@ -43,7 +43,7 @@
   gap: var(--spacing-12);
   flex-wrap: wrap;
   padding: var(--spacing-28) var(--spacing-24);
-  background: var(--surface-base);
+  background: var(--background-base);
 }
 
 .stageStack {
@@ -56,7 +56,7 @@
   margin: 0;
   padding: var(--spacing-16);
   border-top: 1px solid var(--border-subtle);
-  background: var(--surface-raised);
+  background: var(--background-raised);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   line-height: var(--line-height-21);
@@ -176,7 +176,7 @@
 
 /* Its own surface, so the header reads as a header without a heavier rule. */
 .table thead {
-  background: var(--surface-raised);
+  background: var(--background-raised);
 }
 
 .table th {

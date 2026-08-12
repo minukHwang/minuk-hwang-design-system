@@ -48,8 +48,12 @@ body {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: var(--neutral-10);
-  color: var(--text-color-normal);
+  /*
+   * No background or colour here. The token stylesheet paints `body` now, and
+   * this was reading `--neutral-10` off the ramp directly — a step below the
+   * level it meant, which would have gone on ignoring `pageBackground` while
+   * looking correct.
+   */
 }
 
 /*

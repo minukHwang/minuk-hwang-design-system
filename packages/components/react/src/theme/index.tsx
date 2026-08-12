@@ -1,6 +1,7 @@
 import type {
   AccentColor,
   NeutralColor,
+  PageBackground,
   RadiusScale,
 } from '@minuk-hwang-design-system/style-tokens';
 import clsx from 'clsx';
@@ -14,7 +15,7 @@ import * as css from './styles.css';
  * ============================================
  */
 
-export type { AccentColor, NeutralColor, RadiusScale };
+export type { AccentColor, NeutralColor, PageBackground, RadiusScale };
 
 export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
   /**
@@ -40,6 +41,22 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
    * including pills, which is what asking for no radius means.
    */
   radius?: RadiusScale;
+  /**
+   * Which level the page itself sits on.
+   *
+   * `base` is the default: a tinted page with the surfaces raised off it.
+   * `raised` brings the page level with them, which is the white-page
+   * arrangement — and there the colour that told a card from the page is gone,
+   * so give cards `elevation="outlined"`.
+   *
+   * Two things separate this from the dials above. It only moves in the light
+   * theme, because dark has no equivalent to ask for: its page is already as far
+   * from white as the ramp goes. And it is written to `<html>` rather than to
+   * this element, because the page is `body` and no `div` contains it — a nested
+   * `Theme` would recolour its own children and leave the page alone. So the
+   * outermost `Theme` on a document wins, and a nested one ignores it.
+   */
+  pageBackground?: PageBackground;
 };
 
 /*
@@ -81,17 +98,38 @@ export const Theme = ({
   accentColor,
   neutralColor,
   radius,
+  pageBackground,
   className,
   children,
   ...props
-}: ThemeProps) => (
-  <div
-    {...props}
-    data-accent={accentColor}
-    data-neutral={neutralColor}
-    data-radius={radius}
-    className={clsx(css.root, className)}
-  >
-    {children}
-  </div>
-);
+}: ThemeProps) => {
+  /*
+   * The page level goes on the document, not on this element.
+   *
+   * `body` is not inside the `div` below, so an attribute written here could
+   * never reach the one thing this prop is about. Everything else stays on the
+   * element and nests, which is the difference the prop's own note explains.
+   *
+   * Cleaned up on unmount, and only by the `Theme` that set it: a nested one
+   * passes `undefined` and never touches the attribute, so it cannot clear what
+   * an outer one wrote.
+   */
+  React.useEffect(() => {
+    if (!pageBackground) return;
+    const root = document.documentElement;
+    root.setAttribute('data-page-background', pageBackground);
+    return () => root.removeAttribute('data-page-background');
+  }, [pageBackground]);
+
+  return (
+    <div
+      {...props}
+      data-accent={accentColor}
+      data-neutral={neutralColor}
+      data-radius={radius}
+      className={clsx(css.root, className)}
+    >
+      {children}
+    </div>
+  );
+};

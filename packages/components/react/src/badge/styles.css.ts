@@ -1,7 +1,7 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
-const { fill, accent, surface, border, textColor, status } = vars.color.$semantic;
+const { accent, background, border, neutral, status, textColor } = vars.color.$semantic;
 
 /**
  * Badges and chips both read as small rounded labels, and the difference is what
@@ -70,7 +70,7 @@ export const badgeRecipe = recipe({
      * the background rather than by a line.
      */
     tone: {
-      neutral: { color: textColor.normal, backgroundColor: fill.subtle },
+      neutral: { color: textColor.normal, backgroundColor: neutral.surface },
       accent: { color: accent.strong, backgroundColor: accent.surface },
       success: { color: status.success.strong, backgroundColor: status.success.surface },
       warning: { color: status.warning.strong, backgroundColor: status.warning.surface },
@@ -147,27 +147,27 @@ export const badgeRecipe = recipe({
      */
     {
       variants: { tone: 'neutral', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: border.normal },
+      style: { backgroundColor: background.raised, borderColor: border.normal },
     },
     {
       variants: { tone: 'accent', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: accent.subtle },
+      style: { backgroundColor: background.raised, borderColor: accent.subtle },
     },
     {
       variants: { tone: 'success', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: status.success.normal },
+      style: { backgroundColor: background.raised, borderColor: status.success.normal },
     },
     {
       variants: { tone: 'warning', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: status.warning.normal },
+      style: { backgroundColor: background.raised, borderColor: status.warning.normal },
     },
     {
       variants: { tone: 'error', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: status.error.subtle },
+      style: { backgroundColor: background.raised, borderColor: status.error.subtle },
     },
     {
       variants: { tone: 'info', variant: 'outline' },
-      style: { backgroundColor: surface.raised, borderColor: status.info.subtle },
+      style: { backgroundColor: background.raised, borderColor: status.info.subtle },
     },
   ],
 
