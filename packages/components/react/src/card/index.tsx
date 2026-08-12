@@ -68,7 +68,7 @@ const Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
  * whatever the size says.
  */
 const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(function CardTitle(
-  { level = 3, size = 3, ...props },
+  { level = 3, size = 4, ...props },
   ref
 ) {
   return <Heading {...props} ref={ref} level={level} size={size} />;

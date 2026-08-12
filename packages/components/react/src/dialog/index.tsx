@@ -89,7 +89,7 @@ const Title = React.forwardRef<HTMLHeadingElement, Partial<HeadingProps>>(functi
 });
 
 const Description = React.forwardRef<HTMLParagraphElement, TextProps>(function DialogDescription(
-  { size = 5, color = 'assistive', ...props },
+  { size = 4, color = 'assistive', ...props },
   ref
 ) {
   return (

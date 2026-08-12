@@ -15,22 +15,6 @@ export const root = style({
   overflow: 'hidden',
 });
 
-/**
- * How the card separates itself from the page.
- *
- * `outlined` and `elevated` are alternatives rather than a scale: a border draws
- * a hard edge, a shadow implies height, and doing both reads as indecision. The
- * shadow steps to `s` on hover only when the card is interactive, which is what
- * `Card.Root` decides.
- */
-export const elevation = styleVariants({
-  flat: {},
-  outlined: { borderWidth: '1px', borderStyle: 'solid', borderColor: border.subtle },
-  elevated: { boxShadow: vars.shadow.xs },
-});
-
-export type CardElevation = keyof typeof elevation;
-
 export const interactive = style([
   pressable,
   {
@@ -47,6 +31,36 @@ export const interactive = style([
     },
   },
 ]);
+
+/**
+ * How the card separates itself from the page.
+ *
+ * `outlined` and `elevated` are alternatives rather than a scale: a border draws
+ * a hard edge, a shadow implies height, and doing both reads as indecision.
+ *
+ * `elevated` reads `m`, where it read `xs` — a step so slight that the variant
+ * asking to look raised was hard to tell from the one asking to look flat. Not
+ * the `l` the overlays take: those float over arbitrary content and have nothing
+ * but the shadow to separate them, while a card sits in the page's own flow and
+ * only has to look picked up from it.
+ *
+ * Which means the hover shadow has to be held off this one. `interactive` steps
+ * to `s` on hover, which is a lift from nothing and a drop from `m`, so an
+ * elevated card would have sunk under the pointer. It keeps its own step
+ * instead, and the ink is what answers the hover.
+ */
+export const elevation = styleVariants({
+  flat: {},
+  outlined: { borderWidth: '1px', borderStyle: 'solid', borderColor: border.subtle },
+  elevated: {
+    boxShadow: vars.shadow.m,
+    selectors: {
+      [`&${interactive}:hover`]: { boxShadow: vars.shadow.m },
+    },
+  },
+});
+
+export type CardElevation = keyof typeof elevation;
 
 /*
  * Sections.
@@ -67,18 +81,22 @@ export const interactive = style([
 export const header = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.spacing[4],
-  padding: vars.spacing[16],
+  // Four had the description sitting on the title's descenders. The two are a
+  // heading and a sentence, not two lines of one paragraph.
+  gap: vars.spacing[8],
+  padding: vars.spacing[24],
 });
 
 export const body = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.spacing[8],
-  padding: vars.spacing[16],
+  // The header's, so the body's first word starts under the title rather than
+  // eight pixels to its left.
+  padding: vars.spacing[24],
   selectors: {
-    // Two padded sections meeting would give 32px between them. The lower one
-    // drops its top padding so the seam is the same 16 as every other edge.
+    // Two padded sections meeting would give 48px between them. The lower one
+    // drops its top padding so the seam is the same 24 as every other edge.
     [`${header} + &`]: { paddingTop: 0 },
   },
 });
@@ -87,7 +105,7 @@ export const footer = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.spacing[8],
-  padding: vars.spacing[16],
+  padding: vars.spacing[24],
   selectors: {
     [`${header} + &`]: { paddingTop: 0 },
     [`${body} + &`]: { paddingTop: 0 },
