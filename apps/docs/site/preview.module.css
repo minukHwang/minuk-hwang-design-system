@@ -2,6 +2,10 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  /* The frame clips, so everything inside it has to be able to be narrower than
+     its content. Without this the frame itself was the widest thing on the page
+     and what it cut off was the specimen. */
+  min-width: 0;
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius-12);
   overflow: hidden;
@@ -14,10 +18,22 @@
  * one example and the next, so a description reads as belonging to the example
  * under it rather than to the one above.
  */
+/*
+ * Title, sentence, example — with the sentence closer to the title than to the
+ * frame under it.
+ *
+ * One gap of 8 put all three at the same distance, so the sentence sat between
+ * two things it was equally near and read as belonging to neither. It belongs to
+ * the title: they are the question, and the frame is the answer.
+ */
 .example {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-8);
+}
+
+.example > .figure {
+  margin-top: var(--spacing-8);
 }
 
 .description {
@@ -34,21 +50,29 @@
 }
 
 /*
- * The stage is the raised level, which is where a component sits in an
- * application: on a card, on a panel, on a page that has been brought up to
- * meet them. The code below it is the quiet one.
+ * The stage is the page's own level.
  *
- * They were the other way round, and once the site moved to the white page the
- * two were the same colour — the stage read `base`, the page had been brought up
- * to `raised`, and the frame lost its inside edge.
+ * A component is being shown here as it would appear on a page, so the ground
+ * under it is the ground the reader is already looking at. Reading `raised`
+ * instead put every specimen on a panel the application would not necessarily
+ * give it, and a card demonstrated on a card is a card on a card.
  */
 .stage {
   display: flex;
   align-items: center;
   gap: var(--spacing-12);
   flex-wrap: wrap;
+  /*
+   * The one that was actually holding the width open.
+   *
+   * A stage is a flex item of the frame, so `min-width: auto` kept it as wide as
+   * the widest specimen on it — a five-tab strip, say — and the frame around it
+   * clipped the overflow rather than letting the strip scroll. Anything on this
+   * stage that knows how to be narrow can now be.
+   */
+  min-width: 0;
   padding: var(--spacing-28) var(--spacing-24);
-  background: var(--background-raised);
+  background: var(--background-base);
 }
 
 .stageStack {
@@ -57,11 +81,72 @@
   gap: var(--spacing-16);
 }
 
+/*
+ * The block and its copy button share a stacking context.
+ *
+ * The button floats over the code rather than sitting above it: a bar of its own
+ * would add a third band to a frame that already has a specimen and a listing,
+ * and the corner it covers is indentation on every sample here.
+ */
+.codeWrap {
+  position: relative;
+  min-width: 0;
+}
+
+/*
+ * Announced but not drawn. The copy button is icon-only, so the confirmation has
+ * to live somewhere a screen reader can reach — and nowhere a sighted reader has
+ * to make room for.
+ */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.copyButton {
+  position: absolute;
+  top: var(--spacing-8);
+  right: var(--spacing-8);
+  z-index: 1;
+  /* Out of the way until wanted, and never invisible to the keyboard. */
+  opacity: 0;
+  transition: opacity var(--duration-100) var(--easing-standard);
+}
+
+.codeWrap:hover .copyButton,
+.copyButton:focus-visible {
+  opacity: 1;
+}
+
+/* A pointer is not a given. On touch the button is simply always there. */
+@media (hover: none) {
+  .copyButton {
+    opacity: 1;
+  }
+}
+
 .code {
   margin: 0;
   padding: var(--spacing-16);
   border-top: 1px solid var(--border-subtle);
-  background: var(--fill-subtle);
+  /*
+   * Step 50 off the neutral ramp rather than `fill.subtle`, which is 100.
+   *
+   * `fill` is a panel cut into a surface and this is not one — it is the other
+   * half of the frame, and it wants to sit a hair off the stage rather than a
+   * step below it. In the dark theme that is what 50 does: the stage is the page
+   * at 10 and the code comes up to the level a card sits on. In the light theme
+   * the page is already 50, so the two halves land on the same value and the
+   * rule between them is what separates them.
+   */
+  background: var(--neutral-50);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   line-height: var(--line-height-21);
@@ -188,7 +273,6 @@
   text-align: left;
   padding: var(--spacing-10) var(--spacing-16);
   border-bottom: 1px solid var(--border-subtle);
-  font-family: var(--font-family-mono);
   font-size: var(--font-size-12);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -211,14 +295,14 @@
  * Three tiers, because the columns hold three different kinds of thing.
  *
  * The name is what you type, so it is the accent. The type is what the prop
- * accepts, so it is a chip in the surrounding grey: a chip because a type is
+ * accepts, so it is a chip in the surrounding gray: a chip because a type is
  * mostly punctuation — `'s' | 'm' | 'l'` set as prose reads as a sentence with
  * something wrong with it. The default is one short value and stays plain, since
  * a box around every cell is a table of boxes.
  *
  * The chips come from the site's inline-code rule, which tints itself from
- * `currentColor` — so setting the colour here is all it takes for the name's
- * chip to arrive in the accent and the type's in the grey around it.
+ * `currentColor` — so setting the color here is all it takes for the name's
+ * chip to arrive in the accent and the type's in the gray around it.
  */
 /*
  * `nowrap` was the whole bug. A name that did not fit did not wrap and did not

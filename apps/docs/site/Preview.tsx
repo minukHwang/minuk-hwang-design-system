@@ -3,6 +3,7 @@ import { Heading } from '@minuk-hwang-design-system/components-react/heading';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
+import chrome from './chrome.module.css';
 import { CodeBlock } from './CodeBlock';
 import css from './preview.module.css';
 
@@ -30,10 +31,18 @@ export type PreviewProps = {
   /**
    * Grammar for the source underneath. Most examples are JSX; the few that show
    * a stylesheet or a shell command are not, and highlighting those as JSX
-   * colours the punctuation of a language they are not written in.
+   * colors the punctuation of a language they are not written in.
    */
   language?: string;
-  children: React.ReactNode;
+  /**
+   * Optional, because some things are only a snippet.
+   *
+   * Install commands and wiring have nothing to render — there is no specimen of
+   * "import this file". Those used to take a sentence as their example just to
+   * satisfy this prop, which put a paragraph in the frame where a component
+   * should be and made the frame mean two different things.
+   */
+  children?: React.ReactNode;
 };
 
 /*
@@ -72,7 +81,9 @@ export const Preview = ({ title, description, code, stack, language, children }:
       </Text>
     )}
     <figure className={css.figure}>
-      <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
+      {children && (
+        <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
+      )}
       {code && <CodeBlock code={code} language={language} />}
     </figure>
   </section>
@@ -200,7 +211,9 @@ export const Callout = ({
   tone?: 'info' | 'warning';
   children: React.ReactNode;
 }) => (
-  <Alert.Root tone={tone === 'warning' ? 'warning' : 'accent'}>
+  // The class is not decoration: the article uses it to pull a callout up
+  // towards the example it annotates. See `.callout` in chrome.module.css.
+  <Alert.Root tone={tone === 'warning' ? 'warning' : 'accent'} className={chrome.callout}>
     <Alert.Icon />
     <Alert.Body>
       <Alert.Description as="div" size={4} leading="reading">
