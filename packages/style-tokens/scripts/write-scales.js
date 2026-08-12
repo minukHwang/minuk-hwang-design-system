@@ -83,18 +83,23 @@ const THEME_SEMANTICS = {
      * these move the other way, and holding them apart is what stops a hover
      * from reading as a raised card.
      *
-     * An overlay rather than a step on the ramp because a step only lands
-     * correctly on the one surface it was measured against. 8% moves a light
-     * page by 19/255 and a white card by 20, and the ramp step it replaces moved
-     * them by 12 and 25.
+     * Steps on the `dim` and `lighten` ramps rather than alphas written out
+     * here: those ramps are exactly "black at N%" and "white at N%", they
+     * already existed, and the step number is the alpha in thousandths. Only
+     * which of the two a theme points at belongs in this file.
+     *
+     * An overlay rather than a step on the *neutral* ramp, because a neutral
+     * step only lands correctly on the one surface it was measured against. 10%
+     * moves a light page by 24/255 and a white card by 26; the neutral step it
+     * replaces moved them by 12 and 25.
      *
      * This was tried once and dropped, with the reason recorded: 4% shifted a
      * dark surface by ~3/255. It was black in both themes, which on a near-black
      * ground does nothing at all — black 4% on #1f1f1f moves one part in 255.
      */
     stateInk: {
-      hover: 'rgb(0 0 0 / 0.08)',
-      pressed: 'rgb(0 0 0 / 0.16)',
+      hover: 'var(--dim-100)',
+      pressed: 'var(--dim-200)',
     },
     /**
      * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
@@ -117,8 +122,8 @@ const THEME_SEMANTICS = {
     },
     /** White here, for the reason spelled out on the light theme's copy. */
     stateInk: {
-      hover: 'rgb(255 255 255 / 0.08)',
-      pressed: 'rgb(255 255 255 / 0.16)',
+      hover: 'var(--lighten-100)',
+      pressed: 'var(--lighten-200)',
     },
     /**
      * The same 8% over a dark canvas moves it by 2/255 — invisible. These are

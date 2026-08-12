@@ -1,7 +1,7 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 
-const { accent, surface, textColor, status } = vars.color.$semantic;
+const { fill, accent, textColor, status } = vars.color.$semantic;
 
 export const root = style({
   display: 'flex',
@@ -73,7 +73,7 @@ globalStyle(
 export const tone = styleVariants({
   neutral: {
     color: textColor.normal,
-    backgroundColor: surface.sunken,
+    backgroundColor: fill.subtle,
   },
   accent: {
     color: accent.strong,
@@ -106,38 +106,31 @@ export type AlertTone = keyof typeof tone;
  * set to the tone's text. A filled button cannot: its background is the tone's
  * `normal` and the label on it is `onSolid`, the colour measured per hue per
  * theme as the one that clears AA there. Neither is derivable from the text
- * colour, so these are written out — six rules, and the pairs are the same ones
- * `Button` uses for its own primary, only in this alert's tone rather than the
+ * colour, so these are written out — one pair per tone, the same two values
+ * `Button` reads for its own primary, only in this alert's tone rather than the
  * document's accent.
  *
  * Without it an error alert answered itself with a blue button.
  */
-const solidAction: Record<AlertTone, { fill: string; label: string; hover: string }> = {
-  neutral: { fill: textColor.normal, label: textColor.inverse, hover: textColor.strong },
-  accent: { fill: accent.normal, label: accent.onNormal, hover: accent.strong },
-  info: { fill: status.info.normal, label: status.info.onNormal, hover: status.info.strong },
-  success: {
-    fill: status.success.normal,
-    label: status.success.onNormal,
-    hover: status.success.strong,
-  },
-  warning: {
-    fill: status.warning.normal,
-    label: status.warning.onNormal,
-    hover: status.warning.strong,
-  },
-  error: { fill: status.error.normal, label: status.error.onNormal, hover: status.error.strong },
+const solidAction: Record<AlertTone, { fill: string; label: string }> = {
+  neutral: { fill: textColor.normal, label: textColor.inverse },
+  accent: { fill: accent.normal, label: accent.onNormal },
+  info: { fill: status.info.normal, label: status.info.onNormal },
+  success: { fill: status.success.normal, label: status.success.onNormal },
+  warning: { fill: status.warning.normal, label: status.warning.onNormal },
+  error: { fill: status.error.normal, label: status.error.onNormal },
 };
 
-Object.entries(solidAction).forEach(([name, { fill, label, hover }]) => {
-  const scope = tone[name as AlertTone];
-  globalStyle(`${scope} [data-variant='primary']`, {
+/*
+ * Only the resting fill. `Button` paints its own hover and press as ink over
+ * whatever it is filled with, so setting a second background colour here would
+ * land the tone's hover *and* the ink on the same pixel.
+ */
+Object.entries(solidAction).forEach(([name, { fill, label }]) => {
+  globalStyle(`${tone[name as AlertTone]} [data-variant='primary']`, {
     backgroundColor: fill,
     color: label,
     borderColor: 'transparent',
-  });
-  globalStyle(`${scope} [data-variant='primary']:hover:not(:disabled)`, {
-    backgroundColor: hover,
   });
 });
 

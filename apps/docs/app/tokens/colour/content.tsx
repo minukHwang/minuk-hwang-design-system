@@ -10,6 +10,7 @@ import { Callout, Preview, Prose } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const STEPS = [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 990];
+const ALPHA_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 const HUES = [
   'red',
   'crimson',
@@ -29,7 +30,8 @@ const HUES = [
 const NEUTRALS = ['mono', 'gray', 'slate'];
 
 const SEMANTIC = [
-  ['surface', ['canvas', 'default', 'hover', 'pressed', 'selected']],
+  ['surface', ['base', 'raised', 'overlay']],
+  ['fill', ['subtle', 'strong']],
   ['border', ['subtle', 'normal', 'strong', 'focus']],
   ['accent', ['surface', 'subtle', 'normal', 'strong']],
 ] as const;
@@ -160,7 +162,7 @@ export default function ColourPage() {
 
       <Preview
         title="Semantic"
-        description="What a colour is for. Reach for these, not a raw step."
+        description="What a colour is for. Surface is elevation and fill is what sits on it; see Elevation for the pair."
         stack
       >
         <div className={css.ramps}>
@@ -216,6 +218,90 @@ export default function ColourPage() {
             </Text>
           </div>
         ))}
+      </Preview>
+
+      <Preview
+        title="Absolute"
+        description="Four groups that do not follow the theme. Black and white are literals; dim and lighten are operations that work over anything."
+        stack
+      >
+        <div className={css.rows}>
+          <div className={css.row}>
+            <Text as="span" size={2} className={css.token}>
+              color.white
+            </Text>
+            <Text as="span" size={2} className={css.value}>
+              #ffffff
+            </Text>
+            <span className={css.absoluteSwatch} style={{ background: 'var(--white)' }} />
+          </div>
+          <div className={css.row}>
+            <Text as="span" size={2} className={css.token}>
+              color.black
+            </Text>
+            <Text as="span" size={2} className={css.value}>
+              #000000
+            </Text>
+            <span className={css.absoluteSwatch} style={{ background: 'var(--black)' }} />
+          </div>
+        </div>
+
+        <div className={css.ramp}>
+          <Text as="span" size={2} className={css.rampName}>
+            dim
+          </Text>
+          <div className={css.alphaStrip}>
+            {ALPHA_STEPS.map(step => (
+              <span
+                key={step}
+                className={css.alphaStep}
+                style={{ background: `var(--dim-${step})` }}
+              />
+            ))}
+          </div>
+        </div>
+        <div className={css.ramp}>
+          <Text as="span" size={2} className={css.rampName}>
+            lighten
+          </Text>
+          <div className={css.alphaStrip}>
+            {ALPHA_STEPS.map(step => (
+              <span
+                key={step}
+                className={css.alphaStep}
+                style={{ background: `var(--lighten-${step})` }}
+              />
+            ))}
+          </div>
+        </div>
+      </Preview>
+
+      <Callout>
+        The step number is the alpha in thousandths, so <code>dim[100]</code> is black at 10%. Both
+        ramps run 50 to 950 and stop there: 0% is <code>transparent</code> and 100% is{' '}
+        <code>color.black</code> or <code>color.white</code>, which already exist above.
+      </Callout>
+
+      <Preview
+        title="Opacity"
+        description="Two values, both for disabled, and the only ones that dim an element rather than paint over it."
+        stack
+      >
+        <div className={css.opacityDemo}>
+          <Text as="span" size={4}>
+            At rest
+          </Text>
+        </div>
+        <div className={css.opacityDemo} style={{ opacity: 'var(--opacity-disabled-container)' }}>
+          <Text as="span" size={4}>
+            opacity.disabledContainer, 0.12
+          </Text>
+        </div>
+        <div className={css.opacityDemo}>
+          <Text as="span" size={4} style={{ opacity: 'var(--opacity-disabled-content)' }}>
+            opacity.disabledContent, 0.38
+          </Text>
+        </div>
       </Preview>
 
       <Preview

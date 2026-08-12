@@ -493,3 +493,52 @@
 .inkRow:active {
   background-image: linear-gradient(var(--state-ink-pressed), var(--state-ink-pressed));
 }
+
+/* ── absolute colours ───────────────────────────────────────── */
+
+/*
+ * A checkerboard, so an alpha reads as an alpha. On a flat ground every step of
+ * `dim` looks like a grey and the one thing these tokens are for, being
+ * see-through, is the one thing that does not show.
+ */
+.alphaStrip {
+  display: flex;
+  border-radius: var(--docs-radius-6);
+  overflow: hidden;
+  background-color: var(--surface-raised);
+  background-image:
+    linear-gradient(45deg, var(--fill-subtle) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--fill-subtle) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--fill-subtle) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--fill-subtle) 75%);
+  background-size: 12px 12px;
+  background-position:
+    0 0,
+    0 6px,
+    6px -6px,
+    -6px 0;
+}
+
+.alphaStep {
+  flex: 1;
+  height: 40px;
+  min-width: 0;
+}
+
+.absoluteSwatch {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-6);
+}
+
+/* The disabled opacities, shown on something worth dimming rather than on a box. */
+.opacityDemo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-10);
+  padding: var(--spacing-10) var(--spacing-14);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--docs-radius-8);
+  background: var(--surface-raised);
+}

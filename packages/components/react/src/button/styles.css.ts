@@ -3,7 +3,8 @@ import { createVar, style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 import { iconSize } from '../shared/icon-size.css';
-import { hoverLayer, pressedLayer, restLayer } from '../shared/state';
+import { pressable } from '../shared/press.css';
+import { hoverLayer, restLayer } from '../shared/state';
 
 const { accent, surface, border, textColor, status } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
@@ -56,69 +57,72 @@ const focusRing = {
 };
 
 export const buttonRecipe = recipe({
-  base: {
-    // The loading spinner is centred against this box, so the box has to be the
-    // one it measures against. Without it the spinner positions itself on
-    // whatever ancestor happens to be positioned, which is usually the page.
-    position: 'relative',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    /*
-     * A rounded rectangle at every setting but `full`, where it is a pill at all
-     * three heights. Left to the factor alone it would be a pill at 32px and not
-     * at 48px, because what turns a large radius into a pill is the browser
-     * clamping it to half the box — and half of a box is a different number per
-     * size.
-     */
-    borderRadius: pillWhenFull(vars.borderRadius[8]),
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'transparent',
-    backgroundImage: restLayer,
-    /*
-     * A `button` inherits neither family nor size from the page — left alone it
-     * renders at the UA's 13.33px in the system UI face, which is why the label
-     * looked unstyled beside everything around it.
-     */
-    fontFamily: 'inherit',
-    fontWeight: vars.typography.fontWeight[600],
-    // Labels are short; the extra tracking of default type at this weight makes
-    // two-word buttons look loose.
-    letterSpacing: '-0.005em',
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
-    // A double-click on a button should not select its label.
-    userSelect: 'none',
-    cursor: 'pointer',
-    ...transition,
-    selectors: {
-      '&:focus-visible': focusRing,
+  base: [
+    pressable,
+    {
+      // The loading spinner is centred against this box, so the box has to be the
+      // one it measures against. Without it the spinner positions itself on
+      // whatever ancestor happens to be positioned, which is usually the page.
+      position: 'relative',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingLeft: paddingX,
+      paddingRight: paddingX,
       /*
-       * An icon is optically lighter than a word, so the same measured inset
-       * reads as more space on the side it sits. Giving a few pixels back evens
-       * it out, by an amount small enough that a row of buttons where only some
-       * carry icons still lines up.
-       *
-       * The side is an attribute rather than `:has()`, because CSS cannot tell
-       * these two apart: in `<Icon />Create` and `Export<Icon />` the icon is a
-       * `span` that is both `:first-child` and `:last-child`, since the label is
-       * a text node and text nodes are not children for the purpose of those
-       * selectors. The component knows the order and says so.
+       * A rounded rectangle at every setting but `full`, where it is a pill at all
+       * three heights. Left to the factor alone it would be a pill at 32px and not
+       * at 48px, because what turns a large radius into a pill is the browser
+       * clamping it to half the box — and half of a box is a different number per
+       * size.
        */
-      '&[data-leading-icon]': { paddingLeft: `calc(${paddingX} - ${iconInset})` },
-      '&[data-trailing-icon]': { paddingRight: `calc(${paddingX} - ${iconInset})` },
-      // `loading` is a real state, not just a disabled one — the base layer sets
-      // aria-busy, and the cursor should say "wait" rather than "not allowed".
-      '&[aria-busy="true"]': { cursor: 'progress' },
-      '&:disabled, &[aria-disabled="true"]': {
-        cursor: 'not-allowed',
-        opacity: opacity.disabledContainer,
+      borderRadius: pillWhenFull(vars.borderRadius[8]),
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+      backgroundImage: restLayer,
+      /*
+       * A `button` inherits neither family nor size from the page — left alone it
+       * renders at the UA's 13.33px in the system UI face, which is why the label
+       * looked unstyled beside everything around it.
+       */
+      fontFamily: 'inherit',
+      fontWeight: vars.typography.fontWeight[600],
+      // Labels are short; the extra tracking of default type at this weight makes
+      // two-word buttons look loose.
+      letterSpacing: '-0.005em',
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      // A double-click on a button should not select its label.
+      userSelect: 'none',
+      cursor: 'pointer',
+      ...transition,
+      selectors: {
+        '&:focus-visible': focusRing,
+        /*
+         * An icon is optically lighter than a word, so the same measured inset
+         * reads as more space on the side it sits. Giving a few pixels back evens
+         * it out, by an amount small enough that a row of buttons where only some
+         * carry icons still lines up.
+         *
+         * The side is an attribute rather than `:has()`, because CSS cannot tell
+         * these two apart: in `<Icon />Create` and `Export<Icon />` the icon is a
+         * `span` that is both `:first-child` and `:last-child`, since the label is
+         * a text node and text nodes are not children for the purpose of those
+         * selectors. The component knows the order and says so.
+         */
+        '&[data-leading-icon]': { paddingLeft: `calc(${paddingX} - ${iconInset})` },
+        '&[data-trailing-icon]': { paddingRight: `calc(${paddingX} - ${iconInset})` },
+        // `loading` is a real state, not just a disabled one — the base layer sets
+        // aria-busy, and the cursor should say "wait" rather than "not allowed".
+        '&[aria-busy="true"]': { cursor: 'progress' },
+        '&:disabled, &[aria-disabled="true"]': {
+          cursor: 'not-allowed',
+          opacity: opacity.disabledContainer,
+        },
       },
     },
-  },
+  ],
 
   variants: {
     /**
@@ -164,13 +168,7 @@ export const buttonRecipe = recipe({
         color: accent.onNormal,
         backgroundColor: accent.normal,
         selectors: {
-          '&:hover:not(:disabled)': { backgroundColor: accent.strong },
-          // Pressing moves it down a pixel rather than only changing colour.
-          // On a filled button the colour shift is small; the movement is not.
-          '&:active:not(:disabled)': {
-            backgroundColor: accent.strong,
-            transform: 'translateY(1px)',
-          },
+          '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
         },
       },
       /** Everything else that is still a real action. */
@@ -185,10 +183,6 @@ export const buttonRecipe = recipe({
             backgroundImage: hoverLayer,
             borderColor: border.strong,
           },
-          '&:active:not(:disabled)': {
-            backgroundImage: pressedLayer,
-            transform: 'translateY(1px)',
-          },
         },
       },
       /** No box until you touch it. Toolbars, icon-only controls, card actions. */
@@ -197,10 +191,6 @@ export const buttonRecipe = recipe({
         backgroundColor: 'transparent',
         selectors: {
           '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
-          '&:active:not(:disabled)': {
-            backgroundImage: pressedLayer,
-            transform: 'translateY(1px)',
-          },
         },
       },
       /**
@@ -211,11 +201,7 @@ export const buttonRecipe = recipe({
         color: status.error.onNormal,
         backgroundColor: status.error.normal,
         selectors: {
-          '&:hover:not(:disabled)': { backgroundColor: status.error.strong },
-          '&:active:not(:disabled)': {
-            backgroundColor: status.error.strong,
-            transform: 'translateY(1px)',
-          },
+          '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
         },
       },
     },

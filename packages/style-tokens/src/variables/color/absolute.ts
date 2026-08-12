@@ -61,9 +61,15 @@ export const lighten = {
  *
  * A scrim adds a layer; these modulate what is already drawn, which is a
  * different CSS mechanism (`opacity`, not `background`). Disabled is the only
- * case in this system that genuinely needs it — hover, press and selected are
- * handled by moving along the scale instead, which stays visible on dark
- * surfaces where a 4% veil does not.
+ * case in this system that needs it: hover and press are a layer over the
+ * surface rather than a change to the element, so they read the `dim` and
+ * `lighten` ramps above through `state`.
+ *
+ * That used to say the interaction states moved along the neutral scale
+ * instead, "which stays visible on dark surfaces where a 4% veil does not".
+ * The veil was the right mechanism and the wrong colour — 4% of black over a
+ * near-black surface moves it by one part in 255. Pointing each theme at the
+ * ramp that shows up on it is what the note was missing.
  */
 export const opacity = {
   /** Text, icons and other content inside a disabled component. */

@@ -299,8 +299,8 @@ export const text = {
   strong: '#ededed',
 };
 export const stateInk = {
-  hover: 'rgb(255 255 255 / 0.08)',
-  pressed: 'rgb(255 255 255 / 0.16)',
+  hover: 'var(--lighten-100)',
+  pressed: 'var(--lighten-200)',
 };
 export const shadowColor = {
   ambient: 'rgb(0 0 0 / 0.48)',

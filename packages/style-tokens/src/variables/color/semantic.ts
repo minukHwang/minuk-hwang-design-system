@@ -76,20 +76,37 @@ export const surface = {
    * for every neutral family in every theme to survive a nested `Theme`.
    */
   overlay: `color-mix(in srgb, ${color.white} 5%, ${neutralScale[50]})`,
-  /**
-   * A surface that sits *below* the page rather than on it: a disabled control,
-   * a neutral badge, the well behind an avatar's initials.
-   *
-   * Step 100, and it reads correctly in both themes for the same reason every
-   * other step does — the ramp already runs the opposite way in dark, so one
-   * step from `raised` is darker on light and lighter on dark. Both are "further
-   * from the surface it sits on".
-   */
-  sunken: neutralScale[100],
-  /** Deeper again, where `sunken` would collide with a hovered surface. */
-  deep: neutralScale[200],
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
+};
+
+/*
+ * ============================================
+ * Fills
+ * ============================================
+ */
+
+/**
+ * A neutral element sitting *on* a surface, rather than a surface of its own.
+ *
+ * These are what `status.error.surface` is for a red badge: the fill a small
+ * thing paints itself when it has no hue to take one from. A neutral badge, a
+ * neutral alert, a disabled control, the well behind an avatar's initials.
+ *
+ * They were levels for a while, named `sunken` and `deep`, and the names were
+ * the bug. A level has to move away from white as it goes down, and these move
+ * *towards* it in the dark theme — which is correct for a fill, because a badge
+ * on a dark card is only visible if it is lighter, and wrong for a level. Once
+ * they stopped claiming to be depth the contradiction went with the name.
+ *
+ * `strong` is firmer, not deeper. The avatar's well is dark enough to read
+ * initials against, not sunk further into the page.
+ */
+export const fill = {
+  /** A quiet element on a surface. */
+  subtle: neutralScale[100],
+  /** The same, one step firmer, where `subtle` would collide with a hover. */
+  strong: neutralScale[200],
 };
 
 /*

@@ -1,7 +1,7 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { surface, border, textColor, status } = vars.color.$semantic;
+const { fill, surface, border, textColor, status } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
 
 /**
@@ -48,7 +48,7 @@ const trigger = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[data-disabled]': {
       cursor: 'not-allowed',
-      backgroundColor: surface.sunken,
+      backgroundColor: fill.subtle,
       opacity: opacity.disabledContainer,
     },
   },
