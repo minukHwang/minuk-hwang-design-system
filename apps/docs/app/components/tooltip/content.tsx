@@ -31,7 +31,10 @@ export default function TooltipPage() {
         <Icon name="content_copy" />
       </Button>
     </Tooltip.Trigger>
-    <Tooltip.Content>Copy install command</Tooltip.Content>
+    <Tooltip.Content>
+      Copy install command
+      <Tooltip.Arrow />
+    </Tooltip.Content>
   </Tooltip.Root>
 </Tooltip.Provider>`}
       >
@@ -83,9 +86,21 @@ export default function TooltipPage() {
               name: 'side',
               type: `'top' | 'right' | 'bottom' | 'left'`,
               default: `'top'`,
-              description: '',
+              description:
+                'On Content. Preferred side. It flips to the opposite one rather than run off the viewport.',
             },
-            { name: 'sideOffset', type: 'number', default: '6', description: '' },
+            {
+              name: 'sideOffset',
+              type: 'number',
+              default: '6',
+              description: 'On Content. Gap between the tooltip and its trigger, in pixels.',
+            },
+            {
+              name: 'collisionPadding',
+              type: 'number',
+              default: '8',
+              description: 'On Content. How close to the viewport edge it may sit before shifting.',
+            },
           ]}
         />
       </Section>
