@@ -278,6 +278,13 @@ export const text = {
   strong: 'var(--text-strong)',
 };
 
+/* What an interaction paints over a surface. Black on light, white on dark. */
+
+export const stateInk = {
+  hover: 'var(--state-ink-hover)',
+  pressed: 'var(--state-ink-pressed)',
+};
+
 export const shadowColor = {
   ambient: 'var(--shadow-color-ambient)',
   direct: 'var(--shadow-color-direct)',

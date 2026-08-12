@@ -1,6 +1,8 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
+import { hoverLayer } from './state';
+
 const { surface, border, textColor, accent } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
 
@@ -69,7 +71,7 @@ export const panel = style({
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.overlay,
   boxShadow: vars.shadow.m,
   // Radix measures the space between the trigger and the viewport edge and
   // publishes it here. Without it a long menu near the bottom simply overflows.
@@ -130,7 +132,7 @@ export const item = style({
   userSelect: 'none',
   outline: 'none',
   selectors: {
-    '&[data-highlighted]': { backgroundColor: surface.hover },
+    '&[data-highlighted]': { backgroundImage: hoverLayer },
     '&[data-state="checked"]': { color: accent.strong },
     '&[data-disabled]': {
       cursor: 'not-allowed',

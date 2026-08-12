@@ -2,6 +2,8 @@ import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
+import { hoverLayer, restLayer } from '../shared/state';
+
 const { accent, surface, border, textColor } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
 
@@ -36,15 +38,16 @@ export const chipRecipe = recipe({
     borderStyle: 'solid',
     borderColor: border.normal,
     color: textColor.normal,
-    backgroundColor: surface.canvas,
+    backgroundColor: surface.raised,
+    backgroundImage: restLayer,
     whiteSpace: 'nowrap',
     cursor: 'pointer',
-    transitionProperty: 'background-color, border-color, color',
+    transitionProperty: 'background-image, background-color, border-color, color',
     transitionDuration: vars.motion.duration[70],
     transitionTimingFunction: vars.motion.easing.standard,
 
     selectors: {
-      '&:hover:not(:disabled)': { backgroundColor: surface.hover },
+      '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
       '&:focus-visible': {
         outline: `2px solid ${border.focus}`,
         outlineOffset: '2px',

@@ -306,10 +306,16 @@ const hslToHex = (h, s, l) => {
  */
 const buildScale = (hue, theme, tuning = {}) => {
   const ladder = theme === 'dark' ? DARK_LADDER : LIGHT_LADDER;
-  const { saturation = 100, lightnessShift = 0 } = tuning;
+  const { saturation = 100, lightnessShift = 0, lightnessByStep = {} } = tuning;
 
   return Object.fromEntries(
     STEPS.map((step, i) => {
+      // A step named outright skips the ladder and its clamps, which is what
+      // lets a surface step reach a lightness of 100 that the cap would have
+      // held at 99.
+      if (lightnessByStep[step] !== undefined) {
+        return [step, hslToHex(hue, saturation, lightnessByStep[step])];
+      }
       // The shift tapers off at both ends so the near-white and near-black
       // anchors stay aligned with every other scale.
       const taper = 1 - Math.abs(ladder[i] - 50) / 50;
@@ -318,6 +324,29 @@ const buildScale = (hue, theme, tuning = {}) => {
     })
   );
 };
+
+/**
+ * The two steps the light neutrals hold an elevation model in.
+ *
+ * Everywhere else the ladder runs one way from step 10, and in the light theme
+ * that made the page the lightest thing on screen — so a card, which is a
+ * surface *on* the page, had to be darker than it. Every light interface does
+ * the opposite: a grey page with white cards on it. Dark already worked, since
+ * its ladder runs from dark to light and a raised surface is simply a later
+ * step.
+ *
+ * Written as a rule that holds in both themes: the page is the darker of the
+ * two and a surface on it is the lighter. Light gets there by trading its top
+ * two steps, so 10 is the grey page at 95 and 50 is white at 100.
+ *
+ * Neutrals only. The chromatic scales use the same ladder, and a step 50 at
+ * lightness 100 would turn every hue's alert tint into white.
+ */
+const NEUTRAL_SURFACE_LIGHTNESS = { 10: 95, 50: 100 };
+
+/** Tuning for a neutral family, which carries the surface steps in light only. */
+const neutralTuning = (saturation, theme) =>
+  theme === 'light' ? { saturation, lightnessByStep: NEUTRAL_SURFACE_LIGHTNESS } : { saturation };
 
 /**
  * Renders a scale as a TypeScript const declaration.
@@ -353,6 +382,7 @@ export {
   STEPS,
   HUES,
   NEUTRALS,
+  neutralTuning,
   onSolid,
   contrast,
   contrastReport,

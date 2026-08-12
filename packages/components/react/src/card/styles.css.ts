@@ -1,13 +1,16 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
+import { hoverLayer, restLayer } from '../shared/state';
+
 const { surface, border } = vars.color.$semantic;
 
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: vars.borderRadius[12],
-  backgroundColor: surface.default,
+  backgroundColor: surface.raised,
+  backgroundImage: restLayer,
   overflow: 'hidden',
 });
 
@@ -21,7 +24,7 @@ export const root = style({
  */
 export const elevation = styleVariants({
   flat: {},
-  outlined: { borderWidth: '1px', borderStyle: 'solid', borderColor: border.normal },
+  outlined: { borderWidth: '1px', borderStyle: 'solid', borderColor: border.subtle },
   elevated: { boxShadow: vars.shadow.xs },
 });
 
@@ -29,11 +32,11 @@ export type CardElevation = keyof typeof elevation;
 
 export const interactive = style({
   cursor: 'pointer',
-  transitionProperty: 'background-color, box-shadow',
+  transitionProperty: 'background-image, box-shadow',
   transitionDuration: vars.motion.duration[100],
   transitionTimingFunction: vars.motion.easing.standard,
   selectors: {
-    '&:hover': { backgroundColor: surface.hover, boxShadow: vars.shadow.s },
+    '&:hover': { backgroundImage: hoverLayer, boxShadow: vars.shadow.s },
     '&:focus-visible': {
       outline: `2px solid ${border.focus}`,
       outlineOffset: '2px',

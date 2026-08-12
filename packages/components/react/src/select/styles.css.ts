@@ -26,7 +26,7 @@ const trigger = style({
   borderStyle: 'solid',
   borderColor: border.normal,
   color: textColor.normal,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.raised,
   ...textMetrics(16),
   fontFamily: 'inherit',
   textAlign: 'left',
@@ -48,7 +48,7 @@ const trigger = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[data-disabled]': {
       cursor: 'not-allowed',
-      backgroundColor: surface.default,
+      backgroundColor: surface.sunken,
       opacity: opacity.disabledContainer,
     },
   },

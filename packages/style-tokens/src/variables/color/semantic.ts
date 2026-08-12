@@ -13,7 +13,7 @@
 
 import { accentSteps, neutralSteps } from '../../theme';
 
-import { dim } from './absolute';
+import { color, dim } from './absolute';
 import * as palette from './palette';
 
 /**
@@ -39,29 +39,90 @@ const neutralScale = Object.fromEntries(
  */
 
 /**
- * Backgrounds a component paints for itself.
+ * Levels, ordered from the page outwards. Elevation and nothing else.
  *
- * Interaction states move along the scale rather than layering a translucent
- * veil. A 4% overlay shifts a light surface by ~10/255 and a dark one by ~3,
- * so it fails exactly where feedback matters most; stepping 50 → 100 → 200
- * moves ~20–50 either way.
+ * These used to hold interaction states too — `hover` and `pressed` sat on the
+ * same ladder as the page and the card, one rung apart. That made "one step up"
+ * mean two different things, and the two disagreed the moment the light page
+ * stopped being the lightest thing on screen: raising a card made it lighter
+ * while hovering one made it darker, off the same ramp, in the same theme.
+ *
+ * So the ladder is levels, and interaction is `state` below, painted over
+ * whichever level it lands on.
  */
 export const surface = {
   /**
-   * The page itself. Step 10 in both themes, which is the one step defined as
-   * sitting closest to the background rather than as a tint of the hue.
+   * The page itself, and the one level an application is expected to change.
    *
-   * Everything below is a surface a component paints *on top of* this one.
+   * Everything else is defined against it, so moving it moves the set. A product
+   * that wants a white page rather than a grey one sets this to `raised` and
+   * gives its cards a border, which is what `Card`'s `outlined` already is.
    */
-  canvas: neutralScale[10],
-  /** Resting state of an interactive surface. */
-  default: neutralScale[50],
-  hover: neutralScale[100],
-  pressed: neutralScale[200],
-  /** Selected or otherwise held-active, distinct from a transient press. */
-  selected: neutralScale[200],
+  base: neutralScale[10],
+  /** A surface on the page: a card, an input, a panel, a menu. */
+  raised: neutralScale[50],
+  /**
+   * Floating clear of the page: a dialog, a popover, a dropdown, a tooltip.
+   *
+   * A step further in the direction elevation travels, which is towards white in
+   * both themes — and written as that sentence rather than as a step number,
+   * because the two themes have different amounts of room. Light reaches white
+   * at `raised` and has none left, so this resolves to white again and the
+   * shadow carries the level alone. Dark has most of the ramp still above it, so
+   * the same declaration lands a visible step higher.
+   *
+   * `color-mix` is what makes one line do both: mixing white into white is
+   * white. The alternative was a per-theme step, which needs the value repeated
+   * for every neutral family in every theme to survive a nested `Theme`.
+   */
+  overlay: `color-mix(in srgb, ${color.white} 5%, ${neutralScale[50]})`,
+  /**
+   * A surface that sits *below* the page rather than on it: a disabled control,
+   * a neutral badge, the well behind an avatar's initials.
+   *
+   * Step 100, and it reads correctly in both themes for the same reason every
+   * other step does — the ramp already runs the opposite way in dark, so one
+   * step from `raised` is darker on light and lighter on dark. Both are "further
+   * from the surface it sits on".
+   */
+  sunken: neutralScale[100],
+  /** Deeper again, where `sunken` would collide with a hovered surface. */
+  deep: neutralScale[200],
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
+};
+
+/*
+ * ============================================
+ * Interaction
+ * ============================================
+ */
+
+/**
+ * What a pointer does to a surface, as ink painted over it rather than as a
+ * different surface.
+ *
+ * These are the second axis. Elevation moves towards white; interaction moves
+ * towards the text, and the text colour is the thing that flips between themes —
+ * so one declaration darkens on light and lightens on dark, which is what makes
+ * "hover goes darker" stop contradicting "raised goes lighter". They were never
+ * the same direction; they were the same ladder.
+ *
+ * Being an overlay is what lets one value serve every level. The step it
+ * replaces was measured against one surface and wrong on the others: it moved a
+ * light page 12/255 and a white card 25. These move both by 19 and 20, and a
+ * dark page and card by 19 and 18.
+ *
+ * Paint them with `background-image` rather than `background-color`, so the
+ * surface underneath keeps saying which level it is:
+ *
+ * ```ts
+ * selectors: { '&:hover': { backgroundImage: layer(state.hover) } }
+ * ```
+ */
+export const state = {
+  hover: palette.stateInk.hover,
+  pressed: palette.stateInk.pressed,
 };
 
 /*
@@ -175,16 +236,19 @@ export const textColor = {
    * Text on an inverted surface — one painted `textColor.normal`, which a
    * tooltip and a solid neutral badge both are.
    *
-   * The page's own background rather than white. `inverse` was `color.white`,
-   * which inverts nothing: the surface under it follows the theme and white does
-   * not, so in dark it was #ffffff on #e3e3e3 and measured 1.28:1. Taking the
-   * canvas makes the pair actually opposite, at 16.96:1 on light and 14.35:1 on
-   * dark.
+   * A theme surface rather than white. `inverse` was `color.white`, which
+   * inverts nothing: the surface under it follows the theme and white does not,
+   * so in dark it was #ffffff on #e3e3e3 and measured 1.28:1.
+   *
+   * `raised` rather than the page, which it used to be — the two were the same
+   * decision while the light page was the lightest step, and they parted when
+   * the page became the grey one. Text on a near-black tooltip wants the white,
+   * not the page it is floating over.
    *
    * Not for text on a coloured fill. Those read `onNormal`, which is measured
    * per hue per theme.
    */
-  inverse: surface.canvas,
+  inverse: surface.raised,
   link: palette.blue[600],
 };
 

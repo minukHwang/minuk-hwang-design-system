@@ -16,7 +16,7 @@ export const content = style({
  * transparent arrow on a bordered panel reads as a notch cut out of the edge.
  */
 export const arrow = style({
-  fill: surface.canvas,
+  fill: surface.overlay,
   stroke: border.normal,
   strokeWidth: 1,
 });

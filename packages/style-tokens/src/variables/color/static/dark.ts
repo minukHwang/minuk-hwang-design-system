@@ -298,6 +298,10 @@ export const text = {
   alternative: '#d1d1d1',
   strong: '#ededed',
 };
+export const stateInk = {
+  hover: 'rgb(255 255 255 / 0.08)',
+  pressed: 'rgb(255 255 255 / 0.16)',
+};
 export const shadowColor = {
   ambient: 'rgb(0 0 0 / 0.48)',
   direct: 'rgb(0 0 0 / 0.72)',

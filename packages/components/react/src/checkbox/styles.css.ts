@@ -55,7 +55,7 @@ const control = style({
   borderStyle: 'solid',
   borderColor: border.strong,
   color: accent.onNormal,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.raised,
   cursor: 'pointer',
   transitionProperty: 'background-color, border-color',
   transitionDuration: vars.motion.duration[70],

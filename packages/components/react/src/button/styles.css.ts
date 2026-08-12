@@ -3,6 +3,7 @@ import { createVar, style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 import { iconSize } from '../shared/icon-size.css';
+import { hoverLayer, pressedLayer, restLayer } from '../shared/state';
 
 const { accent, surface, border, textColor, status } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
@@ -37,7 +38,8 @@ const gap = createVar();
  * short enough to read as feedback rather than animation.
  */
 const transition = {
-  transitionProperty: 'background-color, border-color, color, box-shadow, transform',
+  transitionProperty:
+    'background-image, background-color, border-color, color, box-shadow, transform',
   transitionDuration: vars.motion.duration[70],
   transitionTimingFunction: vars.motion.easing.standard,
 };
@@ -75,6 +77,7 @@ export const buttonRecipe = recipe({
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'transparent',
+    backgroundImage: restLayer,
     /*
      * A `button` inherits neither family nor size from the page — left alone it
      * renders at the UA's 13.33px in the system UI face, which is why the label
@@ -175,15 +178,15 @@ export const buttonRecipe = recipe({
         color: textColor.normal,
         // The canvas rather than the component surface, so a secondary button
         // stays legible on a card that is already painted `surface.default`.
-        backgroundColor: surface.canvas,
+        backgroundColor: surface.raised,
         borderColor: border.normal,
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor: surface.hover,
+            backgroundImage: hoverLayer,
             borderColor: border.strong,
           },
           '&:active:not(:disabled)': {
-            backgroundColor: surface.pressed,
+            backgroundImage: pressedLayer,
             transform: 'translateY(1px)',
           },
         },
@@ -193,9 +196,9 @@ export const buttonRecipe = recipe({
         color: textColor.normal,
         backgroundColor: 'transparent',
         selectors: {
-          '&:hover:not(:disabled)': { backgroundColor: surface.hover },
+          '&:hover:not(:disabled)': { backgroundImage: hoverLayer },
           '&:active:not(:disabled)': {
-            backgroundColor: surface.pressed,
+            backgroundImage: pressedLayer,
             transform: 'translateY(1px)',
           },
         },

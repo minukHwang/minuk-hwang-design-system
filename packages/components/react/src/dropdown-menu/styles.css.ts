@@ -1,7 +1,9 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { style } from '@vanilla-extract/css';
 
-const { status, surface } = vars.color.$semantic;
+import { hoverLayer } from '../shared/state';
+
+const { status } = vars.color.$semantic;
 
 /**
  * A row that deletes something.
@@ -24,7 +26,7 @@ export const subTrigger = style({
   selectors: {
     // Radix marks the trigger open while its submenu is showing, so the row
     // stays highlighted while the pointer is inside the child menu.
-    '&[data-state="open"]': { backgroundColor: surface.hover },
+    '&[data-state="open"]': { backgroundImage: hoverLayer },
   },
 });
 

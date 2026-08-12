@@ -73,7 +73,7 @@ globalStyle(
 export const tone = styleVariants({
   neutral: {
     color: textColor.normal,
-    backgroundColor: surface.default,
+    backgroundColor: surface.sunken,
   },
   accent: {
     color: accent.strong,

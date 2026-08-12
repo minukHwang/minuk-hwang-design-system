@@ -1,7 +1,9 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { keyframes, style } from '@vanilla-extract/css';
 
-const { border, textColor, surface } = vars.color.$semantic;
+import { hoverLayer } from '../shared/state';
+
+const { border, textColor } = vars.color.$semantic;
 const { opacity } = vars.color.$absolute;
 
 /**
@@ -41,7 +43,7 @@ export const trigger = style({
   textAlign: 'left',
   cursor: 'pointer',
   selectors: {
-    '&:hover:not([data-disabled])': { backgroundColor: surface.hover },
+    '&:hover:not([data-disabled])': { backgroundImage: hoverLayer },
     '&:focus-visible': {
       outline: `2px solid ${border.focus}`,
       outlineOffset: '-2px',

@@ -35,7 +35,7 @@ export const root = style({
    * The name is about where the step sits on the ramp, not about a state this
    * avatar is in — the same reason `Badge`'s neutral tone reads `hover`.
    */
-  backgroundColor: surface.pressed,
+  backgroundColor: surface.deep,
   // The image is clipped by the root, so nothing square can escape it.
   overflow: 'hidden',
   userSelect: 'none',

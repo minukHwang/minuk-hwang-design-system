@@ -70,7 +70,7 @@ export const badgeRecipe = recipe({
      * the background rather than by a line.
      */
     tone: {
-      neutral: { color: textColor.normal, backgroundColor: surface.hover },
+      neutral: { color: textColor.normal, backgroundColor: surface.sunken },
       accent: { color: accent.strong, backgroundColor: accent.surface },
       success: { color: status.success.strong, backgroundColor: status.success.surface },
       warning: { color: status.warning.strong, backgroundColor: status.warning.surface },
@@ -147,27 +147,27 @@ export const badgeRecipe = recipe({
      */
     {
       variants: { tone: 'neutral', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: border.normal },
+      style: { backgroundColor: surface.raised, borderColor: border.normal },
     },
     {
       variants: { tone: 'accent', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: accent.subtle },
+      style: { backgroundColor: surface.raised, borderColor: accent.subtle },
     },
     {
       variants: { tone: 'success', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: status.success.normal },
+      style: { backgroundColor: surface.raised, borderColor: status.success.normal },
     },
     {
       variants: { tone: 'warning', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: status.warning.normal },
+      style: { backgroundColor: surface.raised, borderColor: status.warning.normal },
     },
     {
       variants: { tone: 'error', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: status.error.subtle },
+      style: { backgroundColor: surface.raised, borderColor: status.error.subtle },
     },
     {
       variants: { tone: 'info', variant: 'outline' },
-      style: { backgroundColor: surface.canvas, borderColor: status.info.subtle },
+      style: { backgroundColor: surface.raised, borderColor: status.info.subtle },
     },
   ],
 

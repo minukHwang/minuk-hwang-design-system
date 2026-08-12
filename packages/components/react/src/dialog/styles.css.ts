@@ -36,7 +36,7 @@ export const content = style({
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: border.normal,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.overlay,
   boxShadow: vars.shadow.l,
   outline: 'none',
   selectors: {

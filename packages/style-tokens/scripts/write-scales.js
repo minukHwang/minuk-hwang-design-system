@@ -18,6 +18,7 @@ import {
   STEPS,
   HUES,
   NEUTRALS,
+  neutralTuning,
   TUNING,
   buildScale,
   onSolid,
@@ -74,6 +75,28 @@ const THEME_SEMANTICS = {
       strong: '#000000',
     },
     /**
+     * The ink an interaction paints over whatever it is sitting on.
+     *
+     * Black on light, white on dark, and that flip is the whole point: an
+     * interaction moves a surface *towards the text*, which is the one direction
+     * that means the same thing in both themes. Elevation moves towards white;
+     * these move the other way, and holding them apart is what stops a hover
+     * from reading as a raised card.
+     *
+     * An overlay rather than a step on the ramp because a step only lands
+     * correctly on the one surface it was measured against. 8% moves a light
+     * page by 19/255 and a white card by 20, and the ramp step it replaces moved
+     * them by 12 and 25.
+     *
+     * This was tried once and dropped, with the reason recorded: 4% shifted a
+     * dark surface by ~3/255. It was black in both themes, which on a near-black
+     * ground does nothing at all — black 4% on #1f1f1f moves one part in 255.
+     */
+    stateInk: {
+      hover: 'rgb(0 0 0 / 0.08)',
+      pressed: 'rgb(0 0 0 / 0.16)',
+    },
+    /**
      * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
      * not, which is why the two live apart — see variables/shadow.ts.
      *
@@ -91,6 +114,11 @@ const THEME_SEMANTICS = {
       assistive: '#a1a1a1',
       alternative: '#d1d1d1',
       strong: '#ededed',
+    },
+    /** White here, for the reason spelled out on the light theme's copy. */
+    stateInk: {
+      hover: 'rgb(255 255 255 / 0.08)',
+      pressed: 'rgb(255 255 255 / 0.16)',
     },
     /**
      * The same 8% over a dark canvas moves it by 2/255 — invisible. These are
@@ -167,9 +195,13 @@ const contrastRows = theme =>
   CHROMATIC_ORDER.map(name => {
     const fill = buildScale(HUES[name], theme, TUNING[name] ?? {})[500];
     const { white, black } = contrastReport(fill);
+    // Two decimals, as a number rather than a string. `toFixed` alone emits
+    // `14.20`, which is not how JavaScript prints that number — so the file the
+    // generator wrote and the file the formatter leaves behind disagreed.
+    const num = value => Number(value.toFixed(2));
     return (
-      `    ${name}: { fill: '${fill}', white: ${white.toFixed(2)}, ` +
-      `black: ${black.toFixed(2)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
+      `    ${name}: { fill: '${fill}', white: ${num(white)}, ` +
+      `black: ${num(black)}, chosen: '${onSolid(fill) === '#ffffff' ? 'white' : 'black'}' },`
     );
   }).join('\n');
 
@@ -232,7 +264,7 @@ ${body}
 
   blocks.push('\n/* Neutrals, ordered by how much blue they carry. */\n');
   Object.entries(NEUTRALS).forEach(([name, { hue, saturation }]) => {
-    blocks.push(renderScale(name, buildScale(hue, theme, { saturation })));
+    blocks.push(renderScale(name, buildScale(hue, theme, neutralTuning(saturation, theme))));
   });
 
   blocks.push('\n/* Text colour that clears AA on each solid fill. Measured, not chosen. */\n');

@@ -13,7 +13,7 @@
   grid-template-columns: 48px minmax(0, 1fr);
   gap: var(--spacing-12);
   padding: var(--spacing-18) var(--spacing-20);
-  background: var(--surface-canvas);
+  background: var(--surface-base);
 }
 
 .layer + .layer {
@@ -31,7 +31,7 @@
   width: 28px;
   height: 28px;
   border-radius: var(--docs-radius-full);
-  background: var(--surface-default);
+  background: var(--surface-raised);
   color: var(--text-color-assistive);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
@@ -66,15 +66,20 @@
   padding: var(--spacing-14) var(--spacing-16);
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius-10);
-  background: var(--surface-canvas);
+  background-color: var(--surface-base);
+  background-image: linear-gradient(transparent, transparent);
   text-decoration: none;
   transition:
-    background-color var(--duration-70) var(--easing-standard),
+    background-image var(--duration-70) var(--easing-standard),
     border-color var(--duration-70) var(--easing-standard);
 }
 
+/*
+ * Ink over the tile rather than a different surface, so the hover reads the same
+ * whichever level the page happens to be on. See surface/state in the tokens.
+ */
 .tile:hover {
-  background: var(--surface-hover);
+  background-image: linear-gradient(var(--state-ink-hover), var(--state-ink-hover));
   border-color: var(--border-normal);
 }
 

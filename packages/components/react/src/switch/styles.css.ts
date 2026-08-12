@@ -79,7 +79,7 @@ export const thumb = style({
    * negative, which is not a radius.
    */
   borderRadius: `max(0px, calc(${vars.borderRadius[12]} - 2px))`,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.raised,
   boxShadow: vars.shadow.xs,
   transform: 'translateX(0)',
   transitionProperty: 'transform',

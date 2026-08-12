@@ -22,7 +22,7 @@ const control = style({
   borderStyle: 'solid',
   borderColor: border.normal,
   color: textColor.normal,
-  backgroundColor: surface.canvas,
+  backgroundColor: surface.raised,
   ...textMetrics(16),
   fontFamily: 'inherit',
   transitionProperty: 'border-color, box-shadow, background-color',
@@ -42,11 +42,11 @@ const control = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[aria-invalid]:focus': { boxShadow: `0 0 0 1px ${status.error.normal}` },
     '&:disabled': {
-      backgroundColor: surface.default,
+      backgroundColor: surface.sunken,
       cursor: 'not-allowed',
       opacity: opacity.disabledContainer,
     },
-    '&:read-only:not(:disabled)': { backgroundColor: surface.default },
+    '&:read-only:not(:disabled)': { backgroundColor: surface.sunken },
   },
 });
 
