@@ -331,23 +331,24 @@ const buildScale = (hue, theme, tuning = {}) => {
 };
 
 /**
- * The two steps the light neutrals hold an elevation model in.
+ * The light neutrals reach pure white at their top step.
  *
- * Everywhere else the ladder runs one way from step 10, and in the light theme
- * that made the page the lightest thing on screen — so a card, which is a
- * surface *on* the page, had to be darker than it. Every light interface does
- * the opposite: a grey page with white cards on it. Dark already worked, since
- * its ladder runs from dark to light and a raised surface is simply a later
- * step.
+ * The ladder tops out at 99, which is a white with a grey in it, and the surface
+ * a card is drawn on should be the white the rest of the interface is measured
+ * against. One point of lightness, and it is only reachable by naming the step,
+ * because the generator clamps at 99.
  *
- * Written as a rule that holds in both themes: the page is the darker of the
- * two and a surface on it is the lighter. Light gets there by trading its top
- * two steps, so 10 is the grey page at 95 and 50 is white at 100.
+ * This held two steps for a while — 10 at 95 and 50 at 100 — to put the page
+ * below the card in the light theme. It worked and it broke the ramp: 10 came
+ * out darker than 50, so a swatch strip climbed, dropped and climbed again, and
+ * `neutral-10` stopped meaning "the end of the ladder". Which step each level
+ * reads is a question for the levels, and it is answered per theme in
+ * `THEME_SEMANTICS`. The ramp only has to run one way.
  *
- * Neutrals only. The chromatic scales use the same ladder, and a step 50 at
- * lightness 100 would turn every hue's alert tint into white.
+ * Neutrals only. The chromatic scales walk the same ladder, and a top step at
+ * full lightness would turn every hue's palest tint white.
  */
-const NEUTRAL_SURFACE_LIGHTNESS = { 10: 95, 50: 100 };
+const NEUTRAL_SURFACE_LIGHTNESS = { 10: 100 };
 
 /** Tuning for a neutral family, which carries the surface steps in light only. */
 const neutralTuning = (saturation, theme) =>

@@ -302,6 +302,10 @@ export const stateInk = {
   hover: 'var(--lighten-100)',
   pressed: 'var(--lighten-200)',
 };
+export const level = {
+  base: 'var(--neutral-10)',
+  raised: 'var(--neutral-50)',
+};
 export const pageBackground = {
   base: 'var(--neutral-10)',
   raised: 'var(--neutral-10)',

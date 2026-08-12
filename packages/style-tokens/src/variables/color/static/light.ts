@@ -237,8 +237,8 @@ export const mono = {
   300: '#b3b3b3',
   200: '#cccccc',
   100: '#e6e6e6',
-  50: '#ffffff',
-  10: '#f2f2f2',
+  50: '#f2f2f2',
+  10: '#ffffff',
 };
 export const gray = {
   990: '#101214',
@@ -252,8 +252,8 @@ export const gray = {
   300: '#abb1ba',
   200: '#c7cbd1',
   100: '#e3e5e8',
-  50: '#ffffff',
-  10: '#f1f2f4',
+  50: '#f1f2f4',
+  10: '#ffffff',
 };
 export const slate = {
   990: '#0e1115',
@@ -267,8 +267,8 @@ export const slate = {
   300: '#a4afc1',
   200: '#c2c9d6',
   100: '#e1e4ea',
-  50: '#ffffff',
-  10: '#f0f2f5',
+  50: '#f0f2f5',
+  10: '#ffffff',
 };
 
 /* Text colour that clears AA on each solid fill. Measured, not chosen. */
@@ -302,9 +302,13 @@ export const stateInk = {
   hover: 'var(--dim-100)',
   pressed: 'var(--dim-200)',
 };
+export const level = {
+  base: 'var(--neutral-50)',
+  raised: 'var(--neutral-10)',
+};
 export const pageBackground = {
-  base: 'var(--neutral-10)',
-  raised: 'var(--neutral-50)',
+  base: 'var(--neutral-50)',
+  raised: 'var(--neutral-10)',
 };
 export const shadowColor = {
   ambient: 'rgb(0 0 0 / 0.08)',

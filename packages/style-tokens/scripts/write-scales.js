@@ -115,9 +115,23 @@ const THEME_SEMANTICS = {
      * Steps rather than the semantic names: `--background-base` is the property
      * the dial overwrites, so naming it here would be a cycle.
      */
+    /**
+     * Which step each level reads, which is the one thing about the ramp that
+     * genuinely differs by theme.
+     *
+     * A page is below the surfaces on it and a surface is nearer white, in both
+     * themes — and the ramp runs light to dark on one and dark to light on the
+     * other, so "nearer white" is its first step here and its second there.
+     * Encoding that as two pointers keeps the ramp itself monotonic, which is
+     * what a ramp is for.
+     */
+    level: {
+      base: 'var(--neutral-50)',
+      raised: 'var(--neutral-10)',
+    },
     pageBackground: {
-      base: 'var(--neutral-10)',
-      raised: 'var(--neutral-50)',
+      base: 'var(--neutral-50)',
+      raised: 'var(--neutral-10)',
     },
     /**
      * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
@@ -142,6 +156,11 @@ const THEME_SEMANTICS = {
     stateInk: {
       hover: 'var(--lighten-100)',
       pressed: 'var(--lighten-200)',
+    },
+    /** The other way round: dark's ramp starts at its darkest. */
+    level: {
+      base: 'var(--neutral-10)',
+      raised: 'var(--neutral-50)',
     },
     /** `raised` is a no-op: dark's page is already as far from white as the ramp goes. */
     pageBackground: {

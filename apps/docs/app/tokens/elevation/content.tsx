@@ -60,7 +60,7 @@ export default function ElevationPage() {
         description="Five, ordered from the page outwards. Switch themes in the bar above and watch the order hold while the values invert."
         stack
       >
-        <div className={css.rows}>
+        <div className={`${css.rows} ${css.levelDefault}`}>
           {LEVELS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
               <Text as="span" size={2} className={css.token}>
@@ -100,7 +100,7 @@ export default function ElevationPage() {
         description="A page, a card on it, and something floating over both."
         stack
       >
-        <div className={css.levelStage}>
+        <div className={`${css.levelStage} ${css.levelDefault}`}>
           <Text as="span" size={2} color="assistive">
             background.base
           </Text>
@@ -128,7 +128,7 @@ export default function ElevationPage() {
         description="Hover and hold each row. The ink is one value and it moves both levels by the same amount, which a step on the neutral ramp could not do."
         stack
       >
-        <div className={css.levelStage}>
+        <div className={`${css.levelStage} ${css.levelDefault}`}>
           <div className={css.inkRow}>
             <Text as="span" size={3}>
               A row on the page

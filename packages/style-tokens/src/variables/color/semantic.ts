@@ -61,12 +61,18 @@ export const background = {
    * The page itself, and the one level an application is expected to change.
    *
    * Everything else is defined against it, so moving it moves the set. A product
-   * that wants a white page rather than a grey one sets this to `raised` and
+   * that wants a white page rather than a tinted one sets this to `raised` and
    * gives its cards a border, which is what `Card`'s `outlined` already is.
+   *
+   * Not a step, because which step it is differs by theme: the page is below the
+   * surfaces on it in both, and the ramp runs light to dark on one and dark to
+   * light on the other. Pinning the levels to fixed steps meant bending the ramp
+   * instead, and a bent ramp shows — a swatch strip climbed, dropped and climbed
+   * again where `neutral-10` had been made darker than `neutral-50`.
    */
-  base: neutralScale[10],
+  base: palette.level.base,
   /** A surface on the page: a card, an input, a panel, a menu. */
-  raised: neutralScale[50],
+  raised: palette.level.raised,
   /**
    * Floating clear of the page: a dialog, a popover, a dropdown, a tooltip.
    *
@@ -81,7 +87,7 @@ export const background = {
    * white. The alternative was a per-theme step, which needs the value repeated
    * for every neutral family in every theme to survive a nested `Theme`.
    */
-  overlay: `color-mix(in srgb, ${color.white} 5%, ${neutralScale[50]})`,
+  overlay: `color-mix(in srgb, ${color.white} 5%, ${palette.level.raised})`,
   /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
   scrim: dim[500],
 };

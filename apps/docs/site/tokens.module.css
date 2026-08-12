@@ -27,6 +27,14 @@
   display: flex;
   border-radius: var(--docs-radius-6);
   overflow: hidden;
+  /*
+   * A ring, because the lightest steps are white and the page is too. Without it
+   * a ramp appeared to begin at its third step, the first two having gone
+   * invisible against the ground they were drawn on. `inset` so it does not add
+   * to the strip's size, and the border colour rather than a rule so it reads as
+   * an edge rather than as a swatch of its own.
+   */
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
 }
 
 .swatch {
@@ -443,6 +451,19 @@
   height: 36px;
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius-6);
+}
+
+/*
+ * Every demo on this page pins the page level back to its default.
+ *
+ * The site runs on `pageBackground="raised"`, which is exactly what it should be
+ * free to do — and it rewrites `--background-base` to the raised value, so a
+ * table documenting three levels drew three identical boxes and a stage showing
+ * a card on a page showed a card on itself. The page's own setting must not
+ * decide what a page about the levels is able to show.
+ */
+.levelDefault {
+  --background-base: var(--page-background-base);
 }
 
 /* The levels as they actually stack: a page, a card on it, a dialog over that. */
