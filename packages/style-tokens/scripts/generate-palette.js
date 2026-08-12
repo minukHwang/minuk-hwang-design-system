@@ -96,9 +96,14 @@ const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
 /**
  * Hues of the colours this system ships, in degrees.
  *
- * Spacing is deliberate: no two neighbours sit closer than 18°, which is roughly
- * where two ramps stop reading as separate families. The wheel is walked in
- * order so a new colour can be slotted in without renumbering anything.
+ * Spacing is deliberate but not uniform, and the note that used to sit here
+ * claimed a floor of 18° that the table below does not keep: crimson and red are
+ * 12° apart, and amber and yellow 14°. Those two pairs are the closest, and both
+ * are readably different because the tuning pulls them apart in saturation and
+ * lightness as well — hue spacing alone was never what was doing the work.
+ *
+ * The wheel is walked in order so a new colour can be slotted in without
+ * renumbering anything.
  */
 const HUES = {
   red: 0,

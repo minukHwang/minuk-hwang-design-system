@@ -1,7 +1,7 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
-const { accent, background, border, neutral, status, textColor } = vars.color.$semantic;
+const { accent, background, border, fill, status, textColor } = vars.color.$semantic;
 
 /**
  * Badges and chips both read as small rounded labels, and the difference is what
@@ -70,7 +70,7 @@ export const badgeRecipe = recipe({
      * the background rather than by a line.
      */
     tone: {
-      neutral: { color: textColor.normal, backgroundColor: neutral.surface },
+      neutral: { color: textColor.normal, backgroundColor: fill.subtle },
       accent: { color: accent.strong, backgroundColor: accent.surface },
       success: { color: status.success.strong, backgroundColor: status.success.surface },
       warning: { color: status.warning.strong, backgroundColor: status.warning.surface },

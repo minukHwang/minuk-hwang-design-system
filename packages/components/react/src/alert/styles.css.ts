@@ -1,7 +1,7 @@
 import { vars } from '@minuk-hwang-design-system/style-tokens';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 
-const { accent, neutral, status, textColor } = vars.color.$semantic;
+const { accent, fill, status, textColor } = vars.color.$semantic;
 
 export const root = style({
   display: 'flex',
@@ -73,7 +73,7 @@ globalStyle(
 export const tone = styleVariants({
   neutral: {
     color: textColor.normal,
-    backgroundColor: neutral.surface,
+    backgroundColor: fill.subtle,
   },
   accent: {
     color: accent.strong,

@@ -31,7 +31,7 @@ const NEUTRALS = ['mono', 'gray', 'slate'];
 
 const SEMANTIC = [
   ['background', ['base', 'raised', 'overlay']],
-  ['neutral', ['surface', 'subtle', 'normal']],
+  ['fill', ['subtle', 'strong']],
   ['border', ['subtle', 'normal', 'strong', 'focus']],
   ['accent', ['surface', 'subtle', 'normal', 'strong']],
 ] as const;
@@ -146,6 +146,14 @@ export default function ColourPage() {
         </div>
       </Preview>
 
+      <Prose>
+        <p>
+          The fourteen hues are spread around the wheel, the closest pair 12° apart. Equal HSL
+          lightness is not equal perceived brightness, so cyan and green are pulled down. Without
+          that, <code>teal-500</code> is <code>#00ffea</code>.
+        </p>
+      </Prose>
+
       <Preview
         title="Absolute"
         description="Four groups that do not follow the theme. Black and white are literals; dim and lighten are operations that work over anything."
@@ -208,23 +216,15 @@ export default function ColourPage() {
         <code>color.black</code> or <code>color.white</code>, which already exist above.
       </Callout>
 
-      <Prose>
-        <p>
-          No two hues sit closer than 14°, the point where two ramps stop reading as separate
-          families. Equal HSL lightness is not equal perceived brightness, so cyan and green are
-          pulled down. Without that, <code>teal-500</code> is <code>#00ffea</code>.
-        </p>
-      </Prose>
-
       <Callout>
-        Reach for the semantic tokens below, not a raw step. <code>pink500</code> says what a colour
-        is; <code>status.error.normal</code> says what it is for, and only the second survives a
-        decision to make errors crimson.
+        Reach for the semantic tokens below, not a raw step. <code>palette.pink[500]</code> says
+        what a colour is; <code>status.error.normal</code> says what it is for, and only the second
+        survives a decision to make errors crimson.
       </Callout>
 
       <Preview
         title="Semantic"
-        description="What a colour is for. Background is elevation; every tone including neutral carries the same five roles."
+        description="What a colour is for. Background is the level a thing sits on, fill is a neutral thing sitting on it, and each hue carries the four roles below."
         stack
       >
         <div className={css.ramps}>

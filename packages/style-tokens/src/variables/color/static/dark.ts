@@ -302,6 +302,9 @@ export const stateInk = {
   hover: 'var(--lighten-100)',
   pressed: 'var(--lighten-200)',
 };
+export const pageBackground = {
+  raised: 'var(--neutral-10)',
+};
 export const shadowColor = {
   ambient: 'rgb(0 0 0 / 0.48)',
   direct: 'rgb(0 0 0 / 0.72)',

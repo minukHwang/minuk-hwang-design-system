@@ -14,18 +14,26 @@ const LEVELS = [
 ] as const;
 
 const FILLS = [
-  ['surface', 'A quiet badge or banner, and a disabled control.'],
-  ['subtle', 'Its border, and any fill that has to clear a hovered surface.'],
+  ['subtle', 'A quiet badge or banner, and a disabled control.'],
+  ['strong', 'One step firmer, where subtle would collide with a hovered surface.'],
 ] as const;
 
 /**
- * The white-page arrangement, driven by the real mechanism rather than a mockup.
+ * Exactly what `<Theme pageBackground="raised">` writes, scoped to one block.
  *
- * Setting `--background-base` to the raised value is exactly what an application
- * does, so this block is the documentation and the demonstration at once: get it
- * wrong here and the example stops working.
+ * The prop puts `data-page-background` on the document, because the page it
+ * moves is `body`, and an example in the middle of a page about something else
+ * must not repaint the whole site. So the declaration is scoped here instead.
+ *
+ * The value has to be the dial's own, not `--background-raised`. The two agree
+ * on light and part on dark, where the dial resolves to the page's own step and
+ * does nothing — which is the whole point of the example and exactly what it was
+ * getting wrong. Pointing at the same property means the demo cannot drift from
+ * the thing it demonstrates.
  */
-const WHITE_PAGE = { '--background-base': 'var(--background-raised)' } as React.CSSProperties;
+const WHITE_PAGE = {
+  '--background-base': 'var(--page-background-raised)',
+} as React.CSSProperties;
 
 export default function ElevationPage() {
   return (
@@ -55,17 +63,17 @@ export default function ElevationPage() {
       </Preview>
 
       <Preview
-        title="The neutral tone"
-        description="Not levels. Neutral is a tone like the other five, so a grey badge is built the same way a red one is."
+        title="Fills"
+        description="Not levels. A neutral element paints itself one of these, and they move towards white in dark because a badge on a dark card is only visible if it is lighter."
         stack
       >
         <div className={css.rows}>
           {FILLS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
               <Text as="span" size={2} className={css.token}>
-                neutral.{name}
+                fill.{name}
               </Text>
-              <span className={css.levelChip} style={{ background: `var(--neutral-${name})` }} />
+              <span className={css.levelChip} style={{ background: `var(--fill-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
               </Text>
@@ -137,11 +145,11 @@ export default function ElevationPage() {
 
       <Preview
         title="A white page"
-        description="Set pageBackground on the outermost Theme. It moves in the light theme only, and the page then has no room left above it, so a card marks itself with a border."
+        description="Set pageBackground on the outermost Theme. Light only: dark has nothing above its page to move it to, so switch the theme and this example stops changing anything."
         stack
-        code={`<div style={{ '--background-base': 'var(--background-raised)' }}>
+        code={`<Theme pageBackground="raised">
   <Card.Root elevation="outlined">…</Card.Root>
-</div>`}
+</Theme>`}
       >
         <div className={css.levelStage} style={WHITE_PAGE}>
           <Text as="span" size={2} color="assistive">
@@ -170,8 +178,8 @@ export default function ElevationPage() {
             ['background.raised', 'neutral 50'],
             ['background.overlay', 'raised, mixed 5% towards white'],
             ['background.scrim', 'dim 500, behind a modal'],
-            ['neutral.surface', 'neutral 100'],
-            ['neutral.subtle', 'neutral 200'],
+            ['fill.subtle', 'neutral 100'],
+            ['fill.strong', 'neutral 200'],
             ['state.hover', 'dim 100 on light, lighten 100 on dark'],
             ['state.pressed', 'dim 200 on light, lighten 200 on dark'],
           ].map(([name, value]) => (

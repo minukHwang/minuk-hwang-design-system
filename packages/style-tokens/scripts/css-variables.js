@@ -161,21 +161,25 @@ const textRamp = (indent = '\t') =>
     .join('\n');
 
 /**
- * The page's own level, which only has somewhere to go in the light theme.
+ * The page's own level.
  *
- * Scoped to light rather than emitted unconditionally, because `raised` in dark
- * would drop the page onto the same value its cards use and leave them with
- * nothing to separate them — see `pageBackgrounds`. Written against
- * `:not([data-theme='dark'])` and repeated inside the media query, so it holds
- * for an explicit light choice, for the default, and not for a dark one.
+ * One rule with no theme in it. Whether it does anything is decided by
+ * `--page-background-raised`, which the theme blocks set — the raised step on
+ * light, the page's own step on dark, where there is nothing above the page to
+ * move it to.
+ *
+ * Guarding this selector by theme instead was wrong in the commonest state.
+ * `:not([data-theme='dark'])` matches an element with no such attribute, which
+ * is every visitor on a dark OS who has not chosen a theme, so a light-only dial
+ * applied in dark to most of the people who would see it.
  */
 const pageBlocks = () =>
   theme.pageBackgrounds
     .filter(level => level !== theme.defaultPageBackground)
-    .flatMap(level => [
-      `${SELECTOR}[data-page-background='${level}']:not([data-theme='dark']):not(.dark) {\n\t--background-base: var(--background-${level});\n}`,
-      `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}[data-page-background='${level}'][data-theme='light'], ${SELECTOR}[data-page-background='${level}'].light {\n\t\t--background-base: var(--background-${level});\n\t}\n}`,
-    ])
+    .map(
+      level =>
+        `${SELECTOR}[data-page-background='${level}'] {\n\t--background-base: var(--page-background-${level});\n}`
+    )
     .join('\n\n');
 
 const PILL = theme.borderRadiusValues.full;

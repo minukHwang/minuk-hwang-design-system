@@ -1,7 +1,7 @@
 import { vars, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { neutral, textColor } = vars.color.$semantic;
+const { fill, textColor } = vars.color.$semantic;
 
 export const root = style({
   position: 'relative',
@@ -35,7 +35,7 @@ export const root = style({
    * The name is about where the step sits on the ramp, not about a state this
    * avatar is in — the same reason `Badge`'s neutral tone reads `hover`.
    */
-  backgroundColor: neutral.subtle,
+  backgroundColor: fill.strong,
   // The image is clipped by the root, so nothing square can escape it.
   overflow: 'hidden',
   userSelect: 'none',

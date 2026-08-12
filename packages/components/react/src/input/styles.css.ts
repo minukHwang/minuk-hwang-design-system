@@ -1,7 +1,7 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-const { background, border, neutral, status, textColor } = vars.color.$semantic;
+const { background, border, fill, status, textColor } = vars.color.$semantic;
 const { opacity } = vars;
 
 /**
@@ -42,11 +42,11 @@ const control = style({
     '&[aria-invalid]': { borderColor: status.error.normal },
     '&[aria-invalid]:focus': { boxShadow: `0 0 0 1px ${status.error.normal}` },
     '&:disabled': {
-      backgroundColor: neutral.surface,
+      backgroundColor: fill.subtle,
       cursor: 'not-allowed',
       opacity: opacity.disabledContainer,
     },
-    '&:read-only:not(:disabled)': { backgroundColor: neutral.surface },
+    '&:read-only:not(:disabled)': { backgroundColor: fill.subtle },
   },
 });
 

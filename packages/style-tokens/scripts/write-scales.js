@@ -102,6 +102,23 @@ const THEME_SEMANTICS = {
       pressed: 'var(--dim-200)',
     },
     /**
+     * What `pageBackground="raised"` resolves to, per theme.
+     *
+     * The dial is one unconditional attribute rule, and this is what decides
+     * whether it does anything: light points it at the raised step, dark points
+     * it back at the page's own. Written this way because the alternative —
+     * guarding the attribute rule with `:not([data-theme='dark'])` — is wrong in
+     * the state most people are in. That selector matches when there is no
+     * attribute at all, which is every visitor on a dark OS who has not picked a
+     * theme, so the light-only dial applied in dark.
+     *
+     * Steps rather than the semantic names: `--background-base` is the property
+     * the dial overwrites, so naming it here would be a cycle.
+     */
+    pageBackground: {
+      raised: 'var(--neutral-50)',
+    },
+    /**
      * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
      * not, which is why the two live apart — see variables/shadow.ts.
      *
@@ -124,6 +141,10 @@ const THEME_SEMANTICS = {
     stateInk: {
       hover: 'var(--lighten-100)',
       pressed: 'var(--lighten-200)',
+    },
+    /** A no-op: dark's page is already as far from white as the ramp goes. */
+    pageBackground: {
+      raised: 'var(--neutral-10)',
     },
     /**
      * The same 8% over a dark canvas moves it by 2/255 — invisible. These are

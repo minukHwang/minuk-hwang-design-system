@@ -88,6 +88,40 @@ export const background = {
 
 /*
  * ============================================
+ * Fills
+ * ============================================
+ */
+
+/**
+ * A neutral element painted *on* a background rather than a background of its
+ * own: a quiet badge, a neutral banner, a disabled control, the well behind an
+ * avatar's initials.
+ *
+ * Its own group rather than a sixth entry beside `accent` and the four statuses,
+ * because it does not fit that shape and pretending otherwise cost more than it
+ * bought. Those ramps run `surface` 50, `normal` 500, `strong` 700 — a pale
+ * tint, a saturated fill, and a text colour. A neutral has no saturated step:
+ * mid-grey carries neither black nor white above 4:1, so a solid grey badge is
+ * near-black, which puts `normal` and `strong` on the same value and leaves
+ * `surface` at 100 because 50 is already the card. Three of the five entries
+ * only lined up by name.
+ *
+ * Two steps, named for weight rather than depth. `strong` is firmer, not deeper:
+ * the avatar's well has to carry initials, not look sunk into the page.
+ *
+ * They move towards white in the dark theme, which would be wrong for a level
+ * and is right here — a badge on a dark card is only visible if it is lighter.
+ * That is the whole reason these are not `background`.
+ */
+export const fill = {
+  /** A quiet element on a background. */
+  subtle: neutralScale[100],
+  /** The same, one step firmer, where `subtle` would collide with a hover. */
+  strong: neutralScale[200],
+};
+
+/*
+ * ============================================
  * Interaction
  * ============================================
  */
@@ -244,45 +278,6 @@ export const textColor = {
    */
   inverse: background.raised,
   link: palette.blue[600],
-};
-
-/*
- * ============================================
- * Neutral
- * ============================================
- */
-
-/**
- * The sixth tone, built like the other five.
- *
- * A `Badge` has six tones and five of them read a ramp — `status.error.surface`
- * for the fill, `.strong` for the text on it, `.onNormal` for the text on the
- * solid. The neutral one had nowhere to read from, so it borrowed: a fill from
- * one group, its text from another, its border from a third. Same shape as its
- * siblings, assembled by hand at every call site.
- *
- * Not `buildRamp`, because a neutral has no saturated step to be `normal`. A
- * grey solid badge is near-black on light and near-white on dark, not mid-grey —
- * #808080 carries neither text colour above 4:1. So `normal` sits at the far end
- * of the ramp where the other tones sit at 500, and `strong` lands on the same
- * step: on a pale grey the text that reads is the same near-black that a solid
- * badge is filled with. For a hue those two differ; here they meet.
- *
- * Every value is what the components were already using, so nothing moves on
- * screen. What changes is that a sixth tone can now be written the way the other
- * five are.
- */
-export const neutral = {
-  /** Filled background for a quiet badge or banner, and for a disabled control. */
-  surface: neutralScale[100],
-  /** Its border, and any fill that needs to sit clear of a hovered surface. */
-  subtle: neutralScale[200],
-  /** Solid fill. */
-  normal: neutralScale[950],
-  /** Text on `surface`. */
-  strong: neutralScale[950],
-  /** Text on `normal`. */
-  onNormal: background.raised,
 };
 
 /*
