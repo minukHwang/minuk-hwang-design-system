@@ -18,7 +18,9 @@ export default function InputPage() {
         title="Size"
         description="Three heights, the same three Button and Select use, so a field and its submit line up."
         stack
-        code={`<Input size="s" />\n<Input size="m" />\n<Input size="l" />`}
+        code={`<Input size="s" placeholder="Small, 32px" />
+<Input size="m" placeholder="Medium, 40px" />
+<Input size="l" placeholder="Large, 48px" />`}
       >
         <Input size="s" placeholder="Small, 32px" />
         <Input size="m" placeholder="Medium, 40px" />
@@ -27,11 +29,12 @@ export default function InputPage() {
 
       <Preview
         title="State"
-        description="The error appearance comes from aria-invalid, which Field.Root sets from its own state."
+        description="Resting, invalid, disabled and read-only."
         stack
-        code={`<Input aria-invalid />
-<Input disabled />
-<Input readOnly />`}
+        code={`<Input placeholder="Resting" />
+<Input aria-invalid defaultValue="0.0.1" />
+<Input disabled defaultValue="Cannot edit" />
+<Input readOnly defaultValue="Read only" />`}
       >
         <Input placeholder="Resting" />
         <Input aria-invalid defaultValue="0.0.1" />
@@ -49,7 +52,7 @@ export default function InputPage() {
         title="Textarea"
         description="Resizes vertically only, because horizontal resize breaks whatever column the field sits in."
         stack
-        code={`<Textarea rows={4} />`}
+        code={`<Textarea defaultValue="Splits shadows into geometry and per-theme ink." />`}
       >
         <Textarea defaultValue="Splits shadows into geometry and per-theme ink." />
       </Preview>
@@ -60,7 +63,7 @@ export default function InputPage() {
         stack
         code={`<Field.Root required>
   <Field.Label>Package name</Field.Label>
-  <Field.Control>{props => <Input {...props} />}</Field.Control>
+  <Field.Control>{props => <Input {...props} placeholder="@scope/name" />}</Field.Control>
   <Field.Description>Lowercase, no spaces.</Field.Description>
 </Field.Root>`}
       >
