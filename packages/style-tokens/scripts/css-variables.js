@@ -361,8 +361,28 @@ export const cssVariableBlocks = () => {
   ];
 };
 
-/** Webfonts the token set names. Bare specifiers, resolved by the consumer's bundler. */
+/**
+ * Webfonts the token set names. Bare specifiers, resolved by the consumer's bundler.
+ *
+ * Pretendard arrives as the dynamic subset of the variable font rather than as
+ * the nine static weights, which is a different quantity of font rather than a
+ * different font.
+ *
+ * The static build is one file per weight with no `unicode-range` on any of
+ * them, so a browser downloads the whole 0.75 MB of a weight the moment one
+ * character asks for it. The set uses five, which is 3.7 MB before a page has
+ * drawn a word of Korean it did not need.
+ *
+ * The variable build is one drawing with a weight axis, so the five weights stop
+ * being five downloads. The dynamic subset then cuts it along `unicode-range`,
+ * and the browser fetches only the ranges a page actually sets: tens of
+ * kilobytes for Latin, and Korean by the block rather than all of it.
+ *
+ * It is also the build the documentation site had been linking from a CDN on top
+ * of this import, so the two were fetching the same face twice by two different
+ * routes.
+ */
 export const FONT_IMPORTS = [
-  `@import 'pretendard/dist/web/static/pretendard.css';`,
+  `@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';`,
   `@import 'material-symbols';`,
 ];
