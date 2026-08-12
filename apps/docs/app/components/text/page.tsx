@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { pageMetadata } from '../../../site/page-metadata';
+
 import Content from './content';
 
 /*
@@ -9,6 +11,6 @@ import Content from './content';
  * undefined. Metadata may only be exported from a server component, so the two
  * halves live in separate files.
  */
-export const metadata: Metadata = { title: 'Text' };
+export const metadata: Metadata = pageMetadata('/components/text', 'Text');
 
 export default Content;
