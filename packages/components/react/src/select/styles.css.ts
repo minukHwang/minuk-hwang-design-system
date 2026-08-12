@@ -1,6 +1,8 @@
 import { vars, pillWhenFull, textMetrics } from '@minuk-hwang-design-system/style-tokens';
 import { style, styleVariants } from '@vanilla-extract/css';
 
+import { MENU_PADDING } from '../shared/overlay.css';
+
 const { background, border, fill, status, textColor } = vars.color.$semantic;
 const { opacity } = vars;
 
@@ -79,7 +81,9 @@ export const content = style({
   // it belongs to. Radix measures the trigger and publishes it here.
   minWidth: 'var(--radix-select-trigger-width)',
   maxHeight: 'var(--radix-select-content-available-height)',
-  padding: vars.spacing[4],
+  // The shared one, because the rows inside subtract it from the panel's corner
+  // to find their own.
+  padding: MENU_PADDING,
 });
 
 /** Arrow shown when the list is long enough to scroll. */
