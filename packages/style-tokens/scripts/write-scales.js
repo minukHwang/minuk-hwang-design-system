@@ -116,6 +116,7 @@ const THEME_SEMANTICS = {
      * the dial overwrites, so naming it here would be a cycle.
      */
     pageBackground: {
+      base: 'var(--neutral-10)',
       raised: 'var(--neutral-50)',
     },
     /**
@@ -142,8 +143,9 @@ const THEME_SEMANTICS = {
       hover: 'var(--lighten-100)',
       pressed: 'var(--lighten-200)',
     },
-    /** A no-op: dark's page is already as far from white as the ramp goes. */
+    /** `raised` is a no-op: dark's page is already as far from white as the ramp goes. */
     pageBackground: {
+      base: 'var(--neutral-10)',
       raised: 'var(--neutral-10)',
     },
     /**

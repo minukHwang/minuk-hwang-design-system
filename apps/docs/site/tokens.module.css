@@ -542,3 +542,17 @@
   border-radius: var(--docs-radius-8);
   background: var(--background-raised);
 }
+
+/* The two page arrangements, side by side, so the pair is the comparison. */
+.pagePair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-12);
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .pagePair {
+    grid-template-columns: 1fr;
+  }
+}

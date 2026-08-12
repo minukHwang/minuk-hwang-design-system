@@ -172,6 +172,11 @@ const textRamp = (indent = '\t') =>
  * `:not([data-theme='dark'])` matches an element with no such attribute, which
  * is every visitor on a dark OS who has not chosen a theme, so a light-only dial
  * applied in dark to most of the people who would see it.
+ *
+ * Only the non-default value gets a block, and the selector is qualified to
+ * `html` because that is the only element this can be about. Both values still
+ * exist as properties, which is what lets a page documenting the dial paint one
+ * block each way while itself sitting on one of them.
  */
 const pageBlocks = () =>
   theme.pageBackgrounds

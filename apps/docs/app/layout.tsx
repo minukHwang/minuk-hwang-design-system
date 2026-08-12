@@ -58,7 +58,14 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    /*
+     * The site runs on the white page rather than the tinted one, which is what
+     * `<Theme pageBackground="raised">` writes. Set here rather than through the
+     * component because the attribute belongs on the document and this is the
+     * document — a `Theme` in the tree would have to reach out to `html` to do
+     * the same thing.
+     */
+    <html lang="en" data-page-background="raised" suppressHydrationWarning>
       <head>
         {/*
          * Pretendard, which is what `--font-family-main` has named all along

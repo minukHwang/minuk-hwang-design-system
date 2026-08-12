@@ -3,6 +3,7 @@
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
+import { useResolvedAppearance } from '../../../site/dials';
 import { Page } from '../../../site/Page';
 import { Callout, Preview, Section } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
@@ -19,23 +20,35 @@ const FILLS = [
 ] as const;
 
 /**
- * Exactly what `<Theme pageBackground="raised">` writes, scoped to one block.
+ * The two arrangements the dial picks between, each forced onto one block.
  *
- * The prop puts `data-page-background` on the document, because the page it
- * moves is `body`, and an example in the middle of a page about something else
- * must not repaint the whole site. So the declaration is scoped here instead.
+ * Both, rather than only the one being described, because this site runs on the
+ * white page itself — an example that only set `raised` would be setting what
+ * was already set and would demonstrate nothing. Showing the pair also survives
+ * the site changing its mind later.
  *
- * The value has to be the dial's own, not `--background-raised`. The two agree
- * on light and part on dark, where the dial resolves to the page's own step and
- * does nothing — which is the whole point of the example and exactly what it was
- * getting wrong. Pointing at the same property means the demo cannot drift from
- * the thing it demonstrates.
+ * The values are the dial's own properties rather than `--background-base` and
+ * `--background-raised`. Those agree on light and part on dark, where the dial
+ * resolves to the page's own step and does nothing, and pointing at what the
+ * dial points at is what stops the example drifting from the thing it shows.
  */
+const TINTED_PAGE = { '--background-base': 'var(--page-background-base)' } as React.CSSProperties;
 const WHITE_PAGE = {
   '--background-base': 'var(--page-background-raised)',
 } as React.CSSProperties;
 
 export default function ElevationPage() {
+  /*
+   * The white-page example is not shown in the dark theme.
+   *
+   * The dial it demonstrates resolves to the page's own step there and does
+   * nothing, so the section would be a heading, a sentence about a border, and
+   * two blocks that look exactly like the two above them. Showing an example of
+   * a thing not happening teaches nothing; a line saying it does not happen
+   * teaches the same fact in one sentence.
+   */
+  const theme = useResolvedAppearance();
+
   return (
     <Page
       eyebrow="Tokens"
@@ -143,33 +156,46 @@ export default function ElevationPage() {
         contradicting the rule above.
       </Callout>
 
-      <Preview
-        title="A white page"
-        description="Set pageBackground on the outermost Theme. Light only: dark has nothing above its page to move it to, so switch the theme and this example stops changing anything."
-        stack
-        code={`<Theme pageBackground="raised">
-  <Card.Root elevation="outlined">…</Card.Root>
-</Theme>`}
-      >
-        <div className={css.levelStage} style={WHITE_PAGE}>
-          <Text as="span" size={2} color="assistive">
-            pageBackground raised
-          </Text>
-          <div
-            className={css.levelCard}
-            style={{ boxShadow: 'none', border: '1px solid var(--border-subtle)' }}
-          >
-            <Text as="span" size={3}>
-              Card.Root elevation=&quot;outlined&quot;
-            </Text>
+      {theme === 'light' ? (
+        <Preview
+          title="Where the page sits"
+          description="pageBackground picks between these two. On the tinted page a flat card is enough; on the white one there is no colour left to separate them, so a card takes a border."
+          stack
+          code={`<Theme pageBackground="base">   // tinted, the default
+<Theme pageBackground="raised"> // white`}
+        >
+          <div className={css.pagePair}>
+            <div className={css.levelStage} style={TINTED_PAGE}>
+              <Text as="span" size={2} color="assistive">
+                base
+              </Text>
+              <div className={css.levelCard}>
+                <Text as="span" size={3}>
+                  Card, flat
+                </Text>
+              </div>
+            </div>
+            <div className={css.levelStage} style={WHITE_PAGE}>
+              <Text as="span" size={2} color="assistive">
+                raised
+              </Text>
+              <div
+                className={css.levelCard}
+                style={{ boxShadow: 'none', border: '1px solid var(--border-subtle)' }}
+              >
+                <Text as="span" size={3}>
+                  Card, outlined
+                </Text>
+              </div>
+            </div>
           </div>
-          <div className={css.inkRow}>
-            <Text as="span" size={3}>
-              A row on the page, hovered the same way
-            </Text>
-          </div>
-        </div>
-      </Preview>
+        </Preview>
+      ) : (
+        <Callout>
+          <code>pageBackground</code> is a light-theme dial. Dark has nothing above its page to move
+          it to, so the two arrangements are identical and the example is only shown in light.
+        </Callout>
+      )}
 
       <Section title="Tokens">
         <div className={css.rows}>

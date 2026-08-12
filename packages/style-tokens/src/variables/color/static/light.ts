@@ -303,6 +303,7 @@ export const stateInk = {
   pressed: 'var(--dim-200)',
 };
 export const pageBackground = {
+  base: 'var(--neutral-10)',
   raised: 'var(--neutral-50)',
 };
 export const shadowColor = {

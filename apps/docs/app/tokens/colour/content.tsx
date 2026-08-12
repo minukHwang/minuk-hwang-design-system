@@ -146,6 +146,12 @@ export default function ColourPage() {
         </div>
       </Preview>
 
+      <Callout>
+        Reach for the semantic tokens further down, not one of these steps.{' '}
+        <code>palette.pink[500]</code> says what a colour is; <code>status.error.normal</code> says
+        what it is for, and only the second survives a decision to make errors crimson.
+      </Callout>
+
       <Prose>
         <p>
           The fourteen hues are spread around the wheel, the closest pair 12° apart. Equal HSL
@@ -214,12 +220,6 @@ export default function ColourPage() {
         The step number is the alpha in thousandths, so <code>dim[100]</code> is black at 10%. Both
         ramps run 50 to 950 and stop there: 0% is <code>transparent</code> and 100% is{' '}
         <code>color.black</code> or <code>color.white</code>, which already exist above.
-      </Callout>
-
-      <Callout>
-        Reach for the semantic tokens below, not a raw step. <code>palette.pink[500]</code> says
-        what a colour is; <code>status.error.normal</code> says what it is for, and only the second
-        survives a decision to make errors crimson.
       </Callout>
 
       <Preview

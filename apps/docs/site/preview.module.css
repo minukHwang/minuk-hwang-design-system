@@ -34,8 +34,13 @@
 }
 
 /*
- * The stage sits on the canvas rather than on a tinted panel, so a component's
- * own surface reads against the same ground it will have in an application.
+ * The stage is the raised level, which is where a component sits in an
+ * application: on a card, on a panel, on a page that has been brought up to
+ * meet them. The code below it is the quiet one.
+ *
+ * They were the other way round, and once the site moved to the white page the
+ * two were the same colour — the stage read `base`, the page had been brought up
+ * to `raised`, and the frame lost its inside edge.
  */
 .stage {
   display: flex;
@@ -43,7 +48,7 @@
   gap: var(--spacing-12);
   flex-wrap: wrap;
   padding: var(--spacing-28) var(--spacing-24);
-  background: var(--background-base);
+  background: var(--background-raised);
 }
 
 .stageStack {
@@ -56,7 +61,7 @@
   margin: 0;
   padding: var(--spacing-16);
   border-top: 1px solid var(--border-subtle);
-  background: var(--background-raised);
+  background: var(--fill-subtle);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   line-height: var(--line-height-21);
