@@ -156,45 +156,46 @@ export default function ElevationPage() {
         contradicting the rule above.
       </Callout>
 
-      {theme === 'light' ? (
-        <Preview
-          title="Where the page sits"
-          description="pageBackground picks between these two. On the tinted page a flat card is enough; on the white one there is no colour left to separate them, so a card takes a border."
-          stack
-          code={`<Theme pageBackground="base">   // tinted, the default
-<Theme pageBackground="raised"> // white`}
-        >
-          <div className={css.pagePair}>
-            <div className={css.levelStage} style={TINTED_PAGE}>
-              <Text as="span" size={2} color="assistive">
-                base
-              </Text>
-              <div className={css.levelCard}>
-                <Text as="span" size={3}>
-                  Card, flat
+      {theme === 'light' && (
+        <>
+          <Preview
+            title="Where the page sits"
+            description="pageBackground picks between these two. On the tinted page a flat card is enough; on the white one there is no colour left to separate them, so a card takes a border."
+            stack
+            code={`<Theme pageBackground="base">   // tinted, the default
+  <Theme pageBackground="raised"> // white`}
+          >
+            <div className={css.pagePair}>
+              <div className={css.levelStage} style={TINTED_PAGE}>
+                <Text as="span" size={2} color="assistive">
+                  base
                 </Text>
+                <div className={css.levelCard}>
+                  <Text as="span" size={3}>
+                    Card, flat
+                  </Text>
+                </div>
+              </div>
+              <div className={css.levelStage} style={WHITE_PAGE}>
+                <Text as="span" size={2} color="assistive">
+                  raised
+                </Text>
+                <div
+                  className={css.levelCard}
+                  style={{ boxShadow: 'none', border: '1px solid var(--border-subtle)' }}
+                >
+                  <Text as="span" size={3}>
+                    Card, outlined
+                  </Text>
+                </div>
               </div>
             </div>
-            <div className={css.levelStage} style={WHITE_PAGE}>
-              <Text as="span" size={2} color="assistive">
-                raised
-              </Text>
-              <div
-                className={css.levelCard}
-                style={{ boxShadow: 'none', border: '1px solid var(--border-subtle)' }}
-              >
-                <Text as="span" size={3}>
-                  Card, outlined
-                </Text>
-              </div>
-            </div>
-          </div>
-        </Preview>
-      ) : (
-        <Callout>
-          <code>pageBackground</code> is a light-theme dial. Dark has nothing above its page to move
-          it to, so the two arrangements are identical and the example is only shown in light.
-        </Callout>
+          </Preview>
+          <Callout>
+            <code>pageBackground</code> is a light-theme dial. Dark has nothing above its page to
+            move it to, so both settings resolve to the same page.
+          </Callout>
+        </>
       )}
 
       <Section title="Tokens">
