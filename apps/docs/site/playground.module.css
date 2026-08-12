@@ -1,7 +1,7 @@
 /*
  * Layout only.
  *
- * Nothing here paints: no colour, no radius, no border. Every surface on this
+ * Nothing here paints: no color, no radius, no border. Every surface on this
  * page is a component's own, because the page exists to judge those surfaces
  * against each other and a wrapper with opinions of its own would be one more
  * thing in the picture that the system did not put there.
@@ -59,11 +59,26 @@
   width: 100%;
 }
 
-/* The badge and the title on an accordion row, kept on one line together. */
+/*
+ * The badge and the title on an accordion row, side by side.
+ *
+ * A row rather than inline text, so the badge is centered against the whole title
+ * instead of sitting on its first line — a two-line entry otherwise had the tag
+ * pinned to the top and the second line running back underneath it.
+ *
+ * The wrapping itself is the component's: `Accordion.Trigger` already gives its
+ * label the width and the line breaking. This only says how the two pieces sit
+ * next to each other.
+ */
 .entry {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--spacing-8);
+  min-width: 0;
+}
+
+/* The part that gives way. The badge keeps its size; the words take the rest. */
+.entryTitle {
   min-width: 0;
 }
 

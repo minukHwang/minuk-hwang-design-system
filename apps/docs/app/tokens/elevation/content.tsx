@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { useResolvedAppearance } from '../../../site/dials';
 import { Page } from '../../../site/Page';
-import { Callout, Preview, Section } from '../../../site/Preview';
+import { Callout, Preview } from '../../../site/Preview';
 import css from '../../../site/tokens.module.css';
 
 const LEVELS = [
@@ -63,9 +63,7 @@ export default function ElevationPage() {
         <div className={`${css.rows} ${css.levelDefault}`}>
           {LEVELS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
-              <Text as="span" size={2} className={css.token}>
-                background.{name}
-              </Text>
+              <code className={css.token}>background.{name}</code>
               <span className={css.levelChip} style={{ background: `var(--background-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
@@ -77,15 +75,13 @@ export default function ElevationPage() {
 
       <Preview
         title="The neutral tone"
-        description="Not levels. Neutral is a tone like the other five, so a grey badge and a grey button are built the way a red one is."
+        description="Not levels. Neutral is a tone like the other five, so a gray badge and a gray button are built the way a red one is."
         stack
       >
         <div className={css.rows}>
           {FILLS.map(([name, what]) => (
             <div key={name} className={css.levelRow}>
-              <Text as="span" size={2} className={css.token}>
-                neutral.{name}
-              </Text>
+              <code className={css.token}>neutral.{name}</code>
               <span className={css.levelChip} style={{ background: `var(--neutral-${name})` }} />
               <Text as="span" size={3} color="assistive">
                 {what}
@@ -151,7 +147,7 @@ export default function ElevationPage() {
       </Preview>
 
       <Callout>
-        Interaction moves towards the text rather than towards white, and the text colour is what
+        Interaction moves towards the text rather than towards white, and the text color is what
         flips between themes. That is why a hover darkens on light and lightens on dark without
         contradicting the rule above.
       </Callout>
@@ -160,7 +156,7 @@ export default function ElevationPage() {
         <>
           <Preview
             title="Where the page sits"
-            description="pageBackground picks between these two. On the tinted page a flat card is enough; on the white one there is no colour left to separate them, so a card takes a border."
+            description="pageBackground picks between these two. On the tinted page a flat card is enough; on the white one there is no color left to separate them, so a card takes a border."
             stack
             code={`<Theme pageBackground="base">   // tinted, the default
   <Theme pageBackground="raised"> // white`}
@@ -197,31 +193,6 @@ export default function ElevationPage() {
           </Callout>
         </>
       )}
-
-      <Section title="Tokens">
-        <div className={css.rows}>
-          {[
-            ['background.base', 'neutral 50 on light, neutral 10 on dark'],
-            ['background.raised', 'white on light, neutral 50 on dark'],
-            ['background.overlay', 'raised, mixed 5% towards white'],
-            ['background.scrim', 'dim 500, behind a modal'],
-            ['neutral.surface', 'neutral 100'],
-            ['neutral.subtle', 'neutral 200'],
-            ['state.hover', 'dim 100 on light, lighten 100 on dark'],
-            ['state.pressed', 'dim 200 on light, lighten 200 on dark'],
-          ].map(([name, value]) => (
-            <div key={name} className={css.row}>
-              <Text as="span" size={2} className={css.token}>
-                {name}
-              </Text>
-              <Text as="span" size={2} className={css.value}>
-                {value}
-              </Text>
-              <span />
-            </div>
-          ))}
-        </div>
-      </Section>
     </Page>
   );
 }

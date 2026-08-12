@@ -26,7 +26,7 @@ export default function ScalesPage() {
         <div className={css.rows}>
           {SPACING.map(step => (
             <div key={step} className={css.row}>
-              <span className={css.token}>spacing[{step}]</span>
+              <code className={css.token}>spacing[{step}]</code>
               <span className={css.value}>{step}px</span>
               <span className={css.bar} style={{ width: `var(--spacing-${step})` }} />
             </div>
@@ -56,7 +56,7 @@ export default function ScalesPage() {
           <div className={css.rows}>
             {RADIUS.map(step => (
               <div key={step} className={css.row}>
-                <span className={css.token}>borderRadius[{step}]</span>
+                <code className={css.token}>borderRadius[{step}]</code>
                 <span className={css.value}>{step}px</span>
                 <span
                   className={css.radiusChip}
@@ -65,7 +65,7 @@ export default function ScalesPage() {
               </div>
             ))}
             <div className={css.row}>
-              <span className={css.token}>borderRadius.half</span>
+              <code className={css.token}>borderRadius.half</code>
               <span className={css.value}>50%</span>
               <span
                 className={`${css.radiusChip} ${css.radiusChipSquare}`}
@@ -73,7 +73,7 @@ export default function ScalesPage() {
               />
             </div>
             <div className={css.row}>
-              <span className={css.token}>borderRadius.full</span>
+              <code className={css.token}>borderRadius.full</code>
               <span className={css.value}>999px</span>
               <span
                 className={css.radiusChip}
@@ -92,10 +92,10 @@ export default function ScalesPage() {
         <div className={css.rows}>
           {FONT_SIZE.map(size => (
             <div key={size} className={css.row}>
-              <span className={css.token}>fontSize[{size}]</span>
+              <code className={css.token}>fontSize[{size}]</code>
               <span className={css.value}>{size}px</span>
               <span style={{ fontSize: `var(--font-size-${size})`, lineHeight: 1.2 }}>
-                디자인 시스템
+                Design system
               </span>
             </div>
           ))}
@@ -114,7 +114,7 @@ fontFamily.mono   // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas,
         <div className={css.rows}>
           {(['main', 'serif', 'mono'] as const).map(family => (
             <div key={family} className={css.familyRow}>
-              <span className={css.token}>fontFamily.{family}</span>
+              <code className={css.token}>fontFamily.{family}</code>
               {/*
                * The same three lines for each face, broken by hand rather than
                * left to wrap. Comparing two faces means comparing the same
@@ -122,7 +122,7 @@ fontFamily.mono   // 'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas,
                * places for every stack.
                */}
               <span className={css.specimen} style={{ fontFamily: `var(--font-family-${family})` }}>
-                디자인 시스템
+                Design system
                 <br />
                 Design System
                 <br />

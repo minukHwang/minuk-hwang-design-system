@@ -168,18 +168,14 @@ export default function ColorPage() {
       >
         <div className={css.rows}>
           <div className={css.row}>
-            <Text as="span" size={2} className={css.token}>
-              color.white
-            </Text>
+            <code className={css.token}>color.white</code>
             <Text as="span" size={2} className={css.value}>
               #ffffff
             </Text>
             <span className={css.absoluteSwatch} style={{ background: 'var(--white)' }} />
           </div>
           <div className={css.row}>
-            <Text as="span" size={2} className={css.token}>
-              color.black
-            </Text>
+            <code className={css.token}>color.black</code>
             <Text as="span" size={2} className={css.value}>
               #000000
             </Text>

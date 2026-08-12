@@ -15,7 +15,6 @@
 }
 
 .controlLabel {
-  font-family: var(--font-family-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -36,7 +35,9 @@
   height: 26px;
   padding: 0;
   border: 1px solid var(--border-normal);
-  border-radius: var(--docs-radius-full);
+  /* A chip, like the row in the top bar. A circle of color reads as a status
+     light; a rounded square reads as a sample of the thing it selects. */
+  border-radius: var(--docs-radius-8);
   background: var(--accent-500);
   cursor: pointer;
   transition: transform var(--duration-70) var(--easing-standard);

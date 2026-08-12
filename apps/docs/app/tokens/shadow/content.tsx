@@ -19,7 +19,7 @@ export default function ShadowPage() {
     <Page
       eyebrow="Tokens"
       title="Shadow"
-      lede="Geometry and colour are separate tokens, and only the colour follows the theme. Switch themes in the sidebar and watch these hold their weight."
+      lede="Geometry and color are separate tokens, and only the color follows the theme. Switch themes in the sidebar and watch these hold their weight."
     >
       <Preview
         title="The ladder"
@@ -46,7 +46,7 @@ export default function ShadowPage() {
         <div className={css.rows}>
           {STEPS.map(([name, use]) => (
             <div key={name} className={css.row}>
-              <span className={css.token}>shadow.{name}</span>
+              <code className={css.token}>shadow.{name}</code>
               <span className={css.value} />
               <span>{use}</span>
             </div>

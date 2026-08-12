@@ -1,7 +1,28 @@
+/*
+ * A ground of its own for the ramps, dark in both themes.
+ *
+ * A color ramp is judged against what is behind it, and the page is a near-
+ * white in one theme and a near-black in the other — so the same swatch strip
+ * looked washed out on one and fine on the other, and the palest steps of every
+ * hue disappeared entirely in light. A constant dark ground is the neutral
+ * referee: every step is visible on it, and the two themes show the same picture
+ * so the difference you see is the ramp changing rather than the page.
+ *
+ * `neutral-10` from the dark ramp rather than pure black, so it is the system's
+ * own darkest surface rather than a color from outside it. The label beside the
+ * strips takes the matching text color.
+ */
 .ramps {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-8);
+  padding: var(--spacing-20);
+  border-radius: var(--docs-radius-12);
+  background: #141414;
+}
+
+.ramps .rampName {
+  color: #e3e3e3;
 }
 
 /*
@@ -17,7 +38,6 @@
 }
 
 .rampName {
-  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-assistive);
   white-space: nowrap;
@@ -31,7 +51,7 @@
    * A ring, because the lightest steps are white and the page is too. Without it
    * a ramp appeared to begin at its third step, the first two having gone
    * invisible against the ground they were drawn on. `inset` so it does not add
-   * to the strip's size, and the border colour rather than a rule so it reads as
+   * to the strip's size, and the border color rather than a rule so it reads as
    * an edge rather than as a swatch of its own.
    */
   box-shadow: inset 0 0 0 1px var(--border-subtle);
@@ -72,17 +92,50 @@
   border-bottom: none;
 }
 
+/*
+ * A token's name, set as the code it is.
+ *
+ * These are identifiers you type — `spacing[12]`, `easing.standard` — and they
+ * were plain monospace text sitting in a cell, which read as a label for the row
+ * rather than as the thing you copy. They are `<code>` now, so they take the
+ * site's inline-code chip and match the type column in every props table.
+ *
+ * `justify-self: start` because a grid item is blockified: without it the chip
+ * stretched to the width of its column and became a bar with a word at one end.
+ * It should be the width of the name and no wider.
+ */
 .token {
+  justify-self: start;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-normal);
 }
 
+/*
+ * A value is one token, and a token does not have a place to break.
+ *
+ * `cubic-bezier(0.2, 0, 0, 1)` was being set in a 110px column, so it broke
+ * after the hyphen and again mid-argument and arrived as three lines of
+ * fragments. Nobody reads a curve that way; they copy it.
+ */
 .value {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-assistive);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/*
+ * A wider middle column, for the rows whose value is a function call.
+ *
+ * Each `.row` is its own grid, so the columns only line up across rows because
+ * the first two are fixed widths — which means a table with longer values cannot
+ * simply let its column grow, it has to be given a bigger number. 250 is the
+ * longest curve here at this size, with a little to spare.
+ */
+.rowStacked {
+  grid-template-columns: 150px 250px minmax(0, 1fr);
 }
 
 /* A bar whose width is the token, so the scale is visible rather than only listed. */
@@ -156,6 +209,21 @@
   gap: var(--spacing-8);
 }
 
+/*
+ * Centered once the ladder is a column.
+ *
+ * The chips are a fixed 120 and four of them need more width than a phone has,
+ * so the row becomes one per line — and left-aligned that left each specimen
+ * hard against one side of a stage twice its width, with the shadow it is
+ * demonstrating falling into empty space on the other. A shadow is judged by the
+ * room around it, so the room should be even.
+ */
+@media (max-width: 640px) {
+  .shadowStage {
+    justify-content: center;
+  }
+}
+
 /* ── motion ─────────────────────────────────────────────────── */
 
 .curve {
@@ -180,9 +248,43 @@
 }
 
 @media (max-width: 640px) {
+  /*
+   * The token and its value share the first line; whatever explains them takes
+   * the second, across the full width.
+   *
+   * At `1fr 1fr` the third child dropped into the first column of a second row,
+   * so a sentence was set in half the width with the other half empty beside it
+   * — and on the pages where the middle cell is empty, as it is on this one, the
+   * row spent a whole column on nothing. Sizing the first column to its content
+   * also stops `shadow.xs` and `shadow.l` claiming the same width as a
+   * three-word measurement.
+   */
+  /*
+   * The row gap is the one between the two lines, and it has to be bigger than
+   * the space inside a line. At four the specimen on the second line sat against
+   * the chip above it and the rows ran together.
+   */
   .row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--spacing-14) var(--spacing-12);
+    padding: var(--spacing-12) 0;
+    align-items: start;
   }
+
+  .row > :nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  /* One thing per line, for rows whose value is too long to sit beside its name. */
+  .rowStacked {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-8);
+  }
+
+  .rowStacked > * {
+    grid-column: 1 / -1;
+  }
+
   .ramp {
     grid-template-columns: 1fr;
   }
@@ -263,9 +365,24 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
   color: var(--text-color-normal);
+}
+
+/*
+ * The prop, set as the code it is — `size={10}`, `<h2>`.
+ *
+ * Only this half of the meta block. The measurement under it, `24/30`, is a fact
+ * about what the prop produced rather than something anyone types, and putting
+ * it in a chip as well would make two different kinds of thing look alike.
+ *
+ * `align-self: start` so the chip is the width of the name: the meta block is a
+ * flex column, and a stretched chip would run to the width of the widest line
+ * beside it.
+ */
+.stepName {
+  align-self: start;
+  font-size: var(--font-size-12);
 }
 
 .stepSize {
@@ -275,8 +392,18 @@
 }
 
 @media (max-width: 640px) {
+  /*
+   * The label and its specimen stack here, so the gap between them is also the
+   * gap between one row and the next. At four they ran together into a single
+   * column of alternating type; twelve inside a row and the section's own gap
+   * outside it keep the pairs apart.
+   */
   .stepRow {
     grid-template-columns: 1fr;
+    gap: var(--spacing-12);
+  }
+
+  .stepMeta {
     gap: var(--spacing-4);
   }
 }
@@ -284,13 +411,26 @@
 /*
  * One size per row, so the three are read down a column rather than across a
  * wrapping line. Baseline alignment would sit buttons of three heights on their
- * labels; these are boxes, so they centre.
+ * labels; these are boxes, so they center.
+ */
+/*
+ * One row of specimens, wrapping onto a second line rather than running off.
+ *
+ * A size row is three or four buttons and their labels, which is wider than a
+ * phone. Without `wrap` the row simply overflowed and the frame around it clips,
+ * so the last specimen was cut in half — the one thing an example must not do is
+ * hide the thing it is showing.
+ *
+ * `min-width: 0` so the row can be narrower than its content in the flex column
+ * it sits in, which is what gives the wrap something to happen inside.
  */
 .controlRow {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--spacing-12);
   width: 100%;
+  min-width: 0;
 }
 
 /*
@@ -301,7 +441,6 @@
 .controlRowLabel {
   flex: none;
   width: 24px;
-  font-family: var(--font-family-mono);
   font-size: var(--font-size-12);
   color: var(--text-color-assistive);
 }
@@ -309,6 +448,28 @@
 /* For rows labelled with a word rather than a size letter. */
 .controlRowLabelWide {
   width: 56px;
+}
+
+/*
+ * A column on a phone, label at the top and one specimen per line.
+ *
+ * Wrapping was not enough. A row that breaks puts its later specimens under the
+ * label's gutter rather than under the ones above them, so three buttons read as
+ * two unrelated groups and the size letter stopped belonging to anything. Down a
+ * column they line up on one left edge and the label is a heading for what
+ * follows it, which is what it always was.
+ */
+@media (max-width: 640px) {
+  .controlRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-8);
+  }
+
+  .controlRowLabel,
+  .controlRowLabelWide {
+    width: auto;
+  }
 }
 
 /* ── contrast comparison ────────────────────────────────────── */
@@ -331,7 +492,7 @@
  * They shared a background at first, which made the pair read as a single
  * object with a seam in it — and a line struck through one side then looked
  * like damage to the swatch rather than a verdict on the text. Separating them
- * gives each text colour its own sample, and the strike has a whole box to
+ * gives each text color its own sample, and the strike has a whole box to
  * cross.
  */
 .contrastFill {
@@ -352,13 +513,13 @@
 }
 
 /*
- * The colour that was not chosen gets struck through, corner to corner, the way
+ * The color that was not chosen gets struck through, corner to corner, the way
  * a brand guide crosses out the wrong logo lockup.
  *
  * Marking only the winner would leave the loser looking like a second valid
  * option — which is exactly the impression this table exists to remove. The
  * line is `currentColor`, so it is white on the white swatch and black on the
- * black one, and never introduces a third colour.
+ * black one, and never introduces a third color.
  */
 .contrastHalf[data-rejected]::after {
   content: '';
@@ -425,6 +586,34 @@
   color: var(--status-warning-strong);
 }
 
+/*
+ * Two columns on a phone, rather than five things wrapping wherever they land.
+ *
+ * The row holds a name, a hex, two measurements and sometimes a note, and their
+ * widths have nothing in common — so a wrapping flex broke them at a different
+ * place on every hue and fourteen rows lined up with nothing. On a grid the name
+ * sits over the first figure and the hex over the second, every row breaks in
+ * the same two places, and the note takes a line of its own because it is a
+ * sentence and the others are values.
+ */
+@media (max-width: 640px) {
+  .contrastMeta {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: baseline;
+    gap: var(--spacing-6) var(--spacing-10);
+  }
+
+  .contrastName {
+    min-width: 0;
+  }
+
+  .contrastNote {
+    grid-column: 1 / -1;
+  }
+}
+
 /* ── elevation ──────────────────────────────────────────────── */
 
 .levelRow {
@@ -442,7 +631,35 @@
 }
 
 /*
- * A border on every swatch, because two of these levels are the same colour in
+ * Two lines on a phone: the token and its chip, then the sentence under both.
+ *
+ * The three columns are 150 and 120 of fixed width, which leaves a 390px screen
+ * about eighty pixels for the description — narrow enough that it set one short
+ * word per line and then ran out of the frame. The name and the swatch are the
+ * pair that has to stay together; the sentence about them does not have to be
+ * beside them.
+ */
+@media (max-width: 640px) {
+  /*
+   * The swatch column is a fixed width, not what is left over.
+   *
+   * Sized by the remaining space it came out a different width on every row —
+   * `background.raised` is a longer name than `background.base`, so its chip was
+   * sixteen pixels narrower — and a column of color samples that are not the
+   * same size is comparing two things at once.
+   */
+  .levelRow {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: var(--spacing-8) var(--spacing-12);
+  }
+
+  .levelRow > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/*
+ * A border on every swatch, because two of these levels are the same color in
  * the light theme and a borderless chip would read as a missing row rather than
  * as the ceiling being reached.
  */
@@ -515,11 +732,11 @@
   background-image: linear-gradient(var(--state-ink-pressed), var(--state-ink-pressed));
 }
 
-/* ── absolute colours ───────────────────────────────────────── */
+/* ── absolute colors ───────────────────────────────────────── */
 
 /*
  * A checkerboard, so an alpha reads as an alpha. On a flat ground every step of
- * `dim` looks like a grey and the one thing these tokens are for, being
+ * `dim` looks like a gray and the one thing these tokens are for, being
  * see-through, is the one thing that does not show.
  */
 .alphaStrip {

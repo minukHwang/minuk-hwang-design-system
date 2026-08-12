@@ -1,4 +1,5 @@
 import { Heading } from '@minuk-hwang-design-system/components-react/heading';
+import { Separator } from '@minuk-hwang-design-system/components-react/separator';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import * as React from 'react';
 
@@ -48,6 +49,16 @@ export const Page = ({ eyebrow, title, lede, children }: PageProps) => (
         {lede}
       </Text>
     </header>
+    {/*
+      A rule under the head, so the sentence that introduces the page stops
+      belonging to the first example under it. The gap alone could not say that:
+      48 between the lede and an example is the same 48 that separates two
+      examples, so the head read as the first section rather than as the page's.
+
+      `Separator` rather than a border on the header, because the system has a
+      component for a rule and this is a page built out of the system.
+    */}
+    <Separator className={css.pageRule} />
     {children}
   </article>
 );
