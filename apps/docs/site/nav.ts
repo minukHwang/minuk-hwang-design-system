@@ -108,12 +108,9 @@ export const nav: NavSection[] = [
         summary: 'Modal, focus trapped',
         compound: true,
       },
-      {
-        href: '/components/popover',
-        label: 'Popover',
-        summary: 'Anchored, interactive',
-        compound: true,
-      },
+      // Popover is written and shipping, but held back from the site until it
+      // has been through the same pass as the rest — reachable at
+      // /components/popover, and one line away from being listed again.
       {
         href: '/components/tooltip',
         label: 'Tooltip',
