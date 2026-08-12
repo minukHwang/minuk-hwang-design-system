@@ -17,7 +17,7 @@ const px = (rem: string) => Math.round(parseFloat(rem) * 16);
 
 const LEVELS = [1, 2, 3, 4, 5, 6] as const;
 
-const SAMPLE = '같은 색에 이름이 둘이면 언젠가 갈라진다';
+const SAMPLE = 'One color with two names will drift apart';
 
 export default function HeadingPage() {
   return (
@@ -40,7 +40,7 @@ export default function HeadingPage() {
         {LEVELS.map(level => (
           <div key={level} className={css.stepRow}>
             <span className={css.stepMeta}>
-              {`<h${level}>`}
+              <code className={css.stepName}>{`<h${level}>`}</code>
               <span className={css.stepSize}>
                 size={headingSizeForLevel[level]} ·{' '}
                 {px(step(headingSizeForLevel[level]).regular.fontSize)}px
@@ -62,25 +62,25 @@ export default function HeadingPage() {
         title="Size"
         description="Use size to change the appearance without touching the outline."
         stack
-        code={`<Heading level={2}>기본 크기</Heading>
+        code={`<Heading level={2}>Default size</Heading>
 
 {/* Still an h2 in the outline, only smaller on screen. */}
-<Heading level={2} size={1}>개요는 그대로, 크기만 작게</Heading>`}
+<Heading level={2} size={1}>Same outline, smaller on screen</Heading>`}
       >
         <div className={css.stepRow}>
           <span className={css.stepMeta}>
-            {'<h2> · size=7'}
+            <code className={css.stepName}>{'<h2> · size=7'}</code>
             <span className={css.stepSize}>default</span>
           </span>
-          <Heading level={2}>기본 크기</Heading>
+          <Heading level={2}>Default size</Heading>
         </div>
         <div className={css.stepRow}>
           <span className={css.stepMeta}>
-            {'<h2> · size=1'}
+            <code className={css.stepName}>{'<h2> · size=1'}</code>
             <span className={css.stepSize}>overridden</span>
           </span>
           <Heading level={2} size={1}>
-            개요는 그대로, 크기만 작게
+            Same outline, smaller on screen
           </Heading>
         </div>
       </Preview>
@@ -95,15 +95,13 @@ export default function HeadingPage() {
           return (
             <div key={n} className={css.stepRow}>
               <span className={css.stepMeta}>
-                size={'{'}
-                {n}
-                {'}'}
+                <code className={css.stepName}>size={`{${n}}`}</code>
                 <span className={css.stepSize}>
                   {px(spec.fontSize)}/{px(spec.lineHeight)}
                 </span>
               </span>
               <Heading level={2} size={n} truncate>
-                디자인 시스템
+                Design system
               </Heading>
             </div>
           );

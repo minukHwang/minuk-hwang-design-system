@@ -15,7 +15,7 @@ const px = (rem: string) => Math.round(parseFloat(rem) * 16);
 const WEIGHTS = ['regular', 'medium', 'bold'] as const;
 
 const SAMPLE =
-  '디자인 시스템은 결정을 한 번만 내리게 하는 장치다. 색은 토큰에서 한 번, 포커스 트랩은 base 레이어에서 한 번, 버튼의 생김새는 여기서 한 번.';
+  'A design system is a device for making each decision once. Color once in the tokens, the focus trap once in the base layer, what a button looks like once here.';
 
 export default function TextPage() {
   return (
@@ -44,9 +44,9 @@ export default function TextPage() {
           return (
             <div key={n} className={css.stepRow}>
               <span className={css.stepMeta}>
-                size={'{'}
-                {n}
-                {'}'}
+                {/* The prop as you would type it; the measurement beside it is a
+                    fact about the result, not something to copy. */}
+                <code className={css.stepName}>size={`{${n}}`}</code>
                 <span className={css.stepSize}>
                   {px(spec.fontSize)}/{px(spec.lineHeight)}
                 </span>
@@ -99,8 +99,9 @@ export default function TextPage() {
               </span>
             </span>
             <Text leading={leading}>
-              {SAMPLE} 셋 중 무엇을 바꿔도 나머지 둘은 서 있다. 그것이 이 구조가 통과해야 하는
-              시험이고, 스타일이 입혀진 컴포넌트가 패키지일 뿐 요점이 아닌 이유다.
+              {SAMPLE} Change any one of the three and the other two still stand. That is the test
+              this structure has to pass, and it is why the styled components are a package rather
+              than the point.
             </Text>
           </div>
         ))}
@@ -145,7 +146,18 @@ export default function TextPage() {
 <Text lines={2}>{SAMPLE}</Text>
 <Text lines={3}>{SAMPLE}</Text>`}
       >
-        <div style={{ maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {/* `width: 100%` as well as the cap: a bare `max-width` still lets the box
+            take its content's width on a narrow screen, so the specimens ran past
+            the frame and were clipped instead of truncating. */}
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 360,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+          }}
+        >
           <Text truncate>{SAMPLE}</Text>
           <Text lines={2}>{SAMPLE}</Text>
           <Text lines={3}>{SAMPLE}</Text>
@@ -179,7 +191,7 @@ export default function TextPage() {
               type: 'strong | normal | assistive | inverse | link | accent | success | warning | error | inherit',
               default: `'normal'`,
               description:
-                'Semantic roles only. inherit takes the colour of whatever it sits in, for text inside something that has already picked one.',
+                'Semantic roles only. inherit takes the color of whatever it sits in, for text inside something that has already picked one.',
             },
             { name: 'align', type: `'left' | 'center' | 'right' | 'justify'`, description: '' },
             {

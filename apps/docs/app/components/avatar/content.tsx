@@ -9,7 +9,7 @@ import { PartsList, Preview, PropsTable, Section } from '../../../site/Preview';
 const SIZES = ['xs', 's', 'm', 'l', 'xl'] as const;
 
 /**
- * Photographs rather than coloured squares.
+ * Photographs rather than colored squares.
  *
  * What this component does to an image is crop it square and clip it to a
  * circle, and neither is visible on a flat fill. These are portraits in
@@ -88,7 +88,7 @@ export default function AvatarPage() {
 </Avatar.Root>
 
 <Avatar.Root size="l">
-  <Avatar.Fallback>이</Avatar.Fallback>
+  <Avatar.Fallback>MH</Avatar.Fallback>
 </Avatar.Root>`}
       >
         <Avatar.Root size="l">
@@ -99,7 +99,7 @@ export default function AvatarPage() {
           <Avatar.Fallback>JK</Avatar.Fallback>
         </Avatar.Root>
         <Avatar.Root size="l">
-          <Avatar.Fallback>이</Avatar.Fallback>
+          <Avatar.Fallback>MH</Avatar.Fallback>
         </Avatar.Root>
       </Preview>
 
