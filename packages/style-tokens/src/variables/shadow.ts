@@ -1,9 +1,9 @@
 /**
  * Elevation shadows.
  *
- * Geometry here, colour in the palette. A shadow's offset and blur describe how
+ * Geometry here, color in the palette. A shadow's offset and blur describe how
  * far something floats above the page, which is a fact about the layout and does
- * not change with the theme. Its colour describes how much it darkens what is
+ * not change with the theme. Its color describes how much it darkens what is
  * behind it, and that depends entirely on what is behind it — 8% black reads
  * clearly on white and is invisible on `#141414`.
  *
@@ -18,7 +18,7 @@
  *   ambient   wide and soft, barely offset — everything else in the room
  *
  * Names stay in t-shirt sizes while the rest of the system moved to pixels,
- * because a shadow is four lengths and a colour. There is no single number to
+ * because a shadow is four lengths and a color. There is no single number to
  * key it by, and `shadow[16]` would be naming one of five values arbitrarily.
  */
 

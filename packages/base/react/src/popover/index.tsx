@@ -43,6 +43,6 @@ export const Popover = {
   Anchor: RadixPopover.Anchor,
   Content,
   Close: RadixPopover.Close,
-  /** Optional pointer. Needs a fill colour to be visible. */
+  /** Optional pointer. Needs a fill color to be visible. */
   Arrow: RadixPopover.Arrow,
 };

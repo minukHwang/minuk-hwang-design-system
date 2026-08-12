@@ -66,7 +66,7 @@ export const fallback = style({
   /*
    * The initials moved with the background they sit on.
    *
-   * `assistive` is the grey for text that should recede, and it recedes against
+   * `assistive` is the gray for text that should recede, and it recedes against
    * a pale surface: on the darker fill above it measures 3.42:1 on light and
    * 3.89:1 on dark, under the 4.5:1 that applies because the `xs` avatar sets
    * these at 12px.

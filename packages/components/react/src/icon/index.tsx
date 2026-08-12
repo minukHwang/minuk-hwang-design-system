@@ -24,7 +24,7 @@ export type IconProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'color' | 'c
    */
   size?: 14 | 16 | 18 | 20 | 24;
   /**
-   * Omit it. An icon takes the colour of whatever it sits in, which is what
+   * Omit it. An icon takes the color of whatever it sits in, which is what
    * makes the same glyph work on a page, inside a primary button and on a
    * status fill without being told which.
    */
@@ -50,8 +50,8 @@ export type IconProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'color' | 'c
  * Names come from the Material Symbols set and are passed as text content —
  * that is how the font maps a ligature to a glyph.
  *
- * Colour is inherited unless asked for. The previous default pinned every icon
- * to the body text colour, which meant a white-on-blue button held a dark grey
+ * Color is inherited unless asked for. The previous default pinned every icon
+ * to the body text color, which meant a white-on-blue button held a dark gray
  * glyph — the one place the default was certain to be wrong.
  *
  * Without `label` the icon is hidden from screen readers. That is the right

@@ -39,7 +39,7 @@ export const root = style({
    */
   borderRadius: vars.borderRadius[12],
   // Off is a filled track rather than an outlined one, so the two states differ
-  // by colour alone and the control never changes shape. `strong` rather than
+  // by color alone and the control never changes shape. `strong` rather than
   // `normal` because the white thumb has to read against it.
   backgroundColor: border.strong,
   cursor: 'pointer',

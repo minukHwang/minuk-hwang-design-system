@@ -3,7 +3,7 @@
  *
  * Every chromatic scale in this system is a single hue walked along a fixed
  * lightness ladder at full saturation. Keeping the ladder in code rather than in
- * hand-picked hex values is what makes a new colour land consistently with the
+ * hand-picked hex values is what makes a new color land consistently with the
  * ones that already exist.
  *
  * The ladders below were measured from the existing blue and orange scales,
@@ -30,12 +30,12 @@ const LIGHT_LADDER = [99, 95, 90, 80, 70, 60, 50, 41, 32, 23, 15, 10, 7];
  * dark ground visually vibrates and gets harder to read, not easier — Material
  * caps `onSurface` at tone 90 and the brightest step Radix ships in a dark scale
  * is #c2e6ff, neither of which approaches white. Running to 99 also drained the
- * hue out of the step: every colour's dark-990 came out within 5/255 of #ffffff,
+ * hue out of the step: every color's dark-990 came out within 5/255 of #ffffff,
  * so `blue-990` was blue in name only.
  */
 /*
  * Step 500 holds lightness 50 in both ladders, so the solid fill is literally
- * the same colour in either theme. It is the step that identifies the colour —
+ * the same color in either theme. It is the step that identifies the color —
  * a brand blue button should be recognisably one blue — and it is also what
  * stops the AA answer from flipping: at 53 the dark fill sat just light enough
  * that white failed on red and blue while passing on both in the light theme.
@@ -71,13 +71,13 @@ const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
  *
  * Two other things worth writing down before anyone starts:
  *
- * 1. Apple ships every system colour as a light/dark pair and the dark one is
+ * 1. Apple ships every system color as a light/dark pair and the dark one is
  *    brighter in all twelve — +0.009 on red, +0.021 on blue, +0.11 on cyan,
  *    averaging +0.040 in OKLab lightness with the chroma left alone. The lift is
  *    largest on the low-chroma hues. Our 500 is pinned identical across themes,
  *    so the system has none of it at the one step that carries the brand.
  *
- * 2. Two attempts failed, both by draining the colour:
+ * 2. Two attempts failed, both by draining the color:
  *      - generating as now and rewriting each step's lightness afterwards, then
  *        clipping the old chroma into the new gamut. Cost the dark yellow 0.019
  *        of chroma at 500 and the dark lime 0.030 at 600.
@@ -94,7 +94,7 @@ const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
  */
 
 /**
- * Hues of the colours this system ships, in degrees.
+ * Hues of the colors this system ships, in degrees.
  *
  * Spacing is deliberate but not uniform, and the note that used to sit here
  * claimed a floor of 18° that the table below does not keep: crimson and red are
@@ -102,7 +102,7 @@ const DARK_LADDER = [8, 12, 17, 26, 35, 44, 50, 63, 72, 82, 85, 89, 93];
  * are readably different because the tuning pulls them apart in saturation and
  * lightness as well — hue spacing alone was never what was doing the work.
  *
- * The wheel is walked in order so a new colour can be slotted in without
+ * The wheel is walked in order so a new color can be slotted in without
  * renumbering anything.
  */
 const HUES = {
@@ -167,7 +167,7 @@ const WHITE = '#ffffff';
 const BLACK = '#000000';
 
 /**
- * Which text colour clears WCAG AA on top of a solid fill.
+ * Which text color clears WCAG AA on top of a solid fill.
  *
  * Measured rather than listed. The hand-maintained table this replaced was
  * wrong in the dark theme and had no way of knowing: blue-500 carries white at
@@ -175,7 +175,7 @@ const BLACK = '#000000';
  * is a coin flip on which one it fails.
  *
  * Desaturating or retuning a hue moves the number, and a value derived from the
- * colour follows it. A value typed beside the colour does not.
+ * color follows it. A value typed beside the color does not.
  *
  * White wins ties, and anything that clears the floor counts as a tie. Picking
  * whichever number is larger put black on red — which passes at 4.64:1 and
@@ -183,7 +183,7 @@ const BLACK = '#000000';
  * legible; convention decides between two legible answers.
  */
 /**
- * Which text colour clears WCAG AA on top of a solid fill.
+ * Which text color clears WCAG AA on top of a solid fill.
  *
  * Measured rather than listed. The hand-maintained table this replaced was
  * wrong in the dark theme and had no way of knowing.
@@ -202,7 +202,7 @@ const BLACK = '#000000';
  */
 const onSolid = fill => (contrast(fill, WHITE) >= 4.5 ? WHITE : BLACK);
 
-/** Reports any fill where neither text colour clears the 4.5:1 floor. */
+/** Reports any fill where neither text color clears the 4.5:1 floor. */
 const contrastReport = fill => ({
   white: contrast(fill, WHITE),
   black: contrast(fill, BLACK),
@@ -215,7 +215,7 @@ const contrastReport = fill => ({
  * Equal HSL lightness does not mean equal perceived brightness. Cyan and green
  * read far lighter than blue at the same value, so their scales are pulled down
  * to sit alongside the rest. Without this, teal-500 comes out as #00ffea — a
- * highlighter colour no interface can use.
+ * highlighter color no interface can use.
  *
  * `green` already carries this correction in the committed files; the entry here
  * documents the amount so a regenerated scale matches what is on disk.
@@ -253,11 +253,11 @@ const TUNING = {
    * neighbouring swatches; a little desaturation settles them.
    *
    * The lightness shifts are a different correction, and they buy a text
-   * colour rather than a look. All three missed carrying white by a margin —
+   * color rather than a look. All three missed carrying white by a margin —
    * crimson by 0.09, magenta by 0.47, pink by 0.54 — and a saturated fill set
    * in black reads as a hazard sign rather than as a button. Dropping the
    * saturation far enough to clear 4.5 would have cost magenta 16 points and
-   * pink 20, which is a different colour; one to four points of lightness costs
+   * pink 20, which is a different color; one to four points of lightness costs
    * nothing anyone can see. `#ed123e` and `#e8113c` are the same crimson.
    */
   magenta: { saturation: 86, lightnessShift: -6 },
@@ -275,7 +275,7 @@ const TUNING = {
  * @param h - Hue in degrees
  * @param s - Saturation as a percentage
  * @param l - Lightness as a percentage
- * @returns Lowercase hex colour, e.g. "#0066ff"
+ * @returns Lowercase hex color, e.g. "#0066ff"
  */
 const hslToHex = (h, s, l) => {
   const sat = s / 100;
@@ -307,7 +307,7 @@ const hslToHex = (h, s, l) => {
  * @param hue - Hue in degrees
  * @param theme - 'light' or 'dark'
  * @param saturation - Saturation as a percentage
- * @returns Map of step to hex colour
+ * @returns Map of step to hex color
  */
 const buildScale = (hue, theme, tuning = {}) => {
   const ladder = theme === 'dark' ? DARK_LADDER : LIGHT_LADDER;
@@ -353,7 +353,7 @@ const [, , nameArg, hueArg] = process.argv;
 if (nameArg) {
   const hue = hueArg !== undefined ? Number(hueArg) : HUES[nameArg];
   if (hue === undefined) {
-    console.error(`Unknown colour "${nameArg}". Pass a hue in degrees as the second argument.`);
+    console.error(`Unknown color "${nameArg}". Pass a hue in degrees as the second argument.`);
     process.exit(1);
   }
   const tuning = TUNING[nameArg] ?? {};

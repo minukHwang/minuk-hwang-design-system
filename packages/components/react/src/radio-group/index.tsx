@@ -27,7 +27,7 @@ export type RadioGroupItemProps = React.ComponentPropsWithoutRef<typeof Base.Ite
  * Exactly one choice from a small set.
  *
  * Radix gives the group roving focus, so the whole group is one tab stop and the
- * arrow keys move between options — which is the behaviour a screen reader user
+ * arrow keys move between options — which is the behavior a screen reader user
  * expects, and the part hand-rolled radio groups almost always miss.
  *
  * Above five or so options this becomes a wall; use `Select` there.

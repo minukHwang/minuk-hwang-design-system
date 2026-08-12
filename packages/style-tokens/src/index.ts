@@ -39,8 +39,8 @@ export type {
 export { borderRadiusValues, pillWhenFull } from './variables/radius';
 
 /*
- * What white and black measure against each solid fill. Data about the colours
- * rather than a colour, so it stays out of `vars` — the stylesheet generator
+ * What white and black measure against each solid fill. Data about the colors
+ * rather than a color, so it stays out of `vars` — the stylesheet generator
  * walks that namespace and would emit `--contrast-red: [object Object]`.
  */
 export { contrast } from './variables/color/static/contrast';

@@ -6,10 +6,10 @@ import * as React from 'react';
 import { Page } from '../../../site/Page';
 import { Callout, Preview, PropsTable, Section } from '../../../site/Preview';
 
-const CHILDREN = ['Colour', 'Spacing', 'Shadow'];
+const CHILDREN = ['Color', 'Spacing', 'Shadow'];
 
 export default function CheckboxPage() {
-  const [checked, setChecked] = React.useState<string[]>(['Colour']);
+  const [checked, setChecked] = React.useState<string[]>(['Color']);
 
   const all = checked.length === CHILDREN.length;
   const some = checked.length > 0 && !all;

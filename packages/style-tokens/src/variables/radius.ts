@@ -21,7 +21,7 @@
  *
  * ---
  *
- * Two exports, for the same reason the colour tokens have `$static` beside
+ * Two exports, for the same reason the color tokens have `$static` beside
  * `$palette`: one is the value, the other is the name to reach it by.
  *
  * `borderRadiusValues` is what the stylesheet generator emits. `borderRadius` is

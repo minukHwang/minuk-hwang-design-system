@@ -1,5 +1,5 @@
 /**
- * Raw colour scales — light theme
+ * Raw color scales — light theme
  *
  * GENERATED FILE. Run `node scripts/write-scales.js` to rebuild.
  * Edit scripts/generate-palette.js instead; hand edits here are overwritten.
@@ -10,7 +10,7 @@
  * themes without knowing which one is active.
  */
 
-/* Chromatic scales, ordered around the colour wheel. */
+/* Chromatic scales, ordered around the color wheel. */
 
 export const red = {
   990: '#210303',
@@ -271,7 +271,7 @@ export const slate = {
   10: '#fcfcfd',
 };
 
-/* Text colour that clears AA on each solid fill. Measured, not chosen. */
+/* Text color that clears AA on each solid fill. Measured, not chosen. */
 
 export const onSolid = {
   red: '#ffffff',

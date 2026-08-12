@@ -34,7 +34,7 @@
 export const duration = {
   /** Instant. For disabling a transition without removing the declaration. */
   0: '0ms',
-  /** Micro-feedback: hover and press colour changes. Below this it reads as a jump. */
+  /** Micro-feedback: hover and press color changes. Below this it reads as a jump. */
   70: '70ms',
   /** Small state flips: checkbox, switch, icon rotation. */
   100: '100ms',

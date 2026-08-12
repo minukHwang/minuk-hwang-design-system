@@ -54,7 +54,7 @@ const Ramp = ({ name }: { name: string }) => (
 const AA = 4.5;
 
 /**
- * One fill as two swatches, one per text colour, with the loser struck through.
+ * One fill as two swatches, one per text color, with the loser struck through.
  *
  * The rule that picks between them is a single comparison against 4.5, and on
  * four of the hues both answers clear it — there the comparison is a judgement
@@ -114,13 +114,13 @@ const ContrastRow = ({ hue, theme }: { hue: string; theme: 'light' | 'dark' }) =
   );
 };
 
-export default function ColourPage() {
+export default function ColorPage() {
   const theme = useResolvedAppearance();
 
   return (
     <Page
       eyebrow="Tokens"
-      title="Colour"
+      title="Color"
       lede="Fourteen chromatic scales and three neutrals, thirteen steps each, generated rather than picked. Switch the theme in the toolbar and every swatch below moves."
     >
       <Preview
@@ -149,7 +149,7 @@ export default function ColourPage() {
 
       <Callout>
         Reach for the semantic tokens further down, not one of these steps.{' '}
-        <code>palette.pink[500]</code> says what a colour is; <code>status.error.normal</code> says
+        <code>palette.pink[500]</code> says what a color is; <code>status.error.normal</code> says
         what it is for, and only the second survives a decision to make errors crimson.
       </Callout>
 
@@ -225,7 +225,7 @@ export default function ColourPage() {
 
       <Preview
         title="Semantic"
-        description="What a colour is for. Background is the level a thing sits on, fill is a panel cut into it, and every tone including neutral carries the four roles below."
+        description="What a color is for. Background is the level a thing sits on, fill is a panel cut into it, and every tone including neutral carries the four roles below."
         stack
       >
         <div className={css.ramps}>
@@ -263,7 +263,7 @@ export default function ColourPage() {
 
       <Preview
         title="Text on each fill"
-        description="onNormal records the colour that clears AA on that fill, so no component has to decide."
+        description="onNormal records the color that clears AA on that fill, so no component has to decide."
         stack
       >
         {[
@@ -288,7 +288,7 @@ export default function ColourPage() {
 
       <Preview
         title="White or black"
-        description={`Seven and seven across the hues: red through blue carry white, the cyan-to-orange arc needs black, and both themes agree because step 500 is the same lightness in each. The three greys are measured at 950 instead, where a solid neutral fill sits, and they are the only rows that answer differently in the two themes. (Reading the ${theme} one.)`}
+        description={`Seven and seven across the hues: red through blue carry white, the cyan-to-orange arc needs black, and both themes agree because step 500 is the same lightness in each. The three grays are measured at 950 instead, where a solid neutral fill sits, and they are the only rows that answer differently in the two themes. (Reading the ${theme} one.)`}
         stack
       >
         <div className={css.contrastList}>

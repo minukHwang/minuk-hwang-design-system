@@ -9,6 +9,6 @@ import Content from './content';
  * undefined. Metadata may only be exported from a server component, so the two
  * halves live in separate files.
  */
-export const metadata: Metadata = { title: 'Colour' };
+export const metadata: Metadata = { title: 'Color' };
 
 export default Content;

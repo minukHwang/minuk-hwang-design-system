@@ -70,12 +70,12 @@ export const hasReading: Record<number, true> = Object.fromEntries(
 
 /*
  * ============================================
- * Colour and alignment
+ * Color and alignment
  * ============================================
  */
 
 /**
- * The colours text is allowed to be.
+ * The colors text is allowed to be.
  *
  * Deliberately short. Every entry answers a question about the content — is this
  * body copy, a caption, a link, an error — rather than naming a hue. `crimson600`
@@ -88,17 +88,17 @@ export const colorStyle = styleVariants({
   /** On a filled or inverted surface. */
   inverse: { color: semantic.inverse },
   link: { color: semantic.link },
-  /** The brand colour, for text that is selected or active rather than linked. */
+  /** The brand color, for text that is selected or active rather than linked. */
   accent: { color: accent.strong },
   success: { color: status.success.strong },
   warning: { color: status.warning.strong },
   error: { color: status.error.strong },
   /**
-   * Take the colour of whatever this sits in.
+   * Take the color of whatever this sits in.
    *
-   * For text inside something that has already picked a colour — an alert with
+   * For text inside something that has already picked a color — an alert with
    * a tone, a filled banner, a selected row. Without it, every `Text` re-asserts
-   * a colour at higher specificity than its container and the container's choice
+   * a color at higher specificity than its container and the container's choice
    * never lands.
    */
   inherit: { color: 'inherit' },

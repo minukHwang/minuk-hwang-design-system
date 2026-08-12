@@ -1,10 +1,10 @@
 /**
- * Colour token entry point.
+ * Color token entry point.
  *
  * Four groups, in the order you should reach for them:
  *
- *   $semantic  what a colour is FOR — status.error, border.focus, surface.hover
- *   $palette   what a colour IS, theme-aware — blue[500] resolves per theme
+ *   $semantic  what a color is FOR — status.error, border.focus, surface.hover
+ *   $palette   what a color IS, theme-aware — blue[500] resolves per theme
  *   $absolute  values that never flip — black, white, dim, lighten
  *
  * Components should stay in $semantic. Reaching into $palette is fine for a

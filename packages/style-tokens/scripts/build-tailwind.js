@@ -10,7 +10,7 @@
  * `@theme inline` makes `bg-surface-hover` compile to
  * `background-color: var(--surface-hover)` rather than to a copy of the value.
  * Without `inline` the value is snapshotted at build time and the theme stops
- * flipping — the utility would hold light-mode grey forever. The variables it
+ * flipping — the utility would hold light-mode gray forever. The variables it
  * points at are redefined by the theme blocks below, so the flip is free.
  *
  * `@custom-variant dark` replaces Tailwind's default, which only checks
@@ -27,7 +27,7 @@ import { FONT_IMPORTS, cssVariableBlocks, toKebabCase } from './css-variables.js
 
 /**
  * `textColor.normal` would otherwise become `--color-text-color-normal`.
- * Tailwind already says "colour" by putting the token in the colour namespace.
+ * Tailwind already says "color" by putting the token in the color namespace.
  */
 const SEMANTIC_ALIASES = { textColor: 'text' };
 
@@ -43,7 +43,7 @@ const flatten = (prefix, node) =>
 
 /*
  * ============================================
- * Colours
+ * Colors
  * ============================================
  */
 
@@ -52,7 +52,7 @@ const flatten = (prefix, node) =>
  * `bg-surface-hover` survives a decision to restyle surfaces; `bg-neutral-100`
  * does not.
  */
-const semanticColours = () =>
+const semanticColors = () =>
   Object.entries(theme.vars.color.$semantic).flatMap(([groupName, group]) => {
     const cssPrefix = toKebabCase(groupName);
     const twPrefix = SEMANTIC_ALIASES[groupName] ?? cssPrefix;
@@ -71,7 +71,7 @@ const semanticColours = () =>
  */
 const isScale = group => Object.keys(group).every(key => /^\d+$/.test(key));
 
-const paletteColours = () =>
+const paletteColors = () =>
   Object.entries(theme.vars.color.$palette)
     .filter(([, group]) => isScale(group))
     .flatMap(([groupName, group]) =>
@@ -81,7 +81,7 @@ const paletteColours = () =>
     );
 
 /** Black, white, and the two overlay ramps — the values that never flip. */
-const absoluteColours = () => {
+const absoluteColors = () => {
   const { color, dim, lighten } = theme.vars.color.$absolute;
   return [
     ...Object.keys(color).map(key => mapping('color', key, key)),
@@ -100,9 +100,9 @@ const absoluteColours = () => {
  */
 
 /**
- * Non-colour namespaces, mapped from our token values to Tailwind's names.
+ * Non-color namespaces, mapped from our token values to Tailwind's names.
  *
- * These carry literal values rather than `var()` references, unlike the colours
+ * These carry literal values rather than `var()` references, unlike the colors
  * above. Two of the namespaces Tailwind reserves — `--shadow-*` and
  * `--font-weight-*` — are the names we already use ourselves, so a reference
  * would read `--shadow-xs: var(--shadow-xs)`. Tailwind emits its theme into
@@ -121,7 +121,7 @@ const absoluteColours = () => {
  * Tailwind, which is exactly what our scale says. Easing does need mapping,
  * since `entrance` and `exit` are ours.
  */
-const NON_COLOUR = [
+const NON_COLOR = [
   { namespace: 'radius', group: theme.vars.borderRadius },
   { namespace: 'shadow', group: theme.vars.shadow },
   { namespace: 'font', group: theme.vars.typography.fontFamily },
@@ -137,8 +137,8 @@ const flattenValues = (prefix, node) =>
     return typeof value === 'object' ? flattenValues(name, value) : [[name, value]];
   });
 
-const nonColourTokens = () =>
-  NON_COLOUR.flatMap(({ namespace, group }) =>
+const nonColorTokens = () =>
+  NON_COLOR.flatMap(({ namespace, group }) =>
     flattenValues(namespace, group).map(([name, value]) => `\t--${name}: ${value};`)
   );
 
@@ -152,10 +152,10 @@ const section = (title, lines) => `\t/* ${title} */\n${lines.join('\n')}`;
 
 const THEME_BLOCK = `@theme inline {
 ${[
-  section('Semantic — reach for these first', semanticColours()),
-  section('Palette ramps', paletteColours()),
-  section('Absolute', absoluteColours()),
-  section('Radius, shadow, type, easing', nonColourTokens()),
+  section('Semantic — reach for these first', semanticColors()),
+  section('Palette ramps', paletteColors()),
+  section('Absolute', absoluteColors()),
+  section('Radius, shadow, type, easing', nonColorTokens()),
 ].join('\n\n')}
 }`;
 

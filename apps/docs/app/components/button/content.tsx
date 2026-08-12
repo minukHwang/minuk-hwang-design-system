@@ -182,12 +182,12 @@ export default function ButtonPage() {
             modified click, and the fact that a link ignores the space bar.
           </>
         }
-        code={`<Button as="a" href="/tokens/colour" variant="secondary">
-  Read the colour tokens
+        code={`<Button as="a" href="/tokens/color" variant="secondary">
+  Read the color tokens
 </Button>`}
       >
-        <Button as="a" href="/tokens/colour" variant="secondary">
-          Read the colour tokens
+        <Button as="a" href="/tokens/color" variant="secondary">
+          Read the color tokens
         </Button>
       </Preview>
 
@@ -198,7 +198,7 @@ export default function ButtonPage() {
               name: 'variant',
               type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'`,
               default: `'primary'`,
-              description: 'What the button is for, not what colour it is.',
+              description: 'What the button is for, not what color it is.',
             },
             {
               name: 'size',

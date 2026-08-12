@@ -1,5 +1,5 @@
 /**
- * Writes the raw colour scales into src/variables/color/static.
+ * Writes the raw color scales into src/variables/color/static.
  *
  * These two files are generated, never edited by hand. Every value comes out of
  * generate-palette.js, so a change to a hue, its tuning, or the lightness ladder
@@ -28,7 +28,7 @@ import {
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const STATIC_DIR = path.join(HERE, '..', 'src', 'variables', 'color', 'static');
 
-/** Chromatic scales, ordered around the colour wheel rather than alphabetically. */
+/** Chromatic scales, ordered around the color wheel rather than alphabetically. */
 const CHROMATIC_ORDER = [
   'red',
   'crimson',
@@ -131,7 +131,7 @@ const THEME_SEMANTICS = {
        * White, not a step.
        *
        * The surface a card is drawn on is the white everything else is measured
-       * against, and the ramp tops out at 99 — a white with a grey in it. Making
+       * against, and the ramp tops out at 99 — a white with a gray in it. Making
        * the step reach 100 instead put an absolute value on a rung of a ladder
        * that flips with the theme; reading the absolute here says the same thing
        * without pretending it is a step.
@@ -146,7 +146,7 @@ const THEME_SEMANTICS = {
       raised: 'var(--neutral-10)',
     },
     /**
-     * Shadow ink. Only the colour of a shadow varies by theme; its geometry does
+     * Shadow ink. Only the color of a shadow varies by theme; its geometry does
      * not, which is why the two live apart — see variables/shadow.ts.
      *
      * A shadow works by darkening what is behind it, so how opaque it has to be
@@ -203,7 +203,7 @@ const renderRecord = (name, record) => {
 };
 
 const header = theme => `/**
- * Raw colour scales — ${theme} theme
+ * Raw color scales — ${theme} theme
  *
  * GENERATED FILE. Run \`node scripts/write-scales.js\` to rebuild.
  * Edit scripts/generate-palette.js instead; hand edits here are overwritten.
@@ -216,7 +216,7 @@ const header = theme => `/**
 `;
 
 /**
- * The text colour that clears WCAG AA on each scale's solid fill.
+ * The text color that clears WCAG AA on each scale's solid fill.
  *
  * Measured per theme rather than listed once, because the answer genuinely
  * differs: blue-500 carries white at 4.85:1 on light and fails at 4.43:1 on
@@ -228,12 +228,12 @@ const header = theme => `/**
  * The step each family's solid fill is drawn from.
  *
  * A hue's is 500, the most saturated point on its ladder — which is what makes a
- * solid accent badge read as that colour. A grey has no saturation, so its most
+ * solid accent badge read as that color. A gray has no saturation, so its most
  * present point is the far end instead, and 950 is where a solid neutral badge
  * has always been.
  *
  * That difference is why the neutral answer is not the same in both themes while
- * every hue's is: 500 holds one colour across the two ladders and 950 does not,
+ * every hue's is: 500 holds one color across the two ladders and 950 does not,
  * so a neutral fill is near-black on light and near-white on dark, and the label
  * that clears it flips with the theme.
  */
@@ -300,8 +300,8 @@ const contrastRows = theme =>
  *
  * Everything in `static/light.ts` is walked by the stylesheet generator and
  * turned into custom properties, and a group whose values are objects comes out
- * as `--contrast-red: [object Object]`. This is data about the colours, not a
- * colour.
+ * as `--contrast-red: [object Object]`. This is data about the colors, not a
+ * color.
  */
 const writeContrast = () => {
   const body = ['light', 'dark']
@@ -326,13 +326,13 @@ const writeContrast = () => {
  * the numbers ship. It is also the only way to notice that retuning a hue left
  * its margin at 0.02.
  *
- * The three greys are measured too, at the far end of their ramp rather than the
+ * The three grays are measured too, at the far end of their ramp rather than the
  * middle, which is where a solid neutral fill sits. They are the only rows whose
  * answer differs between the themes.
  */
 
 export type ContrastMeasurement = {
-  /** Which step the solid fill is drawn from: 500 for a hue, 950 for a grey. */
+  /** Which step the solid fill is drawn from: 500 for a hue, 950 for a gray. */
   step: number;
   fill: string;
   /** Ratio against white text. AA wants 4.5 for body copy, 3 for large. */
@@ -352,7 +352,7 @@ ${body}
 ['light', 'dark'].forEach(theme => {
   const blocks = [header(theme)];
 
-  blocks.push('/* Chromatic scales, ordered around the colour wheel. */\n');
+  blocks.push('/* Chromatic scales, ordered around the color wheel. */\n');
   CHROMATIC_ORDER.forEach(name => {
     blocks.push(renderScale(name, buildScale(HUES[name], theme, TUNING[name] ?? {})));
   });
@@ -362,7 +362,7 @@ ${body}
     blocks.push(renderScale(name, buildScale(hue, theme, neutralTuning(saturation))));
   });
 
-  blocks.push('\n/* Text colour that clears AA on each solid fill. Measured, not chosen. */\n');
+  blocks.push('\n/* Text color that clears AA on each solid fill. Measured, not chosen. */\n');
   blocks.push(renderRecord('onSolid', buildOnSolid(theme)));
 
   blocks.push('\n/* Theme surfaces and text. Authored, not generated. */\n');

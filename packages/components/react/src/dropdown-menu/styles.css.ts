@@ -9,7 +9,7 @@ const { status, textColor } = vars.color.$semantic;
 /**
  * A row that deletes something.
  *
- * Colour alone does not carry this — the label has to say "Delete". The tint is
+ * Color alone does not carry this — the label has to say "Delete". The tint is
  * a second signal for people who can see it, not the only one.
  *
  * Highlighted, it takes the shape `Button`'s `primary` has at rest: the tone's
@@ -19,7 +19,7 @@ const { status, textColor } = vars.color.$semantic;
  * something gets deleted should be the loudest thing in the menu.
  *
  * `backgroundImage: none` because the row underneath paints the hover ink on
- * `data-highlighted`, and ink over the fill would darken a colour that was
+ * `data-highlighted`, and ink over the fill would darken a color that was
  * chosen and measured. `primary` is a flat fill until it is hovered, and for a
  * menu row highlighted *is* hovered.
  */
@@ -62,7 +62,7 @@ export const subTrigger = style({
  * Pushed right by `auto` rather than by `space-between` on the row, which only
  * lands the arrow correctly while the label is a single node.
  *
- * Quiet through its colour, not through `opacity`. The literal 0.6 here was the
+ * Quiet through its color, not through `opacity`. The literal 0.6 here was the
  * last one left after the opacity tokens were cut down to a single `disabled`,
  * and it is the accordion's chevron in a different component — same mark, same
  * job, so the same `assistive` it uses.

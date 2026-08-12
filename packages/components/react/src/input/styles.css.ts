@@ -34,7 +34,7 @@ const control = style({
     /*
      * One stroke, drawn across the border rather than beside it.
      *
-     * This was a green border with a same-colour 1px shadow outside it, which is
+     * This was a green border with a same-color 1px shadow outside it, which is
      * two rounded rectangles sharing an edge. On the straight sides they stack
      * on the pixel grid and the ring looks solid; on the corners each is
      * antialiased against the other's absence, so the pixels along the shared
@@ -106,7 +106,7 @@ export const textarea = style([
      * above it.
      *
      * The same on the block axis, where a single-line control has none to
-     * match: its text is centred in a fixed height. This box is as tall as its
+     * match: its text is centered in a fixed height. This box is as tall as its
      * content, so the inset is the only thing holding the first line off the
      * top edge, and 10 read as tight against sides that had grown to 16.
      */

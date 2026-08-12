@@ -6,12 +6,12 @@ const { state } = vars.color.$semantic;
  * An interaction, painted over whatever surface the element already has.
  *
  * `background-image` rather than `background-color`, and that is the whole
- * trick: the colour underneath keeps saying which level the element is on, and
+ * trick: the color underneath keeps saying which level the element is on, and
  * the ink says what the pointer is doing to it. A hover written as a background
- * colour has to know both, which is why the old one was wrong on every surface
+ * color has to know both, which is why the old one was wrong on every surface
  * but the one it was picked against.
  *
- * A gradient with one stop is how CSS spells "a solid colour as an image".
+ * A gradient with one stop is how CSS spells "a solid color as an image".
  * There is no `background-overlay` property, and the alternatives are worse: a
  * pseudo-element needs positioning and a stacking context on every control, and
  * an inset `box-shadow` is painted above the border rather than under it.

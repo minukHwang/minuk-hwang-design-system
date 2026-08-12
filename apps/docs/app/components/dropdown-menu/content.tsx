@@ -121,7 +121,7 @@ export default function DropdownMenuPage() {
 
       <Callout tone="warning">
         <code>destructive</code> gives a row a red label, and fills it red once it is highlighted.
-        Colour alone does not carry that meaning, so the label still has to say
+        Color alone does not carry that meaning, so the label still has to say
         &ldquo;Unpublish&rdquo;.
       </Callout>
 

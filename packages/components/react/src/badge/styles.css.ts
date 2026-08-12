@@ -56,7 +56,7 @@ export const badgeRecipe = recipe({
 
     /**
      * A fill and nothing else. The five chromatic tones keep the tone's own
-     * `surface`; only the grey one is stepped up.
+     * `surface`; only the gray one is stepped up.
      *
      * Every tone was outlined before, and the outline was the chip's — same
      * token, same width. A chip is a control and a badge is not, so at
@@ -64,7 +64,7 @@ export const badgeRecipe = recipe({
      * say which one you could press.
      *
      * The five chromatic tints do not need it: measured against the page they
-     * are 3.4 to 4.9 ΔE apart, which is a hue difference and reads as one. Grey
+     * are 3.4 to 4.9 ΔE apart, which is a hue difference and reads as one. Gray
      * has no hue to be seen by, so its 50 came to 2.99 and needs the step up to
      * 100, where it reaches 6.61. That is the exception, and it is carried by
      * the background rather than by a line.
@@ -125,7 +125,7 @@ export const badgeRecipe = recipe({
 
     /*
      * The border is the tone's `subtle` — step 200, the weight every other
-     * hairline in the system runs at, and what the grey ramp calls
+     * hairline in the system runs at, and what the gray ramp calls
      * `border.normal`.
      *
      * Green and amber take `normal` instead. One step is not one weight: at 200
@@ -135,14 +135,14 @@ export const badgeRecipe = recipe({
      * rest rather than a fainter one. Warning's text is picked a step out of line
      * for the same reason.
      *
-     * It was `strong`, the label's own colour, on the argument that a non-text
+     * It was `strong`, the label's own color, on the argument that a non-text
      * edge wants 3:1. That is the wrong rule for this element: WCAG asks it of
      * visual information needed to identify a component or its state, and this
      * badge says "error" in words inside the box. The line carries nothing the
      * text does not, so it is decoration and can be as quiet as it looks best.
      *
      * The rule does bite one component here, and it is the chip: its fill is the
-     * page's own colour, so its border is the only thing saying a control is
+     * page's own color, so its border is the only thing saying a control is
      * there, and that border measures 1.57:1. Recorded in TODO.md.
      */
     {

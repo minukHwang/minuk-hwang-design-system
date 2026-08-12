@@ -27,7 +27,7 @@ const diameter = `calc(${fallbackVar(iconSize, '18px')} - 2px)`;
  * A ring with one quarter missing, drawn entirely in `border`.
  *
  * `currentColor` on three sides and transparent on the fourth is what makes the
- * rotation legible — a full ring spinning looks static. Inheriting the colour
+ * rotation legible — a full ring spinning looks static. Inheriting the color
  * means the spinner is whatever the text around it is, so it works on a filled
  * button and on a page without being told which.
  *

@@ -13,13 +13,13 @@
  * the numbers ship. It is also the only way to notice that retuning a hue left
  * its margin at 0.02.
  *
- * The three greys are measured too, at the far end of their ramp rather than the
+ * The three grays are measured too, at the far end of their ramp rather than the
  * middle, which is where a solid neutral fill sits. They are the only rows whose
  * answer differs between the themes.
  */
 
 export type ContrastMeasurement = {
-  /** Which step the solid fill is drawn from: 500 for a hue, 950 for a grey. */
+  /** Which step the solid fill is drawn from: 500 for a hue, 950 for a gray. */
   step: number;
   fill: string;
   /** Ratio against white text. AA wants 4.5 for body copy, 3 for large. */

@@ -60,7 +60,7 @@ export const buttonRecipe = recipe({
   base: [
     pressable,
     {
-      // The loading spinner is centred against this box, so the box has to be the
+      // The loading spinner is centered against this box, so the box has to be the
       // one it measures against. Without it the spinner positions itself on
       // whatever ancestor happens to be positioned, which is usually the page.
       position: 'relative',
@@ -176,13 +176,13 @@ export const buttonRecipe = recipe({
        *
        * A filled button in the neutral tone: the tint a thing paints itself when
        * it has no hue to take one from. It carries weight beside a primary
-       * without competing for the same colour, and unlike the outline it does
+       * without competing for the same color, and unlike the outline it does
        * not need a border to be a shape.
        *
        * The tone's own tint, the same one its badge is filled with.
        *
        * It is quiet against a dialog in the dark theme — `surface` and the
-       * overlay level are the same colour to within a part in 255 — which is the
+       * overlay level are the same color to within a part in 255 — which is the
        * price of the button matching the badge. A dialog wanting a neutral
        * button there should reach for `outline`.
        */
@@ -221,7 +221,7 @@ export const buttonRecipe = recipe({
         },
       },
       /**
-       * Deleting, and nothing else. `onNormal` records which text colour clears
+       * Deleting, and nothing else. `onNormal` records which text color clears
        * AA on the error fill, so this stays legible if the hue is ever retuned.
        */
       danger: {
@@ -289,7 +289,7 @@ export const content = style({
   },
 });
 
-/** Centred on the button rather than in the flow, so it needs no room of its own. */
+/** Centered on the button rather than in the flow, so it needs no room of its own. */
 export const loader = style({
   position: 'absolute',
   top: '50%',

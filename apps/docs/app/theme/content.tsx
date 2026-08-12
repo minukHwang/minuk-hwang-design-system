@@ -71,7 +71,7 @@ export default function ThemePage() {
     <Page
       eyebrow="Tokens"
       title="Theme"
-      lede="Three dials, an accent, a grey and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
+      lede="Three dials, an accent, a gray and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
       <Preview
         title="Try it"
@@ -228,7 +228,7 @@ html,
             Light and dark are still chosen on the <code>html</code> element, because the rule that
             follows the operating system has to ask whether the document as a whole has overridden
             it. And <code>textColor.link</code> stays a fixed blue: whether a link should be the
-            brand colour or the colour people recognise as a link is not answered here.
+            brand color or the color people recognise as a link is not answered here.
           </p>
         </Prose>
       </Section>
@@ -241,14 +241,14 @@ html,
               type: '14 hues: red · crimson · pink · magenta · purple · indigo · blue · cyan · teal · green · lime · yellow · amber · orange',
               default: 'inherited',
               description:
-                'The text colour that clears AA on each fill is measured per theme, so this cannot put white on yellow.',
+                'The text color that clears AA on each fill is measured per theme, so this cannot put white on yellow.',
             },
             {
               name: 'neutralColor',
               type: `'mono' | 'gray' | 'slate'`,
               default: 'inherited',
               description:
-                'Which grey the surfaces and borders are drawn from. mono has no hue in it; gray and slate lean toward blue. Text does not move with it.',
+                'Which gray the surfaces and borders are drawn from. mono has no hue in it; gray and slate lean toward blue. Text does not move with it.',
             },
             {
               name: 'radius',

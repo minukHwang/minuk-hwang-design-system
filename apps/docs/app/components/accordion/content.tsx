@@ -9,7 +9,7 @@ import { Callout, PartsList, Preview, PropsTable, Section } from '../../../site/
 const ITEMS = [
   [
     'a',
-    'Why is the shadow colour a separate token?',
+    'Why is the shadow color a separate token?',
     'A shadow works by darkening what is behind it, so how opaque it has to be depends on how dark that already is. Eight per cent black moves a white ground by 20/255 and a near-black one by 2, so the geometry can be shared but the ink cannot.',
   ],
   [

@@ -1,8 +1,8 @@
 /**
- * Semantic colour tokens.
+ * Semantic color tokens.
  *
  * Components should reach for these, never for a raw step. `pink500` says what a
- * colour is; `status.error.normal` says what it is for — and only the second
+ * color is; `status.error.normal` says what it is for — and only the second
  * survives a decision to make errors crimson instead.
  *
  * Every value below points into the palette, which is theme-aware. That is why a
@@ -22,7 +22,7 @@ import * as palette from './palette';
  * `--neutral-*` is not a family. It is whichever of `mono`, `gray` and `slate`
  * the document is currently using, and `data-neutral` on an ancestor is what
  * chooses. Surfaces and borders read this rather than a family directly, so a
- * product that wants its greys to lean blue says so once.
+ * product that wants its grays to lean blue says so once.
  *
  * Text is deliberately not here. Those values are picked for contrast against
  * the surfaces rather than sampled off the same ramp, and a neutral that shifted
@@ -88,7 +88,7 @@ export const background = {
    * for every neutral family in every theme to survive a nested `Theme`.
    */
   overlay: `color-mix(in srgb, ${color.white} 5%, ${palette.level.raised})`,
-  /** Dims the page behind a modal. A new layer, so a colour rather than an opacity. */
+  /** Dims the page behind a modal. A new layer, so a color rather than an opacity. */
   scrim: dim[500],
 };
 
@@ -102,10 +102,10 @@ export const background = {
  * A neutral panel on a background: a code block, a well, a disabled control.
  *
  * Not the neutral tone, which is further down. A tone is what a badge or a
- * button is *in* — it has a solid fill, a text colour measured against it, a
+ * button is *in* — it has a solid fill, a text color measured against it, a
  * border. This is a piece of quiet ground with nothing on it, and asking for
  * `neutral.surface` to paint a code block would be naming a badge to get a
- * colour.
+ * color.
  *
  * They hold the same two steps today, and that is a coincidence of where the
  * ramp has room rather than a reason to collapse them: a tone's tint answers to
@@ -130,7 +130,7 @@ export const fill = {
  * different surface.
  *
  * These are the second axis. Elevation moves towards white; interaction moves
- * towards the text, and the text colour is the thing that flips between themes —
+ * towards the text, and the text color is the thing that flips between themes —
  * so one declaration darkens on light and lightens on dark, which is what makes
  * "hover goes darker" stop contradicting "raised goes lighter". They were never
  * the same direction; they were the same ladder.
@@ -159,7 +159,7 @@ export const state = {
  */
 
 /**
- * Builds the five entries a coloured role needs, from one scale.
+ * Builds the five entries a colored role needs, from one scale.
  *
  * `onNormal` is not passed in. It comes from `palette.onSolid`, which the
  * generator measures against each theme's actual fill — and the two themes
@@ -189,7 +189,7 @@ const buildRamp = (scale: typeof palette.green, onNormal: string, strongStep: 70
  */
 
 /**
- * The brand colour: primary buttons, focus rings, selected states.
+ * The brand color: primary buttons, focus rings, selected states.
  *
  * Points at `--accent-*` rather than at a hue directly. Those properties are
  * defined once as whichever scale the accent currently is, and `data-accent`
@@ -269,10 +269,10 @@ export const textColor = {
    *
    * `raised` rather than the page, which it used to be — the two were the same
    * decision while the light page was the lightest step, and they parted when
-   * the page became the grey one. Text on a near-black tooltip wants the white,
+   * the page became the gray one. Text on a near-black tooltip wants the white,
    * not the page it is floating over.
    *
-   * Not for text on a coloured fill. Those read `onNormal`, which is measured
+   * Not for text on a colored fill. Those read `onNormal`, which is measured
    * per hue per theme.
    */
   inverse: background.raised,
@@ -298,7 +298,7 @@ export const textColor = {
  * rather than 50, because 50 is not free — the neutral ramp is where the page
  * and the card come from, and a badge tinted with the page is not tinted. And
  * `normal` is the far end rather than the middle, for the reason written beside
- * it: a hue's middle is its most saturated point, and a grey's is #808080.
+ * it: a hue's middle is its most saturated point, and a gray's is #808080.
  */
 export const neutral = {
   /** Filled background for a badge or banner. 50 belongs to the levels. */
@@ -317,11 +317,11 @@ export const neutral = {
    *
    * The one role that cannot take the step its hue counterpart takes. A hue's
    * 500 is its most saturated point, which is what makes a solid accent badge
-   * read as that colour; a grey's 500 is #808080 and reads as nothing — it
+   * read as that color; a gray's 500 is #808080 and reads as nothing — it
    * carries black at 5.32 and white at 3.95, so it is simultaneously muddy and
    * short of somewhere comfortable to put the label.
    *
-   * The far end has neither problem, and it is what a solid grey badge looks
+   * The far end has neither problem, and it is what a solid gray badge looks
    * like everywhere: near-black on light, near-white on dark.
    */
   normal: neutralScale[950],
@@ -334,8 +334,8 @@ export const neutral = {
    * step and picks whichever of black and white clears 4.5 on it.
    *
    * It is the one that genuinely differs by theme. A hue's solid step is 500,
-   * which holds the same colour on both ladders, so its label is the same
-   * answer twice; a grey's is the far end, which is near-black on light and
+   * which holds the same color on both ladders, so its label is the same
+   * answer twice; a gray's is the far end, which is near-black on light and
    * near-white on dark, so the label flips with it — white clears 17.4 on the
    * light fill, black clears 16.36 on the dark one.
    */
@@ -354,7 +354,7 @@ export const neutral = {
  * `warning` maps to amber rather than yellow: yellow-500 measures 1.35:1 against
  * white, which no amount of surrounding design rescues.
  *
- * Which text colour clears AA on each fill is measured per theme rather than
+ * Which text color clears AA on each fill is measured per theme rather than
  * assumed — see `buildRamp`.
  */
 export const status = {

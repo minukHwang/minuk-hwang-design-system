@@ -17,19 +17,19 @@ import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
 
 All four are generated from the same source, so none of them can drift.
 
-## Four layers of colour
+## Four layers of color
 
 Reach for them in this order. Dropping a layer is usually a sign that a token is
 missing, and adding one is the better fix.
 
 ```
-$semantic   what a colour is FOR      status.error.normal, border.focus
+$semantic   what a color is FOR      status.error.normal, border.focus
 $palette    what it IS, theme-aware   blue[500] → var(--blue-500)
 $absolute   what never flips          black, white, dim, lighten
 $static     the raw per-theme scales  the stylesheet is built from these
 ```
 
-`pink500` says what a colour is. `status.error.normal` says what it is for, and
+`pink500` says what a color is. `status.error.normal` says what it is for, and
 only the second survives a decision to make errors crimson.
 
 ## The step scale
@@ -53,21 +53,21 @@ reads correctly either way.
 | `800` | —                                                                         |
 | `900` | High-contrast text.                                                       |
 | `950` | Body text.                                                                |
-| `990` | Maximum-contrast anchor. Not a text colour — see below.                   |
+| `990` | Maximum-contrast anchor. Not a text color — see below.                    |
 
 Two of the thirteen are anchors rather than working steps, the same way Material
 ships tone 0 and tone 100.
 
 **`10` is a canvas.** All fourteen hues land within ~5/255 of white here, so it
-carries no visible tint. Reaching for it as "a pale version of this colour" gives
+carries no visible tint. Reaching for it as "a pale version of this color" gives
 you nothing — that is step `50`.
 
-**`990` is not a text colour.** Pure white on a dark ground visually vibrates and
+**`990` is not a text color.** Pure white on a dark ground visually vibrates and
 gets harder to read; Material caps `onSurface` at tone 90 and the brightest step
 Radix ships in a dark scale is `#c2e6ff`. The dark ladder here stops at lightness
 93 for the same reason. Point text at `950` or `900`.
 
-## Colour families
+## Color families
 
 Fourteen chromatic scales, spaced so no two neighbours sit closer than 14° — the
 point where two ramps stop reading as separate families.
@@ -99,8 +99,8 @@ use. The corrections live in `scripts/generate-palette.js`.
 
 Two mechanisms, because CSS has two.
 
-**Painting a new layer** uses a colour. `dim` and `lighten` are operations rather
-than hues — "make this darker" works over a photo, a coloured card or a grey
+**Painting a new layer** uses a color. `dim` and `lighten` are operations rather
+than hues — "make this darker" works over a photo, a colored card or a gray
 panel, which is why no other family gets an alpha scale.
 
 Both run eleven steps, where the number is the alpha in thousandths: `dim[500]`
@@ -127,7 +127,7 @@ way, and works on any ground.
 
 ## Contrast
 
-`status.*.onNormal` records which text colour clears WCAG AA on top of that
+`status.*.onNormal` records which text color clears WCAG AA on top of that
 status's `normal` step. Only blue, purple and indigo are dark enough at full
 chroma to carry white text; everything from cyan through orange needs black.
 
@@ -142,7 +142,7 @@ its own surface — just under the floor.
 
 ## Shadows
 
-Geometry and colour are separate tokens, and only the colour follows the theme.
+Geometry and color are separate tokens, and only the color follows the theme.
 
 ```ts
 shadow.m; // 0 8px 16px -4px var(--shadow-color-direct), 0 3px 6px -2px …
@@ -189,7 +189,7 @@ put `elevatedTop` and `elevatedBottom` in the same flat list as `xs` through
 an emphatic one, only for the single weight someone had baked in.
 
 These keep t-shirt names while the rest of the system moved to pixels, because a
-shadow is four lengths and a colour. There is no single number to key it by.
+shadow is four lengths and a color. There is no single number to key it by.
 
 ## Everything measurable is keyed by pixels
 
@@ -207,7 +207,7 @@ the middle of the ladder rather than at an end.
 
 Two names survive, both because they are not measurements. `borderRadius.full`
 asks for a pill whatever the element's height. `shadow` stays on `xs`/`s`/`m`/`l`
-because a shadow is four numbers and a colour, so no single value could name it.
+because a shadow is four numbers and a color, so no single value could name it.
 
 `0` is a token in both scales. Without it `padding: 0` has to be written raw,
 which is the exact escape hatch a scale exists to close.
@@ -236,7 +236,7 @@ duration for both makes the small thing sluggish and the large thing violent.
 
 | Duration | For                                    |
 | -------- | -------------------------------------- |
-| `70`     | Hover and press colour changes         |
+| `70`     | Hover and press color changes          |
 | `100`    | Checkbox, switch, icon rotation        |
 | `150`    | Tooltip, badge, inline expand          |
 | `200`    | The default — popover, dropdown, toast |
@@ -296,7 +296,7 @@ overrides, and it matches the same cascade the tokens use: an explicit
 `data-theme` or `.dark` wins, and the OS preference applies only when neither is
 set.
 
-Alpha modifiers work on every colour (`bg-crimson-500/40`); v4 resolves them with
+Alpha modifiers work on every color (`bg-crimson-500/40`); v4 resolves them with
 `color-mix`, so the channel-splitting trick v3 required is not needed here.
 
 ### Tailwind's own scales stay
@@ -307,7 +307,7 @@ where it does not, Tailwind's survives: `bg-emerald-500`, `rounded-md`,
 `font-bold`, `text-lg` all still work.
 
 That is a deliberate trade, and it has one sharp edge worth knowing. **Tailwind's
-colours do not follow the theme.** `bg-surface-default` turns dark on a dark
+colors do not follow the theme.** `bg-surface-default` turns dark on a dark
 ground; `bg-emerald-500` stays the same bright green it was, and nothing warns
 you. Shape is safe by construction — our radius steps are numbers and Tailwind's
 are t-shirt sizes, so `rounded-12` and `rounded-md` cannot be confused for each
@@ -332,7 +332,7 @@ imports:
 ```
 
 Order is the whole trick, and getting it wrong fails loudly in one direction
-only. Put the block after our import and it clears our tokens too — every colour
+only. Put the block after our import and it clears our tokens too — every color
 utility in the project stops compiling, ours included.
 
 Left as opt-in because a preset that silently deletes half of Tailwind is a worse

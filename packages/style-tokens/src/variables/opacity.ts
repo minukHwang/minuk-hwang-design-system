@@ -1,7 +1,7 @@
 /**
  * Opacity, applied to an element rather than painted over one.
  *
- * Not a colour, which is why this is not under `color`. It lived there because
+ * Not a color, which is why this is not under `color`. It lived there because
  * the file it shared was about things that do not follow the theme, and these do
  * not — but neither does `spacing`. Every consumer spends this on the `opacity`
  * property, not on a fill.

@@ -39,7 +39,7 @@ export const nav: NavSection[] = [
     title: 'Foundation',
     items: [
       { href: '/theme', label: 'Theme' },
-      { href: '/tokens/colour', label: 'Colour' },
+      { href: '/tokens/color', label: 'Color' },
       { href: '/tokens/elevation', label: 'Elevation' },
       { href: '/tokens/scales', label: 'Spacing, radius, type' },
       { href: '/tokens/shadow', label: 'Shadow' },

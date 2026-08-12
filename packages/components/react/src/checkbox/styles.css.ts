@@ -13,7 +13,7 @@ const { opacity } = vars;
  * The box is 20px and the thing you can hit is 24.
  *
  * WCAG 2.2 SC 2.5.8 asks for 24×24, and a 20px box only cleared it through the
- * spacing exception — undersized targets pass if a 24px circle centred on each
+ * spacing exception — undersized targets pass if a 24px circle centered on each
  * misses its neighbours. `group` stacks rows 10px apart, so it did pass, and it
  * passed because of a number in a different rule that nothing connects to this
  * one. Anyone laying out their own column of checkboxes was one gap value away
@@ -39,7 +39,7 @@ const control = style({
   width: '20px',
   height: '20px',
   padding: 0,
-  // No paint of its own, so this is a hit area and nothing else. Centred on the
+  // No paint of its own, so this is a hit area and nothing else. Centered on the
   // box rather than anchored to a corner, so the 4px is shared evenly and the
   // target stays symmetrical about the thing it belongs to.
   '::after': {
@@ -129,7 +129,7 @@ globalStyle(`${indicator} .material-symbols-outlined`, {
 
 /**
  * The dot inside a selected radio. Drawn rather than an icon, so it stays
- * perfectly centred, and round for the same reason its container is.
+ * perfectly centered, and round for the same reason its container is.
  */
 export const radioDot = style({
   width: '8px',
@@ -141,7 +141,7 @@ export const radioDot = style({
 /**
  * Control and label as one row.
  *
- * `align-items: flex-start` rather than centre, so a label that wraps to three
+ * `align-items: flex-start` rather than center, so a label that wraps to three
  * lines keeps its box beside the first line instead of floating to the middle.
  *
  * 12 rather than 8. The control's hit area overhangs its box by 2px, so 8 left

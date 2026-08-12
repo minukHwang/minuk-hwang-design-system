@@ -60,7 +60,7 @@ export default function AlertPage() {
 
       <Preview
         title="With an action"
-        description="Anything placed after Alert.Body is pushed to the far edge and centred against the block. A button there takes the alert's tone rather than the document's accent."
+        description="Anything placed after Alert.Body is pushed to the far edge and centered against the block. A button there takes the alert's tone rather than the document's accent."
         stack
         code={`<Alert.Root tone="neutral">
   <Alert.Icon name="info" />

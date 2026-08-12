@@ -129,7 +129,7 @@ export const useDials = () => {
  * `appearance` is what was asked for; pages that display per-theme data need
  * what was given. Subscribing to the media query rather than reading it once
  * matters — someone switching their OS to dark at dusk should not be left
- * looking at the light theme's numbers over the dark theme's colours.
+ * looking at the light theme's numbers over the dark theme's colors.
  */
 export const useResolvedAppearance = (): 'light' | 'dark' => {
   const { appearance } = useDials();

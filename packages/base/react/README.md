@@ -1,6 +1,6 @@
 # @minuk-hwang-design-system/base-react
 
-Headless components. Behaviour and accessibility, no styling.
+Headless components. Behavior and accessibility, no styling.
 
 This is the layer that makes the design system's opinions optional. `components-react`
 is one styled implementation on top of it; anyone wanting a different look can take
@@ -11,12 +11,12 @@ these and bring their own CSS.
 Not every primitive is worth building. The line runs through how much of a
 component's correctness lives in a published specification.
 
-**Wrap Radix when WAI-ARIA already specifies the behaviour.** Dialog, menu,
+**Wrap Radix when WAI-ARIA already specifies the behavior.** Dialog, menu,
 popover, select, tabs — these have documented keyboard contracts, focus
 management rules and screen-reader expectations. Getting them subtly wrong is
 easy, and the failure is invisible until someone tries to use a keyboard.
 
-**Write it here when the behaviour is ours.** Press handling that has to work
+**Write it here when the behavior is ours.** Press handling that has to work
 identically on a `button`, an `a` and a `div`. Anything composing design system
 concepts rather than implementing a standard.
 
@@ -31,7 +31,7 @@ audit six months later.
 | Form       | `select` `checkbox` `radio-group` `switch` `label`          | Radix  | Typeahead, group focus, label-control association                                   |
 | Display    | `toast` `avatar` `separator`                                | Radix  | Live regions, image fallback timing                                                 |
 | Utility    | `slot` `visually-hidden`                                    | Radix  | `asChild` composition, screen-reader-only text                                      |
-| Behaviour  | `button` `usePress`                                         | ours   | A native button already carries the semantics; what varies is which element renders |
+| Behavior   | `button` `usePress`                                         | ours   | A native button already carries the semantics; what varies is which element renders |
 
 Deliberately absent: `AspectRatio` (pure CSS), `ScrollArea` (native scrolling is
 fine), `Slider` and `Progress` (nothing needs them yet), `Menubar`,

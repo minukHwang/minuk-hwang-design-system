@@ -6,7 +6,7 @@ import { Slot as RadixSlot } from '@radix-ui/react-slot';
  * Merges props onto a child instead of rendering an element.
  *
  * This is what makes an `asChild` prop possible: a component can hand its
- * behaviour to whatever the caller passes, rather than forcing its own tag.
+ * behavior to whatever the caller passes, rather than forcing its own tag.
  *
  * ```tsx
  * <Button asChild>

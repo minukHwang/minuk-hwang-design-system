@@ -1,8 +1,8 @@
 /**
- * Absolute colours — the only values that do not flip with the theme.
+ * Absolute colors — the only values that do not flip with the theme.
  *
  * Everything in the palette swaps when the theme changes, so `blue-500` means
- * "the blue that reads correctly here" rather than one fixed colour. These do
+ * "the blue that reads correctly here" rather than one fixed color. These do
  * not: pure white is pure white on either ground, and darkening a surface is
  * darkening it regardless of what the surface happens to be.
  */
@@ -14,10 +14,10 @@ export const color = {
 };
 
 /**
- * `dim` and `lighten` are operations, not colours.
+ * `dim` and `lighten` are operations, not colors.
  *
  * They exist because "make this darker" and "make this lighter" work over any
- * background — a photo, a coloured card, a grey panel. That is also why no other
+ * background — a photo, a colored card, a gray panel. That is also why no other
  * hue gets an alpha scale: there is no such thing as "make this bluer" as a
  * general-purpose overlay.
  *

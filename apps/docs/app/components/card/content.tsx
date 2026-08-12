@@ -22,7 +22,7 @@ export default function CardPage() {
         code={`<Card.Root>
   <Card.Header>
     <Card.Title>style-tokens</Card.Title>
-    <Card.Description>Colour, spacing, type, shadow, motion</Card.Description>
+    <Card.Description>Color, spacing, type, shadow, motion</Card.Description>
   </Card.Header>
   <Card.Body>
     <Text size={4} color="assistive">
@@ -38,7 +38,7 @@ export default function CardPage() {
         <Card.Root style={{ maxWidth: 340 }}>
           <Card.Header>
             <Card.Title>style-tokens</Card.Title>
-            <Card.Description>Colour, spacing, type, shadow, motion</Card.Description>
+            <Card.Description>Color, spacing, type, shadow, motion</Card.Description>
           </Card.Header>
           <Card.Body>
             <Text size={4} color="assistive">
@@ -133,7 +133,7 @@ export default function CardPage() {
               description:
                 'Defaults to h3, since a card is almost never the top of a document outline.',
             },
-            { name: 'Card.Description', description: 'Assistive-coloured subtitle.' },
+            { name: 'Card.Description', description: 'Assistive-colored subtitle.' },
             { name: 'Card.Body', description: 'The main content.' },
             {
               name: 'Card.Footer',
@@ -160,7 +160,7 @@ export default function CardPage() {
               name: 'interactive',
               type: 'boolean',
               default: 'false',
-              description: 'Hover and focus affordances. Does not add behaviour.',
+              description: 'Hover and focus affordances. Does not add behavior.',
             },
           ]}
         />

@@ -8,7 +8,7 @@
  * specifically need a value that must not change with the theme.
  */
 
-/* Chromatic scales, ordered around the colour wheel. */
+/* Chromatic scales, ordered around the color wheel. */
 
 export const red = {
   10: 'var(--red-10)',
@@ -295,7 +295,7 @@ export const shadowColor = {
   direct: 'var(--shadow-color-direct)',
 };
 
-/* Which text colour clears AA on each scale's solid fill. Measured per theme. */
+/* Which text color clears AA on each scale's solid fill. Measured per theme. */
 
 export const onSolid = {
   red: 'var(--on-solid-red)',

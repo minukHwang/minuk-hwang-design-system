@@ -33,7 +33,7 @@ export type SpinnerProps = React.HTMLAttributes<HTMLSpanElement> & {
 /**
  * Indeterminate progress.
  *
- * Takes its colour from whatever it sits in, so it needs no variant per surface.
+ * Takes its color from whatever it sits in, so it needs no variant per surface.
  * Stroke scales with size — a 16px ring with a 2px stroke reads as a smudge.
  */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(

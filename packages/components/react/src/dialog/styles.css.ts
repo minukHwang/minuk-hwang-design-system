@@ -4,7 +4,7 @@ import { globalStyle, keyframes, style, styleVariants } from '@vanilla-extract/c
 const { background } = vars.color.$semantic;
 
 /**
- * Rises 8px as it appears rather than scaling from the centre.
+ * Rises 8px as it appears rather than scaling from the center.
  *
  * A dialog is a sheet arriving from somewhere, and a scale makes it look like it
  * is being inflated. Popovers scale because they belong to the trigger they grew
@@ -55,7 +55,7 @@ export const content = style({
  *
  * `secondary` is filled with `neutral.surface`, which is step 100. A dialog is
  * the overlay level: the raised step mixed five per cent towards white. In the
- * dark theme that arithmetic lands on the button's own colour — the surface
+ * dark theme that arithmetic lands on the button's own color — the surface
  * comes out at #2a2a2a and the button is #2b2b2b, one part in 255 apart — so a
  * tonal button on a dialog was a rectangle of text with no button under it.
  *

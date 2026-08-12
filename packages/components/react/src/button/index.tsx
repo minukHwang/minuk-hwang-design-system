@@ -39,7 +39,7 @@ export type ButtonProps = BaseButtonProps &
 /**
  * Button.
  *
- * Behaviour comes from `base-react/button`, which owns press handling and keeps
+ * Behavior comes from `base-react/button`, which owns press handling and keeps
  * the keyboard contract identical whether this renders a `button`, an `a` or a
  * `div`. Everything here is appearance.
  *
@@ -90,8 +90,8 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button
        * The variant on the element, not only in the class name.
        *
        * A container that tints its own contents needs to know which buttons it
-       * may recolour: an `Alert` can safely take over a secondary or ghost
-       * button, and must not touch a filled one, whose text colour was measured
+       * may recolor: an `Alert` can safely take over a secondary or ghost
+       * button, and must not touch a filled one, whose text color was measured
        * against its own fill. The recipe's class is hashed, so the attribute is
        * the only thing another stylesheet can select on.
        */

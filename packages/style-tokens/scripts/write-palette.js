@@ -55,7 +55,7 @@ const blocks = [
  * specifically need a value that must not change with the theme.
  */
 `,
-  '/* Chromatic scales, ordered around the colour wheel. */\n',
+  '/* Chromatic scales, ordered around the color wheel. */\n',
   ...CHROMATIC_ORDER.map(renderScale),
   '\n/* Neutrals, ordered by how much blue they carry. */\n',
   ...Object.keys(NEUTRALS).map(renderScale),
@@ -86,7 +86,7 @@ export const shadowColor = {
   direct: 'var(--shadow-color-direct)',
 };
 
-/* Which text colour clears AA on each scale's solid fill. Measured per theme. */
+/* Which text color clears AA on each scale's solid fill. Measured per theme. */
 
 export const onSolid = {
 ${CHROMATIC_ORDER.map(name => `  ${name}: 'var(--on-solid-${toKebab(name)})',`).join('\n')}

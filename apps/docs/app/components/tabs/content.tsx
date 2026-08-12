@@ -27,7 +27,7 @@ export default function TabsPage() {
   </Tabs.List>
   <Tabs.Panel value="tokens">
     <Text size={5} color="assistive">
-      Colour, spacing, radius, type, shadow and motion. Four consumption
+      Color, spacing, radius, type, shadow and motion. Four consumption
       formats generated from one source.
     </Text>
   </Tabs.Panel>
@@ -55,7 +55,7 @@ export default function TabsPage() {
           </Tabs.List>
           <Tabs.Panel value="tokens">
             <Text size={5} color="assistive">
-              Colour, spacing, radius, type, shadow and motion. Four consumption formats generated
+              Color, spacing, radius, type, shadow and motion. Four consumption formats generated
               from one source.
             </Text>
           </Tabs.Panel>

@@ -46,7 +46,7 @@ export type AlertRootProps = React.HTMLAttributes<HTMLDivElement> & {
  * a button in it. A `title`/`description` pair of props fixes one of those and
  * makes the others impossible.
  *
- * The tone travels by context so `Alert.Icon` can pick its own glyph and colour
+ * The tone travels by context so `Alert.Icon` can pick its own glyph and color
  * without being told twice.
  */
 const Root = React.forwardRef<HTMLDivElement, AlertRootProps>(function AlertRoot(
@@ -108,9 +108,9 @@ const Title = React.forwardRef<HTMLElement, TextProps>(function AlertTitle(
 /**
  * `color` inherits rather than defaulting to `normal`.
  *
- * The tone paints the root, and `Text` writing its own colour on the child at
+ * The tone paints the root, and `Text` writing its own color on the child at
  * equal specificity but later in the cascade meant the tone never reached a
- * single word — every alert read in body grey while claiming to be an error.
+ * single word — every alert read in body gray while claiming to be an error.
  */
 const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescription(
   { size = 4, color = 'inherit', ...props },
@@ -127,7 +127,7 @@ const Description = React.forwardRef<HTMLElement, TextProps>(function AlertDescr
 
 /**
  * Anything placed after `Alert.Body` is treated as the action — pushed to the
- * far edge, centred against the block, and never shrunk. `Alert.Action` exists
+ * far edge, centered against the block, and never shrunk. `Alert.Action` exists
  * for the cases where that guess is not wanted verbatim.
  */
 const Action = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

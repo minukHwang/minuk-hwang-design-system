@@ -31,7 +31,7 @@
  * Every chromatic scale the palette generates, in wheel order.
  *
  * All fourteen are already emitted as custom properties in both themes, and the
- * text colour that clears AA on each one is measured per theme alongside them.
+ * text color that clears AA on each one is measured per theme alongside them.
  * That is what makes swapping the accent safe rather than a guess: choosing
  * `yellow` does not quietly put white text on a yellow button.
  */
@@ -73,12 +73,12 @@ export const accentSteps = [10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900,
  */
 
 /**
- * The three grey families, ordered by how much blue they carry.
+ * The three gray families, ordered by how much blue they carry.
  *
  * `mono` is neutral in the literal sense — no saturation at all. `gray` and
  * `slate` lean progressively toward blue, which is what most software actually
- * uses: a pure grey beside any saturated accent reads slightly warm, and the
- * usual fix is to bias the greys the other way rather than to desaturate the
+ * uses: a pure gray beside any saturated accent reads slightly warm, and the
+ * usual fix is to bias the grays the other way rather than to desaturate the
  * accent.
  *
  * Surfaces and borders are what moves. Text does not, because those values are
@@ -90,7 +90,7 @@ export const neutralColors = ['mono', 'gray', 'slate'] as const;
 
 export type NeutralColor = (typeof neutralColors)[number];
 
-/** What the greys are when nothing says otherwise. */
+/** What the grays are when nothing says otherwise. */
 export const defaultNeutralColor: NeutralColor = 'mono';
 
 /**
@@ -174,7 +174,7 @@ export const defaultRadiusScale: RadiusScale = 'medium';
  * `base` is a page below the surfaces on it: a tinted ground with white cards,
  * which is what a settings screen looks like on every platform. `raised` puts
  * the page level with them, which is the white-page arrangement — and there the
- * colour that separated a card from the page is gone, so the card has to say so
+ * color that separated a card from the page is gone, so the card has to say so
  * with a border. `Card`'s `outlined` already does that.
  *
  * Two things make this unlike the other dials, and both are deliberate.
@@ -185,7 +185,7 @@ export const defaultRadiusScale: RadiusScale = 'medium';
  * far from white as it goes. There is no dark equivalent to ask for.
  *
  * And it is read at the root rather than per subtree. `Theme` renders a `div`,
- * and the page is `body`, which no `div` contains — a nested one would recolour
+ * and the page is `body`, which no `div` contains — a nested one would recolor
  * its own children and leave the page it was talking about untouched. So this
  * belongs on the document, and a nested `Theme` ignores it.
  */

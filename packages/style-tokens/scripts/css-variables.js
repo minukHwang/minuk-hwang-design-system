@@ -83,7 +83,7 @@ const accentRamp = (hue, indent = '\t') =>
  * custom property's `var()` references are substituted where the property is
  * declared, not where it is used — so `--accent-normal: var(--accent-500)`,
  * declared once on `html`, resolves against the accent `html` has and hands
- * every descendant that finished colour. A nested block that changes
+ * every descendant that finished color. A nested block that changes
  * `--accent-500` changes nothing the components read, because they read
  * `--accent-normal`, and that was settled two elements up.
  *
@@ -106,7 +106,7 @@ const accentBlocks = () =>
 /**
  * The neutral ramp, and one block per family that can replace it.
  *
- * `--neutral-*` is a pointer, not a family — which is why the pure grey is
+ * `--neutral-*` is a pointer, not a family — which is why the pure gray is
  * called `mono`. Written the other way the selected block would read
  * `--neutral-10: var(--neutral-10)`, a cycle the browser throws away.
  */
@@ -123,7 +123,7 @@ const neutralRamp = (family, indent = '\t') =>
  * The surfaces and borders that resolve through the neutral ramp, repeated in
  * each family's block for the reason the accent's are: a `var()` inside a custom
  * property is substituted where that property is declared, so a semantic token
- * defined once on `html` is already the grey `html` chose.
+ * defined once on `html` is already the gray `html` chose.
  */
 const neutralDerived = (indent = '\t') =>
   Object.entries(theme.vars.color.$semantic)
@@ -142,13 +142,13 @@ const neutralBlocks = () =>
     .join('\n\n');
 
 /**
- * The text greys, expressed as steps on the neutral ramp.
+ * The text grays, expressed as steps on the neutral ramp.
  *
  * They were authored by hand, and measuring them showed they had been picked off
  * that ramp anyway: in the dark theme all four are the mono step exactly, and in
  * the light theme two of them are. So they were steps written out as literals,
  * which is the one form that cannot follow `data-neutral` — a page on `slate`
- * had slate panels and borders around pure grey body copy.
+ * had slate panels and borders around pure gray body copy.
  *
  * Two light values move by being written this way. `strong` was #000000 and
  * becomes the 990 step, and `assistive` had been nudged a shade darker than 600
@@ -292,7 +292,7 @@ export const generateCssVariables = () => {
     .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group))
     .join('\n\n');
 
-  // Non-colour token groups (spacing, radius, shadow, typography) never vary by
+  // Non-color token groups (spacing, radius, shadow, typography) never vary by
   // theme, so they join the root block alongside the absolutes.
   //
   // `typography` and `motion` are namespaces holding several groups, so they
@@ -309,7 +309,7 @@ export const generateCssVariables = () => {
   // Running it through here would emit each property in terms of itself.
   const isNamespace = node => Object.values(node).every(value => typeof value === 'object');
 
-  const nonColour = Object.entries(theme.vars)
+  const nonColor = Object.entries(theme.vars)
     .filter(([key]) => key !== 'color' && key !== 'borderRadius')
     .map(([name, group]) =>
       isNamespace(group) ? renderTheme(group) : renderSemantic(toKebabCase(name), group)
@@ -325,7 +325,7 @@ export const generateCssVariables = () => {
     radiusDefaults('\t'),
     renderRadius(),
     semantic,
-    nonColour,
+    nonColor,
   ].join('\n\n');
 
   return {

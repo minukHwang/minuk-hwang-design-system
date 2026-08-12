@@ -28,7 +28,7 @@ globalStyle(`${root} > *:not([data-alert-part])`, {
  * An action inside an alert takes the alert's tone.
  *
  * A `secondary` button carries neutral text and a neutral border, which on a red
- * panel reads as a grey box someone dropped there — the control answering the
+ * panel reads as a gray box someone dropped there — the control answering the
  * message looked like it belonged to a different page.
  *
  * Everything comes off `currentColor`, which the tone has already set on the
@@ -37,9 +37,9 @@ globalStyle(`${root} > *:not([data-alert-part])`, {
  * competes with the message it sits beside.
  *
  * Only the two variants that are not filled. `primary` and `danger` have a text
- * colour measured against their own fill, and inheriting the panel's would put
+ * color measured against their own fill, and inheriting the panel's would put
  * the tone's text on the accent's background — a pairing nothing has checked.
- * `secondary` is filled too, in the neutral tone, and a grey block on a red
+ * `secondary` is filled too, in the neutral tone, and a gray block on a red
  * panel is the thing this rule exists to prevent; it is left alone here because
  * an alert should be reaching for `outline` or `ghost` in the first place.
  */
@@ -52,7 +52,7 @@ globalStyle(`${root} [data-variant='outline'], ${root} [data-variant='ghost']`, 
 /*
  * Hover strengthens the outline and leaves the fill alone.
  *
- * A wash of the text colour behind the label was the obvious hover, and it costs
+ * A wash of the text color behind the label was the obvious hover, and it costs
  * contrast the tone cannot spare: the light success alert measures 4.77 at rest,
  * so even a 12% tint takes it to 4.08 and under the floor. The border is not
  * text and can darken for free.
@@ -106,9 +106,9 @@ export type AlertTone = keyof typeof tone;
  *
  * The tinted variants above can take `currentColor`, which the root has already
  * set to the tone's text. A filled button cannot: its background is the tone's
- * `normal` and the label on it is `onSolid`, the colour measured per hue per
+ * `normal` and the label on it is `onSolid`, the color measured per hue per
  * theme as the one that clears AA there. Neither is derivable from the text
- * colour, so these are written out — one pair per tone, the same two values
+ * color, so these are written out — one pair per tone, the same two values
  * `Button` reads for its own primary, only in this alert's tone rather than the
  * document's accent.
  *
@@ -125,7 +125,7 @@ const solidAction: Record<AlertTone, { fill: string; label: string }> = {
 
 /*
  * Only the resting fill. `Button` paints its own hover and press as ink over
- * whatever it is filled with, so setting a second background colour here would
+ * whatever it is filled with, so setting a second background color here would
  * land the tone's hover *and* the ink on the same pixel.
  */
 Object.entries(solidAction).forEach(([name, { fill, label }]) => {
@@ -171,7 +171,7 @@ export const body = style({
 /**
  * Anything after the body — usually a button.
  *
- * Centred against the block rather than top-aligned like the icon: the icon
+ * Centered against the block rather than top-aligned like the icon: the icon
  * belongs to the first line of text, and an action belongs to the message as a
  * whole. It never shrinks, so a long message wraps instead of squeezing the
  * control that answers it.

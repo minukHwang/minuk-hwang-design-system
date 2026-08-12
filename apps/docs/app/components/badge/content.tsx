@@ -35,7 +35,7 @@ export default function BadgePage() {
 
       <Preview
         title="Variant"
-        description="Soft is the tint and the default. Solid is for the badge that has to carry across a busy row, on the text colour measured to pass on that fill. Outline puts no fill on the page, which is what a dense list of them wants."
+        description="Soft is the tint and the default. Solid is for the badge that has to carry across a busy row, on the text color measured to pass on that fill. Outline puts no fill on the page, which is what a dense list of them wants."
         stack
         code={`{(['soft', 'solid', 'outline'] as const).map(variant =>
   TONES.map(tone => (
@@ -83,7 +83,7 @@ export default function BadgePage() {
               name: 'tone',
               type: `'neutral' | 'accent' | 'info' | 'success' | 'warning' | 'error'`,
               default: `'neutral'`,
-              description: 'What the state is, not what colour it is.',
+              description: 'What the state is, not what color it is.',
             },
             {
               name: 'variant',

@@ -13,7 +13,7 @@ export default function SpinnerPage() {
     <Page
       eyebrow="Primitives"
       title="Spinner"
-      lede="Indeterminate progress. Takes its colour from whatever it sits in, so it needs no variant per surface."
+      lede="Indeterminate progress. Takes its color from whatever it sits in, so it needs no variant per surface."
     >
       <Preview
         title="Size"
@@ -31,7 +31,7 @@ export default function SpinnerPage() {
 
       <Preview
         title="Inside a button"
-        description="Button renders one for you when loading is set, in whatever colour the variant is. The label stays in the box under it, so the button is the same width busy as idle."
+        description="Button renders one for you when loading is set, in whatever color the variant is. The label stays in the box under it, so the button is the same width busy as idle."
         stack
         code={`<Button>Publishing</Button>
 <Button loading>Publishing</Button>
