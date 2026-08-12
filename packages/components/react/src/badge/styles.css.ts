@@ -143,7 +143,7 @@ export const badgeRecipe = recipe({
      *
      * The rule does bite one component here, and it is the chip: its fill is the
      * page's own color, so its border is the only thing saying a control is
-     * there, and that border measures 1.57:1. Recorded in TODO.md.
+     * there, and that border measures 1.57:1 — under the 3:1 the rule asks for.
      */
     {
       variants: { tone: 'neutral', variant: 'outline' },

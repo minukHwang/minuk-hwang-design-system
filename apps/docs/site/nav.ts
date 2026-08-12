@@ -4,10 +4,10 @@
  * The sidebar, the component index and the previous/next links all read from
  * here, so a new component is one entry rather than three edits.
  *
- * A page can exist without being listed — /decisions is written but not linked
- * yet. Anything left out of this file is unreachable from the sidebar, the
- * component index and the previous/next links all at once, which is the only
- * safe way to hold something back.
+ * A page can exist without being listed — Popover is written and shipping but
+ * held back from here. Anything left out of this file is unreachable from the
+ * sidebar, the component index and the previous/next links all at once, which is
+ * the only safe way to hold something back.
  */
 
 export type NavItem = {
@@ -30,7 +30,6 @@ export const nav: NavSection[] = [
     items: [
       { href: '/', label: 'Introduction' },
       { href: '/playground', label: 'Example', summary: 'Everything at once' },
-      // Decisions is written but not linked yet — reachable at /decisions.
     ],
   },
   {

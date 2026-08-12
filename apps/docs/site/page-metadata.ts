@@ -20,7 +20,7 @@ import type { Metadata } from 'next';
  * description written separately would be a second answer to drift from the
  * first.
  *
- * Keyed by route rather than held in `nav.ts`, because two of these pages are
+ * Keyed by route rather than held in `nav.ts`, because one of these pages is
  * deliberately unlisted and would otherwise have to be added to the site's map
  * to get a description.
  */
@@ -28,8 +28,6 @@ const DESCRIPTIONS: Record<string, string> = {
   '/': 'Built in four layers, so a decision lives in one of them rather than in all of them. Color is settled in the tokens, behavior in the base, appearance in the components.',
   '/playground':
     'One screen built out of the whole library. Turn a dial and judge the result where things sit next to each other, rather than on a page that shows one component at a time.',
-  '/_decisions':
-    'The choices where the reasonable-looking option turned out to be wrong. Each of these cost a measurement to settle.',
 
   '/theme':
     'Three dials, an accent, a gray and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt.',

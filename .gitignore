@@ -109,3 +109,6 @@ Thumbs.db
 
 # A verification build writes here so it cannot delete the dev server's .next
 .next-verify/
+
+# Local working notes.
+TODO.md
