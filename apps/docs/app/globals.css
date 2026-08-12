@@ -9,8 +9,17 @@
 @import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
 
 :root {
-  --sidebar: 248px;
-  --topbar: 56px;
+  /*
+   * 272 where it was 248. The list gained four pixels of inset on each side and
+   * a focus ring needs room outside the link, so the same labels had less width
+   * than before; the column gives it back and a little more.
+   */
+  --sidebar: 272px;
+  /*
+   * The lockup is 30px — 20 of `text-sm` over 10 of `text-[10px]` — which leaves
+   * 21 above and below it here.
+   */
+  --topbar: 72px;
   --content: 780px;
 
   /*
@@ -25,10 +34,30 @@
    * The numbers are the scale's own at factor 1, not new ones, so the site still
    * looks like it was built from the system.
    */
+  /*
+   * The air above and below a page's content.
+   *
+   * Its own value because the spacing scale stops at 64 and this is furniture
+   * rather than a component measurement — the same reason the corners below are
+   * the site's own. Adding an 80 to the scale would put a step in the published
+   * token API to solve a layout problem on one page of one consumer.
+   */
+  --docs-page-inset: 5rem;
+
   --docs-radius-2: 0.125rem;
   --docs-radius-4: 0.25rem;
   --docs-radius-6: 0.375rem;
   --docs-radius-8: 0.5rem;
+  /*
+   * Three rules asked for this step and none of them got it: the component tiles
+   * on the introduction and the two cards on the elevation page were written
+   * against a property that was never declared here, so `border-radius` resolved
+   * to an invalid value and they rendered as squares.
+   *
+   * Nothing about them said so — an undefined custom property is not an error,
+   * it is a corner that quietly does not happen.
+   */
+  --docs-radius-10: 0.625rem;
   --docs-radius-12: 0.75rem;
   --docs-radius-full: 62.4375rem;
 }
@@ -49,7 +78,7 @@ body {
   height: 100vh;
   overflow: hidden;
   /*
-   * No background or colour here. The token stylesheet paints `body` now, and
+   * No background or color here. The token stylesheet paints `body` now, and
    * this was reading `--neutral-10` off the ramp directly — a step below the
    * level it meant, which would have gone on ignoring `pageBackground` while
    * looking correct.
@@ -65,7 +94,7 @@ body {
  * examples were documenting the docs site's own stylesheet rather than the
  * system's.
  *
- * Headings are `Heading` now, which carries its own size, weight and colour.
+ * Headings are `Heading` now, which carries its own size, weight and color.
  */
 
 a {
@@ -73,14 +102,14 @@ a {
 }
 
 /*
- * Inline code, tinted from `currentColor` rather than painted a fixed grey.
+ * Inline code, tinted from `currentColor` rather than painted a fixed gray.
  *
- * It was `--neutral-50`, which is a colour chosen for one surface and used on
- * every surface. On the page it was a grey chip on a grey page — 1.12:1, close
+ * It was `--neutral-50`, which is a color chosen for one surface and used on
+ * every surface. On the page it was a gray chip on a gray page — 1.12:1, close
  * enough to invisible. Inside a `Callout`, which is `Alert` on the accent tone,
- * it was a grey chip sitting on an accent-tinted panel, belonging to neither.
+ * it was a gray chip sitting on an accent-tinted panel, belonging to neither.
  *
- * Mixing the text colour into transparent makes the chip a function of wherever
+ * Mixing the text color into transparent makes the chip a function of wherever
  * it lands: neutral in prose, blue in an accent callout, amber in a warning one,
  * and it flips with the theme for free — in dark the text is the lighter of the
  * two, so the tint lifts the chip off the surface, and in light it sinks it.
@@ -161,7 +190,7 @@ code {
   background-color: var(--border-strong);
 }
 
-/* Where two scrollable areas meet, the default corner is a bare grey square. */
+/* Where two scrollable areas meet, the default corner is a bare gray square. */
 *::-webkit-scrollbar-corner {
   background: transparent;
 }

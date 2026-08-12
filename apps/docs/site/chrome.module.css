@@ -8,9 +8,25 @@
  * dials come to around 800, so they wrapped onto a second line. Given the whole
  * window they fit on one, and the sidebar gets to be nothing but its links.
  */
+/*
+ * Fixed over the page rather than stacked above it, which is the only way the
+ * blur means anything.
+ *
+ * `backdrop-filter` samples what is painted behind an element, and in the flow
+ * there was nothing behind this — the bar was a row in a column and the article
+ * began underneath it. The property was set, correct, and blurring the page's
+ * flat background. Taking the bar out of the flow puts the scrolling article
+ * under it, which is the thing there was supposed to be something to blur.
+ *
+ * `.shell` fills the viewport in its place and the two columns inset themselves
+ * by the bar's height, so nothing starts underneath it — only what has been
+ * scrolled passes there.
+ */
 .topbar {
-  position: relative;
-  flex: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
   /* The system's own scale. Overlays sit at 1000 and up, so a dialog covers
      this rather than the other way round. */
   z-index: calc(var(--z-index-raised) + 1);
@@ -19,9 +35,21 @@
   justify-content: space-between;
   gap: var(--spacing-24);
   height: var(--topbar);
-  padding: 0 var(--spacing-20);
-  border-bottom: 1px solid var(--border-subtle);
-  background: color-mix(in srgb, var(--background-base) 82%, transparent);
+  padding: 0 var(--spacing-24);
+  /*
+   * The portfolio's bar, to the value: `bg-background/70` is a 70% mix in oklab,
+   * and `backdrop-blur-md` is a 12px blur.
+   *
+   * No border. The blur is the edge — content passing under a translucent bar
+   * separates it from the page more honestly than a hairline does, and a
+   * hairline over a blur reads as a seam between two things rather than as the
+   * bottom of one.
+   *
+   * `in oklab` rather than `in srgb`, which is what Tailwind emits and what
+   * keeps the mix from darkening as it thins. The difference shows in the dark
+   * theme, where an srgb mix towards transparent dips through a muddier middle.
+   */
+  background: color-mix(in oklab, var(--background-base) 70%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -33,14 +61,105 @@
   min-width: 0;
 }
 
-/* The single light/dark toggle, which replaces the three-way group on a phone. */
-.narrowOnly {
+/*
+ * The far end. Nothing but the repository today, and a band of its own rather
+ * than a single element so a second link can join it without the center moving.
+ */
+.topbarEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex: none;
+}
+
+/* ── logo ───────────────────────────────────────────────────── */
+
+/*
+ * The portfolio's wordmark, at its measurements.
+ *
+ * 14 over 10, medium over light, 0.035em on the lower line — copied rather than
+ * approximated, because approximating a logo is how you end up with two logos.
+ *
+ * The face is the reason it looked wrong before this: the portfolio sets its
+ * headings and its wordmark in Plus Jakarta Sans, and this site is Pretendard
+ * throughout, so the same measurements drew a different logo. The layout loads
+ * the face for these two lines and nothing else.
+ *
+ * A lockup rather than running text, so it sets its own leading instead of
+ * inheriting the document's.
+ */
+.logo {
+  display: flex;
+  flex-direction: column;
+  /*
+   * Centered on each other, which is the portfolio's `items-center` and the last
+   * thing that was different. Left-aligned, the shorter line hung off the end of
+   * the longer one and the lockup read as two labels stacked rather than as one
+   * mark.
+   */
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-wordmark);
+  line-height: 1;
+}
+
+/*
+ * Tailwind's `text-sm`, which is a size and a line-height together: 14 over 20.
+ *
+ * The `leading-none` on the lockup is what the lower line inherits, not this one
+ * — `text-sm` brings its own. Setting both lines to 1 made the mark 10px shorter
+ * than the portfolio's and no amount of padding on the bar could fix that,
+ * because the difference was inside the logo.
+ *
+ * No letter-spacing. `text-sm` is `tracking-normal`, and the 0.035em belongs to
+ * the lower line alone.
+ */
+.logoName {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color-strong);
+}
+
+/*
+ * `text-[10px]` sets a size and nothing else, so the leading is the lockup's 1 —
+ * the computed line-height on the portfolio is 10px, matching the font size.
+ *
+ * The tracking is written in pixels rather than as the source's `0.035em`. The
+ * two are the same number at this size and only at this size, and pixels are
+ * what the browser reports, so a later change to the font size cannot quietly
+ * take the tracking with it.
+ */
+.logoRole {
+  font-size: 0.625rem;
+  font-weight: 300;
+  letter-spacing: 0.35px;
+  color: var(--text-color-assistive);
+}
+
+.repositoryMark {
+  flex: none;
+}
+
+/*
+ * The single light/dark toggle, which replaces the three-way group on a phone.
+ *
+ * Doubled for the same reason `.menuButton` is: the element is a `Button` and
+ * its own `display: inline-flex` is a single class like this one, so a tie was
+ * being settled by whichever stylesheet the bundler emitted last — and it was
+ * settling the wrong way, which put the phone's toggle on the desktop bar beside
+ * the three it replaces.
+ */
+.narrowOnly.narrowOnly {
   display: none;
 }
 
 .shell {
   flex: 1;
   min-height: 0;
+  /* The bar is fixed, so this is the whole window and the columns inside it
+     make their own room for it. */
+  height: 100vh;
   display: grid;
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
 }
@@ -64,6 +183,9 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  /* Clears the fixed bar. The list scrolls below it rather than under it —
+     a column of links sliding behind a blur is noise, not depth. */
+  padding-top: var(--topbar);
   background: var(--background-base);
 }
 
@@ -72,13 +194,31 @@
  *
  * Hiding it by narrowing the track would reflow twenty-eight links every time
  * the pointer crossed the sidebar. Fading the thumb instead costs no layout: the
- * lane is reserved either way, and what changes is a colour.
+ * lane is reserved either way, and what changes is a color.
+ */
+/*
+ * The insets are the list's, and they have to clear a focus ring.
+ *
+ * `overflow-y` makes this a scroll container on both axes — the spec resolves a
+ * visible axis to auto when its partner is not — so anything outside the padding
+ * box is cut. A focused link draws its ring two pixels out and two wide, and the
+ * sides were 8 and 2, so the ring was shaved on the right and clipped flat at
+ * the top and bottom of the list. 12 on the sides clears it.
+ *
+ * 40 on the ends, where the article beside it takes 80: this column is narrow
+ * and its first link is a short line of text, so it needs less than a page of
+ * prose does to stop reading as though it began against the bar. Half is the
+ * relationship, not a number picked separately.
+ *
+ * 24 on the sides, which is the bar's. The sidebar and the bar above it share a
+ * left edge, so the first link should start where the logo does rather than
+ * twelve pixels inside it.
  */
 .nav {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: var(--spacing-16) var(--spacing-2) var(--spacing-16) var(--spacing-8);
+  padding: var(--spacing-40) var(--spacing-16);
   scrollbar-color: transparent transparent;
 }
 
@@ -102,35 +242,41 @@
 }
 
 /*
- * A row in the bar rather than a stack in a column. The two lines sat one above
- * the other when this was the head of the sidebar; on a 56px bar they would set
- * the height, so they run side by side with the label after the name.
+ * The link around the logo, and nothing else — the lockup's own measurements are
+ * in `.logo`, which is where they can be compared against the portfolio's.
+ *
+ * It carries a focus ring of its own because it is an anchor with no visible box
+ * to hang one on, and the ring is what tells a keyboard user the mark is a link
+ * home rather than a picture.
  */
 .brand {
   display: flex;
-  align-items: baseline;
-  gap: var(--spacing-8);
+  align-items: center;
   flex: none;
   text-decoration: none;
   white-space: nowrap;
+  border-radius: var(--docs-radius-8);
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
 }
 
 /*
- * Size, weight and colour come from `Text` in the markup. What is left here is
- * the part that is not type: the monospace face and the letter-spacing that
- * make a label read as a label.
+ * The break between two groups of links.
+ *
+ * It has to beat the space inside a group by enough to be read as a different
+ * kind of gap — the links themselves sit six apart with their own padding, and
+ * at 20 the six groups ran together into one long list with headings in it.
  */
-.brandNote {
-  font-family: var(--font-family-mono);
-}
-
 .section + .section {
-  margin-top: var(--spacing-20);
+  margin-top: var(--spacing-32);
 }
 
 /*
- * The accent rather than the assistive grey. These are the only headings in the
- * chrome, and in grey they sat at the same weight as the links under them — so
+ * The accent rather than the assistive gray. These are the only headings in the
+ * chrome, and in gray they sat at the same weight as the links under them — so
  * twenty-eight links read as one list rather than as six groups.
  *
  * Step 800 rather than the 700 that `Text color="accent"` gives. In dark it is
@@ -139,7 +285,7 @@
  * the accent is yellow, and this is 12px uppercase, so 4.5 applies. 800 is the
  * first step that clears it on all fourteen hues in both themes.
  *
- * Doubled selector because `Text` writes its colour with a class of its own, and
+ * Doubled selector because `Text` writes its color with a class of its own, and
  * the two are otherwise a tie decided by which stylesheet the bundler emitted
  * last.
  */
@@ -149,15 +295,14 @@
 
 .sectionTitle {
   padding: 0 var(--spacing-8) var(--spacing-6);
-  font-family: var(--font-family-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 /*
  * The anchor is the hit area and the "you are here" background; the `Text`
- * inside it is the type. Colour on hover has to reach the child, which has its
- * own — hence the descendant rule rather than a colour on the anchor.
+ * inside it is the type. Color on hover has to reach the child, which has its
+ * own — hence the descendant rule rather than a color on the anchor.
  */
 .link {
   display: block;
@@ -165,7 +310,29 @@
   border-radius: var(--docs-radius-6);
   text-decoration: none;
   background-image: linear-gradient(transparent, transparent);
-  transition: background-image var(--duration-70) var(--easing-standard);
+  transition:
+    background-image var(--duration-70) var(--easing-standard),
+    transform var(--duration-70) var(--easing-standard);
+}
+
+/*
+ * The same press the components use, at the same 0.97 and on the same curve.
+ *
+ * A sidebar link is the one control on this page that answered a click with
+ * nothing at all, and a navigation that does not acknowledge the press feels
+ * slower than the page it is loading.
+ *
+ * `:active` rather than the components' `[data-pressed]`, since this is a plain
+ * anchor with no press handling behind it.
+ */
+.link:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:active {
+    transform: none;
+  }
 }
 
 .link:hover {
@@ -176,7 +343,7 @@
   color: var(--text-color-normal);
 }
 
-/* Tinted as well as bolder — colour alone is a poor "you are here". */
+/* Tinted as well as bolder — color alone is a poor "you are here". */
 .linkActive,
 .linkActive:hover {
   background: var(--accent-surface);
@@ -200,20 +367,51 @@
   overflow-y: auto;
 }
 
+/*
+ * 80 above and below.
+ *
+ * A documentation page is a column of specimens, and 40 put the first of them
+ * close enough to the bar to read as attached to it. The reading column is
+ * 780px inside a window that is usually well over 1200, so there is width to
+ * spare and none of it buys anything; height is what makes a page feel unhurried.
+ */
+/*
+ * The top inset carries the bar's height as well as the page's own air, since
+ * the bar is fixed and this column runs underneath it. Everything the reader has
+ * not scrolled past yet still starts clear of it; everything they have scrolls
+ * behind the blur, which is the point of the blur.
+ */
 .content {
-  /* The tail clears the floating panel, so the last line of a page is readable
-     rather than sitting behind it. */
-  padding: var(--spacing-40) var(--spacing-40) var(--spacing-64);
+  padding: calc(var(--topbar) + var(--docs-page-inset)) var(--spacing-40) var(--docs-page-inset);
 }
 
 /* ── toolbar ────────────────────────────────────────────────── */
 
 /*
- * The dials, as the right-hand half of the top bar. No positioning of its own —
- * the bar is what stays on screen, and this is what sits in it.
+ * The dials sit between the brand and the repository link, and are centered
+ * against the bar once there is room to be.
+ *
+ * Centring has to be absolute to mean anything: in the flow they would come to
+ * rest wherever the two ends left them, and the brand is a good deal wider than
+ * a single icon button, so "the middle" would be visibly off it. Taking them out
+ * of the flow measures the center against the bar itself.
+ *
+ * Only above 1280 though, because they are around 800 wide — fourteen swatches,
+ * three buttons and two selects — and a 800px block centered in a 1024px bar
+ * starts at 112, which is underneath the brand. Below that they stay in the flow
+ * at the right-hand end, where they were, and the bar is simply full.
  */
 .toolbar {
   min-width: 0;
+}
+
+@media (min-width: 1280px) {
+  .toolbar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - var(--spacing-40) * 2);
+  }
 }
 
 /*
@@ -251,17 +449,28 @@
   gap: var(--spacing-4);
 }
 
+/*
+ * The rule between two groups of dials, with the same air on either side of it.
+ *
+ * The row's own gap put 10 there, which a hairline does not read as a break at —
+ * the swatches ended and the next label started almost at once. The margin adds
+ * to that gap symmetrically, so both sides come to 18 whichever group is which.
+ */
 .toolDivider {
   width: 1px;
   height: 20px;
+  margin-inline: var(--spacing-8);
   background: var(--border-subtle);
 }
 
+/*
+ * The word and the control it names are one group, and were four pixels apart —
+ * close enough that "gray" read as part of the select rather than as its label.
+ */
 .toolLabel {
-  font-family: var(--font-family-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding-right: var(--spacing-2);
+  padding-right: var(--spacing-6);
 }
 
 /*
@@ -269,12 +478,17 @@
  * to the hue it selects. The alternative is fourteen hex values written out
  * beside the generated palette, which go stale the first time a hue is retuned.
  */
+/*
+ * A rounded square rather than a dot. A circle of color beside a row of
+ * rectangular controls reads as a status light; a chip reads as a sample of the
+ * thing it selects, which is what it is.
+ */
 .swatch {
   width: 20px;
   height: 20px;
   padding: 0;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--docs-radius-full);
+  border-radius: var(--docs-radius-6);
   background: var(--accent-500);
   cursor: pointer;
   transition: transform var(--duration-70) var(--easing-standard);
@@ -295,12 +509,51 @@
   width: 116px;
 }
 
+/*
+ * 48 between sections, where it was 32.
+ *
+ * Each section here is a titled example with a frame around it, and the frames
+ * were doing the separating on their own — at 32 two of them read as one stack
+ * of panels rather than as two answers to two questions. The gap has to beat
+ * the space inside a frame for the break between sections to be the larger one.
+ *
+ * Margins between the children rather than a `gap`, so one kind of child can
+ * have a different one. See `.callout`.
+ */
 .article {
   max-width: var(--content);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-32);
+}
+
+.article > * + * {
+  margin-top: var(--spacing-48);
+}
+
+/*
+ * A callout sits closer to what it is about than sections sit to each other.
+ *
+ * It always annotates the example above it, and at the full 48 it floated
+ * between two examples with no way to tell which one it belonged to — the gap
+ * that was supposed to separate sections was separating a section from its own
+ * footnote. 20 attaches it upwards; whatever follows still gets the full break.
+ */
+.article > .callout {
+  margin-top: var(--spacing-20);
+}
+
+/*
+ * The rule under the page head, closer to the head than a section break is to a
+ * section, so it reads as the head's own underline rather than as the first
+ * thing on the page. What comes after it still gets the full 48.
+ *
+ * 32: at 24 the rule was near enough to a 17px line of reading text that the
+ * sentence looked underlined, and at 40 it had drifted far enough to read as the
+ * first thing on the page rather than the last thing in the head.
+ */
+.article > .pageRule {
+  margin-top: var(--spacing-32);
 }
 
 .pageHead {
@@ -310,7 +563,6 @@
 }
 
 .eyebrow {
-  font-family: var(--font-family-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -361,6 +613,8 @@
    * that is left here is the list it opens — which takes no room at all until
    * it does.
    */
+  /* No room reserved for the bar here: the list is a fixed panel of its own on
+     this screen, and the sidebar itself takes no space until it opens. */
   .sidebar {
     z-index: var(--z-index-raised);
     padding: 0;
@@ -374,15 +628,37 @@
    * Collapsed by default. Twenty-eight links stacked above the article means
    * every visit starts by scrolling past the table of contents.
    */
+  /*
+   * The sides are the bar's 12, not the column's 24, for the same reason the
+   * column's are the bar's on a wide screen: the menu opens directly under the
+   * bar and the two share an edge.
+   */
   .nav {
     display: none;
     max-height: calc(100vh - var(--topbar));
+    padding: var(--spacing-16) var(--spacing-12);
     border-bottom: 1px solid var(--border-subtle);
     background: var(--background-base);
   }
 
+  /*
+   * Over the article, not above it.
+   *
+   * `display: block` alone left the list in the grid, so opening the menu pushed
+   * the whole page down by however tall the list was and closing it snapped
+   * everything back — the article moved because the navigation appeared, which
+   * is not what a menu does. Taking it out of the flow means the page underneath
+   * holds still and the scrim covers something that is actually still there.
+   */
   .nav[data-open] {
     display: block;
+    position: fixed;
+    top: var(--topbar);
+    right: 0;
+    left: 0;
+    z-index: var(--z-index-raised);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   /*
@@ -408,17 +684,29 @@
   }
 
   .content {
-    padding: var(--spacing-28) var(--spacing-20) var(--spacing-48);
+    padding: calc(var(--topbar) + var(--spacing-28)) var(--spacing-20) var(--spacing-48);
   }
 
   /*
-   * Edge to edge, because centring an 800px panel on a 390px screen centres it
-   * off both sides. It keeps its own horizontal scroll: fourteen 20px swatches
-   * need 336px before anything else, which no phone has.
+   * The same 12 on both sides. It was 12 and 16, which put the logo a notch
+   * further from its edge than the repository link is from the other one — a
+   * difference nobody names and everybody sees as the bar being slightly off.
    */
   .topbar {
-    gap: var(--spacing-12);
-    padding: 0 var(--spacing-12) 0 var(--spacing-16);
+    gap: var(--spacing-8);
+    padding: 0 var(--spacing-12);
+  }
+
+  /*
+   * The light/dark toggle joins the repository link at the right end.
+   *
+   * All that is left of the dials on a phone is that one button, and in the
+   * middle of the bar it read as a third thing of its own — a stray control
+   * between the brand and the link. Pushed over, the two icons are one cluster:
+   * the things you can do, in the corner where they belong.
+   */
+  .toolbar {
+    margin-left: auto;
   }
 
   /*

@@ -27,7 +27,7 @@ const APPEARANCE_ICON: Record<Appearance, string> = {
  * The three dials, above the content on every page.
  *
  * They were on the Theme page to begin with, which is the wrong place for them:
- * a brand colour judged against one sample block is a colour that works on one
+ * a brand color judged against one sample block is a color that works on one
  * sample block. Here they are in reach while reading any page, which is the only
  * way to find out that yellow is unreadable on a badge.
  *
@@ -84,7 +84,7 @@ export const Toolbar = () => {
         {/* Each swatch carries its own `data-accent`, so it paints itself from the
           ramp it selects. Fourteen hex values written out beside the generated
           palette is a list that goes stale the first time a hue is retuned. */}
-        <div className={`${css.toolGroup} ${css.wideOnly}`} role="group" aria-label="Accent colour">
+        <div className={`${css.toolGroup} ${css.wideOnly}`} role="group" aria-label="Accent color">
           {accentColors.map(hue => (
             <button
               key={hue}
@@ -115,7 +115,7 @@ export const Toolbar = () => {
             color="assistive"
             className={css.toolLabel}
           >
-            grey
+            gray
           </Text>
           <Select.Root
             value={neutral}
@@ -138,9 +138,20 @@ export const Toolbar = () => {
               </Select.Group>
             </Select.Content>
           </Select.Root>
+        </div>
 
-          <div className={`${css.toolDivider} ${css.wideOnly}`} />
+        {/*
+          A sibling of the row, like the other two.
 
+          This one and the group after it used to live inside the group above, so
+          the row's gap did not apply to them: the rule between gray and radius
+          sat in 4px of group gap where the others sit in 10px of row gap, and the
+          two labels were spaced differently from their selects for the same
+          reason. One dial is one group, and every rule is between two of them.
+        */}
+        <div className={`${css.toolDivider} ${css.wideOnly}`} aria-hidden />
+
+        <div className={`${css.toolGroup} ${css.wideOnly}`}>
           <Text
             as="span"
             id="radius-dial-label"

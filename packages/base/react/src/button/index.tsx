@@ -22,6 +22,15 @@ export type BaseButtonProps = React.HTMLAttributes<HTMLElement> & {
   pressed?: boolean;
   /** Used when as='a' */
   href?: string;
+  /**
+   * Used when as='a'. Declared beside `href` because the two are one decision:
+   * the props already carried the destination and had no way to say how it
+   * opens, so an anchor that wanted a new tab reached the element through the
+   * rest spread and failed to typecheck on the way.
+   */
+  target?: string;
+  /** Used when as='a'. `noreferrer noopener` belongs on anything with a target. */
+  rel?: string;
   /** Used when as='button' */
   type?: 'button' | 'submit' | 'reset';
 };

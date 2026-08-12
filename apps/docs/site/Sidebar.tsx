@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
 import css from './chrome.module.css';
+import { Logo } from './Logo';
 import { nav } from './nav';
 import { useNav } from './nav-state';
 
@@ -41,7 +42,7 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
                  * `Text` inside the link rather than as the link. It carries
                  * the step and the weight; the anchor keeps the padding, the
                  * hit area and the "you are here" background, which are
-                 * navigation behaviour rather than type.
+                 * navigation behavior rather than type.
                  */}
                 <Text
                   as="span"
@@ -62,13 +63,8 @@ const NavList = ({ onNavigate }: { onNavigate?: () => void }) => {
 
 /** Lives in the top bar now, beside the dials, rather than above the link list. */
 export const Brand = () => (
-  <Link href="/" className={css.brand}>
-    <Text as="span" size={6} weight="bold" color="strong">
-      minuk-hwang
-    </Text>
-    <Text as="span" size={1} color="assistive" className={css.brandNote}>
-      design system
-    </Text>
+  <Link href="/" className={css.brand} aria-label="minuk-hwang design system, home">
+    <Logo />
   </Link>
 );
 
