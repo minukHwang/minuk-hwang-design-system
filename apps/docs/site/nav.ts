@@ -29,7 +29,7 @@ export const nav: NavSection[] = [
     title: 'Overview',
     items: [
       { href: '/', label: 'Introduction' },
-      { href: '/playground', label: 'Playground', summary: 'Everything at once' },
+      { href: '/playground', label: 'Example', summary: 'Everything at once' },
       // Decisions is written but not linked yet — reachable at /decisions.
     ],
   },

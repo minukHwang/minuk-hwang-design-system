@@ -56,7 +56,7 @@ const CHANGELOG = [
   [
     'added',
     'A neutral tone, built like the other five',
-    'A grey badge and a grey button now read neutral.surface and neutral.onNormal the way a red one reads its own. The label on a solid fill is measured, not chosen.',
+    'A gray badge and a gray button now read neutral.surface and neutral.onNormal the way a red one reads its own. The label on a solid fill is measured, not chosen.',
   ],
   [
     'fixed',
@@ -95,7 +95,7 @@ const Masthead = () => (
         <Badge variant="outline">v0.0.1</Badge>
       </div>
       <Text size={4} color="assistive">
-        Colour, spacing, type, shadow and motion, in four consumption formats from one source.
+        Color, spacing, type, shadow and motion, in four consumption formats from one source.
       </Text>
     </div>
 
@@ -243,7 +243,9 @@ const Overview = () => (
                   <Badge size="s" tone={kind === 'breaking' ? 'error' : 'neutral'}>
                     {kind}
                   </Badge>
-                  {title}
+                  {/* Its own element so the badge stays beside the block of text
+                      rather than sitting on its first line. */}
+                  <span className={css.entryTitle}>{title}</span>
                 </span>
               </Accordion.Trigger>
               <Accordion.Content>{body}</Accordion.Content>
@@ -477,7 +479,7 @@ export default function PlaygroundContent() {
   return (
     <Page
       eyebrow="Overview"
-      title="Playground"
+      title="Example"
       lede="One screen built out of the whole library. Turn a dial in the bar above and judge the result here, where things sit next to each other, rather than on a page that shows one component at a time."
     >
       <Tooltip.Provider>
@@ -489,7 +491,7 @@ export default function PlaygroundContent() {
             <Alert.Body>
               <Alert.Title>Every surface here reads the tokens the dials rewrite</Alert.Title>
               <Alert.Description>
-                Nothing on this page paints itself. Change the accent, the grey, the radius or the
+                Nothing on this page paints itself. Change the accent, the gray, the radius or the
                 theme and everything below follows.
               </Alert.Description>
             </Alert.Body>
