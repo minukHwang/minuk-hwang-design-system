@@ -13,12 +13,93 @@
   gap: var(--spacing-20);
 }
 
-.board > h2 {
-  margin: var(--spacing-12) 0 0;
+/*
+ * The page's own header: identity on the left, state under it, actions on the
+ * right. It wraps rather than scrolls, because the actions are the point and a
+ * bar that hides them on a narrow window has failed at the one job it has.
+ */
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spacing-16);
 }
 
-.board > h2:first-child {
-  margin-top: 0;
+.mastheadText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  /* Takes the slack so the actions sit against the far edge. */
+  flex: 1;
+  min-width: 240px;
+}
+
+.mastheadActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-left: auto;
+}
+
+/*
+ * Three of a kind, dropping to two and then one rather than getting narrow.
+ *
+ * The gap is `.stack`'s, which is what sets the distance from the card below.
+ * At 12 the row was spaced more widely than it was spaced from its neighbour, so
+ * the three read as further from each other than from the thing under them.
+ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-10);
+}
+
+/* Accordion sizes itself from its container, and a card body is a flex column. */
+.full {
+  width: 100%;
+}
+
+/* The badge and the title on an accordion row, kept on one line together. */
+.entry {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.popoverBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  width: 220px;
+}
+
+/* Rows and their separators, with the body's own gap removed so the rules sit
+   evenly between them rather than at the ends of a gap. */
+.fileList {
+  gap: 0;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-12);
+  padding: var(--spacing-10) 0;
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+/* A named group of controls that is not a Field, so it borrows the same gap
+   Field.Root keeps between its label and its control. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
 }
 
 .row {

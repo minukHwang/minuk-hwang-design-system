@@ -219,12 +219,24 @@
 /*
  * One row, always. It scrolls sideways rather than growing a second line,
  * because a bar that changes height moves the whole page under it.
+ *
+ * The vertical padding is what keeps the focus rings whole. Setting overflow-x
+ * alone does not leave the other axis visible: the spec resolves a visible axis
+ * to auto when its partner is not, so this row clips top and bottom as well as
+ * the sides. Its height was exactly the tallest control's, which left a focused
+ * ring with nowhere to be — flattened pill ends on the select at radius full,
+ * chewed corners lower down.
+ *
+ * Four, from the widest ring in the row rather than from the narrowest: the
+ * buttons beside the selects sit their outline two pixels out and draw two more,
+ * where a select's crosses its own border and needs one.
  */
 .toolbarRow {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   gap: var(--spacing-10);
+  padding-block: var(--spacing-4);
   overflow-x: auto;
   scrollbar-width: none;
 }
