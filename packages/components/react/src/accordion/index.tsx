@@ -24,6 +24,19 @@ import * as css from './styles.css';
  * The chevron comes with the trigger and rotates from `data-state`, so no call
  * site has to track open state to point an arrow the right way.
  */
+/**
+ * Wrapped rather than re-exported from the base, so it can carry a class.
+ *
+ * It had none, which left the list unable to be narrower than its widest row in
+ * any flex or grid parent — see `root` in the stylesheet.
+ */
+const Root = React.forwardRef<
+  React.ElementRef<typeof Base.Root>,
+  React.ComponentPropsWithoutRef<typeof Base.Root>
+>(function AccordionRoot({ className, ...props }, ref) {
+  return <Base.Root {...props} ref={ref} className={clsx(css.root, className)} />;
+});
+
 const Item = React.forwardRef<
   React.ElementRef<typeof Base.Item>,
   React.ComponentPropsWithoutRef<typeof Base.Item>
@@ -37,7 +50,9 @@ const Trigger = React.forwardRef<
 >(function AccordionTrigger({ className, children, ...props }, ref) {
   return (
     <Base.Trigger {...props} ref={ref} className={clsx(css.trigger, className)}>
-      {children}
+      {/* Wrapped rather than passed straight through — see `label` for why a
+          bare string cannot be laid out here on its own. */}
+      <span className={css.label}>{children}</span>
       <Icon name="expand_more" size={20} className={css.chevron} />
     </Base.Trigger>
   );
@@ -60,7 +75,7 @@ const Content = React.forwardRef<
  * ============================================
  */
 
-export const Accordion = { Root: Base.Root, Item, Trigger, Content };
+export const Accordion = { Root, Item, Trigger, Content };
 
 /**
  * The parts again, as named exports.
@@ -75,7 +90,7 @@ export const Accordion = { Root: Base.Root, Item, Trigger, Content };
  * renders from a server component; `Accordion.Root` still works everywhere it
  * did before. Radix ships both for the same reason.
  */
-export const AccordionRoot = Base.Root;
+export const AccordionRoot = Root;
 export const AccordionItem = Item;
 export const AccordionTrigger = Trigger;
 export const AccordionContent = Content;

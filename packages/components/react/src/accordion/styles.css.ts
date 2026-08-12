@@ -24,7 +24,26 @@ const slideUp = keyframes({
   to: { height: 0 },
 });
 
+/**
+ * The list itself, and the reason a long title used to run out of its container.
+ *
+ * An accordion is nearly always dropped inside something that is a flex or grid
+ * box — a card body, a panel, a column of sections. A flex item's automatic
+ * minimum size is its min-content width, so without this the accordion refused
+ * to be narrower than its widest row: it grew past its parent, whatever clipped
+ * overflow cut it off, and the chevron ended up drawn beyond the visible edge
+ * with the title running under it.
+ *
+ * No amount of wrapping inside the row could fix that, because the row was never
+ * being asked to be narrow — the whole list had already claimed the width.
+ */
+export const root = style({
+  width: '100%',
+  minWidth: 0,
+});
+
 export const item = style({
+  minWidth: 0,
   borderBottom: `1px solid ${border.subtle}`,
 });
 
@@ -96,8 +115,50 @@ export const trigger = style([
   },
 ]);
 
+/**
+ * The label, given something of its own to be laid out in.
+ *
+ * `children` used to be handed to the trigger's flex box as it came, and a bare
+ * string becomes an anonymous flex item — which cannot be given a `min-width`,
+ * because there is no element to give it to. So the row could not shrink below
+ * its content and a long question ran out through the side of whatever contained
+ * it, with the chevron pushed out under the text.
+ *
+ * `flex: 1` and `min-width: 0` are what let it give way to the chevron.
+ * `overflow-wrap: anywhere` is what makes that possible even when the label is
+ * one long unbroken token: the automatic minimum size of a line of prose is its
+ * longest word, and a URL or an identifier has no space in it to break at.
+ *
+ * The caller can still pass an element instead of a string — a badge beside the
+ * title, an icon — and it lands inside this rather than beside it, which is what
+ * keeps the chevron the last thing in the row.
+ */
+export const label = style({
+  flex: 1,
+  minWidth: 0,
+  /*
+   * `white-space: normal` is the one that actually makes the label wrap, and it
+   * has to be said out loud.
+   *
+   * The reset gives every `button` a `white-space: nowrap` — a sensible default
+   * for a control whose label is a word or two, and one that every descendant of
+   * the trigger inherits. Against it `overflow-wrap` is inert, because there is
+   * no line breaking for it to influence: the text was laid out as a single
+   * unbreakable line no matter how narrow the box got.
+   *
+   * That is why nothing above this line fixed the overflow on its own. The row
+   * could shrink, the label could shrink, and the text still would not break.
+   */
+  whiteSpace: 'normal',
+  overflowWrap: 'anywhere',
+  textAlign: 'left',
+});
+
 export const chevron = style({
   flex: 'none',
+  // Centered on the row rather than on the first line, so a title that wraps to
+  // two lines keeps the arrow in the middle of them.
+  alignSelf: 'center',
   color: textColor.assistive,
   transitionProperty: 'transform',
   transitionDuration: vars.motion.duration[200],

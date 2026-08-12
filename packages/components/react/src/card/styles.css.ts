@@ -9,6 +9,16 @@ const { background, border } = vars.color.$semantic;
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
+  /*
+   * A card never widens what contains it.
+   *
+   * Dropped into a flex or grid parent it becomes an item with `min-width: auto`,
+   * which refuses to be narrower than its widest content — so one long line
+   * anywhere inside pushed the whole card past its column, and `overflow: hidden`
+   * below turned that into a clip rather than a wrap. The content could not fix
+   * it from the inside: nothing in there was ever being asked to be narrow.
+   */
+  minWidth: 0,
   borderRadius: vars.borderRadius[12],
   backgroundColor: background.raised,
   backgroundImage: restLayer,
@@ -80,6 +90,7 @@ export type CardElevation = keyof typeof elevation;
 
 export const header = style({
   display: 'flex',
+  minWidth: 0,
   flexDirection: 'column',
   // Four had the description sitting on the title's descenders. The two are a
   // heading and a sentence, not two lines of one paragraph.
@@ -89,6 +100,7 @@ export const header = style({
 
 export const body = style({
   display: 'flex',
+  minWidth: 0,
   flexDirection: 'column',
   gap: vars.spacing[8],
   // The header's, so the body's first word starts under the title rather than
@@ -103,6 +115,7 @@ export const body = style({
 
 export const footer = style({
   display: 'flex',
+  minWidth: 0,
   alignItems: 'center',
   gap: vars.spacing[8],
   padding: vars.spacing[24],

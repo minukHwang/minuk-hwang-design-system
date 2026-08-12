@@ -7,6 +7,17 @@ const { opacity } = vars;
 export const root = style({
   display: 'flex',
   flexDirection: 'column',
+  /*
+   * A tab set takes the width it is given rather than the width it wants.
+   *
+   * `min-width: 0` says it *may* be narrow; this is what makes it so. Sized by
+   * its content it came out as wide as the whole strip laid end to end, and in a
+   * wrapping flex parent it kept that width and hung out of the container — so
+   * the strip's own `overflow-x` had nothing to scroll and whatever clipped
+   * overflow cut the last tabs off instead.
+   */
+  width: '100%',
+  minWidth: 0,
 });
 
 /**
@@ -18,10 +29,36 @@ export const list = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.spacing[4],
-  borderBottom: `1px solid ${border.subtle}`,
+  /*
+   * The rail as an inset shadow rather than a border.
+   *
+   * A border sits outside the padding box, which is what the indicator below is
+   * positioned against — so covering it meant hanging the bar a pixel past the
+   * bottom, and that one pixel made the strip scrollable on the vertical axis as
+   * well as the horizontal one. A shadow paints inside the box, so the indicator
+   * can sit at zero and still cover the line.
+   */
+  boxShadow: `inset 0 -1px 0 ${border.subtle}`,
+  /*
+   * Without this the strip could not scroll, however many tabs it held.
+   *
+   * `overflow-x: auto` only does something once the box is narrower than its
+   * contents, and this box is a flex item of the root — so `min-width: auto`
+   * kept it as wide as all its tabs put together. On a phone a five-tab strip
+   * simply ran off the side of the page, and the scroll it was supposed to have
+   * had nothing to scroll.
+   */
+  minWidth: 0,
   overflowX: 'auto',
+  /*
+   * Only the horizontal axis scrolls. Left to resolve on its own the other one
+   * becomes `auto` too — the spec turns a visible axis into auto when its
+   * partner is not — and the strip picked up a pixel or two of vertical travel
+   * that a trackpad could find.
+   */
+  overflowY: 'hidden',
   // Hides the horizontal scrollbar on a strip that overflows, which otherwise
-  // adds a grey line right where the rail is.
+  // adds a gray line right where the rail is.
   scrollbarWidth: 'none',
   selectors: { '&::-webkit-scrollbar': { display: 'none' } },
 });
@@ -39,7 +76,7 @@ export const list = style({
  */
 export const indicator = style({
   position: 'absolute',
-  bottom: '-1px',
+  bottom: 0,
   height: '2px',
   borderTopLeftRadius: vars.borderRadius[4],
   borderTopRightRadius: vars.borderRadius[4],
@@ -129,6 +166,7 @@ export const trigger = style({
 });
 
 export const panel = style({
+  minWidth: 0,
   paddingTop: vars.spacing[16],
   outline: 'none',
   selectors: {
