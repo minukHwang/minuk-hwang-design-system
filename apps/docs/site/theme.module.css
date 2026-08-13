@@ -1,10 +1,24 @@
 /* ── picker ─────────────────────────────────────────────────── */
 
+/*
+ * One dial per row.
+ *
+ * Laid out in a row the three wrapped at almost every width, and where they
+ * wrapped changed which dial sat beside which — so the same page had a
+ * different reading order depending on the window. Stacked, each dial is a line
+ * you scan down, and the label sits directly above the control it names.
+ *
+ * The rule below carries more air than it did. It separates the controls from
+ * the thing they change, which is the one boundary on this page that has to be
+ * read, and 20 above it with 16 under it made it look like part of the last
+ * dial rather than the end of them.
+ */
 .picker {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-28);
-  padding-bottom: var(--spacing-20);
+  flex-direction: column;
+  gap: var(--spacing-24);
+  padding-bottom: var(--spacing-32);
+  margin-bottom: var(--spacing-16);
   border-bottom: 1px solid var(--border-subtle);
 }
 

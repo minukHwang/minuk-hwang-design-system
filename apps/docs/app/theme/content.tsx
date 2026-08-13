@@ -10,7 +10,7 @@ import { Input } from '@minuk-hwang-design-system/components-react/input';
 import { Switch } from '@minuk-hwang-design-system/components-react/switch';
 import { Text } from '@minuk-hwang-design-system/components-react/text';
 import { Theme } from '@minuk-hwang-design-system/components-react/theme';
-import { accentColors, radiusScales } from '@minuk-hwang-design-system/style-tokens';
+import { accentColors, neutralColors, radiusScales } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
 import { useDials } from '../../site/dials';
@@ -65,7 +65,7 @@ const Sample = () => (
 );
 
 export default function ThemePage() {
-  const { accent, setAccent, radius, setRadius } = useDials();
+  const { accent, setAccent, neutral, setNeutral, radius, setRadius } = useDials();
 
   return (
     <Page
@@ -100,6 +100,32 @@ export default function ThemePage() {
             <Text size={2} color="assistive">
               {accent}
             </Text>
+          </div>
+
+          {/*
+            Named buttons rather than swatches. The three grays differ by a few
+            points of hue against a neutral background, so three small squares
+            would be three squares of the same color to anyone not comparing
+            them side by side. The accent above can be a swatch because its
+            options are fourteen visibly different hues.
+          */}
+          <div className={css.control}>
+            <Text as="div" size={1} color="assistive" className={css.controlLabel}>
+              neutralColor
+            </Text>
+            <div className={css.segments}>
+              {neutralColors.map(family => (
+                <Button
+                  key={family}
+                  size="s"
+                  variant={neutral === family ? 'secondary' : 'ghost'}
+                  aria-pressed={neutral === family}
+                  onClick={() => setNeutral(family)}
+                >
+                  {family}
+                </Button>
+              ))}
+            </div>
           </div>
 
           <div className={css.control}>
