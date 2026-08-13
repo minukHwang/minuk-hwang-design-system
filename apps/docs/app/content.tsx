@@ -66,7 +66,6 @@ export default function Home() {
           because you are expected to assemble them yourself.
         </p>
       </Prose>
-
       <div className={css.layers}>
         {LAYERS.map(layer => (
           <div key={layer.name} className={css.layer}>
@@ -144,7 +143,6 @@ export default function App() {
   return <Button>Publish</Button>;
 }`}
       />
-
       <Callout>
         One thing is the application&apos;s job rather than the library&apos;s, and it looks like a
         bug when it is missed. <strong>Light and dark</strong> are chosen with{' '}

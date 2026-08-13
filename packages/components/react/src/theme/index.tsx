@@ -66,18 +66,18 @@ export type ThemeProps = React.HTMLAttributes<HTMLDivElement> & {
  */
 
 /**
- * Sets the accent and the radius for everything inside it.
+ * Sets the accent, the gray and the radius for everything inside it.
  *
  * ```tsx
- * <Theme accentColor="purple" radius="large">
+ * <Theme accentColor="purple" neutralColor="slate" radius="large">
  *   <App />
  * </Theme>
  * ```
  *
  * Nothing is rebuilt and no component takes a new prop. Every stylesheet in the
  * system already reads `--accent-500` rather than `--blue-500`, and
- * `--border-radius-8` rather than `0.5rem`; this writes the two attributes those
- * properties are keyed off, and inheritance carries them down.
+ * `--border-radius-8` rather than `0.5rem`; this writes the three attributes
+ * those properties are keyed off, and inheritance carries them down.
  *
  * That is also why it nests. A pricing section in teal inside a blue
  * application is a second `Theme` around that section — the attribute selectors
