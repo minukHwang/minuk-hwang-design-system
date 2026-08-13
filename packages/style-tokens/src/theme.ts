@@ -54,8 +54,19 @@ export const accentColors = [
 
 export type AccentColor = (typeof accentColors)[number];
 
-/** What the accent is when nothing says otherwise. */
-export const defaultAccentColor: AccentColor = 'blue';
+/**
+ * What the accent is when nothing says otherwise.
+ *
+ * Green rather than blue. Blue is the default of nearly every system a reader
+ * has already seen, so it says nothing about this one, and it is the hue most
+ * likely to collide with whatever the consuming product already uses.
+ *
+ * It costs a little: green-500 carries black text at 9.19:1 and white at only
+ * 2.29, so a primary button here is dark-on-green where a blue one was
+ * white-on-blue. That is the measurement doing its job rather than a problem —
+ * the label follows the fill instead of the convention.
+ */
+export const defaultAccentColor: AccentColor = 'green';
 
 /**
  * The steps the accent ramp needs.
@@ -90,8 +101,15 @@ export const neutralColors = ['mono', 'gray', 'slate'] as const;
 
 export type NeutralColor = (typeof neutralColors)[number];
 
-/** What the grays are when nothing says otherwise. */
-export const defaultNeutralColor: NeutralColor = 'mono';
+/**
+ * What the grays are when nothing says otherwise.
+ *
+ * Slate rather than `mono`, for the reason written above this list: a pure gray
+ * beside a saturated accent reads slightly warm, and biasing the grays the
+ * other way is the usual fix. `mono` is still there for anyone who wants the
+ * surfaces to carry no hue at all.
+ */
+export const defaultNeutralColor: NeutralColor = 'slate';
 
 /**
  * The steps the neutral ramp needs.

@@ -1,9 +1,12 @@
 'use client';
 
-import type {
-  AccentColor,
-  NeutralColor,
-  RadiusScale,
+import {
+  defaultAccentColor,
+  defaultNeutralColor,
+  defaultRadiusScale,
+  type AccentColor,
+  type NeutralColor,
+  type RadiusScale,
 } from '@minuk-hwang-design-system/style-tokens';
 import * as React from 'react';
 
@@ -49,9 +52,14 @@ const DialsContext = React.createContext<Dials | null>(null);
  */
 export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
   const [appearance, setAppearance] = React.useState<Appearance>('system');
-  const [accent, setAccent] = React.useState<AccentColor>('blue');
-  const [neutral, setNeutral] = React.useState<NeutralColor>('mono');
-  const [radius, setRadius] = React.useState<RadiusScale>('medium');
+  /*
+   * The dials start where the library starts, read from it rather than repeated
+   * here. Written out, the two drifted apart the moment the defaults changed,
+   * and the site then opened on an appearance an install would not produce.
+   */
+  const [accent, setAccent] = React.useState<AccentColor>(defaultAccentColor);
+  const [neutral, setNeutral] = React.useState<NeutralColor>(defaultNeutralColor);
+  const [radius, setRadius] = React.useState<RadiusScale>(defaultRadiusScale);
 
   // Read once on mount rather than during render: the server has no
   // localStorage, and initialising from it would make the first client render
