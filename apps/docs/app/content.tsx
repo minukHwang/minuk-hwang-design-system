@@ -141,8 +141,9 @@ export default function App() {
       />
 
       <Callout>
-        Light and dark need nothing set up. Without a <code>Theme</code> the system follows the
-        operating system; with one, <code>appearance</code> decides.
+        Dark mode works from the import. The stylesheet follows <code>prefers-color-scheme</code>{' '}
+        until something names an appearance, and{' '}
+        <code>&lt;Theme appearance=&quot;dark&quot;&gt;</code> is what names one.
       </Callout>
 
       <Preview

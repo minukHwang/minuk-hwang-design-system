@@ -284,11 +284,18 @@ html,
         </Prose>
       </Section>
 
-      <Section title="What is not here">
+      <Section title="What the accent does not move">
         <Prose>
           <p>
-            <code>textColor.link</code> stays a fixed blue: whether a link should be the brand color
-            or the color people recognise as a link is not answered here.
+            Link text. <code>--text-color-link</code> is <code>blue-600</code> under every one of
+            the fourteen accents, so a link in a crimson application is still blue. It flips with
+            the theme like everything else, <code>#0655cb</code> on light and <code>#488ff9</code>{' '}
+            on dark, but the accent dial never reaches it.
+          </p>
+          <p>
+            That is a decision the system has made for you, and the arguable kind: blue is the color
+            people recognise as a link, and a brand that has gone to the trouble of picking an
+            accent may want its links in it. If you disagree, the token is one line.
           </p>
         </Prose>
       </Section>
