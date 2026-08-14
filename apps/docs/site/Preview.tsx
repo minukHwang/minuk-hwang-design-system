@@ -29,6 +29,14 @@ export type PreviewProps = {
   /** Lays the examples out in a column rather than a wrapping row. */
   stack?: boolean;
   /**
+   * Lets the specimen reach the frame's edges.
+   *
+   * The stage insets what it holds, which is right for a component being shown
+   * at its own size and wrong for one that is a surface: a palette panel inside
+   * a padded stage inside a bordered frame is three boxes to say one thing.
+   */
+  flush?: boolean;
+  /**
    * Grammar for the source underneath. Most examples are JSX; the few that show
    * a stylesheet or a shell command are not, and highlighting those as JSX
    * colors the punctuation of a language they are not written in.
@@ -68,7 +76,15 @@ export type PreviewProps = {
  * documentation page that way. Title, one sentence, example — in that order, and
  * the sentence is what the paragraphs collapsed into.
  */
-export const Preview = ({ title, description, code, stack, language, children }: PreviewProps) => (
+export const Preview = ({
+  title,
+  description,
+  code,
+  stack,
+  flush,
+  language,
+  children,
+}: PreviewProps) => (
   <section className={css.example}>
     {title && (
       <Heading level={2} size={5}>
@@ -82,7 +98,13 @@ export const Preview = ({ title, description, code, stack, language, children }:
     )}
     <figure className={css.figure}>
       {children && (
-        <div className={stack ? `${css.stage} ${css.stageStack}` : css.stage}>{children}</div>
+        <div
+          className={[css.stage, stack && css.stageStack, flush && css.stageFlush]
+            .filter(Boolean)
+            .join(' ')}
+        >
+          {children}
+        </div>
       )}
       {code && <CodeBlock code={code} language={language} />}
     </figure>

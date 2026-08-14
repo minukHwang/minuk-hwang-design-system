@@ -10,10 +10,18 @@
 
 .layer {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: var(--spacing-12);
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: var(--spacing-16);
   padding: var(--spacing-18) var(--spacing-20);
   background: var(--background-base);
+}
+
+/* Under the column width the label wraps mid-word, so below it the two stack. */
+@media (max-width: 560px) {
+  .layer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-8);
+  }
 }
 
 .layer + .layer {
@@ -21,24 +29,29 @@
 }
 
 /*
- * Numbered because the layers really are ordered: each one may only reach
- * downwards, and that is the constraint the whole structure rests on.
+ * Two packages in one layer are one block.
  *
- * The number is the layer rather than the row, so two packages carry a 2. That
- * repetition is the point. It is the one place on the page that shows four
- * packages resolving into three layers without a sentence having to say so.
+ * The rule and the full top padding made them two entries that happened to sit
+ * next to each other, which is the opposite of what the shared label says. They
+ * still need a gap, so the padding shrinks rather than going.
  */
-.layerIndex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--docs-radius-full);
-  background: var(--background-raised);
-  color: var(--text-color-assistive);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-13);
+.layer + .layer.layerContinued {
+  border-top: none;
+  padding-top: var(--spacing-8);
+}
+
+/*
+ * The layer, named once per group.
+ *
+ * It was a numbered circle, which put 1, 2, 2, 3 down the side: the repetition
+ * carried the whole point of the list and read as a typo. A name that appears
+ * once and then leaves an empty cell says the same thing without asking anyone
+ * to work it out.
+ */
+.layerName {
+  color: var(--text-color-normal);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-600);
 }
 
 .layerBody {
@@ -48,11 +61,8 @@
   min-width: 0;
 }
 
-.layerHead {
-  display: flex;
-  align-items: baseline;
-  gap: var(--spacing-10);
-  flex-wrap: wrap;
+.layerPackage {
+  align-self: flex-start;
 }
 
 /* ── component grid ─────────────────────────────────────────── */

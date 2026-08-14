@@ -1,5 +1,6 @@
 'use client';
 
+import { Theme } from '@minuk-hwang-design-system/components-react/theme';
 import {
   defaultAccentColor,
   defaultNeutralColor,
@@ -45,10 +46,13 @@ const DialsContext = React.createContext<Dials | null>(null);
  * fine when the Theme page grew a picker for the same values the toolbar owns —
  * two copies of the same state, agreeing only until someone used both.
  *
- * All three are attributes on `html` rather than React state applied to a
- * wrapper, because that is where the token stylesheet reads them: `data-theme`
- * has to sit on the document so the rule that follows the operating system can
- * ask whether the document as a whole has overridden it.
+ * The values are state and nothing else. `Theme` turns them into attributes,
+ * which is the same thing any consumer of this system does — the site used to
+ * write them onto `html` by hand, from a time when `Theme` could not carry an
+ * appearance.
+ *
+ * `localStorage` is the one thing here that is not the library's business, so it
+ * stays: a reload should open on the dials you left.
  */
 export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
   const [appearance, setAppearance] = React.useState<Appearance>('system');
@@ -78,33 +82,23 @@ export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   /*
-   * Removing the attribute hands control back to the OS, which is not the same
-   * as writing whichever theme the OS currently reports — that would pin a guess
-   * and stop following it.
+   * `system` is remembered by forgetting. Storing the word would pin whichever
+   * theme the OS reported at the time and stop following it afterwards.
    */
   React.useEffect(() => {
-    const root = document.documentElement;
-    if (appearance === 'system') {
-      root.removeAttribute('data-theme');
-      window.localStorage.removeItem('theme');
-    } else {
-      root.setAttribute('data-theme', appearance);
-      window.localStorage.setItem('theme', appearance);
-    }
+    if (appearance === 'system') window.localStorage.removeItem('theme');
+    else window.localStorage.setItem('theme', appearance);
   }, [appearance]);
 
   React.useEffect(() => {
-    document.documentElement.setAttribute('data-accent', accent);
     window.localStorage.setItem('accent', accent);
   }, [accent]);
 
   React.useEffect(() => {
-    document.documentElement.setAttribute('data-neutral', neutral);
     window.localStorage.setItem('neutral', neutral);
   }, [neutral]);
 
   React.useEffect(() => {
-    document.documentElement.setAttribute('data-radius', radius);
     window.localStorage.setItem('radius', radius);
   }, [radius]);
 
@@ -122,7 +116,25 @@ export const DialsProvider = ({ children }: { children: React.ReactNode }) => {
     [appearance, accent, neutral, radius]
   );
 
-  return <DialsContext.Provider value={value}>{children}</DialsContext.Provider>;
+  /*
+   * The site is a consumer of its own library here, not a special case. The
+   * dials are state; `Theme` is what turns state into the attributes the token
+   * stylesheet reads, and it paints the page from them because `body` is above
+   * every element React renders and cannot be reached from inside.
+   */
+  return (
+    <DialsContext.Provider value={value}>
+      <Theme
+        appearance={appearance}
+        accentColor={accent}
+        neutralColor={neutral}
+        radius={radius}
+        pageBackground="raised"
+      >
+        {children}
+      </Theme>
+    </DialsContext.Provider>
+  );
 };
 
 export const useDials = () => {

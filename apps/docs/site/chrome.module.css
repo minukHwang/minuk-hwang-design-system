@@ -335,20 +335,38 @@
   }
 }
 
+/*
+ * A gray fill, not the ink a button uses.
+ *
+ * `--state-ink-hover` is black or white at ten per cent, which is what a control
+ * paints over its own colour. A navigation row has no colour of its own, so the
+ * ink read as a smudge of the page rather than as a surface, and it took the
+ * gray dial with it only by accident. `fill.subtle` is the tint the system
+ * already uses for a panel cut into a page, and it moves with the family.
+ */
 .link:hover {
-  background-image: linear-gradient(var(--state-ink-hover), var(--state-ink-hover));
+  background-image: linear-gradient(var(--fill-subtle), var(--fill-subtle));
 }
 
 .link:hover > * {
   color: var(--text-color-normal);
 }
 
-/* Tinted as well as bolder — color alone is a poor "you are here". */
+/* Tinted as well as coloured — either alone is a poor "you are here". */
 .linkActive,
 .linkActive:hover {
   background: var(--accent-surface);
 }
 
+/*
+ * At rest, not only on hover.
+ *
+ * The colour was written under `:hover` alone, so the current page was tinted
+ * and its label was the same as every other label until a pointer happened to
+ * be over it — which is the one moment a reader does not need telling where
+ * they are.
+ */
+.linkActive > *,
 .linkActive:hover > * {
   color: var(--accent-strong);
 }

@@ -154,12 +154,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
      * document — a `Theme` in the tree would have to reach out to `html` to do
      * the same thing.
      */
-    <html
-      lang="en"
-      data-page-background="raised"
-      className={wordmark.variable}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={wordmark.variable} suppressHydrationWarning>
       {/*
        * No font link here.
        *

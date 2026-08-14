@@ -44,6 +44,26 @@
    */
   --docs-page-inset: 5rem;
 
+  /*
+   * The ground under the palette strips.
+   *
+   * It cannot be a step from the ramp, because the ramps are what is drawn on
+   * it: `fill.subtle` is literally one of the swatches a few rows down, so a
+   * neutral strip had a step that vanished into its own background.
+   *
+   * A wash is translucent, so it is not a colour the palette contains. Black in
+   * light and white in dark, the way the token set picks its interaction ink.
+   *
+   * Written out rather than taken from `--dim-*`, whose smallest step is five
+   * per cent. Three is enough to separate a panel from the page it sits on, and
+   * anything more starts to read as a surface competing with the swatches, which
+   * are the thing on this page worth looking at.
+   *
+   * The three selectors are the same three the tokens use, so an element left on
+   * the operating system's answer is covered too.
+   */
+  --docs-panel-wash: rgba(0 0 0 / 0.03);
+
   --docs-radius-2: 0.125rem;
   --docs-radius-4: 0.25rem;
   --docs-radius-6: 0.375rem;
@@ -60,6 +80,31 @@
   --docs-radius-10: 0.625rem;
   --docs-radius-12: 0.75rem;
   --docs-radius-full: 62.4375rem;
+}
+
+[data-theme='dark'] {
+  --docs-panel-wash: rgba(255 255 255 / 0.03);
+}
+
+/*
+ * The light value, restated for an element that asked for light.
+ *
+ * Without it the wash was white on a light page whenever the operating system
+ * was set to dark: the media rule below matches `html`, which carries no
+ * `data-theme`, and a `Theme` that had chosen light inherited the answer meant
+ * for a dark document. Every dial in the token set carries this third block for
+ * the same reason — the default, the operating system, and the explicit choice
+ * that has to win over both.
+ */
+[data-theme='light'] {
+  --docs-panel-wash: rgba(0 0 0 / 0.03);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]),
+  [data-theme-scope]:not([data-theme]) {
+    --docs-panel-wash: rgba(255 255 255 / 0.03);
+  }
 }
 
 /*
@@ -132,7 +177,15 @@ code {
   color: inherit;
   background: color-mix(in srgb, currentColor 10%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent);
-  padding: 1px 5px;
+  /*
+   * Two above and below rather than one.
+   *
+   * A chip is a shape, and at 1px the ring sat on the letters closely enough
+   * that it read as an underline that had wrapped rather than as a box around a
+   * name. Vertical padding on an inline box does not move the line it sits in,
+   * so the only thing this changes is the shape.
+   */
+  padding: 2px 6px;
   border-radius: var(--docs-radius-4);
 }
 

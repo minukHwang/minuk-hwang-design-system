@@ -75,6 +75,16 @@
   background: var(--background-base);
 }
 
+/*
+ * No inset, for a specimen that is itself a surface.
+ *
+ * The frame already clips to its own corner, so a child that fills this reaches
+ * the rounded edge without needing a radius of its own.
+ */
+.stageFlush {
+  padding: 0;
+}
+
 .stageStack {
   flex-direction: column;
   align-items: stretch;

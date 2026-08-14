@@ -127,6 +127,7 @@ export default function ColorPage() {
         title="Chromatic"
         description="Fourteen hues, thirteen steps each, 10 to 990 left to right."
         stack
+        flush
       >
         <div className={css.ramps}>
           {HUES.map(hue => (
@@ -139,6 +140,7 @@ export default function ColorPage() {
         title="Neutral"
         description="Three of them, ordered by how much blue they carry."
         stack
+        flush
       >
         <div className={css.ramps}>
           {NEUTRALS.map(name => (
@@ -165,50 +167,53 @@ export default function ColorPage() {
         title="Absolute"
         description="Four groups that do not follow the theme. Black and white are literals; dim and lighten are operations that work over anything."
         stack
+        flush
       >
-        <div className={css.rows}>
-          <div className={css.row}>
-            <code className={css.token}>color.white</code>
-            <Text as="span" size={2} className={css.value}>
-              #ffffff
-            </Text>
-            <span className={css.absoluteSwatch} style={{ background: 'var(--white)' }} />
+        <div className={css.ramps}>
+          <div className={css.rows}>
+            <div className={css.row}>
+              <code className={css.token}>color.white</code>
+              <Text as="span" size={2} className={css.value}>
+                #ffffff
+              </Text>
+              <span className={css.absoluteSwatch} style={{ background: 'var(--white)' }} />
+            </div>
+            <div className={css.row}>
+              <code className={css.token}>color.black</code>
+              <Text as="span" size={2} className={css.value}>
+                #000000
+              </Text>
+              <span className={css.absoluteSwatch} style={{ background: 'var(--black)' }} />
+            </div>
           </div>
-          <div className={css.row}>
-            <code className={css.token}>color.black</code>
-            <Text as="span" size={2} className={css.value}>
-              #000000
-            </Text>
-            <span className={css.absoluteSwatch} style={{ background: 'var(--black)' }} />
-          </div>
-        </div>
 
-        <div className={css.ramp}>
-          <Text as="span" size={2} className={css.rampName}>
-            dim
-          </Text>
-          <div className={css.alphaStrip}>
-            {ALPHA_STEPS.map(step => (
-              <span
-                key={step}
-                className={css.alphaStep}
-                style={{ background: `var(--dim-${step})` }}
-              />
-            ))}
+          <div className={css.ramp}>
+            <Text as="span" size={2} className={css.rampName}>
+              dim
+            </Text>
+            <div className={css.alphaStrip}>
+              {ALPHA_STEPS.map(step => (
+                <span
+                  key={step}
+                  className={css.alphaStep}
+                  style={{ background: `var(--dim-${step})` }}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className={css.ramp}>
-          <Text as="span" size={2} className={css.rampName}>
-            lighten
-          </Text>
-          <div className={css.alphaStrip}>
-            {ALPHA_STEPS.map(step => (
-              <span
-                key={step}
-                className={css.alphaStep}
-                style={{ background: `var(--lighten-${step})` }}
-              />
-            ))}
+          <div className={css.ramp}>
+            <Text as="span" size={2} className={css.rampName}>
+              lighten
+            </Text>
+            <div className={css.alphaStrip}>
+              {ALPHA_STEPS.map(step => (
+                <span
+                  key={step}
+                  className={css.alphaStep}
+                  style={{ background: `var(--lighten-${step})` }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </Preview>
@@ -223,6 +228,7 @@ export default function ColorPage() {
         title="Semantic"
         description="What a color is for. Background is the level a thing sits on, fill is a panel cut into it, and every tone including neutral carries the four roles below."
         stack
+        flush
       >
         <div className={css.ramps}>
           {SEMANTIC.map(([group, keys]) => (
