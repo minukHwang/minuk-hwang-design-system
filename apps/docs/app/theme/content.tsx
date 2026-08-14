@@ -217,7 +217,13 @@ export default function ThemePage() {
 
       <Preview
         title="How it works"
-        description="Two indirections in the token stylesheet, and nothing else anywhere."
+        description={
+          <>
+            Two indirections in the token stylesheet, and nothing else anywhere. A component
+            compiled against <code>var(--accent-500)</code> and <code>var(--border-radius-8)</code>{' '}
+            follows a rebrand it was built years before.
+          </>
+        }
         stack
         language="css"
         code={`/* one ramp, and a block per hue that replaces it */
@@ -254,12 +260,7 @@ html,
   background-color: var(--accent-500);
   border-radius: max(var(--border-radius-8), var(--border-radius-pill-full));
 }`}
-      >
-        <Text size={4} color="assistive">
-          A component compiled against <code>var(--accent-500)</code> and{' '}
-          <code>var(--border-radius-8)</code> follows a rebrand it was built years before.
-        </Text>
-      </Preview>
+      />
 
       <Section title="Props">
         <PropsTable
