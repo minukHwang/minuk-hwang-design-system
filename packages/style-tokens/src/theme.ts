@@ -124,6 +124,27 @@ export const neutralSteps = [
 
 /*
  * ============================================
+ * Appearance
+ * ============================================
+ */
+
+/**
+ * Light, dark, or whatever the operating system is asking for.
+ *
+ * `system` is the absence of a choice rather than a third set of values: the
+ * stylesheet follows `prefers-color-scheme` for as long as nothing has written
+ * `data-theme`, so choosing it means removing the attribute rather than setting
+ * it to a third word.
+ */
+export const appearances = ['light', 'dark', 'system'] as const;
+
+export type Appearance = (typeof appearances)[number];
+
+/** What the appearance is when nothing says otherwise. */
+export const defaultAppearance: Appearance = 'system';
+
+/*
+ * ============================================
  * Radius
  * ============================================
  */

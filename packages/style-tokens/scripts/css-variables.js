@@ -7,9 +7,15 @@
  * is how the two files quietly drift apart.
  *
  * Theme switching is layered so that automatic and manual selection can coexist:
- *   html                                   light values (the default)
- *   @media (dark) html:not([data-theme])    follows the OS unless overridden
- *   html[data-theme="dark"] / html.dark     explicit override wins
+ *   html                                 light values (the default)
+ *   @media (dark) html:not([data-theme])  follows the OS unless overridden
+ *   [data-theme="dark"] / html.dark       explicit override wins
+ *
+ * The override selectors are not qualified to `html`. They were, and that made
+ * light and dark the one dial a component could not carry: `Theme` writes its
+ * attributes to a `div`, so `data-theme` on it selected nothing and appearance
+ * had to be set on the document by hand. Unqualified, the same block serves the
+ * document and a section of it, which is what the other three dials already do.
  */
 
 import * as theme from '../dist/index.js';
@@ -90,18 +96,41 @@ const accentRamp = (hue, indent = '\t') =>
  * Collected by looking for the reference rather than by listing the names, so a
  * semantic token added later cannot quietly opt out of nesting.
  */
-const accentDerived = (indent = '\t') =>
+/**
+ * Every semantic token, rendered wherever something it reads can change.
+ *
+ * The layer is a chain: `--text-color-normal` reads `--text-normal`, which reads
+ * `--neutral-950`, which the gray dial rewrites. A block that restates only the
+ * lines naming `--neutral-` catches the middle of that chain and not the end, so
+ * the dial moved the surfaces and left the text where it was.
+ *
+ * The formulas do not vary by theme or by dial — only what they resolve to does
+ * — so emitting all of them costs bytes and nothing else.
+ */
+const semanticLayer = (indent = '\t') =>
   Object.entries(theme.vars.color.$semantic)
     .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group, indent))
-    .join('\n')
-    .split('\n')
-    .filter(line => /var\(--accent-/.test(line))
-    .join('\n');
+    .join('\n\n');
 
 const accentBlocks = () =>
   theme.accentColors
-    .map(hue => `[data-accent='${hue}'] {\n${accentRamp(hue)}\n${accentDerived()}\n}`)
+    .map(hue => `[data-accent='${hue}'] {\n${accentRamp(hue)}\n\n${semanticLayer()}\n}`)
     .join('\n\n');
+
+/*
+ * The derived layer is deeper than one hop, and a filter only catches the first.
+ *
+ * `accentDerived` and `neutralDerived` keep the semantic lines that name the
+ * dial's own properties: `--text-normal: var(--neutral-950)` matches, so a dial
+ * block restates it. `--text-color-normal: var(--text-normal)` does not, and it
+ * is the one components read — so it stayed computed against the document's
+ * default and the gray dial moved everything except the text.
+ *
+ * Restating the whole semantic layer is the cheap fix and the honest one: every
+ * line in it reads something, so every line has to sit wherever what it reads
+ * can change. The formulas are the same in both themes, which is what makes it
+ * safe to emit them without knowing which theme is in force.
+ */
 
 /**
  * The neutral ramp, and one block per family that can replace it.
@@ -125,19 +154,11 @@ const neutralRamp = (family, indent = '\t') =>
  * property is substituted where that property is declared, so a semantic token
  * defined once on `html` is already the gray `html` chose.
  */
-const neutralDerived = (indent = '\t') =>
-  Object.entries(theme.vars.color.$semantic)
-    .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group, indent))
-    .join('\n')
-    .split('\n')
-    .filter(line => /var\(--neutral-/.test(line))
-    .join('\n');
-
 const neutralBlocks = () =>
   theme.neutralColors
     .map(
       family =>
-        `[data-neutral='${family}'] {\n${neutralRamp(family)}\n${textRamp()}\n${neutralDerived()}\n}`
+        `[data-neutral='${family}'] {\n${neutralRamp(family)}\n\n${textRamp()}\n\n${semanticLayer()}\n}`
     )
     .join('\n\n');
 
@@ -177,17 +198,20 @@ const textRamp = (indent = '\t') =>
  * is every visitor on a dark OS who has not chosen a theme, so a light-only dial
  * applied in dark to most of the people who would see it.
  *
- * Only the non-default value gets a block, and the selector is qualified to
- * `html` because that is the only element this can be about. Both values still
- * exist as properties, which is what lets a page documenting the dial paint one
- * block each way while itself sitting on one of them.
+ * Only the non-default value gets a block. Both values still exist as
+ * properties, which is what lets a page documenting the dial paint one block
+ * each way while itself sitting on one of them.
+ *
+ * Unqualified, like the theme blocks and for the same reason: the element that
+ * carries this is whichever one `Theme` rendered, and at the root that element
+ * is the thing painting the page.
  */
 const pageBlocks = () =>
   theme.pageBackgrounds
     .filter(level => level !== theme.defaultPageBackground)
     .map(
       level =>
-        `${SELECTOR}[data-page-background='${level}'] {\n\t--background-base: var(--page-background-${level});\n}`
+        `[data-page-background='${level}'] {\n\t--background-base: var(--page-background-${level});\n}`
     )
     .join('\n\n');
 
@@ -273,7 +297,7 @@ const radiusBlocks = () =>
  * names are the ones the theme blocks below rewrite.
  */
 export const generateCssVariables = () => {
-  const { $absolute, $semantic } = theme.vars.color;
+  const { $absolute } = theme.vars.color;
   const { light: lightScales, dark: darkScales } = theme.generatedScales;
 
   // Absolute values sit in the light block because it doubles as the root.
@@ -288,9 +312,7 @@ export const generateCssVariables = () => {
 
   // Semantic tokens resolve through the palette, so one definition covers both
   // themes. They live in the root block for the same reason the absolutes do.
-  const semantic = Object.entries($semantic)
-    .map(([groupName, group]) => renderSemantic(toKebabCase(groupName), group))
-    .join('\n\n');
+  const semantic = semanticLayer();
 
   // Non-color token groups (spacing, radius, shadow, typography) never vary by
   // theme, so they join the root block alongside the absolutes.
@@ -316,7 +338,39 @@ export const generateCssVariables = () => {
     )
     .join('\n\n');
 
+  /**
+   * Everything that reads the scales, restated wherever the scales are.
+   *
+   * A custom property is substituted where it is declared, not where it is
+   * used: `--text-normal: var(--neutral-950)` resolves against the element that
+   * carries that line, and redefining `--neutral-950` further down the tree does
+   * not reach back to it. While both blocks targeted `html` that was invisible,
+   * because the scales and everything derived from them landed on one element.
+   *
+   * They do not any more. `Theme` writes `data-theme` to whatever element it
+   * rendered, so a theme block containing only the scales left every derived
+   * property computed against the ancestor's — dark surfaces under text that was
+   * still the light theme's, measured at 1.05:1.
+   *
+   * The dial blocks below have always worked this way. `[data-accent]` restates
+   * the semantic lines that read `--accent-*`, `[data-neutral]` restates the text
+   * ramp and the lines that read `--neutral-*`. A theme moves every scale at
+   * once, so it restates all of it.
+   */
+  const derivedFromScales = [
+    accentRamp(theme.defaultAccentColor),
+    neutralRamp(theme.defaultNeutralColor),
+    textRamp(),
+    semantic,
+  ].join('\n\n');
+
+  const themeBlock = (scales, appearance) =>
+    [`\tcolor-scheme: ${appearance};`, renderTheme(scales), derivedFromScales].join('\n\n');
+
   const root = [
+    // The browser paints the canvas and the scrollbars from this, which is the
+    // part of the window no element owns.
+    '\tcolor-scheme: light;',
     renderTheme(lightScales),
     absolute,
     accentRamp(theme.defaultAccentColor),
@@ -330,13 +384,32 @@ export const generateCssVariables = () => {
 
   return {
     light: `${SELECTOR} {\n${root}\n}`,
+    /*
+     * The same values again, on any element `Theme` rendered.
+     *
+     * The document gets them from the block above; an element does not, and
+     * `system` writes no `data-theme` for a block to key off. Without this a
+     * `Theme` left on the operating system's answer had no level tokens of its
+     * own, so its page background was the document's and the gray dial moved
+     * everything except the ground.
+     *
+     * Before the dark media rule and before the explicit blocks, both of which
+     * are meant to win over it.
+     */
+    scopeBase: `[data-theme-scope] {\n${themeBlock(lightScales, 'light')}\n}`,
     // Only follow the OS when the page has not asked for a specific theme.
-    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]) {\n${renderTheme(darkScales, '\t\t')}\n\t}\n}`,
-    darkClass: [`${SELECTOR}[data-theme="dark"]`, `${SELECTOR}.dark`]
-      .map(sel => `${sel} {\n${renderTheme(darkScales)}\n}`)
+    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]),\n\t[data-theme-scope]:not([data-theme]) {\n${themeBlock(
+      darkScales,
+      'dark'
+    )
+      .split('\n')
+      .map(line => (line ? `\t${line}` : line))
+      .join('\n')}\n\t}\n}`,
+    darkClass: [`[data-theme="dark"]`, `${SELECTOR}.dark`]
+      .map(sel => `${sel} {\n${themeBlock(darkScales, 'dark')}\n}`)
       .join('\n\n'),
-    lightClass: [`${SELECTOR}[data-theme="light"]`, `${SELECTOR}.light`]
-      .map(sel => `${sel} {\n${renderTheme(lightScales)}\n}`)
+    lightClass: [`[data-theme="light"]`, `${SELECTOR}.light`]
+      .map(sel => `${sel} {\n${themeBlock(lightScales, 'light')}\n}`)
       .join('\n\n'),
   };
 };
@@ -347,13 +420,35 @@ export const generateCssVariables = () => {
  * The dials come last so they read in the order they take effect, though they do
  * not depend on it: attribute selectors outrank `html` either way.
  */
+/**
+ * The canvas, when the theme is set on an element rather than on the document.
+ *
+ * `color-scheme` decides what the browser paints outside every box — the strip
+ * past the end of a short page, the scrollbars, the default form control
+ * chrome — and only the root element can tell it. A `Theme` at the top of an
+ * app is a `div`, so setting `data-theme` there leaves that strip light while
+ * everything inside it goes dark.
+ *
+ * `:has()` lets the root answer for it. The marker is on the outermost `Theme`
+ * only, so a dark footer inside a light page does not drag the window with it.
+ */
+const rootSchemeBlocks = () =>
+  ['dark', 'light']
+    .map(
+      appearance =>
+        `:root:has([data-theme-root][data-theme='${appearance}']) {\n\tcolor-scheme: ${appearance};\n}`
+    )
+    .join('\n\n');
+
 export const cssVariableBlocks = () => {
-  const { light, dark, darkClass, lightClass } = generateCssVariables();
+  const { light, scopeBase, dark, darkClass, lightClass } = generateCssVariables();
   return [
     light,
+    scopeBase,
     dark,
     darkClass,
     lightClass,
+    rootSchemeBlocks(),
     accentBlocks(),
     neutralBlocks(),
     radiusBlocks(),

@@ -50,7 +50,9 @@ export type { ContrastMeasurement } from './variables/color/static/contrast';
 export {
   accentColors,
   accentSteps,
+  appearances,
   defaultAccentColor,
+  defaultAppearance,
   neutralColors,
   defaultNeutralColor,
   neutralSteps,
@@ -60,4 +62,4 @@ export {
   pageBackgrounds,
   defaultPageBackground,
 } from './theme';
-export type { AccentColor, NeutralColor, RadiusScale, PageBackground } from './theme';
+export type { AccentColor, Appearance, NeutralColor, RadiusScale, PageBackground } from './theme';

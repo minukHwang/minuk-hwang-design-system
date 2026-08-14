@@ -198,14 +198,21 @@ input:focus {
  */
 body {
   /*
-   * The page paints itself.
+   * The page is not painted here, and that is a change.
    *
-   * It did not, and every consumer was left to work out that the ground under
-   * the components is `--background-base` — the docs site had been painting it
-   * by hand. A design system that ships a page level and then leaves the page
-   * unpainted has published half a decision.
+   * It was `background: var(--background-base)`, on the argument that a system
+   * shipping a page level and leaving the page unpainted has published half a
+   * decision. The argument still holds; the element was wrong. `body` resolves
+   * its variables against `html`, and the dials now sit on whatever element
+   * `Theme` rendered — so a page whose gray or appearance had moved kept the
+   * old ground underneath the new one, and `body`'s colour propagates to the
+   * canvas, which put the wrong colour in the overscroll strip as well.
+   *
+   * `Theme` paints instead: it is the element that holds the values, and it is
+   * the only one that can be right in every theme. Without it the browser
+   * paints from `color-scheme`, which the token block sets, so a consumer who
+   * never reaches for `Theme` still gets a page that matches the appearance.
    */
-  background: var(--background-base);
   color: var(--text-color-normal);
   font-family: var(--font-family-main);
 }
