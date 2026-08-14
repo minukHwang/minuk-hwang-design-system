@@ -17,8 +17,6 @@
 ![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radixui&logoColor=white)
 ![Nx](https://img.shields.io/badge/Nx-143055?style=for-the-badge&logo=nx&logoColor=white)
 
-**English** · [한국어](./README.ko.md)
-
 </div>
 
 ---
