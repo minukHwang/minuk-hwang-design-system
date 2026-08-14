@@ -90,19 +90,31 @@
 
 /* ── nesting ────────────────────────────────────────────────── */
 
+/*
+ * Two columns, stated rather than fitted.
+ *
+ * This was `repeat(auto-fit, minmax(220px, 1fr))`, and the row it produced was
+ * 204px tall around panes measuring 94 — a hundred and ten pixels of empty
+ * stage under every example on this page. The tracks resolved to `357px 357px`
+ * either way; writing those same two columns as `1fr 1fr` gives a 94px row, and
+ * `grid-auto-rows: min-content` on the auto-fit version does not, so the row is
+ * being sized against the track minimum rather than against the width the items
+ * are actually laid out at.
+ *
+ * Both examples here hold exactly two panes, so a fitted track count was
+ * solving a problem this page does not have. Below the site's usual breakpoint
+ * they stack, which is what auto-fit was there for.
+ */
 .nested {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: var(--spacing-16);
-  /*
-   * Items at their own height, not the row's.
-   *
-   * A grid item stretches by default, which was invisible while the panes were
-   * `display: contents` and their bordered child sized itself. Now the pane is
-   * the `Theme`, and stretching gave a two-line sample a box more than twice as
-   * tall as its contents with the extra painted in.
-   */
-  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .nested {
+    grid-template-columns: 1fr;
+  }
 }
 
 .nestedPane {
