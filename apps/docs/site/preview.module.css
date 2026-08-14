@@ -186,6 +186,16 @@
   box-shadow: none;
   padding: 0;
   font-size: inherit;
+  /*
+   * The block's leading, not the chip's.
+   *
+   * The inline rule carries `line-height: normal` so that a chip is the same
+   * height whether or not something has blockified it. Inside a listing every
+   * token is one of these, and `normal` at 13px is 15 against the 21 this block
+   * sets — which closed the gaps between the lines of every sample on the site
+   * by six pixels each.
+   */
+  line-height: inherit;
 }
 
 .prose {
