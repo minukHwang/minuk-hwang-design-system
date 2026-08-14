@@ -276,12 +276,18 @@
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
-  width: 32%;
+  width: 30%;
 }
 
+/*
+ * 16% rather than 14%. A default is one token and often a quoted string with no
+ * space in it, so it cannot wrap at all: `'horizontal'` ran three pixels past
+ * the column. The two per cent comes off the type beside it, which wraps at its
+ * separators and can spare them.
+ */
 .table th:nth-child(3),
 .table td:nth-child(3) {
-  width: 14%;
+  width: 16%;
 }
 
 /* Two columns, so the name takes what a compound part's name needs. */
@@ -368,8 +374,18 @@
   box-decoration-break: clone;
 }
 
+/*
+ * No `nowrap`, for the reason the name column already learned.
+ *
+ * A default that did not fit did not wrap and did not clip either: it drew
+ * straight over the Notes column beside it. `hasBackground` reads "root, or any
+ * appearance" and the column is fourteen per cent of the width, so the two
+ * printed on top of each other.
+ *
+ * Wrapping at spaces only, which is what `normal` does, so a union like
+ * `'primary'` still cannot be broken in the middle.
+ */
 .default {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-13);
-  white-space: nowrap;
 }

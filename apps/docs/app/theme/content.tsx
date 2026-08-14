@@ -303,7 +303,7 @@ html,
             {
               name: 'hasBackground',
               type: 'boolean',
-              default: 'root, or any appearance',
+              default: 'auto',
               description:
                 'Whether this Theme paints the ground under it. Left alone it is true for the outermost one and for a nested one that names an appearance. Set it false to put a themed region on a background the page has already painted.',
             },
