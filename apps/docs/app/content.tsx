@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import { componentItems } from '../site/nav';
 import { Page } from '../site/Page';
-import { Callout, Preview, Prose, Section } from '../site/Preview';
+import { Preview, Prose, Section } from '../site/Preview';
 
 import css from './home.module.css';
 
@@ -139,12 +139,6 @@ export default function App() {
   return <Button>Publish</Button>;
 }`}
       />
-
-      <Callout>
-        Dark mode works from the import. The stylesheet follows <code>prefers-color-scheme</code>{' '}
-        until something names an appearance, and{' '}
-        <code>&lt;Theme appearance=&quot;dark&quot;&gt;</code> is what names one.
-      </Callout>
 
       <Preview
         title="Changing the appearance, the accent, the gray or the corners"

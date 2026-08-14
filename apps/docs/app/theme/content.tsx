@@ -15,7 +15,7 @@ import * as React from 'react';
 
 import { useDials } from '../../site/dials';
 import { Page } from '../../site/Page';
-import { PropsTable, Preview, Prose, Section } from '../../site/Preview';
+import { PropsTable, Preview, Section } from '../../site/Preview';
 import css from '../../site/theme.module.css';
 
 /** A sample wide enough to judge a hue on: fills, tints, borders, focus, text. */
@@ -260,45 +260,6 @@ html,
           <code>var(--border-radius-8)</code> follows a rebrand it was built years before.
         </Text>
       </Preview>
-
-      <Section title="Why there is no color prop on Button">
-        <Prose>
-          <p>
-            <code>variant</code> carries meaning: <code>primary</code> is the one action a screen is
-            about, <code>danger</code> is deleting. A <code>color</code> beside it would let each
-            call site invent a fifth meaning. An application picks a brand; a button says what it
-            does.
-          </p>
-        </Prose>
-      </Section>
-
-      <Section title="Portals">
-        <Prose>
-          <p>
-            A dialog, a popover, a select, a tooltip and a menu render through a portal, and a
-            portal into <code>body</code> lands outside every <code>Theme</code>. Those five render
-            into the themed element instead, so a surface opened after a dial moved arrives on the
-            theme in force rather than the one the page loaded with. Nothing to pass and nothing to
-            wrap.
-          </p>
-        </Prose>
-      </Section>
-
-      <Section title="What the accent does not move">
-        <Prose>
-          <p>
-            Link text. <code>--text-color-link</code> is <code>blue-600</code> under every one of
-            the fourteen accents, so a link in a crimson application is still blue. It flips with
-            the theme like everything else, <code>#0655cb</code> on light and <code>#488ff9</code>{' '}
-            on dark, but the accent dial never reaches it.
-          </p>
-          <p>
-            That is a decision the system has made for you, and the arguable kind: blue is the color
-            people recognise as a link, and a brand that has gone to the trouble of picking an
-            accent may want its links in it. If you disagree, the token is one line.
-          </p>
-        </Prose>
-      </Section>
 
       <Section title="Props">
         <PropsTable
