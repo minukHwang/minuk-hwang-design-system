@@ -91,8 +91,19 @@ export const Preview = ({
         {title}
       </Heading>
     )}
+    {/*
+      `leading="reading"`, because this is where the site's prose actually is.
+      There are ninety-three of these against two uses of `Prose`, and they are
+      not the one-line captions the prop name suggests — a description runs to
+      two, three, four wrapped lines often enough that it is a paragraph. It was
+      the only prose on the site set at the normal leading: 15/20 beside the
+      lede's 17/28 and `Prose`'s 16/26.
+
+      The size stays at 4. What separates an example's sentence from a page's
+      body copy is the size, and opening the leading does not spend it.
+    */}
     {description && (
-      <Text size={4} color="assistive" className={css.description}>
+      <Text size={4} leading="reading" color="assistive" className={css.description}>
         {description}
       </Text>
     )}
