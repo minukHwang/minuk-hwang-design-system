@@ -94,7 +94,7 @@ const Masthead = () => (
         <Badge tone="success">Passing</Badge>
         <Badge variant="outline">v0.0.1</Badge>
       </div>
-      <Text size={4} color="assistive">
+      <Text size={4} leading="reading" color="assistive">
         Color, spacing, type, shadow and motion, in four consumption formats from one source.
       </Text>
     </div>
@@ -490,7 +490,12 @@ export default function PlaygroundContent() {
             <Alert.Icon />
             <Alert.Body>
               <Alert.Title>Every surface here reads the tokens the dials rewrite</Alert.Title>
-              <Alert.Description>
+              {/*
+                `leading` reaches through the part, which is the thing worth
+                showing here: this page is a consumer of the system rather than
+                a specimen of it, and a two-line alert body is a paragraph.
+              */}
+              <Alert.Description leading="reading">
                 Nothing on this page paints itself. Change the accent, the gray, the radius or the
                 theme and everything below follows.
               </Alert.Description>
