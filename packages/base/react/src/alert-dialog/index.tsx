@@ -20,14 +20,23 @@ export type AlertDialogContentProps = React.ComponentPropsWithoutRef<
 > & {
   /** Class applied to the backdrop behind the dialog. */
   overlayClassName?: string;
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
 };
 
 const Content = React.forwardRef<
   React.ElementRef<typeof RadixAlertDialog.Content>,
   AlertDialogContentProps
->(function AlertDialogContent({ overlayClassName, children, ...props }, ref) {
+>(function AlertDialogContent({ overlayClassName, container, children, ...props }, ref) {
   return (
-    <RadixAlertDialog.Portal>
+    <RadixAlertDialog.Portal container={container}>
       <RadixAlertDialog.Overlay className={overlayClassName} />
       <RadixAlertDialog.Content {...props} ref={ref}>
         {children}

@@ -22,10 +22,19 @@ export type DialogContentProps = React.ComponentPropsWithoutRef<typeof RadixDial
   overlayClassName?: string;
   /** Renders without a portal, for cases where the dialog must stay in flow. */
   inline?: boolean;
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
 };
 
 const Content = React.forwardRef<React.ElementRef<typeof RadixDialog.Content>, DialogContentProps>(
-  function DialogContent({ overlayClassName, inline = false, children, ...props }, ref) {
+  function DialogContent({ overlayClassName, inline = false, container, children, ...props }, ref) {
     const body = (
       <>
         <RadixDialog.Overlay className={overlayClassName} />
@@ -35,7 +44,7 @@ const Content = React.forwardRef<React.ElementRef<typeof RadixDialog.Content>, D
       </>
     );
 
-    return inline ? body : <RadixDialog.Portal>{body}</RadixDialog.Portal>;
+    return inline ? body : <RadixDialog.Portal container={container}>{body}</RadixDialog.Portal>;
   }
 );
 

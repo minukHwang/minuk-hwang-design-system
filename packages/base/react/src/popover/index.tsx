@@ -15,17 +15,32 @@ import * as React from 'react';
 const DEFAULT_SIDE_OFFSET = 8;
 const DEFAULT_COLLISION_PADDING = 8;
 
-export type PopoverContentProps = React.ComponentPropsWithoutRef<typeof RadixPopover.Content>;
+export type PopoverContentProps = React.ComponentPropsWithoutRef<typeof RadixPopover.Content> & {
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
+};
 
 const Content = React.forwardRef<
   React.ElementRef<typeof RadixPopover.Content>,
   PopoverContentProps
 >(function PopoverContent(
-  { sideOffset = DEFAULT_SIDE_OFFSET, collisionPadding = DEFAULT_COLLISION_PADDING, ...props },
+  {
+    sideOffset = DEFAULT_SIDE_OFFSET,
+    collisionPadding = DEFAULT_COLLISION_PADDING,
+    container,
+    ...props
+  },
   ref
 ) {
   return (
-    <RadixPopover.Portal>
+    <RadixPopover.Portal container={container}>
       <RadixPopover.Content
         {...props}
         ref={ref}

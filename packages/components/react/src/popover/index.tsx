@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 
 import { animated, panel } from '../shared/overlay.css';
+import { useThemeContainer } from '../theme';
 
 import { arrow, content } from './styles.css';
 
@@ -26,7 +27,12 @@ const Content = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof Base.Content>
 >(function PopoverContent({ className, ...props }, ref) {
   return (
-    <Base.Content {...props} ref={ref} className={clsx(panel, content, animated, className)} />
+    <Base.Content
+      {...props}
+      ref={ref}
+      container={useThemeContainer()}
+      className={clsx(panel, content, animated, className)}
+    />
   );
 });
 

@@ -6,6 +6,7 @@ import * as React from 'react';
 
 import { Icon } from '../icon';
 import * as overlay from '../shared/overlay.css';
+import { useThemeContainer } from '../theme';
 
 import * as css from './styles.css';
 
@@ -89,6 +90,7 @@ const Content = React.forwardRef<
     <Base.Content
       {...props}
       ref={ref}
+      container={useThemeContainer()}
       className={clsx(overlay.panel, overlay.animated, css.content, className)}
     >
       <Base.ScrollUpButton className={css.scrollButton}>

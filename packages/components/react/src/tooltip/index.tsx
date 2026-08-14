@@ -4,6 +4,8 @@ import { Tooltip as Base } from '@minuk-hwang-design-system/base-react/tooltip';
 import clsx from 'clsx';
 import * as React from 'react';
 
+import { useThemeContainer } from '../theme';
+
 import { arrow, content } from './styles.css';
 
 /*
@@ -27,7 +29,14 @@ const Content = React.forwardRef<
   React.ElementRef<typeof Base.Content>,
   React.ComponentPropsWithoutRef<typeof Base.Content>
 >(function TooltipContent({ className, ...props }, ref) {
-  return <Base.Content {...props} ref={ref} className={clsx(content, className)} />;
+  return (
+    <Base.Content
+      {...props}
+      ref={ref}
+      container={useThemeContainer()}
+      className={clsx(content, className)}
+    />
+  );
 });
 
 const Arrow = React.forwardRef<

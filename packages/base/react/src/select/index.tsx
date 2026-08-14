@@ -14,12 +14,22 @@ import * as React from 'react';
  * containers and flips near the viewport edge.
  */
 
-export type SelectContentProps = React.ComponentPropsWithoutRef<typeof RadixSelect.Content>;
+export type SelectContentProps = React.ComponentPropsWithoutRef<typeof RadixSelect.Content> & {
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
+};
 
 const Content = React.forwardRef<React.ElementRef<typeof RadixSelect.Content>, SelectContentProps>(
-  function SelectContent({ position = 'popper', sideOffset = 4, ...props }, ref) {
+  function SelectContent({ position = 'popper', sideOffset = 4, container, ...props }, ref) {
     return (
-      <RadixSelect.Portal>
+      <RadixSelect.Portal container={container}>
         <RadixSelect.Content {...props} ref={ref} position={position} sideOffset={sideOffset} />
       </RadixSelect.Portal>
     );

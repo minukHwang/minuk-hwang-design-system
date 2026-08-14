@@ -19,17 +19,32 @@ import * as React from 'react';
 const DEFAULT_SIDE_OFFSET = 6;
 const DEFAULT_COLLISION_PADDING = 8;
 
-export type TooltipContentProps = React.ComponentPropsWithoutRef<typeof RadixTooltip.Content>;
+export type TooltipContentProps = React.ComponentPropsWithoutRef<typeof RadixTooltip.Content> & {
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
+};
 
 const Content = React.forwardRef<
   React.ElementRef<typeof RadixTooltip.Content>,
   TooltipContentProps
 >(function TooltipContent(
-  { sideOffset = DEFAULT_SIDE_OFFSET, collisionPadding = DEFAULT_COLLISION_PADDING, ...props },
+  {
+    sideOffset = DEFAULT_SIDE_OFFSET,
+    collisionPadding = DEFAULT_COLLISION_PADDING,
+    container,
+    ...props
+  },
   ref
 ) {
   return (
-    <RadixTooltip.Portal>
+    <RadixTooltip.Portal container={container}>
       <RadixTooltip.Content
         {...props}
         ref={ref}

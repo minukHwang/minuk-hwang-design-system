@@ -20,17 +20,32 @@ const DEFAULT_COLLISION_PADDING = 8;
 
 export type DropdownMenuContentProps = React.ComponentPropsWithoutRef<
   typeof RadixDropdownMenu.Content
->;
+> & {
+  /**
+   * Where the portal renders.
+   *
+   * A portal defaults to `body`, which is outside anything a component
+   * rendered — including whatever element carries the theme attributes. The
+   * styled layer passes the themed element here, so a surface opened after a
+   * dial moved is not left on the appearance the page started with.
+   */
+  container?: HTMLElement;
+};
 
 const Content = React.forwardRef<
   React.ElementRef<typeof RadixDropdownMenu.Content>,
   DropdownMenuContentProps
 >(function DropdownMenuContent(
-  { sideOffset = DEFAULT_SIDE_OFFSET, collisionPadding = DEFAULT_COLLISION_PADDING, ...props },
+  {
+    sideOffset = DEFAULT_SIDE_OFFSET,
+    collisionPadding = DEFAULT_COLLISION_PADDING,
+    container,
+    ...props
+  },
   ref
 ) {
   return (
-    <RadixDropdownMenu.Portal>
+    <RadixDropdownMenu.Portal container={container}>
       <RadixDropdownMenu.Content
         {...props}
         ref={ref}

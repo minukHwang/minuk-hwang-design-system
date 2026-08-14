@@ -9,6 +9,7 @@ import { Heading, HeadingProps } from '../heading';
 import { Icon } from '../icon';
 import { scrim } from '../shared/overlay.css';
 import { Text, TextProps } from '../text';
+import { useThemeContainer } from '../theme';
 
 import * as css from './styles.css';
 
@@ -48,6 +49,7 @@ const Content = React.forwardRef<React.ElementRef<typeof BaseDialog.Content>, Di
       <BaseDialog.Content
         {...props}
         ref={ref}
+        container={useThemeContainer()}
         overlayClassName={scrim}
         className={clsx(css.content, css.size[size], className)}
       >
