@@ -130,10 +130,23 @@ export default function CardPage() {
             { name: 'Card.Header', description: 'Title and description.' },
             {
               name: 'Card.Title',
-              description:
-                'Defaults to h3, since a card is almost never the top of a document outline.',
+              description: (
+                <>
+                  Defaults to h3, since a card is almost never the top of a document outline. A{' '}
+                  <code>Heading</code>, so it takes every prop of one.
+                </>
+              ),
             },
-            { name: 'Card.Description', description: 'Assistive-colored subtitle.' },
+            {
+              name: 'Card.Description',
+              description: (
+                <>
+                  Assistive-colored subtitle. A <code>Text</code>, so it takes every prop of one,
+                  and <code>leading=&quot;reading&quot;</code> opens the line height when it runs
+                  long.
+                </>
+              ),
+            },
             { name: 'Card.Body', description: 'The main content.' },
             {
               name: 'Card.Footer',

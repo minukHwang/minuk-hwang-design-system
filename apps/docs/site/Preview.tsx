@@ -206,8 +206,17 @@ export const PropsTable = ({ rows }: { rows: PropRow[] }) => (
  * A two-column grid before, with a fixed 200px first column — which stretched
  * each name's chip to that width, giving five boxes with a word at the left edge
  * of each and empty space after it. A chip should be the size of what it holds.
+ *
+ * `description` is a `ReactNode` rather than a string because eight of these
+ * parts are a `Text` or a `Heading` underneath and take every prop of one. That
+ * was true and undocumented, and saying it means setting `leading` and `Text` as
+ * the code they are.
  */
-export const PartsList = ({ parts }: { parts: { name: string; description: string }[] }) => (
+export const PartsList = ({
+  parts,
+}: {
+  parts: { name: string; description: React.ReactNode }[];
+}) => (
   <div className={css.tableScroll}>
     <Text as="table" size={3} color="assistive" className={`${css.table} ${css.partsTable}`}>
       <thead>

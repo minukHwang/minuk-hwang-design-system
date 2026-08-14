@@ -154,13 +154,21 @@ export default function FieldPage() {
             },
             {
               name: 'Field.Description',
-              description:
-                'Helper text. Registers itself so aria-describedby only lists it when it rendered.',
+              description: (
+                <>
+                  Helper text. Registers itself so aria-describedby only lists it when it rendered.
+                  A <code>Text</code>, so it takes every prop of one.
+                </>
+              ),
             },
             {
               name: 'Field.Error',
-              description:
-                'Validation message. Renders only while the root is invalid, with role="alert".',
+              description: (
+                <>
+                  Validation message. Renders only while the root is invalid, with
+                  role=&quot;alert&quot;. A <code>Text</code>, so it takes every prop of one.
+                </>
+              ),
             },
           ]}
         />

@@ -115,8 +115,25 @@ export default function AlertPage() {
               name: 'Alert.Body',
               description: 'Everything right of the icon, so text stays aligned when it wraps.',
             },
-            { name: 'Alert.Title', description: 'Optional. A one-line alert does not need one.' },
-            { name: 'Alert.Description', description: 'The message.' },
+            {
+              name: 'Alert.Title',
+              description: (
+                <>
+                  Optional. A one-line alert does not need one. A <code>Text</code>, so it takes
+                  every prop of one.
+                </>
+              ),
+            },
+            {
+              name: 'Alert.Description',
+              description: (
+                <>
+                  The message. A <code>Text</code>, so it takes every prop of one, and{' '}
+                  <code>leading=&quot;reading&quot;</code> opens the line height when the message
+                  runs to a paragraph.
+                </>
+              ),
+            },
           ]}
         />
       </Section>

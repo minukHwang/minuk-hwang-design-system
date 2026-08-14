@@ -147,9 +147,22 @@ export default function DialogPage() {
             },
             {
               name: 'Dialog.Title',
-              description: 'The accessible name and the visible heading, same node.',
+              description: (
+                <>
+                  The accessible name and the visible heading, same node. A <code>Heading</code>, so
+                  it takes every prop of one.
+                </>
+              ),
             },
-            { name: 'Dialog.Description', description: 'Announced with the title on open.' },
+            {
+              name: 'Dialog.Description',
+              description: (
+                <>
+                  Announced with the title on open. A <code>Text</code>, so it takes every prop of
+                  one, including <code>leading=&quot;reading&quot;</code>.
+                </>
+              ),
+            },
             { name: 'Dialog.Body', description: 'The scrolling region.' },
             { name: 'Dialog.Footer', description: 'Actions, aligned right.' },
             { name: 'Dialog.Close', description: 'Closes it from anywhere inside.' },
