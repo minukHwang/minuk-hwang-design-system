@@ -336,7 +336,6 @@
  * box at the start and closing it three lines later.
  */
 .type {
-  font-size: var(--font-size-13);
   /*
    * Leading for the chip, not for the text. The chip is about 18px tall and the
    * table's own line height is 19, so two wrapped lines of a long union arrived

@@ -113,8 +113,6 @@
  */
 .token {
   justify-self: start;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-13);
   color: var(--text-color-normal);
 }
 
@@ -398,7 +396,6 @@
 .stepName {
   align-self: start;
   background: var(--fill-subtle);
-  font-size: var(--font-size-12);
 }
 
 .stepSize {

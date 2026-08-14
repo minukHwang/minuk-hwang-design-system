@@ -166,7 +166,31 @@ a {
  */
 code {
   font-family: var(--font-family-mono);
-  font-size: 0.88em;
+  /*
+   * One size, not a proportion of wherever it landed.
+   *
+   * This was `0.88em`, which sounds like a rule and behaved like four: 14.08px
+   * in prose, 13.2 in a preview description, 12.32 in a props table's name
+   * column, and 13 where `.type` overrode it outright. The same token name was
+   * two pixels bigger in a paragraph than in the table documenting it.
+   *
+   * The padding is what made it visible. It is a fixed `2px 6px`, so a chip did
+   * not only change size between contexts, it changed shape — the smallest one
+   * carried the same six pixels as the largest and read as the most padded.
+   * With one size that stays one shape.
+   */
+  font-size: var(--font-size-13);
+  /*
+   * The chip's own leading, so it is one height wherever it is.
+   *
+   * An inline box paints its background over the font's content area and
+   * ignores `line-height`; a chip that has been blockified by an `align-self`
+   * or a `justify-self` uses the inherited `line-height` instead. Those two
+   * disagreed by two pixels, so the package names on the introduction and the
+   * step names on the color page were shorter than every other chip on the
+   * site. `normal` sends both to the font metrics.
+   */
+  line-height: normal;
   /* For the reason the code blocks turn them off: `--accent-500` is two
      hyphens, and a face that draws them as one dash is showing a name nobody
      can type. */
