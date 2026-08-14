@@ -13,11 +13,11 @@
       "require": "./dist/index.cjs"
     },
     "./style-tokens.css": {
-      "types": "./dist/css.d.ts",
+      "types": "./dist/style-tokens.css.d.ts",
       "default": "./dist/style-tokens.css"
     },
     "./tailwind.css": {
-      "types": "./dist/css.d.ts",
+      "types": "./dist/tailwind.css.d.ts",
       "default": "./dist/tailwind.css"
     },
     "./package.json": "./package.json"

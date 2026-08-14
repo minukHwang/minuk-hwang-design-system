@@ -15,7 +15,7 @@
       "require": "./dist/*/index.cjs"
     },
     "./*/style": {
-      "types": "./dist/css.d.ts",
+      "types": "./dist/*/index.css.d.ts",
       "default": "./dist/*/index.css"
     }
   },
