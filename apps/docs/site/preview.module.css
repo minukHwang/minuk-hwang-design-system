@@ -36,8 +36,19 @@
   margin-top: var(--spacing-8);
 }
 
+/*
+ * No measure of its own. The content column is the measure.
+ *
+ * This was `68ch`, which did not mean what it reads as: `ch` is the width of
+ * the `0` glyph, and an average character in this face is about four fifths of
+ * that, so 68 of them came out as 85 on the line. Two of the three prose styles
+ * carried it and the lede carried nothing, which made the most prominent
+ * paragraph on a page the widest at 97.
+ *
+ * Rather than three different measures, one: `--content`, which the article
+ * already sets.
+ */
 .description {
-  max-width: 68ch;
   margin-bottom: var(--spacing-2);
 }
 
@@ -198,11 +209,11 @@
   line-height: inherit;
 }
 
+/* The measure is the content column, for the reason `.description` gives. */
 .prose {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-12);
-  max-width: 68ch;
 }
 
 .prose :global(p) {

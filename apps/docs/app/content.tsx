@@ -79,7 +79,7 @@ export default function Home() {
               <div className={css.layerName}>{continues ? '' : layer.layer}</div>
               <div className={css.layerBody}>
                 <code className={css.layerPackage}>{layer.name}</code>
-                <Text size={5} color="assistive">
+                <Text size={5} leading="reading" color="assistive">
                   {layer.detail}
                 </Text>
               </div>
