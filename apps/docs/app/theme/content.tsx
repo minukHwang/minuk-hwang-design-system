@@ -71,7 +71,7 @@ export default function ThemePage() {
     <Page
       eyebrow="Tokens"
       title="Theme"
-      lede="Three dials, an accent, a gray and a radius, set on an ancestor. Twenty-three components change appearance and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
+      lede="Five dials, set on an ancestor: light or dark, an accent, a gray, a radius and the level the page sits on. Twenty-three components follow and not one of them is rebuilt, because every stylesheet already reads the properties the dials rewrite."
     >
       <Preview
         title="Try it"
@@ -152,6 +152,30 @@ export default function ThemePage() {
       </Preview>
 
       <Preview
+        title="Appearance"
+        description="A nested Theme that names an appearance paints the ground under it, so a dark region on a light page brings its own surface rather than inheriting one that no longer matches."
+        stack
+        code={`<Theme appearance="dark">
+  <Button size="s">Deploy</Button>
+  <Badge tone="accent">Production</Badge>
+</Theme>`}
+      >
+        <div className={css.nested}>
+          {(['light', 'dark'] as const).map(appearance => (
+            <Theme key={appearance} appearance={appearance} className={css.appearancePane}>
+              <Text as="div" size={1} color="assistive" className={css.controlLabel}>
+                {appearance}
+              </Text>
+              <div className={css.sampleRow}>
+                <Button size="s">Deploy</Button>
+                <Badge tone="accent">Production</Badge>
+              </div>
+            </Theme>
+          ))}
+        </div>
+      </Preview>
+
+      <Preview
         title="Nesting"
         description="Wrap a region in a second Theme to give it its own accent. Omitting a prop inherits rather than resets."
         stack
@@ -198,7 +222,7 @@ export default function ThemePage() {
         language="css"
         code={`/* one ramp, and a block per hue that replaces it */
 html {
-  --accent-500: var(--blue-500);
+  --accent-500: var(--green-500);
 }
 
 [data-accent='purple'] {
@@ -248,13 +272,23 @@ html,
         </Prose>
       </Section>
 
+      <Section title="Portals">
+        <Prose>
+          <p>
+            A dialog, a popover, a select, a tooltip and a menu render through a portal, and a
+            portal into <code>body</code> lands outside every <code>Theme</code>. Those five render
+            into the themed element instead, so a surface opened after a dial moved arrives on the
+            theme in force rather than the one the page loaded with. Nothing to pass and nothing to
+            wrap.
+          </p>
+        </Prose>
+      </Section>
+
       <Section title="What is not here">
         <Prose>
           <p>
-            Light and dark are still chosen on the <code>html</code> element, because the rule that
-            follows the operating system has to ask whether the document as a whole has overridden
-            it. And <code>textColor.link</code> stays a fixed blue: whether a link should be the
-            brand color or the color people recognise as a link is not answered here.
+            <code>textColor.link</code> stays a fixed blue: whether a link should be the brand color
+            or the color people recognise as a link is not answered here.
           </p>
         </Prose>
       </Section>
@@ -262,6 +296,13 @@ html,
       <Section title="Props">
         <PropsTable
           rows={[
+            {
+              name: 'appearance',
+              type: `'light' | 'dark' | 'system'`,
+              default: 'inherited',
+              description:
+                'system is the absence of a choice rather than a third set of values: it writes no attribute and the stylesheet goes back to asking prefers-color-scheme.',
+            },
             {
               name: 'accentColor',
               type: '14 hues: red · crimson · pink · magenta · purple · indigo · blue · cyan · teal · green · lime · yellow · amber · orange',
@@ -282,6 +323,20 @@ html,
               default: 'inherited',
               description:
                 'A multiplier over the radius scale. none squares pills too, which is what asking for no radius means.',
+            },
+            {
+              name: 'pageBackground',
+              type: `'base' | 'raised'`,
+              default: 'inherited',
+              description:
+                'Which level the page sits on. A light-theme dial: dark has nothing above its page to move to.',
+            },
+            {
+              name: 'hasBackground',
+              type: 'boolean',
+              default: 'root, or any appearance',
+              description:
+                'Whether this Theme paints the ground under it. Left alone it is true for the outermost one and for a nested one that names an appearance. Set it false to put a themed region on a background the page has already painted.',
             },
           ]}
         />

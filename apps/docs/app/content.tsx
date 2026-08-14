@@ -141,19 +141,18 @@ export default function App() {
       />
 
       <Callout>
-        Light and dark are the application&apos;s job: set <code>data-theme</code> on{' '}
-        <code>&lt;html&gt;</code>. Leave the attribute off and the system follows the operating
-        system.
+        Light and dark need nothing set up. Without a <code>Theme</code> the system follows the
+        operating system; with one, <code>appearance</code> decides.
       </Callout>
 
       <Preview
-        title="Changing the accent, the gray or the corners"
-        description="Theme writes three attributes on a wrapper, one per dial. Nothing is rebuilt and no component takes a new prop."
+        title="Changing the appearance, the accent, the gray or the corners"
+        description="Theme writes one attribute per dial on a wrapper. Nothing is rebuilt and no component takes a new prop."
         language="jsx"
         code={`import { Theme } from '@minuk-hwang-design-system/components-react/theme';
 import '@minuk-hwang-design-system/components-react/theme/style';
 
-<Theme accentColor="purple" neutralColor="slate" radius="large">
+<Theme appearance="dark" accentColor="purple" neutralColor="slate" radius="large">
   <App />
 </Theme>`}
       />

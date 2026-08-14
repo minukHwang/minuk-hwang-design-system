@@ -94,6 +94,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--spacing-16);
+  /*
+   * Items at their own height, not the row's.
+   *
+   * A grid item stretches by default, which was invisible while the panes were
+   * `display: contents` and their bordered child sized itself. Now the pane is
+   * the `Theme`, and stretching gave a two-line sample a box more than twice as
+   * tall as its contents with the extra painted in.
+   */
+  align-items: start;
 }
 
 .nestedPane {
@@ -104,4 +113,25 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius-12);
   background: var(--background-raised);
+}
+
+/*
+ * The same pane, worn by the `Theme` itself.
+ *
+ * A `Theme` that names an appearance paints, which makes it a real box rather
+ * than `display: contents` — so putting the pane on a child left two boxes
+ * stacked, the outer one stretched by the grid and painted for its full height
+ * while the inner one stopped at its content. One element is the honest
+ * arrangement and the shorter markup.
+ *
+ * No background here. That is the whole point of the example: the ground comes
+ * from the appearance, not from the page it was dropped onto.
+ */
+.appearancePane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
 }
