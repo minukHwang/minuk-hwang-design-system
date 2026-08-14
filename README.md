@@ -118,15 +118,23 @@ pnpm add @minuk-hwang-design-system/components-react
 ```tsx
 // Once, at the root of the app.
 import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+import { Theme } from '@minuk-hwang-design-system/components-react/theme';
+import '@minuk-hwang-design-system/components-react/theme/style';
 
 // Per component, so you take only the CSS you use.
 import { Button } from '@minuk-hwang-design-system/components-react/button';
 import '@minuk-hwang-design-system/components-react/button/style';
 
 export default function App() {
-  return <Button>Publish</Button>;
+  return (
+    <Theme>
+      <Button>Publish</Button>
+    </Theme>
+  );
 }
 ```
+
+`Theme` paints the page and is where the dials live: `appearance`, `accentColor`, `neutralColor`, `radius`. Every one of them is optional, and left alone the appearance follows the operating system.
 
 ### Local development
 
