@@ -235,7 +235,13 @@ export const Theme = ({
         // scrollbars to match. Only the outermost one, or a dark section would
         // take the whole window with it.
         data-theme-root={isRoot ? '' : undefined}
-        className={clsx(paints ? css.painted : css.root, className)}
+        /*
+         * Painting and filling the viewport are two decisions, not one. The
+         * root is the page and stands its full height; a nested section that
+         * names an appearance paints the box it happens to be. `page` rides
+         * along only where there is a box to give a height to.
+         */
+        className={clsx(paints ? css.painted : css.root, paints && isRoot && css.page, className)}
       >
         {children}
       </div>
