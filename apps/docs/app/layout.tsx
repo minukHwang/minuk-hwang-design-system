@@ -13,37 +13,14 @@ import { Toolbar } from '../site/Toolbar';
 import './globals.css';
 
 /*
- * Every component's stylesheet, once.
+ * Every component's stylesheet, in one file.
  *
- * The packages emit CSS per component so an application only ships what it
- * imports. A documentation site shows all of them, so it takes all of them —
- * and importing them here rather than per page keeps the cascade order fixed
- * instead of varying with whichever route loaded first.
+ * This was twenty-four imports, one per component, kept here rather than on the
+ * pages so the cascade order did not vary with whichever route loaded first.
+ * The package publishes the bundle now, and it is smaller than the sheets it
+ * replaces: the shared layer is written once instead of once per component.
  */
-import '@minuk-hwang-design-system/components-react/accordion/style';
-import '@minuk-hwang-design-system/components-react/alert/style';
-import '@minuk-hwang-design-system/components-react/avatar/style';
-import '@minuk-hwang-design-system/components-react/badge/style';
-import '@minuk-hwang-design-system/components-react/button/style';
-import '@minuk-hwang-design-system/components-react/card/style';
-import '@minuk-hwang-design-system/components-react/checkbox/style';
-import '@minuk-hwang-design-system/components-react/chip/style';
-import '@minuk-hwang-design-system/components-react/dialog/style';
-import '@minuk-hwang-design-system/components-react/dropdown-menu/style';
-import '@minuk-hwang-design-system/components-react/field/style';
-import '@minuk-hwang-design-system/components-react/heading/style';
-import '@minuk-hwang-design-system/components-react/icon/style';
-import '@minuk-hwang-design-system/components-react/input/style';
-import '@minuk-hwang-design-system/components-react/popover/style';
-import '@minuk-hwang-design-system/components-react/radio-group/style';
-import '@minuk-hwang-design-system/components-react/select/style';
-import '@minuk-hwang-design-system/components-react/separator/style';
-import '@minuk-hwang-design-system/components-react/spinner/style';
-import '@minuk-hwang-design-system/components-react/switch/style';
-import '@minuk-hwang-design-system/components-react/tabs/style';
-import '@minuk-hwang-design-system/components-react/theme/style';
-import '@minuk-hwang-design-system/components-react/text/style';
-import '@minuk-hwang-design-system/components-react/tooltip/style';
+import '@minuk-hwang-design-system/components-react/styles.css';
 
 /*
  * The layers as they are, which is not what this said.

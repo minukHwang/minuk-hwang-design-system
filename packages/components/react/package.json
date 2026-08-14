@@ -9,6 +9,10 @@
   "exports": {
     "./package.json": "./package.json",
     "./shared": null,
+    "./styles.css": {
+      "types": "./dist/styles.css.d.ts",
+      "default": "./dist/styles.css"
+    },
     "./*": {
       "types": "./dist/*/index.d.ts",
       "import": "./dist/*/index.js",

@@ -88,12 +88,58 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
  * @param options.onBuildEnd - Called after each rebuild in watch mode
  * @param options.buildMode - 'bundle' for a single entry, 'separate' to scan per component
  */
+/**
+ * One stylesheet holding every component's CSS.
+ *
+ * Splitting the entry points was a decision about JavaScript: one `'use client'`
+ * in a barrel carries the whole package across the RSC boundary, and only
+ * separate entries fix that. Splitting the CSS was not a decision at all. It is
+ * what esbuild does when you hand it one entry per component, and it was
+ * inherited rather than chosen.
+ *
+ * Measured, the split loses. A component's stylesheet repeats the shared layer
+ * every other component also carries, so `Button` alone is 3,197 B gzipped
+ * against 4,856 B for all twenty-four bundled together. Two components are
+ * still ahead; three are behind; ten cost 16,700 B against the same 4,856.
+ * Nobody adopts a design system and uses three components.
+ *
+ * So both are published and the consumer picks. The per-component sheets stay
+ * for an application that genuinely uses a handful, and this is for everyone
+ * else. Radix Themes ships only the bundle; Mantine ships both, which is this.
+ *
+ * Built from a synthetic barrel through `stdin` rather than a file on disk, so
+ * nothing in `src` exists only to be a build input. The same plugins run, so
+ * the class names are the ones the JavaScript already refers to.
+ */
+const emitBundledCss = async ({ entries, baseConfig }) => {
+  const contents = entries
+    .slice()
+    .sort()
+    .map(entry => `import ${JSON.stringify(`./${entry}`)};`)
+    .join('\n');
+
+  const result = await esbuild.build({
+    ...baseConfig,
+    entryPoints: undefined,
+    stdin: { contents, resolveDir: process.cwd(), sourcefile: 'styles.css.ts', loader: 'ts' },
+    format: 'esm',
+    splitting: false,
+    sourcemap: false,
+    write: false,
+    outdir: 'dist',
+  });
+
+  const css = result.outputFiles.find(file => file.path.endsWith('.css'));
+  if (css) fs.writeFileSync(path.join('dist', 'styles.css'), css.contents);
+};
+
 const runBuild = ({
   entryPoints = ['src/index.ts'],
   pkg,
   config = {},
   onBuildEnd = () => void 0,
   buildMode = 'bundle',
+  bundledCss = false,
 }) => {
   const dev = process.argv.includes('--dev');
   const minify = !dev;
@@ -209,7 +255,12 @@ const runBuild = ({
         {
           name: 'watch-plugin',
           setup(build) {
-            build.onEnd(() => {
+            /*
+             * The bundle before the declarations, so `styles.css` gets one too
+             * rather than being the single published stylesheet without a type.
+             */
+            build.onEnd(async () => {
+              if (bundledCss) await emitBundledCss({ entries: finalEntryPoints, baseConfig });
               emitCssDeclarations();
               onBuildEnd();
             });
@@ -225,6 +276,7 @@ const runBuild = ({
       console.log('Watching for update');
     } else {
       await Promise.all([esbuild.build(esmConfig), esbuild.build(cjsConfig)]);
+      if (bundledCss) await emitBundledCss({ entries: finalEntryPoints, baseConfig });
       emitCssDeclarations();
     }
   }
