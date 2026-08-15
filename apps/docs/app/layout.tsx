@@ -13,16 +13,6 @@ import { Toolbar } from '../site/Toolbar';
 import './globals.css';
 
 /*
- * Every component's stylesheet, in one file.
- *
- * This was twenty-four imports, one per component, kept here rather than on the
- * pages so the cascade order did not vary with whichever route loaded first.
- * The package publishes the bundle now, and it is smaller than the sheets it
- * replaces: the shared layer is written once instead of once per component.
- */
-import '@minuk-hwang-design-system/components-react/styles.css';
-
-/*
  * The layers as they are, which is not what this said.
  *
  * It named "a shared style layer", a package that existed for five days and was

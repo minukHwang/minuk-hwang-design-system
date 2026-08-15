@@ -22,6 +22,10 @@ const config = {
 runBuild({
   pkg,
   config,
-  buildMode: 'separate', // 컴포넌트별 개별 빌드
-  bundledCss: true, // 컴포넌트별 CSS에 더해 styles.css 하나를 함께 낸다
+  buildMode: 'separate', // One entry per component
+  // One styles.css alongside the per-component sheets. It imports the token
+  // stylesheet, so a consumer writes a single import rather than two in order.
+  bundledCss: {
+    imports: ['@minuk-hwang-design-system/style-tokens/style-tokens.css'],
+  },
 });

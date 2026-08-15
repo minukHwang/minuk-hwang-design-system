@@ -13,5 +13,5 @@ const pkg = require('./package.json');
 runBuild({
   pkg,
   config: {},
-  buildMode: 'separate', // 컴포넌트별 개별 빌드
+  buildMode: 'separate', // One entry per component
 });

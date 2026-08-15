@@ -6,7 +6,16 @@
  * the system does not define would be documenting something else.
  */
 
-@import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+/*
+ * The library's stylesheet, and the tokens it imports in turn.
+ *
+ * Here rather than in `layout.tsx`, because it carries a reset and a reset has
+ * to come before the rules that override it. An `@import` at the top of this
+ * file states that order; two JavaScript imports in a component file leave it
+ * to whatever order the bundler settles on, and when that order came out the
+ * other way the reset's `code { font-size: inherit }` beat the chip rule below.
+ */
+@import '@minuk-hwang-design-system/components-react/styles.css';
 
 :root {
   /*

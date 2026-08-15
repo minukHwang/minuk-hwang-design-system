@@ -110,8 +110,15 @@ const scanComponentEntryPoints = (srcDir = 'src') => {
  * Built from a synthetic barrel through `stdin` rather than a file on disk, so
  * nothing in `src` exists only to be a build input. The same plugins run, so
  * the class names are the ones the JavaScript already refers to.
+ *
+ * `imports` are prepended as `@import` rules, which is how the token stylesheet
+ * arrives. A component's styles are written against custom properties that
+ * package declares, so the two were always imported together and the order
+ * between them mattered; stating it here removes both the second import and the
+ * chance of getting it backwards. The specifier is passed in rather than named
+ * here, because this runner builds packages that have no such dependency.
  */
-const emitBundledCss = async ({ entries, baseConfig }) => {
+const emitBundledCss = async ({ entries, baseConfig, imports = [] }) => {
   const contents = entries
     .slice()
     .sort()
@@ -130,7 +137,10 @@ const emitBundledCss = async ({ entries, baseConfig }) => {
   });
 
   const css = result.outputFiles.find(file => file.path.endsWith('.css'));
-  if (css) fs.writeFileSync(path.join('dist', 'styles.css'), css.contents);
+  if (!css) return;
+
+  const header = imports.map(specifier => `@import ${JSON.stringify(specifier)};\n`).join('');
+  fs.writeFileSync(path.join('dist', 'styles.css'), header + Buffer.from(css.contents));
 };
 
 const runBuild = ({
@@ -260,7 +270,12 @@ const runBuild = ({
              * rather than being the single published stylesheet without a type.
              */
             build.onEnd(async () => {
-              if (bundledCss) await emitBundledCss({ entries: finalEntryPoints, baseConfig });
+              if (bundledCss)
+                await emitBundledCss({
+                  entries: finalEntryPoints,
+                  baseConfig,
+                  imports: bundledCss.imports,
+                });
               emitCssDeclarations();
               onBuildEnd();
             });
@@ -276,7 +291,12 @@ const runBuild = ({
       console.log('Watching for update');
     } else {
       await Promise.all([esbuild.build(esmConfig), esbuild.build(cjsConfig)]);
-      if (bundledCss) await emitBundledCss({ entries: finalEntryPoints, baseConfig });
+      if (bundledCss)
+        await emitBundledCss({
+          entries: finalEntryPoints,
+          baseConfig,
+          imports: bundledCss.imports,
+        });
       emitCssDeclarations();
     }
   }
