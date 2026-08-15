@@ -45,11 +45,11 @@ A design system built in three layers, so a decision lives in **one** of them ra
 
 ### 1. One bundle → per-component entries
 
-**🔍 Problem**: The package shipped as one barrel bundle behind two entry points, one for the JavaScript and one for the CSS, so a single `'use client'` inside it made every component in the package client-only and no consumer on Next.js App Router could render any of them from a server component.
+**🔍 Problem**: The package shipped as one barrel bundle, so a single `'use client'` inside it made every component in the package client-only and no consumer on Next.js App Router could render any of them from a server component.
 
 **💡 Solution**
 
-- Split the build so every component has its own entry file and its own stylesheet, reached as `…/button` and `…/button/style`. Importing one component now pulls in one component, and a `'use client'` reaches no further than the component that declares it.
+- Split the build so every component has its own entry file, reached as `…/button`. Importing one component now pulls in one component, and a `'use client'` reaches no further than the component that declares it.
 - Generated the entry list by scanning the source tree, because esbuild has no way of being told "keep the module structure", and left the barrel out of the build: build it and everything is in one file again.
 
 ```javascript
@@ -78,8 +78,29 @@ return entryPoints.filter(entry => !entry.includes('src/index.ts'));
 
 **✅ Outcome**
 
-- Importing nothing but `Button`, gzipped: **11,217 → 1,485 B** transferred and **74,210 → 3,740 B** after decompression. **7.6× on the wire, 20× on what the browser parses.**
-- Tree-shaking is the obvious alternative and it stops well short. Leave the single bundle in place, remove every unused byte of JavaScript from it, and a page using only `Button` still ships 5,026 B against the 1,485 B above. **4,322 B of that is CSS**, which tree-shaking does not touch.
+- **Server components can use them.** Seven of the twenty-three declare no `'use client'`: `Badge`, `Card`, `Heading`, `Icon`, `Input`, `Spinner`, `Text`.
+- An application that uses only `Button`, the same source consumed three ways:
+
+| JavaScript shipped      |         raw |     gzipped |
+| ----------------------- | ----------: | ----------: |
+| Barrel                  |    24,931 B |     7,710 B |
+| Barrel + tree-shaking   |    22,732 B |     6,764 B |
+| **Per-component entry** | **3,244 B** | **1,446 B** |
+
+Tree-shaking barely moves it because a style is a function call at the top of a module, and a bundler will not drop a call it cannot prove is pure.
+
+**⚠️ And what it got wrong**
+
+Splitting the entries also split the CSS, because that is what esbuild does with one entry per component. That part was never a decision, and it loses from the third component on. Each sheet repeats the shared layer every other sheet also carries.
+
+| Components used | Per-component sheets | One bundle |
+| --------------- | -------------------: | ---------: |
+| 1               |              3,195 B |    4,856 B |
+| 2               |              3,933 B |    4,856 B |
+| **3**           |          **5,917 B** |    4,856 B |
+| 10              |             16,700 B |    4,856 B |
+
+Both are published now. This site's own documentation had collected twenty-four CSS imports into one file to keep their order fixed; it takes one, and went from 20,835 B to 4,855.
 
 ### 2. Color is measured, not chosen
 
@@ -116,12 +137,11 @@ pnpm add @minuk-hwang-design-system/components-react
 ```tsx
 // Once, at the root of the app.
 import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+import '@minuk-hwang-design-system/components-react/styles.css';
 import { Theme } from '@minuk-hwang-design-system/components-react/theme';
-import '@minuk-hwang-design-system/components-react/theme/style';
 
-// Per component, so you take only the CSS you use.
+// Per component, and only the JavaScript is per component.
 import { Button } from '@minuk-hwang-design-system/components-react/button';
-import '@minuk-hwang-design-system/components-react/button/style';
 
 export default function App() {
   return (
@@ -133,6 +153,13 @@ export default function App() {
 ```
 
 `Theme` paints the page and is where the dials live: `appearance`, `accentColor`, `neutralColor`, `radius`. Every one of them is optional, and left alone the appearance follows the operating system.
+
+Using a handful of components rather than the system? Take the sheets one at a time instead, and skip the bundle above. Under three components it is smaller.
+
+```tsx
+import { Button } from '@minuk-hwang-design-system/components-react/button';
+import '@minuk-hwang-design-system/components-react/button/style';
+```
 
 ### Local development
 
