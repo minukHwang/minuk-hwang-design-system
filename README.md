@@ -50,7 +50,7 @@ A design system built in three layers, so a decision lives in **one** of them ra
 **💡 Solution**
 
 - Split the build so every component has its own entry file, reached as `…/button`. Importing one component now pulls in one component, and a `'use client'` reaches no further than the component that declares it.
-- Generated the entry list by scanning the source tree, because esbuild has no way of being told "keep the module structure", and left the barrel out of the build: build it and everything is in one file again.
+- Generated the entry list by scanning the source tree, because `esbuild` has no way of being told "keep the module structure", and left the barrel out of the build: Build it and everything is in one file again.
 
 ```javascript
 // packages/esbuild-config/index.js, abridged
@@ -87,20 +87,23 @@ return entryPoints.filter(entry => !entry.includes('src/index.ts'));
 | Barrel + tree-shaking   |    22,732 B |     6,764 B |
 | **Per-component entry** | **3,244 B** | **1,446 B** |
 
-Tree-shaking barely moves it because a style is a function call at the top of a module, and a bundler will not drop a call it cannot prove is pure.
+**⚠️ And the one with the CSS splitting**
 
-**⚠️ And what it got wrong**
+`esbuild` emits one stylesheet per entry point, which applied the same split to the CSS.
 
-Splitting the entries also split the CSS, because that is what esbuild does with one entry per component. That part was never a decision, and it loses from the third component on. Each sheet repeats the shared layer every other sheet also carries.
+- **For the consumer**: Importing them one at a time can leave one out, and an import for every component is a large cost.
+- **For the bytes**: A shared style is copied into every sheet that uses it. Across the ten components below, `Text` is duplicated into five, and 43% of the bytes are duplicates.
 
-| Components used | Per-component sheets | One bundle |
-| --------------- | -------------------: | ---------: |
-| 1               |              3,195 B |    4,856 B |
-| 2               |              3,933 B |    4,856 B |
-| **3**           |          **5,917 B** |    4,856 B |
-| 10              |             16,700 B |    4,856 B |
+  | Components used | Per-component sheets | One bundle |
+  | --------------- | -------------------: | ---------: |
+  | 1               |              3,195 B |    4,856 B |
+  | 2               |              3,933 B |    4,856 B |
+  | **3**           |          **5,917 B** |    4,856 B |
+  | 10              |             16,700 B |    4,856 B |
 
-Both are published now. This site's own documentation had collected twenty-four CSS imports into one file to keep their order fixed; it takes one, and went from 20,835 B to 4,855.
+  Per-component sheets are smaller only below three components, which was judged an uncommon way to use a design system.
+
+The package therefore publishes a single stylesheet: A second `esbuild` pass bundles the same entry points through a synthetic barrel and retains only the CSS. The consumer loads it once.
 
 ### 2. Color is measured, not chosen
 
@@ -135,8 +138,7 @@ pnpm add @minuk-hwang-design-system/components-react
 ```
 
 ```tsx
-// Once, at the root of the app.
-import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+// Once, at the root of the app. It imports the token stylesheet in turn.
 import '@minuk-hwang-design-system/components-react/styles.css';
 import { Theme } from '@minuk-hwang-design-system/components-react/theme';
 
@@ -152,14 +154,9 @@ export default function App() {
 }
 ```
 
+> ⚠️ `styles.css` carries a reset, so it belongs before any stylesheet of your own. Import it from the top of one, where the order cannot be rearranged.
+
 `Theme` paints the page and is where the dials live: `appearance`, `accentColor`, `neutralColor`, `radius`. Every one of them is optional, and left alone the appearance follows the operating system.
-
-Using a handful of components rather than the system? Take the sheets one at a time instead, and skip the bundle above. Under three components it is smaller.
-
-```tsx
-import { Button } from '@minuk-hwang-design-system/components-react/button';
-import '@minuk-hwang-design-system/components-react/button/style';
-```
 
 ### Local development
 
@@ -178,7 +175,7 @@ pnpm dev:docs            # the documentation site
 | **Language** | TypeScript                                                               |
 | **Styling**  | vanilla-extract (zero-runtime CSS-in-TS)                                 |
 | **Headless** | Radix UI (17 packages), hand-written where no specification exists       |
-|  **Build**   | esbuild (per-component entries, code splitting), Nx, pnpm workspace      |
+|  **Build**   | `esbuild` (per-component entries, code splitting), Nx, pnpm workspace    |
 |   **Docs**   | Next.js 15 App Router, deployed on Vercel                                |
 |  **Tokens**  | Generated: CSS variables, TypeScript, utility classes, Tailwind v4 theme |
 

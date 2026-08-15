@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import { componentItems } from '../site/nav';
 import { Page } from '../site/Page';
-import { Preview, Prose, Section } from '../site/Preview';
+import { Callout, Preview, Prose, Section } from '../site/Preview';
 
 import css from './home.module.css';
 
@@ -118,34 +118,42 @@ export default function Home() {
       </Section>
 
       <Preview
-        title="Getting started"
-        description="One package. It brings the layers below it, so there is nothing else to install."
+        title="Installation"
         language="shell"
         code={`pnpm add @minuk-hwang-design-system/components-react`}
       />
 
       <Preview
-        title="A file that runs"
-        description="The token stylesheet once at the root, then a component and its own stylesheet wherever you use it."
+        title="Usage"
+        description="One stylesheet at the root, then a component where it is used."
         language="jsx"
-        code={`// Once, at the root of the app.
-import '@minuk-hwang-design-system/style-tokens/style-tokens.css';
+        code={`// Once, at the root of the app. It imports the token stylesheet in turn.
+import '@minuk-hwang-design-system/components-react/styles.css';
 
-// Per component, so you take only the CSS you use.
+// Per component, and only the JavaScript is per component.
 import { Button } from '@minuk-hwang-design-system/components-react/button';
-import '@minuk-hwang-design-system/components-react/button/style';
 
 export default function App() {
   return <Button>Publish</Button>;
 }`}
       />
 
+      <Callout>
+        <code>styles.css</code> carries a reset, so it belongs before any stylesheet of your own.
+        Import it from the top of one, where the order cannot be rearranged.
+      </Callout>
+
       <Preview
-        title="Changing the appearance, the accent, the gray or the corners"
-        description="Theme writes one attribute per dial on a wrapper. Nothing is rebuilt and no component takes a new prop."
+        title="Theme"
+        description={
+          <>
+            Theme paints the page and is where the dials live: <code>appearance</code>,{' '}
+            <code>accentColor</code>, <code>neutralColor</code>, <code>radius</code>. Every one of
+            them is optional, and left alone the appearance follows the operating system.
+          </>
+        }
         language="jsx"
         code={`import { Theme } from '@minuk-hwang-design-system/components-react/theme';
-import '@minuk-hwang-design-system/components-react/theme/style';
 
 <Theme appearance="dark" accentColor="purple" neutralColor="slate" radius="large">
   <App />
