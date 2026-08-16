@@ -16,9 +16,10 @@ popover, select, tabs — these have documented keyboard contracts, focus
 management rules and screen-reader expectations. Getting them subtly wrong is
 easy, and the failure is invisible until someone tries to use a keyboard.
 
-**Write it here when the behavior is ours.** Press handling that has to work
-identically on a `button`, an `a` and a `div`. Anything composing design system
-concepts rather than implementing a standard.
+**Write it ourselves when the behavior is ours.** Anything composing design
+system concepts rather than implementing a standard. Press handling that has to
+work identically on a `button`, an `a` and a `div` is one of those, and it lives
+one layer down in `behavior-react`; `Button` here is built on it.
 
 The point is not that Radix is better code. It is that a bug in `usePress` shows
 up in review, and a bug in focus-trapping a dialog shows up in an accessibility
@@ -31,7 +32,7 @@ audit six months later.
 | Form       | `select` `checkbox` `radio-group` `switch` `label`          | Radix  | Typeahead, group focus, label-control association                                   |
 | Display    | `toast` `avatar` `separator`                                | Radix  | Live regions, image fallback timing                                                 |
 | Utility    | `slot` `visually-hidden`                                    | Radix  | `asChild` composition, screen-reader-only text                                      |
-| Behavior   | `button` `usePress`                                         | ours   | A native button already carries the semantics; what varies is which element renders |
+| Behavior   | `button`                                                    | ours   | A native button already carries the semantics; what varies is which element renders |
 
 Deliberately absent: `AspectRatio` (pure CSS), `ScrollArea` (native scrolling is
 fine), `Slider` and `Progress` (nothing needs them yet), `Menubar`,

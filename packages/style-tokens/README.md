@@ -69,7 +69,7 @@ Radix ships in a dark scale is `#c2e6ff`. The dark ladder here stops at lightnes
 
 ## Color families
 
-Fourteen chromatic scales, spaced so no two neighbours sit closer than 14° — the
+Fourteen chromatic scales, spaced so no two neighbours sit closer than 12° — the
 point where two ramps stop reading as separate families.
 
 ```
@@ -83,10 +83,14 @@ Three neutrals, ordered by how much blue they carry. They sit where Tailwind's
 keyword `slategray`.
 
 ```
-neutral  saturation  0%
+mono     saturation  0%
 gray     saturation 10%
 slate    saturation 19%
 ```
+
+The pure one is `mono` rather than `neutral`, because `--neutral-*` is not a
+family but the pointer to whichever of the three is in use, exactly as
+`--accent-*` points at whichever hue is.
 
 ### Why some scales are tuned
 
@@ -128,15 +132,16 @@ way, and works on any ground.
 ## Contrast
 
 `status.*.onNormal` records which text color clears WCAG AA on top of that
-status's `normal` step. Only blue, purple and indigo are dark enough at full
-chroma to carry white text; everything from cyan through orange needs black.
+status's `normal` step. Seven of the fourteen are dark enough at full chroma to
+carry white text — red, crimson, pink, magenta, purple, indigo and blue — and
+everything from cyan through orange needs black.
 
 ```ts
-status.info.onNormal; // white — blue-500 at 4.83:1
+status.info.onNormal; // white — blue-500 at 4.85:1
 status.success.onNormal; // black — green-500 would be 2.29:1 with white
 ```
 
-`warning` maps to amber rather than yellow: yellow-500 measures 1.35:1 against
+`warning` maps to amber rather than yellow: yellow-500 measures 1.48:1 against
 white. Its `strong` step is 800 rather than 700, because 700 measured 4.35:1 on
 its own surface — just under the floor.
 
