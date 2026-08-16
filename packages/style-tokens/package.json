@@ -2,7 +2,9 @@
   "name": "@minuk-hwang-design-system/style-tokens",
   "version": "0.0.1",
   "type": "module",
-  "main": "index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "packageManager": "pnpm@8.15.0",
   "exports": {
     ".": {
@@ -10,14 +12,24 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./style-tokens.css": "./dist/style-tokens.css"
+    "./style-tokens.css": {
+      "types": "./dist/style-tokens.css.d.ts",
+      "default": "./dist/style-tokens.css"
+    },
+    "./tailwind.css": {
+      "types": "./dist/tailwind.css.d.ts",
+      "default": "./dist/tailwind.css"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm build:js && pnpm build:type && pnpm build:css",
+    "build": "pnpm clean && pnpm build:type && pnpm build:js && pnpm build:css && pnpm build:tailwind",
     "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
+    "dev": "node build.js --dev --watch",
     "build:js": "node build.js",
     "build:type": "tsc --emitDeclarationOnly",
     "build:css": "node ./scripts/build-css-modules.js",
+    "build:tailwind": "node ./scripts/build-tailwind.js",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,6 +50,8 @@
     "style-tokens",
     "design-tokens",
     "css-variables",
+    "tailwindcss",
+    "tailwind",
     "theme",
     "theming",
     "colors",

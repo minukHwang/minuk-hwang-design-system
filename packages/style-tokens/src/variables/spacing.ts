@@ -1,4 +1,16 @@
+/**
+ * Spacing scale, keyed by pixels.
+ *
+ * Numbers rather than t-shirt sizes because there is nothing to translate: a
+ * design says 16 and the code says `spacing[16]`. Values are in rem so the scale
+ * still answers to the user's font size.
+ *
+ * `0` is a token for the same reason the rest are. Without it `padding: 0` has
+ * to be written as a raw value, which is exactly the escape hatch the scale
+ * exists to close — and it is the most common spacing value there is.
+ */
 export const spacing = {
+  0: '0rem',
   1: '0.0625rem', // 5xs
   2: '0.125rem', // 4xs
   4: '0.25rem', // 3xs

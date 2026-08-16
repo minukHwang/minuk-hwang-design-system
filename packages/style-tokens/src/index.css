@@ -160,12 +160,20 @@ input[type='search']::-webkit-search-results-decoration {
   -moz-appearance: none;
 }
 
+/*
+ * The appearance reset stays; the box-sizing that used to travel with it does
+ * not.
+ *
+ * `content-box` here came from the reset this file grew out of, and it made
+ * `input[type="search"]` the one element in the system outside the `border-box`
+ * rule at the top. Every control sets a fixed height and pads inside it, so a
+ * search field added its padding to that height instead and came out taller
+ * than the button beside it. Nothing on the documentation site uses the type,
+ * which is the only reason it went unnoticed.
+ */
 input[type='search'] {
   -webkit-appearance: none;
   -moz-appearance: none;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 input {
@@ -177,17 +185,50 @@ input:focus {
   outline: none;
 }
 
-/* font */
-* {
-  color: var(--text-normal);
+/*
+ * Font and color.
+ *
+ * Set on `body` and inherited, not applied to `*`.
+ *
+ * A universal `color` rule defeats inheritance everywhere: an icon inside a
+ * filled button, a caption inside a status banner and anything else that means
+ * to tint its children all get overridden by a selector they cannot outrank
+ * without adding one of their own. Buttons and inputs do not inherit font by
+ * default, so those two are named explicitly rather than reaching for `*`.
+ */
+body {
+  /*
+   * The page is not painted here, and that is a change.
+   *
+   * It was `background: var(--background-base)`, on the argument that a system
+   * shipping a page level and leaving the page unpainted has published half a
+   * decision. The argument still holds; the element was wrong. `body` resolves
+   * its variables against `html`, and the dials now sit on whatever element
+   * `Theme` rendered — so a page whose gray or appearance had moved kept the
+   * old ground underneath the new one, and `body`'s colour propagates to the
+   * canvas, which put the wrong colour in the overscroll strip as well.
+   *
+   * `Theme` paints instead: it is the element that holds the values, and it is
+   * the only one that can be right in every theme. Without it the browser
+   * paints from `color-scheme`, which the token block sets, so a consumer who
+   * never reaches for `Theme` still gets a page that matches the appearance.
+   */
+  color: var(--text-color-normal);
   font-family: var(--font-family-main);
+}
+
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
 }
 
 /* icon & symbol */
 .material-symbols-outlined {
-  color: var(--text-normal);
   font-variation-settings:
-    'FILL' 1,
+    'FILL' 0,
     'wght' 400,
     'GRAD' 0,
     'opsz' 24;
@@ -195,4 +236,23 @@ input:focus {
 
 a {
   text-decoration: none;
+}
+
+/*
+ * Reduced motion.
+ *
+ * A floor, not a preference: some people get motion sickness from interface
+ * animation, and the OS setting is how they say so. Durations collapse rather
+ * than transitions being removed, so `transitionend` still fires and any
+ * component waiting on it still finishes.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

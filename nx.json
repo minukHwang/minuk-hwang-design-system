@@ -1,23 +1,28 @@
 {
   "extends": "nx/presets/npm.json",
-  "affected": {
-    "defaultBase": "main"
-  },
+  "defaultBase": "master",
   "workspaceLayout": {
     "appDir": "apps",
     "libDir": "packages"
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build"]
-      }
-    }
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/packages/esbuild-config/index.js"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.stories.@(ts|tsx)",
+      "!{projectRoot}/**/*.test.@(ts|tsx)"
+    ]
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
     }
   }
 }

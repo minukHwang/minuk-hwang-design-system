@@ -1,8 +1,14 @@
 #!/bin/sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 MSG_FILE=$1
-MSG=$(cat "$MSG_FILE")
+
+# The subject line only.
+#
+# This read the whole message, and `grep '^docs'` then matched any body line
+# starting with one of the type words — a paragraph that happened to wrap onto
+# "docs site was painting it" put :page_facing_up: on a refactor. Every test
+# below is about the type, and the type is on line one.
+MSG=$(sed -n '1p' "$MSG_FILE")
 
 # Skip if gitmoji code already exists
 if ! echo "$MSG" | grep -qE '^:[a-z_]+:'; then

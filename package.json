@@ -2,35 +2,29 @@
   "name": "minuk-hwang-design-system",
   "version": "1.0.0",
   "description": "Modern design system built with React, TypeScript, and Vanilla Extract",
-  "main": "index.js",
   "private": true,
-  "workspaces": [
-    "packages/style-tokens",
-    "packages/esbuild-config",
-    "packages/components/react",
-    "apps/*"
-  ],
   "scripts": {
     "prepare": "husky",
     "dev": "nx dev",
-    "dev:storybook": "pnpm build:dev @minuk-hwang-design-system/tokens & pnpm build:dev @minuk-hwang-design-system/react & pnpm --filter @minuk-hwang-design-system/storybook dev",
+    "dev:docs": "pnpm build:packages && pnpm --parallel --filter @minuk-hwang-design-system/style-tokens --filter @minuk-hwang-design-system/base-react --filter @minuk-hwang-design-system/behavior-react --filter @minuk-hwang-design-system/components-react --filter @minuk-hwang-design-system/docs dev",
+    "build:docs": "pnpm build:packages && pnpm --filter @minuk-hwang-design-system/docs build",
     "graph": "nx run-many --target=build --graph",
     "build": "nx build",
     "build:all": "nx run-many --target=build --all",
-    "build:packages": "nx run-many --target=build --projects=@minuk-hwang-design-system/style-tokens,@minuk-hwang-design-system/components-react",
+    "build:packages": "nx run-many --target=build --projects=@minuk-hwang-design-system/style-tokens,@minuk-hwang-design-system/base-react,@minuk-hwang-design-system/behavior-react,@minuk-hwang-design-system/components-react",
     "build:dev": "nx build:dev",
     "clean": "nx clean",
     "clean:all": "nx run-many --target=clean --all",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --cache --cache-location .eslintcache",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --cache --cache-location .eslintcache --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "pnpm --filter @minuk-hwang-design-system/storybook dev",
-    "build:storybook": "pnpm --filter @minuk-hwang-design-system/storybook build",
-    "publish:tokens": "pnpm --filter @minuk-hwang-design-system/tokens build && cd packages/style-tokens && npm publish --access public",
-    "publish:react": "pnpm --filter @minuk-hwang-design-system/react build && cd packages/components/react && npm publish --access public",
-    "publish:all": "pnpm publish:tokens && pnpm publish:react"
+    "publish:tokens": "pnpm --filter @minuk-hwang-design-system/style-tokens build && pnpm --filter @minuk-hwang-design-system/style-tokens publish --access public --no-git-checks",
+    "publish:behavior": "pnpm --filter @minuk-hwang-design-system/behavior-react build && pnpm --filter @minuk-hwang-design-system/behavior-react publish --access public --no-git-checks",
+    "publish:base": "pnpm --filter @minuk-hwang-design-system/base-react build && pnpm --filter @minuk-hwang-design-system/base-react publish --access public --no-git-checks",
+    "publish:react": "pnpm --filter @minuk-hwang-design-system/components-react build && pnpm --filter @minuk-hwang-design-system/components-react publish --access public --no-git-checks",
+    "publish:all": "pnpm publish:tokens && pnpm publish:behavior && pnpm publish:base && pnpm publish:react"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -53,12 +47,6 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@nx/storybook": "^21.5.1",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-interactions": "^8.6.14",
-    "@storybook/react": "^8.6.14",
-    "@storybook/react-vite": "^8.6.14",
-    "@storybook/test": "^8.6.14",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "commitlint-config-gitmoji": "^2.3.1",
@@ -71,13 +59,11 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-storybook": "^0.8.0",
     "gitmoji-cli": "^9.7.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "nx": "^21.5.1",
     "prettier": "^3.3.3",
-    "storybook": "^8.6.14",
     "typescript": "^5.5.4"
   }
 }

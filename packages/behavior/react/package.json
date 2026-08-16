@@ -1,0 +1,68 @@
+{
+  "name": "@minuk-hwang-design-system/behavior-react",
+  "version": "0.0.1",
+  "type": "module",
+  "packageManager": "pnpm@8.15.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "pnpm clean && pnpm build:type && pnpm build:js",
+    "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
+    "dev": "node build.js --dev --watch",
+    "build:js": "node build.js",
+    "build:type": "tsc --emitDeclarationOnly",
+    "clean": "rimraf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Minuk Hwang",
+  "license": "MIT",
+  "description": "React behavior hooks for the Minuk Hwang Design System",
+  "homepage": "https://github.com/minukHwang/minuk-hwang-design-system/tree/main/packages/behavior-react#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minukHwang/minuk-hwang-design-system.git",
+    "directory": "packages/behavior/react"
+  },
+  "bugs": {
+    "url": "https://github.com/minukHwang/minuk-hwang-design-system/issues"
+  },
+  "keywords": [
+    "react-behavior-hooks",
+    "design-system",
+    "behavior-hooks-library",
+    "vanilla-extract",
+    "behavior-hooks",
+    "frontend",
+    "minuk-hwang-design-system"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "sideEffects": false,
+  "devDependencies": {
+    "@minuk-hwang-design-system/esbuild-config": "workspace:^",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "esbuild": "^0.23.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {}
+}

@@ -1,18 +1,47 @@
 {
   "compilerOptions": {
-    // ESNext 타겟: 최신 ECMAScript 표준을 타겟으로 컴파일
+    // Compile against the latest ECMAScript standard
     "target": "ESNext",
-    // 모듈 시스템 설정: 최신 ECMAScript 모듈 시스템 사용
+    // Emit native ES modules
     "module": "ESNext",
-    // 라이브러리 설정: 컴파일할 때 사용할 라이브러리 정의 (ESNext, DOM)
-    "lib": ["ESNext", "DOM"],
-    // 선언 파일 생성: 타입 선언 파일 (.d.ts) 생성 여부
+    // Type definitions available to every package
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    // Generate .d.ts declaration files
     "declaration": true,
-    // 엄격한 타입 검사: 타입스크립트의 엄격한 타입 검사 기능 활성화
+    // Enable the full set of strict type checks
     "strict": true,
-    // 모듈 해석 방식: bundler 스타일로 모듈 해석
+    // Resolve modules the way bundlers do (respects package "exports")
     "moduleResolution": "bundler",
-    // JSX 변환 방식: React 17 이상의 JSX 변환 방식 사용
-    "jsx": "react-jsx"
+    // React 17+ automatic JSX runtime
+    "jsx": "react-jsx",
+    // Allow emit (the flag below narrows it to declarations only)
+    "noEmit": false,
+    // tsc only emits types; esbuild owns the JavaScript output
+    "emitDeclarationOnly": true,
+    // Use [[Define]] semantics for class fields
+    "useDefineForClassFields": true,
+    // Skip type checking of dependency .d.ts files for faster builds
+    "skipLibCheck": true,
+    // Allow importing .json files as modules
+    "resolveJsonModule": true,
+    // Treat every file as an isolated module
+    "isolatedModules": true,
+    // Report unused locals as errors
+    "noUnusedLocals": true,
+    // Report unused parameters as errors
+    "noUnusedParameters": true,
+    // Forbid accidental switch-case fallthrough
+    "noFallthroughCasesInSwitch": true
+
+    // Path aliases are deliberately absent.
+    //
+    // Pointing an alias at another package's src pulls that source into the
+    // current package's program and violates rootDir (TS6059). More importantly
+    // it erases the layer boundary: a package would compile against a sibling's
+    // internals instead of its published surface.
+    //
+    // Cross-package imports resolve through pnpm workspace symlinks to the
+    // dist/*.d.ts each package advertises in its "exports" map. Dependencies
+    // must therefore be built first, which nx guarantees via dependsOn: ["^build"].
   }
 }

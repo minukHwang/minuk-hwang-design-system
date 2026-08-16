@@ -15,9 +15,17 @@ export const fontSize = {
   12: '0.75rem',
 };
 
+/**
+ * Four weights, three of which `Text` exposes.
+ *
+ * 600 stays because the interface uses it directly — buttons, tab triggers,
+ * sidebar links — where 700 is heavier than a control wants to be. What it is
+ * no longer is the meaning of `bold`, which is 700 everywhere now.
+ */
 export const fontWeight = {
   700: '700',
   600: '600',
+  500: '500',
   400: '400',
 };
 
@@ -40,6 +48,34 @@ export const lineHeight = {
   16: '1rem',
 };
 
+/**
+ * Two families, and no third.
+ *
+ * The token names the face; loading it is the application's job. Shipping the
+ * binary would charge every consumer for a typeface they may already self-host,
+ * and would make the system's size depend on a decision that is not the
+ * system's to make.
+ *
+ * `mono` existed only in the documentation site's own stylesheet until now,
+ * which is the tell that it was missing here: a system with one family cannot
+ * set a code sample, and every consumer that needs one invents a different
+ * stack.
+ */
 export const fontFamily = {
-  main: "'Pretendard', 'Noto Sans KR', 'Arial', 'Helvetica', 'sans-serif'",
+  main: "'Pretendard', 'Pretendard Variable', 'Noto Sans KR', system-ui, sans-serif",
+  /**
+   * For the places a serif says something a sans cannot: a long-form article, a
+   * pull quote, a piece of editorial inside an otherwise plain interface.
+   *
+   * Nothing in the system reaches for it. It is named so that an application
+   * that wants one has somewhere to put it, and so that the choice is a token
+   * rather than a font stack copied into three stylesheets.
+   *
+   * The stack ends in the platform serifs rather than in a webfont, since like
+   * the other two this only names the face — fetching it stays the
+   * application's job.
+   */
+  serif:
+    "'Pretendard Serif', 'Nanum Myeongjo', 'Apple SD Gothic Neo', Georgia, 'Times New Roman', serif",
+  mono: "'SFMono-Regular', ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
 };

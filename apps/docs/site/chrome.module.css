@@ -1,0 +1,760 @@
+/* ── shell ──────────────────────────────────────────────────── */
+
+/*
+ * One bar across the window: the brand on the left, the dials on the right.
+ *
+ * They were in two places before — the brand at the top of the sidebar, the
+ * dials in a bar inside the reading column — and the column is 780px while the
+ * dials come to around 800, so they wrapped onto a second line. Given the whole
+ * window they fit on one, and the sidebar gets to be nothing but its links.
+ */
+/*
+ * Fixed over the page rather than stacked above it, which is the only way the
+ * blur means anything.
+ *
+ * `backdrop-filter` samples what is painted behind an element, and in the flow
+ * there was nothing behind this — the bar was a row in a column and the article
+ * began underneath it. The property was set, correct, and blurring the page's
+ * flat background. Taking the bar out of the flow puts the scrolling article
+ * under it, which is the thing there was supposed to be something to blur.
+ *
+ * `.shell` fills the viewport in its place and the two columns inset themselves
+ * by the bar's height, so nothing starts underneath it — only what has been
+ * scrolled passes there.
+ */
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  /* The system's own scale. Overlays sit at 1000 and up, so a dialog covers
+     this rather than the other way round. */
+  z-index: calc(var(--z-index-raised) + 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  height: var(--topbar);
+  padding: 0 var(--spacing-24);
+  /*
+   * The portfolio's bar, to the value: `bg-background/70` is a 70% mix in oklab,
+   * and `backdrop-blur-md` is a 12px blur.
+   *
+   * No border. The blur is the edge — content passing under a translucent bar
+   * separates it from the page more honestly than a hairline does, and a
+   * hairline over a blur reads as a seam between two things rather than as the
+   * bottom of one.
+   *
+   * `in oklab` rather than `in srgb`, which is what Tailwind emits and what
+   * keeps the mix from darkening as it thins. The difference shows in the dark
+   * theme, where an srgb mix towards transparent dips through a muddier middle.
+   */
+  background: color-mix(in oklab, var(--background-base) 70%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+/* The disclosure and the brand travel together at the left end of the bar. */
+.topbarStart {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+/*
+ * The far end. Nothing but the repository today, and a band of its own rather
+ * than a single element so a second link can join it without the center moving.
+ */
+.topbarEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex: none;
+}
+
+/* ── logo ───────────────────────────────────────────────────── */
+
+/*
+ * The portfolio's wordmark, at its measurements.
+ *
+ * 14 over 10, medium over light, 0.035em on the lower line — copied rather than
+ * approximated, because approximating a logo is how you end up with two logos.
+ *
+ * The face is the reason it looked wrong before this: the portfolio sets its
+ * headings and its wordmark in Plus Jakarta Sans, and this site is Pretendard
+ * throughout, so the same measurements drew a different logo. The layout loads
+ * the face for these two lines and nothing else.
+ *
+ * A lockup rather than running text, so it sets its own leading instead of
+ * inheriting the document's.
+ */
+.logo {
+  display: flex;
+  flex-direction: column;
+  /*
+   * Centered on each other, which is the portfolio's `items-center` and the last
+   * thing that was different. Left-aligned, the shorter line hung off the end of
+   * the longer one and the lockup read as two labels stacked rather than as one
+   * mark.
+   */
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-wordmark);
+  line-height: 1;
+}
+
+/*
+ * Tailwind's `text-sm`, which is a size and a line-height together: 14 over 20.
+ *
+ * The `leading-none` on the lockup is what the lower line inherits, not this one
+ * — `text-sm` brings its own. Setting both lines to 1 made the mark 10px shorter
+ * than the portfolio's and no amount of padding on the bar could fix that,
+ * because the difference was inside the logo.
+ *
+ * No letter-spacing. `text-sm` is `tracking-normal`, and the 0.035em belongs to
+ * the lower line alone.
+ */
+.logoName {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color-strong);
+}
+
+/*
+ * `text-[10px]` sets a size and nothing else, so the leading is the lockup's 1 —
+ * the computed line-height on the portfolio is 10px, matching the font size.
+ *
+ * The tracking is written in pixels rather than as the source's `0.035em`. The
+ * two are the same number at this size and only at this size, and pixels are
+ * what the browser reports, so a later change to the font size cannot quietly
+ * take the tracking with it.
+ */
+.logoRole {
+  font-size: 0.625rem;
+  font-weight: 300;
+  letter-spacing: 0.35px;
+  color: var(--text-color-assistive);
+}
+
+.repositoryMark {
+  flex: none;
+}
+
+/*
+ * The single light/dark toggle, which replaces the three-way group on a phone.
+ *
+ * Doubled for the same reason `.menuButton` is: the element is a `Button` and
+ * its own `display: inline-flex` is a single class like this one, so a tie was
+ * being settled by whichever stylesheet the bundler emitted last — and it was
+ * settling the wrong way, which put the phone's toggle on the desktop bar beside
+ * the three it replaces.
+ */
+.narrowOnly.narrowOnly {
+  display: none;
+}
+
+.shell {
+  flex: 1;
+  min-height: 0;
+  /* The bar is fixed, so this is the whole window and the columns inside it
+     make their own room for it. */
+  height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr);
+}
+
+/*
+ * Nothing but the links now. The brand and the dials moved to the bar above,
+ * which spans the window and therefore has room for both.
+ */
+/*
+ * No padding of its own, in any direction.
+ *
+ * Vertical padding here framed the list rather than belonging to it: the
+ * scroller started 16px down and ended 16px up, so the first link was clipped
+ * against a band of background instead of against the edge, and the scrollbar
+ * ran short of the column at both ends. Horizontal padding had the same problem
+ * sideways — a reserved empty lane between the scrollbar and the edge.
+ *
+ * The list carries the insets instead, where they scroll with what they inset.
+ */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Clears the fixed bar. The list scrolls below it rather than under it —
+     a column of links sliding behind a blur is noise, not depth. */
+  padding-top: var(--topbar);
+  background: var(--background-base);
+}
+
+/*
+ * The scrollbar is always there and only visible on hover.
+ *
+ * Hiding it by narrowing the track would reflow twenty-eight links every time
+ * the pointer crossed the sidebar. Fading the thumb instead costs no layout: the
+ * lane is reserved either way, and what changes is a color.
+ */
+/*
+ * The insets are the list's, and they have to clear a focus ring.
+ *
+ * `overflow-y` makes this a scroll container on both axes — the spec resolves a
+ * visible axis to auto when its partner is not — so anything outside the padding
+ * box is cut. A focused link draws its ring two pixels out and two wide, and the
+ * sides were 8 and 2, so the ring was shaved on the right and clipped flat at
+ * the top and bottom of the list. 12 on the sides clears it.
+ *
+ * 40 on the ends, where the article beside it takes 80: this column is narrow
+ * and its first link is a short line of text, so it needs less than a page of
+ * prose does to stop reading as though it began against the bar. Half is the
+ * relationship, not a number picked separately.
+ *
+ * 24 on the sides, which is the bar's. The sidebar and the bar above it share a
+ * left edge, so the first link should start where the logo does rather than
+ * twelve pixels inside it.
+ */
+.nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--spacing-40) var(--spacing-16);
+  scrollbar-color: transparent transparent;
+}
+
+.nav:hover,
+.nav:focus-within {
+  scrollbar-color: var(--border-normal) transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  transition: background-color var(--duration-150) var(--easing-standard);
+}
+
+.nav:hover::-webkit-scrollbar-thumb,
+.nav:focus-within::-webkit-scrollbar-thumb {
+  background-color: var(--border-normal);
+}
+
+.nav:hover::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-strong);
+}
+
+/*
+ * The link around the logo, and nothing else — the lockup's own measurements are
+ * in `.logo`, which is where they can be compared against the portfolio's.
+ *
+ * It carries a focus ring of its own because it is an anchor with no visible box
+ * to hang one on, and the ring is what tells a keyboard user the mark is a link
+ * home rather than a picture.
+ */
+.brand {
+  display: flex;
+  align-items: center;
+  flex: none;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--docs-radius-8);
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/*
+ * The break between two groups of links.
+ *
+ * It has to beat the space inside a group by enough to be read as a different
+ * kind of gap — the links themselves sit six apart with their own padding, and
+ * at 20 the six groups ran together into one long list with headings in it.
+ */
+.section + .section {
+  margin-top: var(--spacing-32);
+}
+
+/*
+ * The accent rather than the assistive gray. These are the only headings in the
+ * chrome, and in gray they sat at the same weight as the links under them — so
+ * twenty-eight links read as one list rather than as six groups.
+ *
+ * Step 800 rather than the 700 that `Text color="accent"` gives. In dark it is
+ * the paler of the two, which is what a label wants; in light it is the deeper,
+ * which is what the measurements want — 700 comes to 3.49:1 on the canvas when
+ * the accent is yellow, and this is 12px uppercase, so 4.5 applies. 800 is the
+ * first step that clears it on all fourteen hues in both themes.
+ *
+ * Doubled selector because `Text` writes its color with a class of its own, and
+ * the two are otherwise a tie decided by which stylesheet the bundler emitted
+ * last.
+ */
+.sectionTitle.sectionTitle {
+  color: var(--accent-800);
+}
+
+.sectionTitle {
+  padding: 0 var(--spacing-8) var(--spacing-6);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
+ * The anchor is the hit area and the "you are here" background; the `Text`
+ * inside it is the type. Color on hover has to reach the child, which has its
+ * own — hence the descendant rule rather than a color on the anchor.
+ */
+.link {
+  display: block;
+  padding: var(--spacing-6) var(--spacing-8);
+  border-radius: var(--docs-radius-6);
+  text-decoration: none;
+  background-image: linear-gradient(transparent, transparent);
+  transition:
+    background-image var(--duration-70) var(--easing-standard),
+    transform var(--duration-70) var(--easing-standard);
+}
+
+/*
+ * The same press the components use, at the same 0.97 and on the same curve.
+ *
+ * A sidebar link is the one control on this page that answered a click with
+ * nothing at all, and a navigation that does not acknowledge the press feels
+ * slower than the page it is loading.
+ *
+ * `:active` rather than the components' `[data-pressed]`, since this is a plain
+ * anchor with no press handling behind it.
+ */
+.link:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:active {
+    transform: none;
+  }
+}
+
+/*
+ * A gray fill, not the ink a button uses.
+ *
+ * `--state-ink-hover` is black or white at ten per cent, which is what a control
+ * paints over its own colour. A navigation row has no colour of its own, so the
+ * ink read as a smudge of the page rather than as a surface, and it took the
+ * gray dial with it only by accident. `fill.subtle` is the tint the system
+ * already uses for a panel cut into a page, and it moves with the family.
+ */
+.link:hover {
+  background-image: linear-gradient(var(--fill-subtle), var(--fill-subtle));
+}
+
+.link:hover > * {
+  color: var(--text-color-normal);
+}
+
+/* Tinted as well as coloured — either alone is a poor "you are here". */
+.linkActive,
+.linkActive:hover {
+  background: var(--accent-surface);
+}
+
+/*
+ * At rest, not only on hover.
+ *
+ * The colour was written under `:hover` alone, so the current page was tinted
+ * and its label was the same as every other label until a pointer happened to
+ * be over it — which is the one moment a reader does not need telling where
+ * they are.
+ */
+.linkActive > *,
+.linkActive:hover > * {
+  color: var(--accent-strong);
+}
+
+/* ── content ────────────────────────────────────────────────── */
+
+/*
+ * No padding on `main` itself — the toolbar spans the full width and the
+ * article is inset inside it. Padding here would leave the toolbar's rule
+ * stopping short of both edges, which reads as a misaligned box rather than as
+ * a bar.
+ */
+/* The one scrolling region on the page. */
+.main {
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/*
+ * 80 above and below.
+ *
+ * A documentation page is a column of specimens, and 40 put the first of them
+ * close enough to the bar to read as attached to it. The reading column is
+ * 780px inside a window that is usually well over 1200, so there is width to
+ * spare and none of it buys anything; height is what makes a page feel unhurried.
+ */
+/*
+ * The top inset carries the bar's height as well as the page's own air, since
+ * the bar is fixed and this column runs underneath it. Everything the reader has
+ * not scrolled past yet still starts clear of it; everything they have scrolls
+ * behind the blur, which is the point of the blur.
+ */
+.content {
+  padding: calc(var(--topbar) + var(--docs-page-inset)) var(--spacing-40) var(--docs-page-inset);
+}
+
+/* ── toolbar ────────────────────────────────────────────────── */
+
+/*
+ * The dials sit between the brand and the repository link, and are centered
+ * against the bar once there is room to be.
+ *
+ * Centring has to be absolute to mean anything: in the flow they would come to
+ * rest wherever the two ends left them, and the brand is a good deal wider than
+ * a single icon button, so "the middle" would be visibly off it. Taking them out
+ * of the flow measures the center against the bar itself.
+ *
+ * Only above 1280 though, because they are around 800 wide — fourteen swatches,
+ * three buttons and two selects — and a 800px block centered in a 1024px bar
+ * starts at 112, which is underneath the brand. Below that they stay in the flow
+ * at the right-hand end, where they were, and the bar is simply full.
+ */
+.toolbar {
+  min-width: 0;
+}
+
+@media (min-width: 1280px) {
+  .toolbar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - var(--spacing-40) * 2);
+  }
+}
+
+/*
+ * One row, always. It scrolls sideways rather than growing a second line,
+ * because a bar that changes height moves the whole page under it.
+ *
+ * The vertical padding is what keeps the focus rings whole. Setting overflow-x
+ * alone does not leave the other axis visible: the spec resolves a visible axis
+ * to auto when its partner is not, so this row clips top and bottom as well as
+ * the sides. Its height was exactly the tallest control's, which left a focused
+ * ring with nowhere to be — flattened pill ends on the select at radius full,
+ * chewed corners lower down.
+ *
+ * Four, from the widest ring in the row rather than from the narrowest: the
+ * buttons beside the selects sit their outline two pixels out and draw two more,
+ * where a select's crosses its own border and needs one.
+ */
+.toolbarRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--spacing-10);
+  padding-block: var(--spacing-4);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.toolbarRow::-webkit-scrollbar {
+  display: none;
+}
+
+.toolGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+/*
+ * The rule between two groups of dials, with the same air on either side of it.
+ *
+ * The row's own gap put 10 there, which a hairline does not read as a break at —
+ * the swatches ended and the next label started almost at once. The margin adds
+ * to that gap symmetrically, so both sides come to 18 whichever group is which.
+ */
+.toolDivider {
+  width: 1px;
+  height: 20px;
+  margin-inline: var(--spacing-8);
+  background: var(--border-subtle);
+}
+
+/*
+ * The word and the control it names are one group, and were four pixels apart —
+ * close enough that "gray" read as part of the select rather than as its label.
+ */
+.toolLabel {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-right: var(--spacing-6);
+}
+
+/*
+ * Each swatch sets its own `data-accent`, so `--accent-500` inside it resolves
+ * to the hue it selects. The alternative is fourteen hex values written out
+ * beside the generated palette, which go stale the first time a hue is retuned.
+ */
+/*
+ * A rounded square rather than a dot. A circle of color beside a row of
+ * rectangular controls reads as a status light; a chip reads as a sample of the
+ * thing it selects, which is what it is.
+ */
+.swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-6);
+  background: var(--accent-500);
+  cursor: pointer;
+  transition: transform var(--duration-70) var(--easing-standard);
+}
+
+.swatch:hover {
+  transform: scale(1.15);
+}
+
+/* Two rings rather than a border, so the mark reads on a swatch of any hue. */
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--background-base),
+    0 0 0 4px var(--accent-500);
+}
+
+.radiusTrigger {
+  width: 116px;
+}
+
+/*
+ * 48 between sections, where it was 32.
+ *
+ * Each section here is a titled example with a frame around it, and the frames
+ * were doing the separating on their own — at 32 two of them read as one stack
+ * of panels rather than as two answers to two questions. The gap has to beat
+ * the space inside a frame for the break between sections to be the larger one.
+ *
+ * Margins between the children rather than a `gap`, so one kind of child can
+ * have a different one. See `.callout`.
+ */
+.article {
+  max-width: var(--content);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.article > * + * {
+  margin-top: var(--spacing-48);
+}
+
+/*
+ * A callout sits closer to what it is about than sections sit to each other.
+ *
+ * It always annotates the example above it, and at the full 48 it floated
+ * between two examples with no way to tell which one it belonged to — the gap
+ * that was supposed to separate sections was separating a section from its own
+ * footnote. 20 attaches it upwards; whatever follows still gets the full break.
+ */
+.article > .callout {
+  margin-top: var(--spacing-20);
+}
+
+/*
+ * The rule under the page head, closer to the head than a section break is to a
+ * section, so it reads as the head's own underline rather than as the first
+ * thing on the page. What comes after it still gets the full 48.
+ *
+ * 32: at 24 the rule was near enough to a 17px line of reading text that the
+ * sentence looked underlined, and at 40 it had drifted far enough to read as the
+ * first thing on the page rather than the last thing in the head.
+ */
+.article > .pageRule {
+  margin-top: var(--spacing-32);
+}
+
+.pageHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
+}
+
+.eyebrow {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* `Heading` sets the size; this only removes the margin the UA adds to an h1. */
+.pageTitle {
+  margin: 0;
+}
+
+.headActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 0 var(--spacing-8);
+}
+
+/* ── mobile disclosure ──────────────────────────────────────── */
+
+/*
+ * Hidden until the sidebar stops being a sidebar.
+ *
+ * Doubled selector because the element is a `Button`, and its own
+ * `display: inline-flex` is a single class like this one. Ties go to whichever
+ * stylesheet the bundler happened to emit last, which is not a thing to depend
+ * on.
+ */
+.menuButton.menuButton {
+  display: none;
+}
+
+.scrim {
+  display: none;
+}
+
+/* ── responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  /*
+   * A bar rather than a column, stuck to the top so the disclosure stays
+   * reachable from anywhere on a long page.
+   */
+  /*
+   * No longer a bar of its own. The disclosure moved to the top bar, so all
+   * that is left here is the list it opens — which takes no room at all until
+   * it does.
+   */
+  /* No room reserved for the bar here: the list is a fixed panel of its own on
+     this screen, and the sidebar itself takes no space until it opens. */
+  .sidebar {
+    z-index: var(--z-index-raised);
+    padding: 0;
+  }
+
+  .menuButton.menuButton {
+    display: inline-flex;
+  }
+
+  /*
+   * Collapsed by default. Twenty-eight links stacked above the article means
+   * every visit starts by scrolling past the table of contents.
+   */
+  /*
+   * The sides are the bar's 12, not the column's 24, for the same reason the
+   * column's are the bar's on a wide screen: the menu opens directly under the
+   * bar and the two share an edge.
+   */
+  .nav {
+    display: none;
+    max-height: calc(100vh - var(--topbar));
+    padding: var(--spacing-16) var(--spacing-12);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--background-base);
+  }
+
+  /*
+   * Over the article, not above it.
+   *
+   * `display: block` alone left the list in the grid, so opening the menu pushed
+   * the whole page down by however tall the list was and closing it snapped
+   * everything back — the article moved because the navigation appeared, which
+   * is not what a menu does. Taking it out of the flow means the page underneath
+   * holds still and the scrim covers something that is actually still there.
+   */
+  .nav[data-open] {
+    display: block;
+    position: fixed;
+    top: var(--topbar);
+    right: 0;
+    left: 0;
+    z-index: var(--z-index-raised);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /*
+   * Starts below the top bar rather than at the top of the window.
+   *
+   * Covering the bar dimmed it: the bar is 82% opaque with a `backdrop-filter`,
+   * so it samples and blurs whatever sits behind it, and what sat behind it was
+   * the scrim. The bar is not part of what the menu covers — its close button is
+   * the way out — so it should not be behind the veil either.
+   */
+  .scrim {
+    display: block;
+    position: fixed;
+    top: var(--topbar);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    padding: 0;
+    border: none;
+    background: var(--background-scrim);
+    cursor: default;
+  }
+
+  .content {
+    padding: calc(var(--topbar) + var(--spacing-28)) var(--spacing-20) var(--spacing-48);
+  }
+
+  /*
+   * The same 12 on both sides. It was 12 and 16, which put the logo a notch
+   * further from its edge than the repository link is from the other one — a
+   * difference nobody names and everybody sees as the bar being slightly off.
+   */
+  .topbar {
+    gap: var(--spacing-8);
+    padding: 0 var(--spacing-12);
+  }
+
+  /*
+   * The light/dark toggle joins the repository link at the right end.
+   *
+   * All that is left of the dials on a phone is that one button, and in the
+   * middle of the bar it read as a third thing of its own — a stray control
+   * between the brand and the link. Pushed over, the two icons are one cluster:
+   * the things you can do, in the corner where they belong.
+   */
+  .toolbar {
+    margin-left: auto;
+  }
+
+  /*
+   * Everything but light/dark comes off the bar on a phone. Fourteen swatches
+   * and two selects on a 390px bar is a horizontal scroll inside a fixed bar —
+   * two scrolls in one gesture, and the one people want is the page. Choosing an
+   * accent is something you do at a desk with components in front of you.
+   *
+   * It has to sit here rather than in a media block of its own further up: a
+   * media query adds no specificity, so `.wideOnly` losing to `.toolGroup` was
+   * only ever a question of which came last.
+   */
+  .wideOnly {
+    display: none;
+  }
+
+  .narrowOnly.narrowOnly {
+    display: inline-flex;
+  }
+
+  .toolGroup {
+    flex: none;
+  }
+
+  /*
+   * Step 7 rather than 9 on a narrow screen. Doubled selector for the same
+   * reason as the menu button: `Heading` sets the size with a class of its own.
+   */
+  .pageTitle.pageTitle {
+    font-size: var(--font-size-28);
+    line-height: var(--line-height-34);
+  }
+}

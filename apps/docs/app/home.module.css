@@ -1,0 +1,109 @@
+/* ── layers ─────────────────────────────────────────────────── */
+
+.layers {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
+  overflow: hidden;
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: var(--spacing-16);
+  padding: var(--spacing-18) var(--spacing-20);
+  background: var(--background-base);
+}
+
+/* Under the column width the label wraps mid-word, so below it the two stack. */
+@media (max-width: 560px) {
+  .layer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-8);
+  }
+}
+
+.layer + .layer {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/*
+ * Two packages in one layer are one block.
+ *
+ * The rule and the full top padding made them two entries that happened to sit
+ * next to each other, which is the opposite of what the shared label says. They
+ * still need a gap, so the padding shrinks rather than going.
+ */
+.layer + .layer.layerContinued {
+  border-top: none;
+  padding-top: var(--spacing-8);
+}
+
+/*
+ * The layer, named once per group.
+ *
+ * It was a numbered circle, which put 1, 2, 2, 3 down the side: the repetition
+ * carried the whole point of the list and read as a typo. A name that appears
+ * once and then leaves an empty cell says the same thing without asking anyone
+ * to work it out.
+ */
+.layerName {
+  color: var(--text-color-normal);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-600);
+}
+
+.layerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  min-width: 0;
+}
+
+.layerPackage {
+  align-self: flex-start;
+}
+
+/* ── component grid ─────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-10);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-14) var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-10);
+  background-color: var(--background-base);
+  background-image: linear-gradient(transparent, transparent);
+  text-decoration: none;
+  transition:
+    background-image var(--duration-70) var(--easing-standard),
+    border-color var(--duration-70) var(--easing-standard);
+}
+
+/*
+ * Ink over the tile rather than a different surface, so the hover reads the same
+ * whichever level the page happens to be on. See surface/state in the tokens.
+ */
+.tile:hover {
+  background-image: linear-gradient(var(--state-ink-hover), var(--state-ink-hover));
+  border-color: var(--border-normal);
+}
+
+.tileHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.installCard {
+  max-width: 420px;
+}

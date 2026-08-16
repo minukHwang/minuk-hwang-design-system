@@ -25,7 +25,7 @@
   },
   "settings": {
     "react": {
-      "version": "detect"
+      "version": "18.3"
     },
     "import/resolver": {
       "typescript": {
@@ -44,7 +44,7 @@
     "import/no-duplicates": "error",
     "import/no-unresolved": "error",
     "import/named": "error",
-    "import/default": "error",
+    "import/default": "off",
     "import/namespace": "error",
     "import/order": [
       "error",
@@ -77,7 +77,9 @@
       }
     ],
     "prefer-const": "error",
-    "no-var": "error"
+    "no-var": "error",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
   },
   "overrides": [
     {
@@ -94,7 +96,13 @@
       }
     },
     {
-      "files": ["**/build.js", "**/build.mjs", "**/*.config.{js,mjs}"],
+      "files": [
+        "**/build.js",
+        "**/build.mjs",
+        "**/*.config.{js,mjs}",
+        "**/scripts/**/*.{js,mjs}",
+        "packages/esbuild-config/**/*.js"
+      ],
       "rules": {
         "no-console": "off",
         "@typescript-eslint/no-var-requires": "off"
@@ -102,12 +110,12 @@
     }
   ],
   "ignorePatterns": [
-    "dist/**",
-    "build/**",
-    "node_modules/**",
-    ".nx/**",
-    "coverage/**",
-    ".storybook/**",
-    "storybook-static/**"
+    "**/dist/**",
+    "**/build/**",
+    "**/node_modules/**",
+    "**/.nx/**",
+    "**/coverage/**",
+    "**/.next/**",
+    "**/next-env.d.ts"
   ]
 }

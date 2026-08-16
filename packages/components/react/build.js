@@ -1,5 +1,4 @@
 /* eslint-disable no-redeclare */
-import { execSync } from 'child_process';
 import { createRequire } from 'module';
 
 import runBuild from '@minuk-hwang-design-system/esbuild-config';
@@ -16,17 +15,17 @@ const config = {
   ],
 };
 
-// TypeScript 선언 파일 생성
-console.log('🔧 TypeScript 선언 파일 생성 중...');
-try {
-  execSync('npx tsc', { stdio: 'inherit' });
-  console.log('✅ TypeScript 선언 파일 생성 완료');
-} catch (error) {
-  console.error('❌ TypeScript 선언 파일 생성 실패:', error.message);
-}
+// Declaration output is produced by the build:type script in package.json.
+// Running tsc here as well would compile twice and swallow its failures,
+// making a broken build look successful.
 
 runBuild({
   pkg,
   config,
-  buildMode: 'separate', // 컴포넌트별 개별 빌드
+  buildMode: 'separate', // One entry per component
+  // One styles.css alongside the per-component sheets. It imports the token
+  // stylesheet, so a consumer writes a single import rather than two in order.
+  bundledCss: {
+    imports: ['@minuk-hwang-design-system/style-tokens/style-tokens.css'],
+  },
 });

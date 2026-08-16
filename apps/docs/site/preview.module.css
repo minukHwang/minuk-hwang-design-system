@@ -1,0 +1,391 @@
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  /* The frame clips, so everything inside it has to be able to be narrower than
+     its content. Without this the frame itself was the widest thing on the page
+     and what it cut off was the specimen. */
+  min-width: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
+  overflow: hidden;
+}
+
+/*
+ * Title, one sentence, example — as a group.
+ *
+ * The gap between the sentence and the frame is smaller than the gap between
+ * one example and the next, so a description reads as belonging to the example
+ * under it rather than to the one above.
+ */
+/*
+ * Title, sentence, example — with the sentence closer to the title than to the
+ * frame under it.
+ *
+ * One gap of 8 put all three at the same distance, so the sentence sat between
+ * two things it was equally near and read as belonging to neither. It belongs to
+ * the title: they are the question, and the frame is the answer.
+ */
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.example > .figure {
+  margin-top: var(--spacing-8);
+}
+
+/*
+ * No measure of its own. The content column is the measure.
+ *
+ * This was `68ch`, which did not mean what it reads as: `ch` is the width of
+ * the `0` glyph, and an average character in this face is about four fifths of
+ * that, so 68 of them came out as 85 on the line. Two of the three prose styles
+ * carried it and the lede carried nothing, which made the most prominent
+ * paragraph on a page the widest at 97.
+ *
+ * Rather than three different measures, one: `--content`, which the article
+ * already sets.
+ */
+.description {
+  margin-bottom: var(--spacing-2);
+}
+
+/* ── section ────────────────────────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/*
+ * The stage is the page's own level.
+ *
+ * A component is being shown here as it would appear on a page, so the ground
+ * under it is the ground the reader is already looking at. Reading `raised`
+ * instead put every specimen on a panel the application would not necessarily
+ * give it, and a card demonstrated on a card is a card on a card.
+ */
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  flex-wrap: wrap;
+  /*
+   * The one that was actually holding the width open.
+   *
+   * A stage is a flex item of the frame, so `min-width: auto` kept it as wide as
+   * the widest specimen on it — a five-tab strip, say — and the frame around it
+   * clipped the overflow rather than letting the strip scroll. Anything on this
+   * stage that knows how to be narrow can now be.
+   */
+  min-width: 0;
+  padding: var(--spacing-28) var(--spacing-24);
+  background: var(--background-base);
+}
+
+/*
+ * No inset, for a specimen that is itself a surface.
+ *
+ * The frame already clips to its own corner, so a child that fills this reaches
+ * the rounded edge without needing a radius of its own.
+ */
+.stageFlush {
+  padding: 0;
+}
+
+.stageStack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-16);
+}
+
+/*
+ * The block and its copy button share a stacking context.
+ *
+ * The button floats over the code rather than sitting above it: a bar of its own
+ * would add a third band to a frame that already has a specimen and a listing,
+ * and the corner it covers is indentation on every sample here.
+ */
+.codeWrap {
+  position: relative;
+  min-width: 0;
+}
+
+/*
+ * Announced but not drawn. The copy button is icon-only, so the confirmation has
+ * to live somewhere a screen reader can reach — and nowhere a sighted reader has
+ * to make room for.
+ */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.copyButton {
+  position: absolute;
+  top: var(--spacing-8);
+  right: var(--spacing-8);
+  z-index: 1;
+  /* Out of the way until wanted, and never invisible to the keyboard. */
+  opacity: 0;
+  transition: opacity var(--duration-100) var(--easing-standard);
+}
+
+.codeWrap:hover .copyButton,
+.copyButton:focus-visible {
+  opacity: 1;
+}
+
+/* A pointer is not a given. On touch the button is simply always there. */
+@media (hover: none) {
+  .copyButton {
+    opacity: 1;
+  }
+}
+
+.code {
+  margin: 0;
+  padding: var(--spacing-16);
+  border-top: 1px solid var(--border-subtle);
+  /*
+   * Step 50 off the neutral ramp rather than `fill.subtle`, which is 100.
+   *
+   * `fill` is a panel cut into a surface and this is not one — it is the other
+   * half of the frame, and it wants to sit a hair off the stage rather than a
+   * step below it. In the dark theme that is what 50 does: the stage is the page
+   * at 10 and the code comes up to the level a card sits on. In the light theme
+   * the page is already 50, so the two halves land on the same value and the
+   * rule between them is what separates them.
+   */
+  background: var(--neutral-50);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-21);
+  color: var(--text-color-normal);
+  /*
+   * No ligatures. A monospace face that joins `--` into one long dash is a nice
+   * touch in application code and a lie in a stylesheet: every custom property
+   * on this site begins with two hyphens, and the glyph shown for them is one a
+   * reader would then type. `=>`, `!=` and `>=` join the same way and are read
+   * the same way; this is the only place the difference is load-bearing.
+   */
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+
+/*
+ * A highlighted block is made of `code` spans, one per token, and the inline
+ * chip treatment would draw a tinted box with a ring around every keyword.
+ */
+.code code {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: inherit;
+  /*
+   * The block's leading, not the chip's.
+   *
+   * The inline rule carries `line-height: normal` so that a chip is the same
+   * height whether or not something has blockified it. Inside a listing every
+   * token is one of these, and `normal` at 13px is 15 against the 21 this block
+   * sets — which closed the gaps between the lines of every sample on the site
+   * by six pixels each.
+   */
+  line-height: inherit;
+}
+
+/* The measure is the content column, for the reason `.description` gives. */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.prose :global(p) {
+  margin: 0;
+}
+
+.prose :global(strong) {
+  color: var(--text-color-normal);
+  font-weight: var(--font-weight-600);
+}
+
+/* ── props table ────────────────────────────────────────────── */
+
+/*
+ * The same frame the live examples sit in.
+ *
+ * The table was loose on the page, so its rules ran to the width of the text in
+ * the last column and stopped — which made a reference table look like a
+ * paragraph that had been tabbed. Putting it in the bordered card the previews
+ * already use gives the rules something to run between, and makes the two kinds
+ * of block on a component page read as the same kind of thing.
+ *
+ * The border is on the scrolling box rather than the table, so a narrow screen
+ * scrolls the columns inside a frame that stays put.
+ */
+.tableScroll {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
+  overflow-x: auto;
+}
+
+/*
+ * Fixed columns, because the type column will otherwise take whatever it needs.
+ *
+ * A union like `'neutral' | 'accent' | 'info' | 'success' | 'warning' | 'error'`
+ * is one unbreakable line if you let it be, and it pushed Default and Notes off
+ * the side — where Notes, squeezed to a few characters, wrapped into a cell tall
+ * enough to leave the rest of the row empty. Shares of the width, and the type
+ * wraps at the separators instead.
+ */
+.table {
+  width: 100%;
+  min-width: 520px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/*
+ * Four columns: name, type, default, notes.
+ *
+ * 24% rather than 18%. A compound component names its props through the part
+ * that takes them — `Root.onValueChange` is eighteen characters of mono — and
+ * at 18% that ran past the column and printed on top of the type chip beside
+ * it. The width comes off Notes, which is prose and wraps.
+ */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 24%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 30%;
+}
+
+/*
+ * 16% rather than 14%. A default is one token and often a quoted string with no
+ * space in it, so it cannot wrap at all: `'horizontal'` ran three pixels past
+ * the column. The two per cent comes off the type beside it, which wraps at its
+ * separators and can spare them.
+ */
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 16%;
+}
+
+/* Two columns, so the name takes what a compound part's name needs. */
+.partsTable th:nth-child(1),
+.partsTable td:nth-child(1) {
+  width: 30%;
+}
+
+.partsTable th:nth-child(2),
+.partsTable td:nth-child(2) {
+  width: auto;
+}
+
+/* Its own surface, so the header reads as a header without a heavier rule. */
+.table thead {
+  background: var(--background-raised);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--spacing-10) var(--spacing-16);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--font-size-12);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-400);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--spacing-12) var(--spacing-16);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+/* The rule under the last prop has nothing below it to separate from. */
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/*
+ * Three tiers, because the columns hold three different kinds of thing.
+ *
+ * The name is what you type, so it is the accent. The type is what the prop
+ * accepts, so it is a chip in the surrounding gray: a chip because a type is
+ * mostly punctuation — `'s' | 'm' | 'l'` set as prose reads as a sentence with
+ * something wrong with it. The default is one short value and stays plain, since
+ * a box around every cell is a table of boxes.
+ *
+ * The chips come from the site's inline-code rule, which tints itself from
+ * `currentColor` — so setting the color here is all it takes for the name's
+ * chip to arrive in the accent and the type's in the gray around it.
+ */
+/*
+ * `nowrap` was the whole bug. A name that did not fit did not wrap and did not
+ * clip either — it drew straight over the next column, so `Root.onValueChange`
+ * and its type chip printed on top of each other.
+ *
+ * `anywhere` rather than `normal`, because a prop name has no spaces to break
+ * at. It only breaks when the column genuinely cannot hold the name, which the
+ * width above now covers for everything this system ships. `clone` keeps the
+ * chip closed on both lines if it ever does.
+ */
+.propName {
+  color: var(--accent-800);
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/*
+ * `clone` so a wrapped type keeps its chip on every line rather than opening one
+ * box at the start and closing it three lines later.
+ */
+.type {
+  /*
+   * Leading for the chip, not for the text. The chip is about 18px tall and the
+   * table's own line height is 19, so two wrapped lines of a long union arrived
+   * with a pixel between the boxes and read as one block with a seam in it.
+   */
+  line-height: var(--line-height-26);
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/*
+ * No `nowrap`, for the reason the name column already learned.
+ *
+ * A default that did not fit did not wrap and did not clip either: it drew
+ * straight over the Notes column beside it. `hasBackground` reads "root, or any
+ * appearance" and the column is fourteen per cent of the width, so the two
+ * printed on top of each other.
+ *
+ * Wrapping at spaces only, which is what `normal` does, so a union like
+ * `'primary'` still cannot be broken in the middle.
+ */
+.default {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-13);
+}

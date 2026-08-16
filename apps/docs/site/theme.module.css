@@ -1,0 +1,149 @@
+/* ── picker ─────────────────────────────────────────────────── */
+
+/*
+ * One dial per row.
+ *
+ * Laid out in a row the three wrapped at almost every width, and where they
+ * wrapped changed which dial sat beside which — so the same page had a
+ * different reading order depending on the window. Stacked, each dial is a line
+ * you scan down, and the label sits directly above the control it names.
+ *
+ * The rule below carries more air than it did. It separates the controls from
+ * the thing they change, which is the one boundary on this page that has to be
+ * read, and 20 above it with 16 under it made it look like part of the last
+ * dial rather than the end of them.
+ */
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+  padding-bottom: var(--spacing-32);
+  margin-bottom: var(--spacing-16);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.controlLabel {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-6);
+}
+
+/*
+ * Each swatch carries its own `data-accent`, so it paints itself from the same
+ * ramp it selects. A hand-written list of fourteen hex values beside the
+ * generated palette is a list that goes stale the first time a hue is retuned.
+ */
+.swatch {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border-normal);
+  /* A chip, like the row in the top bar. A circle of color reads as a status
+     light; a rounded square reads as a sample of the thing it selects. */
+  border-radius: var(--docs-radius-8);
+  background: var(--accent-500);
+  cursor: pointer;
+  transition: transform var(--duration-70) var(--easing-standard);
+}
+
+.swatch:hover {
+  transform: scale(1.12);
+}
+
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--background-base),
+    0 0 0 4px var(--accent-500);
+}
+
+.segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+/* ── sample ─────────────────────────────────────────────────── */
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.sampleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+/* ── nesting ────────────────────────────────────────────────── */
+
+/*
+ * Two columns, stated rather than fitted.
+ *
+ * This was `repeat(auto-fit, minmax(220px, 1fr))`, and the row it produced was
+ * 204px tall around panes measuring 94 — a hundred and ten pixels of empty
+ * stage under every example on this page. The tracks resolved to `357px 357px`
+ * either way; writing those same two columns as `1fr 1fr` gives a 94px row, and
+ * `grid-auto-rows: min-content` on the auto-fit version does not, so the row is
+ * being sized against the track minimum rather than against the width the items
+ * are actually laid out at.
+ *
+ * Both examples here hold exactly two panes, so a fitted track count was
+ * solving a problem this page does not have. Below the site's usual breakpoint
+ * they stack, which is what auto-fit was there for.
+ */
+.nested {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-16);
+}
+
+@media (max-width: 640px) {
+  .nested {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nestedPane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
+  background: var(--background-raised);
+}
+
+/*
+ * The same pane, worn by the `Theme` itself.
+ *
+ * A `Theme` that names an appearance paints, which makes it a real box rather
+ * than `display: contents` — so putting the pane on a child left two boxes
+ * stacked, the outer one stretched by the grid and painted for its full height
+ * while the inner one stopped at its content. One element is the honest
+ * arrangement and the shorter markup.
+ *
+ * No background here. That is the whole point of the example: the ground comes
+ * from the appearance, not from the page it was dropped onto.
+ */
+.appearancePane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius-12);
+}

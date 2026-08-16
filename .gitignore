@@ -41,6 +41,12 @@ jspm_packages/
 # TypeScript cache
 *.tsbuildinfo
 
+# Written by `next build` and `next dev`, and it names the output directory it
+# was last built with — so a verification build run with NEXT_DIST_DIR left a
+# tracked file pointing at `.next-verify`, a path that is itself ignored.
+# Next regenerates it on every build, and CI builds before it lints.
+next-env.d.ts
+
 # Optional npm cache directory
 .npm
 
@@ -66,10 +72,8 @@ jspm_packages/
 # Nuxt.js build / generate output
 .nuxt
 
-# Storybook build outputs
 .out
 .build
-storybook-static
 
 # Temporary folders
 tmp/
@@ -96,3 +100,15 @@ Thumbs.db
 # NX
 .nx/cache
 .nx/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Browser-automation scratch: screenshots and page snapshots from a session.
+.playwright-mcp/
+
+# A verification build writes here so it cannot delete the dev server's .next
+.next-verify/
+
+# Local working notes.
+TODO.md

@@ -1,0 +1,171 @@
+/*
+ * Layout only.
+ *
+ * Nothing here paints: no color, no radius, no border. Every surface on this
+ * page is a component's own, because the page exists to judge those surfaces
+ * against each other and a wrapper with opinions of its own would be one more
+ * thing in the picture that the system did not put there.
+ */
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+}
+
+/*
+ * The page's own header: identity on the left, state under it, actions on the
+ * right. It wraps rather than scrolls, because the actions are the point and a
+ * bar that hides them on a narrow window has failed at the one job it has.
+ */
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spacing-16);
+}
+
+.mastheadText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  /* Takes the slack so the actions sit against the far edge. */
+  flex: 1;
+  min-width: 240px;
+}
+
+.mastheadActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-left: auto;
+}
+
+/*
+ * Three of a kind, dropping to two and then one rather than getting narrow.
+ *
+ * The gap is `.stack`'s, which is what sets the distance from the card below.
+ * At 12 the row was spaced more widely than it was spaced from its neighbour, so
+ * the three read as further from each other than from the thing under them.
+ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-10);
+}
+
+/* Accordion sizes itself from its container, and a card body is a flex column. */
+.full {
+  width: 100%;
+}
+
+/*
+ * The badge and the title on an accordion row, side by side.
+ *
+ * A row rather than inline text, so the badge is centered against the whole title
+ * instead of sitting on its first line — a two-line entry otherwise had the tag
+ * pinned to the top and the second line running back underneath it.
+ *
+ * The wrapping itself is the component's: `Accordion.Trigger` already gives its
+ * label the width and the line breaking. This only says how the two pieces sit
+ * next to each other.
+ */
+.entry {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+/* The part that gives way. The badge keeps its size; the words take the rest. */
+.entryTitle {
+  min-width: 0;
+}
+
+.popoverBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  width: 220px;
+}
+
+/* Rows and their separators, with the body's own gap removed so the rules sit
+   evenly between them rather than at the ends of a gap. */
+.fileList {
+  gap: 0;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-12);
+  padding: var(--spacing-10) 0;
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+/* A named group of controls that is not a Field, so it borrows the same gap
+   Field.Root keeps between its label and its control. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-10);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
+  min-width: 0;
+}
+
+/* The search field takes the slack, so the controls beside it keep their widths. */
+.grow {
+  flex: 1;
+  min-width: 200px;
+}
+
+.select {
+  width: 170px;
+}
+
+/*
+ * Two panels side by side, because a card and a form disagreeing about padding
+ * or corner is only visible when they are level with each other.
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-16);
+  align-items: start;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
+}
