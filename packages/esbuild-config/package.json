@@ -1,5 +1,6 @@
 {
   "name": "@minuk-hwang-design-system/esbuild-config",
+  "version": "1.0.0",
   "packageManager": "pnpm@8.15.0",
   "main": "index.js",
   "files": [
