@@ -23,13 +23,14 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && pnpm build:type && pnpm build:js && pnpm build:css && pnpm build:tailwind && pnpm verify:cascade",
+    "build": "pnpm clean && pnpm build:type && pnpm build:js && pnpm build:css && pnpm build:tailwind && pnpm build:declarations && pnpm verify:cascade",
     "build:dev": "pnpm build:js --dev --watch & pnpm build:type --watch",
     "dev": "node build.js --dev --watch",
     "build:js": "node build.js",
     "build:type": "tsc --emitDeclarationOnly",
     "build:css": "node ./scripts/build-css-modules.js",
     "build:tailwind": "node ./scripts/build-tailwind.js",
+    "build:declarations": "node ./scripts/css-declarations.js",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "verify:cascade": "node ./scripts/verify-cascade.js"
