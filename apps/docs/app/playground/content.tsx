@@ -92,7 +92,7 @@ const Masthead = () => (
           style-tokens
         </Heading>
         <Badge tone="success">Passing</Badge>
-        <Badge variant="outline">v0.0.1</Badge>
+        <Badge variant="outline">v1.0.0</Badge>
       </div>
       <Text size={4} leading="reading" color="assistive">
         Color, spacing, type, shadow and motion, in four consumption formats from one source.
@@ -232,7 +232,7 @@ const Overview = () => (
     <Card.Root elevation="outlined">
       <Card.Header>
         <Card.Title>What changed</Card.Title>
-        <Card.Description>Three entries since 0.0.1.</Card.Description>
+        <Card.Description>Three entries since 1.0.0.</Card.Description>
       </Card.Header>
       <Card.Body>
         <Accordion.Root type="single" collapsible defaultValue="0" className={css.full}>
