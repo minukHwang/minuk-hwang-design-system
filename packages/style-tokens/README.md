@@ -120,8 +120,7 @@ vars.color.$absolute.lighten[200]; // a badge on an image
 **Modulating what is already drawn** uses a number.
 
 ```ts
-vars.color.$absolute.opacity.disabledContent; // 0.38
-vars.color.$absolute.opacity.disabledContainer; // 0.12
+vars.opacity.disabled; // 0.38
 ```
 
 Hover, press and selected are _not_ here. A 4% veil shifts a light surface by
@@ -352,9 +351,9 @@ value in our spacing scale is already reachable through Tailwind's own numbering
 (`p-4` is our `spacing.16`, `p-1.5` our `spacing.6`), so nothing is lost by
 letting Tailwind keep the ladder it named first.
 
-**`palette.text`, `palette.ui`, `palette.background`.** Role groups the semantic
-layer already wraps. Exposing both would put two names on one value, and
-`palette.text.normal` would collide with `textColor.normal` outright.
+**`palette.text`, `level`, `onSolid`, `shadowColor`, `stateInk`.** Role groups
+the semantic layer already wraps. Exposing both would put two names on one
+value, and `palette.text.normal` would collide with `textColor.normal` outright.
 
 **The reset and the typography classes.** Preflight covers the reset, and
 `text-16 font-600 leading-24` is how a Tailwind user expects to write what

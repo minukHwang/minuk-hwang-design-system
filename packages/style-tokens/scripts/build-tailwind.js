@@ -64,10 +64,10 @@ const semanticColors = () =>
 /**
  * Then the raw ramps, for decoration the semantic layer has no name for.
  *
- * Only groups keyed by step number are exposed. `palette.text`, `palette.ui` and
- * `palette.background` are role groups that the semantic layer already wraps —
- * emitting both would put two names on one value, and `palette.text.normal`
- * would collide with `textColor.normal` outright.
+ * Only groups keyed by step number are exposed. `text`, `level`, `onSolid`,
+ * `shadowColor` and `stateInk` are role groups that the semantic layer already
+ * wraps — emitting both would put two names on one value, and
+ * `palette.text.normal` would collide with `textColor.normal` outright.
  */
 const isScale = group => Object.keys(group).every(key => /^\d+$/.test(key));
 
