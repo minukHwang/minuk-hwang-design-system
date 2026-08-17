@@ -154,3 +154,20 @@ export const DialogTitle = Title;
 export const DialogDescription = Description;
 export const DialogBody = Body;
 export const DialogFooter = Footer;
+
+/**
+ * The parts under their short names, so `import * as Dialog` gives a namespace
+ * that works on either side of the server boundary.
+ *
+ * A module namespace is assembled at the import site out of the module's own
+ * exports, and each export of a `'use client'` module crosses the boundary as
+ * its own reference. The object above is a single export holding several
+ * values, so it crosses as one reference with nothing readable on it and
+ * `Dialog.Root` is `undefined` in a server component.
+ *
+ * Same components either way. The only difference is whether the grouping
+ * happens here or at the import, and only one of those survives the crossing.
+ * This is the shape Radix ships, for the same reason.
+ */
+export { Content, Header, Title, Description, Body, Footer };
+export const { Root, Trigger, Close } = Dialog;

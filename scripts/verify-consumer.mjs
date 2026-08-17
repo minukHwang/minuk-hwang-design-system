@@ -85,7 +85,7 @@ try {
    */
   fs.writeFileSync(
     path.join(app, 'page.tsx'),
-    `import { AlertBody, AlertDescription, AlertRoot } from '@minuk-hwang-design-system/components-react/alert';\n` +
+    `import * as Alert from '@minuk-hwang-design-system/components-react/alert';\n` +
       `import { Badge } from '@minuk-hwang-design-system/components-react/badge';\n` +
       `import { Button } from '@minuk-hwang-design-system/components-react/button';\n` +
       `import { Card } from '@minuk-hwang-design-system/components-react/card';\n` +
@@ -102,9 +102,9 @@ try {
       `      <Card.Root elevation="outlined">\n` +
       `        <Card.Header><Card.Title>Namespace, no client boundary</Card.Title></Card.Header>\n` +
       `      </Card.Root>\n` +
-      `      <AlertRoot tone="accent">\n` +
-      `        <AlertBody><AlertDescription>Named exports, across a boundary</AlertDescription></AlertBody>\n` +
-      `      </AlertRoot>\n` +
+      `      <Alert.Root tone="accent">\n` +
+      `        <Alert.Body><Alert.Description>Namespace import, from a server component</Alert.Description></Alert.Body>\n` +
+      `      </Alert.Root>\n` +
       `    </Theme>\n` +
       `  );\n` +
       `}\n`
@@ -142,7 +142,10 @@ try {
   console.log('Building…');
   run('npx', ['next', 'build'], work);
 
-  console.log('\nConsumer build succeeded.');
+  const html = fs.readFileSync(path.join(work, '.next/server/app/index.html'), 'utf8');
+  const hit = html.includes('Namespace import, from a server component');
+  console.log('\nAlert rendered into the HTML:', hit);
+  console.log('Consumer build succeeded.');
 } catch (error) {
   console.error('\nConsumer build failed.\n');
   console.error(error.stdout || '');

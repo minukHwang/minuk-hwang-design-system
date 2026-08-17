@@ -59,24 +59,26 @@ Each is its own subpath, so importing one pulls in one. Seven declare no
 `'use client'` and render on the server: Badge, Card, Heading, Icon, Input,
 Spinner and Text.
 
-A compound component that declares `'use client'` is reached through its named
-exports from a server component, not through its namespace. Those exports arrive
-across the boundary as references rather than values, and a reference has no
-properties, so `Alert.Root` is `undefined` and React reports an invalid element
-type. `Card` is the one compound component with no client boundary of its own,
-so its namespace works anywhere.
+Import a compound component as a namespace, and it works on either side of the
+server boundary.
 
 ```tsx
-// In a server component
-import {
-  AlertRoot,
-  AlertBody,
-  AlertDescription,
-} from '@minuk-hwang-design-system/components-react/alert';
+import * as Alert from '@minuk-hwang-design-system/components-react/alert';
 
-// In a client component, either form works
-import { Alert } from '@minuk-hwang-design-system/components-react/alert';
+<Alert.Root tone="error">
+  <Alert.Icon />
+  <Alert.Body>
+    <Alert.Description>Two packages need rebuilding.</Alert.Description>
+  </Alert.Body>
+</Alert.Root>;
 ```
+
+The object form, `import { Alert }`, is still there and still works in a client
+component. It cannot cross into a server one: a `'use client'` module's exports
+arrive there as references rather than values, and an object exported as a
+single value becomes a single reference with nothing readable on it, so
+`Alert.Root` is `undefined`. A module namespace is assembled at the import
+instead, out of exports that each cross on their own.
 
 ## Documentation
 
