@@ -19,18 +19,20 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # nx needs history to work out what changed against the base branch.
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 8.15.0
+      # No version pinned here. The root package.json already names one under
+      # `packageManager`, and stating it twice is how the two drift apart.
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      # 22 rather than 20, which reached end of life in April 2026. It is also
+      # what `vitest` declares support for: ^20 || ^22 || >=24.
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
@@ -38,7 +40,7 @@ jobs:
       # nx caches per project, so an unchanged package is restored rather than
       # rebuilt. Keyed on the lockfile and source so a dependency bump busts it.
       - name: Restore nx cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .nx/cache
           key: nx-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
