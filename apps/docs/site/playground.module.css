@@ -42,7 +42,12 @@
 }
 
 /*
- * Three of a kind, dropping to two and then one rather than getting narrow.
+ * Three of a kind, going straight from three across to one.
+ *
+ * `auto-fit` with a minimum used to allow a two-column stage, and three cards
+ * never fill two columns: on a phone wide enough for the pair, the third sat
+ * alone with its own width of nothing beside it. Two is the one count this row
+ * cannot use.
  *
  * The gap is `.stack`'s, which is what sets the distance from the card below.
  * At 12 the row was spaced more widely than it was spaced from its neighbour, so
@@ -50,8 +55,14 @@
  */
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--spacing-10);
+}
+
+@media (min-width: 641px) {
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* Accordion sizes itself from its container, and a card body is a flex column. */

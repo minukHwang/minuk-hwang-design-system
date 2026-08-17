@@ -308,8 +308,18 @@ const Files = () => {
               <Checkbox defaultChecked>Changed in this release</Checkbox>
               <Checkbox>Generated files</Checkbox>
               <Separator />
+              {/*
+                `outline`, not `secondary`.
+
+                A popover panel is `background.overlay` and `secondary` fills
+                with `neutral.surface`, and in the dark theme those measure
+                rgb(36, 40, 47) and rgb(35, 41, 52) — the same colour to any eye.
+                The button was there and unfindable. `outline` sits a step below
+                the panel and carries an edge, which is what its own
+                documentation says it is for.
+              */}
               <Popover.Close asChild>
-                <Button size="s" variant="secondary" fullWidth>
+                <Button size="s" variant="outline" fullWidth>
                   Done
                 </Button>
               </Popover.Close>
