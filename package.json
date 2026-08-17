@@ -1,6 +1,6 @@
 {
   "name": "minuk-hwang-design-system",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Modern design system built with React, TypeScript, and Vanilla Extract",
   "private": true,
   "scripts": {
