@@ -131,7 +131,21 @@
   white-space: nowrap;
 }
 
-.copyButton {
+/*
+ * Two classes, because one loses.
+ *
+ * `Button` sets `position: relative` on itself so its spinner has something to
+ * measure against, and that is a single class exactly as this is. The two tie on
+ * specificity and the winner is whichever stylesheet the browser reads last —
+ * which is the component bundle, since it arrives through an `@import` at the
+ * top of `globals.css`. The button stayed `relative`, `right` became "shift left
+ * by 8px" rather than "8px from the right edge", and it sat over the first line
+ * of every sample instead of in the corner.
+ *
+ * Anything here that overrides a component needs the same treatment. Sheet order
+ * is not something a consumer should have to know.
+ */
+.codeWrap .copyButton {
   position: absolute;
   top: var(--spacing-8);
   right: var(--spacing-8);
@@ -148,7 +162,7 @@
 
 /* A pointer is not a given. On touch the button is simply always there. */
 @media (hover: none) {
-  .copyButton {
+  .codeWrap .copyButton {
     opacity: 1;
   }
 }
