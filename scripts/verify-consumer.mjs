@@ -58,7 +58,27 @@ try {
     path.join(work, 'package.json'),
     JSON.stringify({ name: 'consumer', private: true, version: '0.0.0' }, null, 2)
   );
-  run('npm', ['install', 'next', 'react', 'react-dom', '--silent'], work);
+  /*
+   * The TypeScript toolchain is not optional here. `next build` runs a type
+   * check only when it can resolve `typescript`, and skips it with a warning
+   * otherwise — which is what happened for as long as these were missing. The
+   * whole reason the consumer carries a `tsconfig.json` is the flag in it, so a
+   * run without them proved less than it appeared to.
+   */
+  run(
+    'npm',
+    [
+      'install',
+      'next',
+      'react',
+      'react-dom',
+      'typescript',
+      '@types/react',
+      '@types/node',
+      '--silent',
+    ],
+    work
+  );
   run('npm', ['install', ...tarballs, '--silent'], work);
 
   const app = path.join(work, 'app');
@@ -142,9 +162,19 @@ try {
   console.log('Building…');
   run('npx', ['next', 'build'], work);
 
+  /*
+   * A build that succeeds is not the whole claim. `Alert.Root` resolving to
+   * `undefined` is what shipped in 1.0.0, and React renders nothing for it
+   * rather than throwing, so the page has to be read back. This used to print
+   * the answer and exit zero either way.
+   */
   const html = fs.readFileSync(path.join(work, '.next/server/app/index.html'), 'utf8');
-  const hit = html.includes('Namespace import, from a server component');
-  console.log('\nAlert rendered into the HTML:', hit);
+  const marker = 'Namespace import, from a server component';
+  if (!html.includes(marker)) {
+    throw new Error(`The build succeeded and "${marker}" is not in the HTML.`);
+  }
+
+  console.log('\nAlert rendered into the HTML: true');
   console.log('Consumer build succeeded.');
 } catch (error) {
   console.error('\nConsumer build failed.\n');
