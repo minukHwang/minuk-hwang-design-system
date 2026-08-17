@@ -12,6 +12,7 @@ Use PNPM scripts from the workspace root:
 - `pnpm dev` — run Nx in watch mode for active projects.
 - `pnpm dev:docs` — rebuild the packages, then serve the documentation site on localhost.
 - `pnpm build:packages` — compile publishable packages for release validation.
+- `pnpm test` — run the build-invariant suite over `dist/` (build first).
 - `pnpm lint` / `pnpm format:check` — enforce ESLint + Prettier before submitting changes.
 - `pnpm clean:all` — clear build artifacts across every project.
 
@@ -21,7 +22,7 @@ TypeScript and React are mandatory; keep components and hooks in `.tsx`. Compone
 
 ## Testing Guidelines
 
-Automated tests are not yet wired; place future unit tests beside source files as `*.test.tsx`. The documentation site is the current integration check — it imports each package's `dist/`, so a broken build surfaces as a broken page. When introducing tests, expose a matching Nx target so teammates can run `pnpm nx run <project>:test`. Document manual QA steps in PR descriptions until the automated suite stabilizes.
+`pnpm test` runs Vitest over `tests/`, which checks what the build produced: that every subpath in an `exports` map lands on a file, that a compound component's three export forms agree, that `'use client'` is present in exactly the components that need it, and that the numbers in the token README match the generated tokens. It reads `dist`, so run `pnpm build:packages` first. Component and behavior tests do not exist yet; place them beside source files as `*.test.tsx` and expose a matching Nx target so teammates can run `pnpm nx run <project>:test`. The documentation site remains the integration check — it imports each package's `dist/`, so a broken build surfaces as a broken page — and `node scripts/verify-consumer.mjs` packs the tarballs into a throwaway Next.js app to prove the published surface works from a server component.
 
 ## Commit & Pull Request Guidelines
 

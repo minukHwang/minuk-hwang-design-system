@@ -1,6 +1,6 @@
 {
   "extends": "nx/presets/npm.json",
-  "defaultBase": "master",
+  "defaultBase": "main",
   "workspaceLayout": {
     "appDir": "apps",
     "libDir": "packages"
