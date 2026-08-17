@@ -105,6 +105,7 @@ export default function AvatarPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Avatar"
           parts={[
             {
               name: 'Avatar.Root',

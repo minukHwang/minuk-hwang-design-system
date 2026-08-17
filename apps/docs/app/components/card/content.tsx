@@ -121,6 +121,7 @@ export default function CardPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Card"
           parts={[
             {
               name: 'Card.Root',

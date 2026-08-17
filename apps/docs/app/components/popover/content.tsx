@@ -83,6 +83,7 @@ export default function PopoverPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Popover"
           parts={[
             { name: 'Popover.Root', description: 'Owns the open state.' },
             { name: 'Popover.Trigger', description: 'Opens it and anchors it.' },

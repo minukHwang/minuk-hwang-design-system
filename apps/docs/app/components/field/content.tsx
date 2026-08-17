@@ -136,6 +136,7 @@ export default function FieldPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Field"
           parts={[
             {
               name: 'Field.Root',

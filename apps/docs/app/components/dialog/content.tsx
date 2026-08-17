@@ -131,6 +131,7 @@ export default function DialogPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Dialog"
           parts={[
             { name: 'Dialog.Root', description: 'Owns the open state.' },
             {

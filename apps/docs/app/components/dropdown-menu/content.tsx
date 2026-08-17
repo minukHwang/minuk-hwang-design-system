@@ -127,6 +127,7 @@ export default function DropdownMenuPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="DropdownMenu"
           parts={[
             { name: 'DropdownMenu.Root', description: 'Owns the open state.' },
             { name: 'DropdownMenu.Trigger', description: 'Gets role and aria-expanded.' },

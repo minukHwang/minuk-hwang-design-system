@@ -60,6 +60,7 @@ export default function RadioGroupPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="RadioGroup"
           parts={[
             { name: 'RadioGroup.Root', description: 'Owns the value and the roving focus.' },
             {

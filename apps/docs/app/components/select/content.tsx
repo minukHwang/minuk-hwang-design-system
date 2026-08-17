@@ -123,6 +123,7 @@ export default function SelectPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Select"
           parts={[
             { name: 'Select.Root', description: 'Owns the value.' },
             {

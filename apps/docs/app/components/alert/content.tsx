@@ -102,6 +102,7 @@ export default function AlertPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Alert"
           parts={[
             {
               name: 'Alert.Root',

@@ -126,6 +126,7 @@ export default function TabsPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Tabs"
           parts={[
             { name: 'Tabs.Root', description: 'Owns the selected value.' },
             { name: 'Tabs.List', description: 'The strip, with the rail under it.' },

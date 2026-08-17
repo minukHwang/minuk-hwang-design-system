@@ -76,6 +76,7 @@ export default function AccordionPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Accordion"
           parts={[
             {
               name: 'Accordion.Root',

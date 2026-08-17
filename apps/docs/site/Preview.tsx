@@ -213,30 +213,55 @@ export const PropsTable = ({ rows }: { rows: PropRow[] }) => (
  * the code they are.
  */
 export const PartsList = ({
+  namespace,
   parts,
 }: {
+  /**
+   * The compound's name, which turns the table into an import line above it.
+   *
+   * Every example on these pages writes `Alert.Root` without ever saying where
+   * `Alert` came from, and the two ways of getting it are not interchangeable:
+   * the exported object crosses into a server component as one reference with
+   * nothing readable on it. The subpath is the name kebab-cased, so the two
+   * cannot drift apart.
+   */
+  namespace?: string;
   parts: { name: string; description: React.ReactNode }[];
 }) => (
-  <div className={css.tableScroll}>
-    <Text as="table" size={3} color="assistive" className={`${css.table} ${css.partsTable}`}>
-      <thead>
-        <tr>
-          <th>Part</th>
-          <th>What it is</th>
-        </tr>
-      </thead>
-      <tbody>
-        {parts.map(part => (
-          <tr key={part.name}>
-            <td>
-              <code className={css.propName}>{part.name}</code>
-            </td>
-            <td>{part.description}</td>
+  <>
+    {namespace && (
+      <>
+        <Text size={4} leading="reading" color="assistive" className={css.description}>
+          Import it as a namespace, and the parts work on either side of the server boundary.
+        </Text>
+        <CodeBlock
+          code={`import * as ${namespace} from '@minuk-hwang-design-system/components-react/${namespace
+            .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+            .toLowerCase()}';`}
+        />
+      </>
+    )}
+    <div className={css.tableScroll}>
+      <Text as="table" size={3} color="assistive" className={`${css.table} ${css.partsTable}`}>
+        <thead>
+          <tr>
+            <th>Part</th>
+            <th>What it is</th>
           </tr>
-        ))}
-      </tbody>
-    </Text>
-  </div>
+        </thead>
+        <tbody>
+          {parts.map(part => (
+            <tr key={part.name}>
+              <td>
+                <code className={css.propName}>{part.name}</code>
+              </td>
+              <td>{part.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Text>
+    </div>
+  </>
 );
 
 /**

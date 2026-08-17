@@ -63,6 +63,7 @@ export default function TooltipPage() {
 
       <Section title="Parts">
         <PartsList
+          namespace="Tooltip"
           parts={[
             { name: 'Tooltip.Provider', description: 'Shares delays. Mount once near the root.' },
             { name: 'Tooltip.Root', description: 'One tooltip.' },
