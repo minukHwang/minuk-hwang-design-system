@@ -163,6 +163,7 @@ export default function App() {
 ```bash
 pnpm install
 pnpm build:packages      # the four packages, in dependency order
+pnpm test                # the build invariants, read off dist
 pnpm dev:docs            # the documentation site
 ```
 

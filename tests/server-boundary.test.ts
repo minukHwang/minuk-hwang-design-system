@@ -47,18 +47,18 @@ const prologue = (source: string): string[] => {
   return found;
 };
 
-const directive = (name: string, output: string) =>
-  prologue(fs.readFileSync(path.join(pkgDir, 'dist', name, output), 'utf8')).includes('use client');
+const directive = (dir: string, name: string, output: string) =>
+  prologue(fs.readFileSync(path.join(dir, 'dist', name, output), 'utf8')).includes('use client');
 
-describe.each(OUTPUTS)('%s', output => {
+describe.each(OUTPUTS)('components-react %s', output => {
   it('carries no directive in the seven documented server components', () => {
-    expect(SERVER.filter(name => directive(name, output))).toEqual([]);
+    expect(SERVER.filter(name => directive(pkgDir, name, output))).toEqual([]);
   });
 
   it('carries the directive in every other component', () => {
     const missing = names
       .filter(name => !SERVER.includes(name))
-      .filter(name => !directive(name, output));
+      .filter(name => !directive(pkgDir, name, output));
     expect(missing).toEqual([]);
   });
 });
@@ -69,4 +69,20 @@ it('the README still describes seven of them', () => {
 
   const listed = SERVER.map(name => name[0].toUpperCase() + name.slice(1));
   expect(listed.filter(name => !readme.includes(name))).toEqual([]);
+});
+
+/*
+ * "Everything here is a client component", says the base README, and it is the
+ * reason the layer above has only seven that are not. A primitive that lost its
+ * directive would move the boundary without anyone deciding to.
+ */
+const baseDir = path.join(root, 'packages/base/react');
+
+describe.each(OUTPUTS)('base-react %s', output => {
+  it('carries the directive in every primitive', () => {
+    const missing = directories(path.join(baseDir, 'src')).filter(
+      name => !directive(baseDir, name, output)
+    );
+    expect(missing).toEqual([]);
+  });
 });
