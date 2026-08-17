@@ -398,17 +398,43 @@ export const generateCssVariables = () => {
      */
     scopeBase: `[data-theme-scope] {\n${themeBlock(lightScales, 'light')}\n}`,
     // Only follow the OS when the page has not asked for a specific theme.
-    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:not([data-theme]),\n\t[data-theme-scope]:not([data-theme]) {\n${themeBlock(
+    /*
+     * `:where()` around the guard, so it costs nothing.
+     *
+     * A theme block restates the default accent and neutral ramps, and a dial
+     * block overrides them from the same element. Which one a component reads is
+     * the cascade's decision, and the dial has to win: an appearance is the
+     * ground, an accent is the request made against it.
+     *
+     * `:not([data-theme])` is an attribute selector's worth of specificity, so
+     * this rule outranked `[data-accent='purple']` and reset the accent to the
+     * default for anyone whose operating system was dark and who had not chosen
+     * a theme explicitly. `:where()` contributes zero, which puts this level with
+     * the explicit blocks below and leaves the dials, written after all of them,
+     * holding the last word.
+     */
+    dark: `@media (prefers-color-scheme: dark) {\n\t${SELECTOR}:where(:not([data-theme])),\n\t[data-theme-scope]:where(:not([data-theme])) {\n${themeBlock(
       darkScales,
       'dark'
     )
       .split('\n')
       .map(line => (line ? `\t${line}` : line))
       .join('\n')}\n\t}\n}`,
-    darkClass: [`[data-theme="dark"]`, `${SELECTOR}.dark`]
+    /*
+     * `:where(html)` rather than `html`, for the reason the media rule above
+     * takes `:where()` too.
+     *
+     * The class form exists for a document that marks its theme the way Tailwind
+     * does, and it stays qualified to the root because `.dark` is a name an
+     * application is likely to use for something of its own. Qualifying it cost
+     * a type selector, though, which put it above `[data-accent='purple']` and
+     * reset the accent for anyone using the class convention. `:where()` keeps
+     * the guard and charges nothing for it.
+     */
+    darkClass: [`[data-theme="dark"]`, `:where(${SELECTOR}).dark`]
       .map(sel => `${sel} {\n${themeBlock(darkScales, 'dark')}\n}`)
       .join('\n\n'),
-    lightClass: [`[data-theme="light"]`, `${SELECTOR}.light`]
+    lightClass: [`[data-theme="light"]`, `:where(${SELECTOR}).light`]
       .map(sel => `${sel} {\n${themeBlock(lightScales, 'light')}\n}`)
       .join('\n\n'),
   };

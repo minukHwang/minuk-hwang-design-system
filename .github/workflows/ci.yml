@@ -64,6 +64,13 @@ jobs:
       - name: Build docs
         run: pnpm --filter @minuk-hwang-design-system/docs build
 
+      # Neither of the two bugs that shipped in 1.0.0 could be caught by the
+      # steps above. The site resolves the packages through workspace links
+      # rather than tarballs, and every page in it is a client component, so it
+      # never exercises the export maps as published or the server boundary.
+      - name: Build a consumer
+        run: node scripts/verify-consumer.mjs
+
       - name: Lint
         run: pnpm lint
 
