@@ -96,12 +96,11 @@ return entryPoints.filter(entry => !entry.includes('src/index.ts'));
 
   | Components used | Per-component sheets | One bundle |
   | --------------- | -------------------: | ---------: |
-  | 1               |              3,195 B |    4,856 B |
-  | 2               |              3,933 B |    4,856 B |
-  | **3**           |          **5,917 B** |    4,856 B |
-  | 10              |             16,700 B |    4,856 B |
+  | …               |                    … |    4,882 B |
+  | **~4**          |          **5,155 B** |    4,882 B |
+  | 10              |              9,888 B |    4,882 B |
 
-  Per-component sheets are smaller only below three components, which was judged an uncommon way to use a design system.
+  Per-component sheets are smaller only below about four components once a heavy one like `Dialog` is among them. Installing a design system to use three components was judged uncommon.
 
 The package therefore publishes a single stylesheet: A second `esbuild` pass bundles the same entry points through a synthetic barrel and retains only the CSS. The consumer loads it once.
 
