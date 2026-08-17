@@ -19,7 +19,8 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --cache --cache-location .eslintcache --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "publish:tokens": "pnpm --filter @minuk-hwang-design-system/style-tokens build && pnpm --filter @minuk-hwang-design-system/style-tokens publish --access public --no-git-checks",
     "publish:behavior": "pnpm --filter @minuk-hwang-design-system/behavior-react build && pnpm --filter @minuk-hwang-design-system/behavior-react publish --access public --no-git-checks",
     "publish:base": "pnpm --filter @minuk-hwang-design-system/base-react build && pnpm --filter @minuk-hwang-design-system/base-react publish --access public --no-git-checks",
@@ -64,6 +65,7 @@
     "lint-staged": "^16.1.6",
     "nx": "^21.5.1",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^4.1.10"
   }
 }
