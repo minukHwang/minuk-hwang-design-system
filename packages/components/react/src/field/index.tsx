@@ -56,14 +56,31 @@ export type FieldRootProps = React.HTMLAttributes<HTMLDivElement> & {
   required?: boolean;
 };
 
+/** What `Field.Root` works out and hands to whatever the control turns out to be. */
+export type FieldControlRenderProps = {
+  id: string;
+  'aria-describedby': string | undefined;
+  'aria-invalid': true | undefined;
+  disabled: boolean;
+  required: boolean;
+};
+
 export type FieldControlProps = {
-  children: (props: {
-    id: string;
-    'aria-describedby': string | undefined;
-    'aria-invalid': true | undefined;
-    disabled: boolean;
-    required: boolean;
-  }) => React.ReactNode;
+  /**
+   * A function, or a single element to clone the props onto.
+   *
+   * The function is the better form and stays the one the documentation shows:
+   * it hands the props over and lets the caller spread them wherever they
+   * belong, which is the only thing that works for a control the system has
+   * never seen.
+   *
+   * The element form exists because a function cannot cross the React Server
+   * Components boundary. Passing one from a server component fails outright
+   * with "Functions cannot be passed directly to Client Components", so the
+   * render prop made `Field` the one component in the package that could not be
+   * rendered from a server component at all.
+   */
+  children: React.ReactElement | ((props: FieldControlRenderProps) => React.ReactNode);
 };
 
 /*
@@ -154,6 +171,17 @@ export const FieldLabel = React.forwardRef<
  * `textarea`, a `Select` or something the system has never seen. Cloning an
  * unknown child to inject props guesses at its API; handing the props over lets
  * the caller spread them wherever they belong.
+ *
+ * A single element is accepted too, and then the props are cloned onto it. That
+ * is the guess the paragraph above declines to make, and it is here because the
+ * alternative was worse: a function cannot cross the server boundary, so the
+ * render prop alone left `Field` unusable from a server component while every
+ * other component in the package renders there or says it does not.
+ *
+ * The element's own props win the merge. `id` from `Field` is the wiring the
+ * label depends on, but a caller who writes one has said something deliberate,
+ * and `disabled`/`required` are only overridden when written out — an element
+ * that does not mention them takes the field's.
  */
 const Control = ({ children }: FieldControlProps) => {
   const {
@@ -172,15 +200,19 @@ const Control = ({ children }: FieldControlProps) => {
       .filter(Boolean)
       .join(' ') || undefined;
 
+  const controlProps: FieldControlRenderProps = {
+    id: controlId,
+    'aria-describedby': describedBy,
+    'aria-invalid': invalid || undefined,
+    disabled,
+    required,
+  };
+
   return (
     <>
-      {children({
-        id: controlId,
-        'aria-describedby': describedBy,
-        'aria-invalid': invalid || undefined,
-        disabled,
-        required,
-      })}
+      {typeof children === 'function'
+        ? children(controlProps)
+        : React.cloneElement(children, { ...controlProps, ...children.props })}
     </>
   );
 };

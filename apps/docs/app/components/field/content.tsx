@@ -57,6 +57,30 @@ export default function FieldPage() {
       </Callout>
 
       <Preview
+        title="From a server component"
+        description="Pass a single element instead, and the props are cloned onto it. A function cannot cross the server boundary, so this is the form to reach for there."
+        stack
+        code={`<Field.Root required>
+  <Field.Label>Package name</Field.Label>
+  <Field.Control>
+    <Input placeholder="@scope/name" />
+  </Field.Control>
+</Field.Root>`}
+      >
+        <Field.Root required>
+          <Field.Label>Package name</Field.Label>
+          <Field.Control>
+            <Input placeholder="@scope/name" />
+          </Field.Control>
+        </Field.Root>
+      </Preview>
+
+      <Callout tone="warning">
+        The render function stays the better form for anything the system has not seen. Cloning
+        guesses at a child&apos;s API; handing the props over does not.
+      </Callout>
+
+      <Preview
         title="Invalid"
         description='Field.Error renders nothing while the root is valid, and carries role="alert" when it appears.'
         stack
