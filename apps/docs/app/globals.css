@@ -225,11 +225,29 @@ code {
 /*
  * Focus is never removed, only redrawn. The one rule of a docs site nobody
  * checks is whether it can be read with a keyboard.
+ *
+ * No `border-radius` here, and that is the point of the comment.
+ *
+ * It used to set one, so that a focused bare element had a shape. Every
+ * component in the system is focusable too, and none of them declare a radius
+ * inside their own `:focus` rule — they declare it once on the element and
+ * expect it to hold. So this rule had no competitor and won: focusing an input
+ * at `radius="full"` turned a pill into a 4px rectangle, and every other
+ * control lost its corners the same way the moment it was focused.
+ *
+ * `:where()` for the same reason, and it is not decoration either. A bare
+ * `:focus-visible` counts the same as a component's class, and the component
+ * bundle arrives through an `@import` at the top of this file — so on a tie the
+ * site won, and a menu row that had set `outline: none` because highlighting is
+ * its focus indicator got an outline anyway. Offset two pixels outward, where
+ * the panel clipped its sides and left two green bars.
+ *
+ * At zero specificity this is what it was meant to be: a floor for the site's
+ * own bare elements, which anything with an opinion of its own overrides.
  */
-:focus-visible {
+:where(:focus-visible) {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
-  border-radius: var(--docs-radius-4);
 }
 
 ::selection {

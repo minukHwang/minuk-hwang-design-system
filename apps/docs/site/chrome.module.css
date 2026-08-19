@@ -446,6 +446,14 @@
  * Four, from the widest ring in the row rather than from the narrowest: the
  * buttons beside the selects sit their outline two pixels out and draw two more,
  * where a select's crosses its own border and needs one.
+ *
+ * The sides need the same four and for the same reason, which is less obvious
+ * because only one control is ever against an edge. The last dial lost the
+ * right-hand side of its ring and nothing else did, so it read as a bug in that
+ * control rather than in the row holding it.
+ *
+ * The negative margin hands those pixels back, so the row sits where it always
+ * did and only the clip moved.
  */
 .toolbarRow {
   display: flex;
@@ -453,6 +461,8 @@
   flex-wrap: nowrap;
   gap: var(--spacing-10);
   padding-block: var(--spacing-4);
+  padding-inline: 4px;
+  margin-inline: -4px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -523,8 +533,23 @@
     0 0 0 4px var(--accent-500);
 }
 
-.radiusTrigger {
+/*
+ * A box around the select rather than a width on it.
+ *
+ * `Select`'s trigger is `width: 100%`, which fills a block parent and means
+ * nothing in a flex row — there it falls back to the content, so the control
+ * grew and shrank as the value went from `none` to `medium` and everything to
+ * its right moved with it. Styling the trigger directly is a fight the consumer
+ * loses: one class ties with the component's own and the package's stylesheet
+ * is read last.
+ *
+ * A wrapper sidesteps both. It is the consumer's own element, so nothing
+ * competes for it, and the trigger fills it because filling its parent is what
+ * the trigger already does. 116 fits the longest label at this size.
+ */
+.dialSelect {
   width: 116px;
+  flex: none;
 }
 
 /*

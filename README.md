@@ -183,8 +183,8 @@ pnpm dev:docs            # the documentation site
 
 ## 👤 Author
 
-**Minuk Hwang** - Frontend Developer
+**Minuk Hwang** - Fullstack Developer
 
-- 📚 [Documentation](https://ds.minukhwang.com)
+- 🌐 [Portfolio](https://www.minukhwang.com)
 - 💼 [LinkedIn](https://linkedin.com/in/minuk-hwang-934999157)
 - 📧 [minuk.lucas.hwang@gmail.com](mailto:minuk.lucas.hwang@gmail.com)

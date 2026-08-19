@@ -358,18 +358,34 @@
 
 /* ── type specimen ──────────────────────────────────────────── */
 
+/*
+ * Centered, not on the baseline.
+ *
+ * Baseline put the meta block's first line on the specimen's baseline, which is
+ * right when the label is one line and wrong here: the second line then hangs
+ * below it, and beside a 60px sample the pair reads as having slipped to the
+ * floor. What this row compares is size, and the label is a block rather than a
+ * sentence, so it centers — the same call the elevation rows already record.
+ */
 .stepRow {
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
   gap: var(--spacing-16);
-  align-items: baseline;
+  align-items: center;
   width: 100%;
 }
 
 .stepMeta {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  /*
+   * Six, where it was two.
+   *
+   * The chip above carries two pixels of its own padding, so a two-pixel gap put
+   * its box within four of the line under it and the pair read as one smudged
+   * block rather than as a name and its measurement.
+   */
+  gap: var(--spacing-6);
   font-size: var(--font-size-13);
   color: var(--text-color-normal);
 }
@@ -417,7 +433,7 @@
   }
 
   .stepMeta {
-    gap: var(--spacing-4);
+    gap: var(--spacing-8);
   }
 }
 
