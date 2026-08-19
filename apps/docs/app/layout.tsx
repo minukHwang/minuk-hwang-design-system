@@ -7,6 +7,7 @@ import { DialsProvider } from '../site/dials';
 import { NavProvider } from '../site/nav-state';
 import { SITE } from '../site/page-metadata';
 import { RepositoryLink } from '../site/RepositoryLink';
+import { ScrollReset } from '../site/ScrollReset';
 import { Brand, MenuButton, Sidebar } from '../site/Sidebar';
 import { Toolbar } from '../site/Toolbar';
 
@@ -160,6 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className={css.shell}>
               <Sidebar />
               <main className={css.main}>
+                <ScrollReset />
                 <div className={css.content}>{children}</div>
               </main>
             </div>
