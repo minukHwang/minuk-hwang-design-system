@@ -117,27 +117,25 @@ export const Toolbar = () => {
           >
             gray
           </Text>
-          <Select.Root
-            value={neutral}
-            onValueChange={(value: string) => setNeutral(value as NeutralColor)}
-          >
-            <Select.Trigger
-              aria-labelledby="neutral-dial-label"
-              size="s"
-              className={css.radiusTrigger}
+          <div className={css.dialSelect}>
+            <Select.Root
+              value={neutral}
+              onValueChange={(value: string) => setNeutral(value as NeutralColor)}
             >
-              <Select.Value />
-            </Select.Trigger>
-            <Select.Content>
-              <Select.Group>
-                {neutralColors.map(family => (
-                  <Select.Item key={family} value={family}>
-                    {family}
-                  </Select.Item>
-                ))}
-              </Select.Group>
-            </Select.Content>
-          </Select.Root>
+              <Select.Trigger aria-labelledby="neutral-dial-label" size="s">
+                <Select.Value />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Group>
+                  {neutralColors.map(family => (
+                    <Select.Item key={family} value={family}>
+                      {family}
+                    </Select.Item>
+                  ))}
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
+          </div>
         </div>
 
         {/*
@@ -161,27 +159,25 @@ export const Toolbar = () => {
           >
             radius
           </Text>
-          <Select.Root
-            value={radius}
-            onValueChange={(value: string) => setRadius(value as RadiusScale)}
-          >
-            <Select.Trigger
-              aria-labelledby="radius-dial-label"
-              size="s"
-              className={css.radiusTrigger}
+          <div className={css.dialSelect}>
+            <Select.Root
+              value={radius}
+              onValueChange={(value: string) => setRadius(value as RadiusScale)}
             >
-              <Select.Value />
-            </Select.Trigger>
-            <Select.Content>
-              <Select.Group>
-                {radiusScales.map(scale => (
-                  <Select.Item key={scale} value={scale}>
-                    {scale}
-                  </Select.Item>
-                ))}
-              </Select.Group>
-            </Select.Content>
-          </Select.Root>
+              <Select.Trigger aria-labelledby="radius-dial-label" size="s">
+                <Select.Value />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Group>
+                  {radiusScales.map(scale => (
+                    <Select.Item key={scale} value={scale}>
+                      {scale}
+                    </Select.Item>
+                  ))}
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
+          </div>
         </div>
       </div>
     </div>
